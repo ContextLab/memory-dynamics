@@ -1,0 +1,8 @@
+sqlalchemy
+pandas
+numpy
+matplotlib
+scipy
+seaborn
+jupyter
+quail
