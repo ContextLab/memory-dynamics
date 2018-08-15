@@ -1,5 +1,5 @@
 # memory-dynamics
-Binder for drivingdynamics project
+Binder for memory-dynamics project
 
 # To use:
 1. `git clone https://github.com/ContextLab/memory-dynamics.git`
