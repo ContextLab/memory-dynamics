@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<annotation-spec>
+
+    <body>
+
+        <track-spec name="words" type="primary">
+            <attribute name="token" valuetype="String" />
+        </track-spec>
+
+        <group name="foo">
+
+            <track-spec name="bla" type="span" ref="words" >
+                <attribute name="something">
+                    <value-el>eins</value-el>
+                    <value-el>zwei</value-el>
+                </attribute>
+            </track-spec>
+
+            <track-spec name="tag" type="singleton" ref="foo.bla" >
+                <attribute name="check this" valuetype="Boolean" />
+            </track-spec>
+
+        </group>
+
+        <track-spec name="strange" type="span" ref="words" >
+            <attribute name="containing" valuetype="MultiLink" />
+        </track-spec>
+
+    </body>
+
+</annotation-spec>
