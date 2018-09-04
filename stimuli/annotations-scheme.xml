@@ -1,33 +1,35 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-
-
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <annotation-spec>
-
-    <body>
-
-        <track-spec name="words" type="primary">
-            <attribute name="token" valuetype="String" />
-        </track-spec>
-
-        <group name="foo">
-
-            <track-spec name="bla" type="span" ref="words" >
-                <attribute name="something">
-                    <value-el>eins</value-el>
-                    <value-el>zwei</value-el>
-                </attribute>
-            </track-spec>
-
-            <track-spec name="tag" type="singleton" ref="foo.bla" >
-                <attribute name="check this" valuetype="Boolean" />
-            </track-spec>
-
-        </group>
-
-        <track-spec name="strange" type="span" ref="words" >
-            <attribute name="containing" valuetype="MultiLink" />
-        </track-spec>
-
-    </body>
-
+  <head>
+    <valuetype-def>
+      <valueset name="indoor/outdoor">
+        <value-el>indoor</value-el>
+        <value-el>outdoor</value-el>
+      </valueset>
+      <valueset name="something_InternalValueType_0">
+        <value-el>eins</value-el>
+        <value-el>zwei</value-el>
+      </valueset>
+    </valuetype-def>
+  </head>
+  <body>
+    <font color="#000000" face="SansSerif" size="12" style="plain"/>
+    <track-spec color-attr="Scene description" name="Scene info" type="primary">
+      <font color="#000000" face="Dialog" size="10" style="plain"/>
+      <attribute name="narrative details" valuetype="String"/>
+      <attribute name="characters on screen" valuetype="String"/>
+      <attribute name="Music Presence" valuetype="Boolean"/>
+    </track-spec>
+    <track-spec name="speech" ref="Scene info" type="span">
+      <attribute name="transcription" valuetype="String"/>
+      <attribute name="character speaking" valuetype="String"/>
+    </track-spec>
+    <track-spec name="setting" ref="Scene info" type="span">
+      <attribute name="indoor/outdoor" valuetype="indoor/outdoor"/>
+      <attribute name="setting" valuetype="String"/>
+    </track-spec>
+    <track-spec name="Scene name" ref="Scene info" type="span">
+      <attribute name="scene name" valuetype="String"/>
+    </track-spec>
+  </body>
 </annotation-spec>
