@@ -1,12 +1,9 @@
 sqlalchemy
-pandas
+pandas>= 0.20.0
 numpy
 matplotlib
 scipy
 seaborn
 jupyter
 quail
-Google-Cloud-videointelligence==1.2.0
-sk-video==1.1.8
-ffmpy==0.2.2
-ffmpeg-python==0.1.9
+deepdish
