@@ -1,0 +1,54 @@
+# Dockerfile for psiturk container
+FROM debian:stretch
+MAINTAINER Matteo Visconti dOC <mvdoc.gr@dartmouth.edu>
+
+# install debian-related stuff
+RUN apt-get update
+RUN apt-get install -y eatmydata
+RUN eatmydata apt-get install -y \
+    python-dev \
+    default-libmysqlclient-dev \
+    python-pip \
+    procps \
+    git \
+    yasm
+RUN rm -rf /var/lib/apt/lists/*
+
+# install python packages
+RUN pip install --upgrade pip
+RUN pip install --upgrade \
+setuptools \
+requests \
+mysql-python \
+psiturk==2.2.1 \
+pydub \
+matplotlib \
+pandas \
+numpy \
+quail \
+seaborn
+
+# install ffmpeg
+RUN git clone https://github.com/FFmpeg/FFmpeg
+RUN cd FFmpeg && ./configure --enable-gpl && \
+make && make install && ldconfig
+
+RUN pip install joblib \
+psiturk
+# install vim
+RUN apt-get update
+RUN apt-get install -y vim
+
+# add experiment and data folder
+ADD exp /exp
+ADD data /data
+ADD code /code
+
+# setup working directory
+WORKDIR /exp
+
+# set up psiturk to use the .psiturkconfig in /psiturk
+ENV PSITURK_GLOBAL_CONFIG_LOCATION=/
+
+# expose port to access psiturk from outside
+EXPOSE 9999
