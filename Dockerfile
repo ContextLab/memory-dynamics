@@ -20,7 +20,7 @@ RUN pip install --upgrade \
 setuptools \
 requests \
 mysql-python \
-psiturk==2.2.1 \
+psiturk==2.2.3 \
 pydub \
 matplotlib \
 pandas \
@@ -33,12 +33,14 @@ sqlalchemy \
 scipy \
 deepdish
 
+
 # install ffmpeg
 RUN git clone https://github.com/FFmpeg/FFmpeg
 RUN cd FFmpeg && ./configure --enable-gpl && \
 make && make install && ldconfig
 
-
+RUN pip install \
+git+https://github.com/ContextLab/psiTurk.git@expose-gunicorn-timeout-parameter
 
 # install vim
 RUN apt-get update
