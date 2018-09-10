@@ -1,37 +1,49 @@
 var timeline = []
-var recordTime = 60
+var record_time = 5
 
-var runExperiment = function(currentStimArray, options, cb) {
+var runExperiment = function() {
+
+  // subject info?
+  var info = {
+      type: 'survey-text',
+      questions: [
+        {prompt: 'How old are you?', value: 'age', columns: 3},
+        {prompt: 'Where were you born?', value: 'location', columns: 50},
+        {prompt: 'Tell me about your day', value: 'How did it start?', rows:10, columns: 50}
+      ]
+  };
 
   // instructions
   var instructions = {
-      type: "text",
-      text: "add instructions here."
+      type: "instructions",
+      pages: ["add instructions here.",  "add another page here"]
   }
 
   // video
   var video = {
     type: 'video',
-    width: 640,
-    start: 8,
-    stop: 10,
-    sources: ['video/sample_video.mp4']
+    height: 640,
+    width: 800,
+    sources: ['/static/files/sample_video.mp4']
   }
 
-  // recall instructions
+  // instructions
   var recall_instructions = {
-      type: "text",
-      text: "add instructions here."
+      type: "instructions",
+      pages: ["add instructions here.",  "add another page here"]
   }
 
   // recall
   var recall = {
         type: 'free-recall',
         stimulus: "<p class='mic'><i class='fa fa-microphone blink_me'></i></p>",
-        stim_duration: recordTime * 1000,
-        trial_duration: recordTime * 1000 + 2000,
+        stim_duration: record_time * 1000,
+        trial_duration: record_time * 1000 + 2000,
         record_audio: true,
         speech_recognition: 'google',
+        data: {
+          listNumber: 0,
+        },
         on_finish: function() {
             console.log('Saving audio data...')
             psiTurk.saveData({
@@ -43,7 +55,7 @@ var runExperiment = function(currentStimArray, options, cb) {
 
   // initialize
   jsPsych.init({
-    timeline: [instructions, video, recall_instructions, recall],
+    timeline: [info, instructions, video, recall_instructions, recall],
     on_finish: function() { jsPsych.data.displayData(); }
   });
 
