@@ -1,4 +1,5 @@
 var timeline = []
+var recordTime = 60
 
 var runExperiment = function(currentStimArray, options, cb) {
 
@@ -38,7 +39,7 @@ var runExperiment = function(currentStimArray, options, cb) {
                     console.log('Data saved!')
                 }
             })
-  }
+  }}
 
   // initialize
   jsPsych.init({
