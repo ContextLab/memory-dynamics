@@ -56,4 +56,4 @@ WORKDIR /exp
 ENV PSITURK_GLOBAL_CONFIG_LOCATION=/
 
 # expose port to access psiturk from outside
-EXPOSE 9999
+EXPOSE 22363
