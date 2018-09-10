@@ -1,6 +1,6 @@
 # Dockerfile for psiturk container
 FROM debian:stretch
-MAINTAINER Paxton Fitzpatrick <paxton.c.fitzpatrick@dartmouth.edu>
+MAINTAINER Paxton Fitzpatrick <paxton.c.fitzpatrick.19@dartmouth.edu>
 
 # install debian-related stuff
 RUN apt-get update
@@ -13,11 +13,6 @@ RUN eatmydata apt-get install -y \
     git \
     yasm
 RUN rm -rf /var/lib/apt/lists/*
-
-# install ffmpeg
-RUN git clone https://github.com/FFmpeg/FFmpeg
-RUN cd FFmpeg && ./configure --enable-gpl && \
-make && make install && ldconfig
 
 # install python packages
 RUN pip install --upgrade pip
@@ -32,9 +27,18 @@ pandas \
 numpy \
 quail \
 seaborn \
-hypertools
+hypertools \
 joblib \
-psiturk
+sqlalchemy \
+scipy \
+deepdish
+
+# install ffmpeg
+RUN git clone https://github.com/FFmpeg/FFmpeg
+RUN cd FFmpeg && ./configure --enable-gpl && \
+make && make install && ldconfig
+
+
 
 # install vim
 RUN apt-get update
