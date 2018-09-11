@@ -26,14 +26,14 @@ var runExperiment = function() {
     height: 640,
     width: 800,
     sources: ['/static/files/sample_video.mp4']
-  }
+  };
 
   // instructions
   var recall_instructions = {
       type: "instructions",
       pages: ["add instructions here.",  "add another page here"];
       show_clickable_nav: true
-  }
+  };
 
   // recall
   var recall = {
