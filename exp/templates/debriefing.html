@@ -5,7 +5,7 @@
 <head>
         <meta charset="utf-8" />
 	<title>Debriefing</title>
-	<link rel="stylesheet" href="/static/css/task.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/exp/static/css/task.css" type="text/css" media="screen" />
 </head>
 <body>
 	<div id="debriefing">
@@ -32,7 +32,7 @@
 		anteposuerit litterarum formas humanitatis per seacula quarta decima et
 		quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant
 		sollemnes in futurum.</p>
-		
+
 		<p>If you have any questions about this research, you may contact the
 		principal investigator, Principal Investigator.</p>
 		</div>
@@ -46,7 +46,7 @@
 					<table><tr>
 						<td id="affirmative" onClick="javascript:document.forms['accept'].submit()">Yes, I agree.</td>
 						<td id="negative" onClick="javascript:document.forms['decline'].submit()">No, please withhold my data. I will contact the experimenter with questions.</td>
-					</tr></table> 
+					</tr></table>
 					<form id="accept" action="complete" method="post">
 						<input type="hidden" name="uniqueid" value="{{ uniqueId }}" />
 						<input type="hidden" name="agree" value="true" />
