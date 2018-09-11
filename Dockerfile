@@ -47,9 +47,12 @@ RUN apt-get update
 RUN apt-get install -y vim
 
 # add experiment and data folder
-ADD exp /exp
-ADD data /data
-ADD code /code
+COPY memory-dynamics/exp /exp
+COPY memory-dynamics/data /data
+COPY memory-dynamics/code /code
+
+# add stimuli folder
+COPY video-stims /exp/video-stims
 
 # setup working directory
 WORKDIR /exp
