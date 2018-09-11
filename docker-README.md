@@ -15,7 +15,7 @@
 #   start docker (see above)
 #   `psiturk`
 #   `server on`
-#   copy link to Google Chrome
+#   open Google Chrome and go to `localhost:22363`
 
 # to end experiment:
 #   `server off`
