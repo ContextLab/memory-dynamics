@@ -52,7 +52,7 @@ COPY memory-dynamics/data /data
 COPY memory-dynamics/code /code
 
 # add stimuli folder
-COPY video-stims /exp/video-stims
+# COPY video-stims /exp/video-stims
 
 # setup working directory
 WORKDIR /exp
