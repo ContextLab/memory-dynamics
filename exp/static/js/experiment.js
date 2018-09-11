@@ -16,8 +16,9 @@ var runExperiment = function() {
   // instructions
   var instructions = {
       type: "instructions",
-      pages: ["add instructions here.",  "add another page here"]
-  }
+      pages: ["add instructions here.",  "add another page here"],
+      show_clickable_nav: true
+  };
 
   // video
   var video = {
@@ -30,7 +31,8 @@ var runExperiment = function() {
   // instructions
   var recall_instructions = {
       type: "instructions",
-      pages: ["add instructions here.",  "add another page here"]
+      pages: ["add instructions here.",  "add another page here"];
+      show_clickable_nav: true
   }
 
   // recall
