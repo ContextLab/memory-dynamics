@@ -1,6 +1,7 @@
 var timeline = []
 var record_time = 5
 
+
 var runExperiment = function() {
 
   // subject info?
@@ -38,7 +39,7 @@ var runExperiment = function() {
   // recall
   var recall = {
         type: "free-recall",
-        stimulus: "<p class='mic'><i class='fa fa-microphone blink_me'></i></p>",
+        stimulus: "<p class='mic'><i class='fas fa-microphone blink_me'></i></p>",
         stim_duration: record_time * 1000,
         trial_duration: record_time * 1000 + 2000,
         record_audio: true,
