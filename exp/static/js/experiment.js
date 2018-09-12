@@ -39,8 +39,8 @@ var runExperiment = function(cb) {
   // recall
   var recall = {
         type: "free-recall",
-        stimulus: "<p class='mic'><i class='fas fa-microphone blink_me'.val()></i></p>",
-        // style='position:absolute;top:35%;left:47%;font-size:10vw;color:red'
+        stimulus: "<p class='mic' style='position:absolute;top:31%;left:43%;font-size:20vw;color:red'><i class='fa fa-microphone blink_me' style='color:red'></i></p>",
+        // stimulus: "<p class='mic'><i class='fas fa-microphone></i></p>",
         stim_duration: record_time * 1000,
         trial_duration: record_time * 1000 + 2000,
         record_audio: true,
@@ -63,9 +63,6 @@ var runExperiment = function(cb) {
       type: "instructions",
       pages: ["That's it! You're done!"],
   };
-
-
-  console.log(timeline)
 
 
   // initialize
