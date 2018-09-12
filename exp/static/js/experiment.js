@@ -2,9 +2,9 @@ var timeline = []
 var record_time = 5
 
 
-var runExperiment = function() {
+var runExperiment = function(cb) {
 
-  // subject info?
+  // subject info
   var info = {
       type: 'survey-text',
       questions: [
@@ -29,7 +29,7 @@ var runExperiment = function() {
     sources: ['/static/files/sample_video.mp4']
   };
 
-  // instructions
+  // recall instructions
   var recall_instructions = {
       type: "instructions",
       pages: ["add instructions here.",  "add another page here"],
@@ -39,7 +39,7 @@ var runExperiment = function() {
   // recall
   var recall = {
         type: "free-recall",
-        stimulus: "<p class='mic'.val()><i class='fas fa-microphone blink_me'.val()></i></p>",
+        stimulus: "<p class='mic'><i class='fas fa-microphone blink_me'.val()></i></p>",
         // style='position:absolute;top:35%;left:47%;font-size:10vw;color:red'
         stim_duration: record_time * 1000,
         trial_duration: record_time * 1000 + 2000,
@@ -56,12 +56,35 @@ var runExperiment = function() {
                 }
             })
     }
-  }
+  };
+
+  // finished message
+  var finished_message = {
+      type: "instructions",
+      pages: ["That's it! You're done!"],
+  };
+
+
+  console.log(timeline)
+
 
   // initialize
   jsPsych.init({
-    timeline: [info, instructions, video, recall_instructions, recall],
-    on_finish: function() { jsPsych.data.displayData(); }
-  });
+    timeline: [info, instructions, video, recall_instructions, recall, finished_message],
+    // on_finish: function() { jsPsych.data.displayData(); }
+    // on_finish: function() {
+    //   psiTurk.saveData({
+    //     success: function() {
+    //       $.post("/onfinish", {
+    //         "data": uniqueId
+    //         });
+    //         cb();
+    //     }
+    //   })
+    // },
+    // on_data_update: function(data) {
+    //   psiTurk.recordTrialData(data);
+    // }
+  })
 
 };
