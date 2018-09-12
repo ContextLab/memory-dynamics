@@ -39,13 +39,14 @@ var runExperiment = function() {
   // recall
   var recall = {
         type: "free-recall",
-        stimulus: "<p class='mic'><i class='fas fa-microphone blink_me'></i></p>",
+        stimulus: "<p class='mic'.val()><i class='fas fa-microphone blink_me'.val()></i></p>",
+        // style='position:absolute;top:35%;left:47%;font-size:10vw;color:red'
         stim_duration: record_time * 1000,
         trial_duration: record_time * 1000 + 2000,
         record_audio: true,
         speech_recognition: 'google',
         data: {
-          listNumber: 0,
+          listNumber: 0
         },
         on_finish: function() {
             console.log('Saving audio data...')
