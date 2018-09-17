@@ -19,11 +19,11 @@ var runExperiment = function(cb) {
             "<p> In this experiment, you will view a 20-25 minute episode of a TV show and recall what happened in as much detail as possible. </p>" +
             "<p> Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p> When the episode ends, you will see the microphone icon (<i style='color:red' class='fa fa-microphone'></i>).  This indicates that the computer has started recording. </p>" +
-            "<p> From that point on, you will have 10 minutes to recall the episode as fully as you can.</p> <p> Press the spacebar to continue.</p></div>",
+            "<p> From that point on, you will have <strong>10 minutes</strong> to recall the episode as fully as you can.</p> <p> Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p> Do your best to recall the events of the video in order using the characters' names, but if you realize you skipped something, feel free to go back and describe it.</p>" +
             "<p> Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>That's it!</p>" +
-            "<p> When you're ready to begin the episode, press the spacebar.</p></div>"
+            "<p> <strong>When you're ready to begin the episode, press the spacebar.</strong></p></div>"
           ],
       key_forward: 32
       //show_clickable_nav: true
@@ -40,8 +40,12 @@ var runExperiment = function(cb) {
   // recall instructions
   var recall_instructions = {
       type: "instructions",
-      pages: ["add instructions here.",  "add another page here"],
-      show_clickable_nav: true
+      pages: ["<div class='instructions'><p> When you see the <i style='color:red' class='fa fa-microphone'></i>, recall the episode to the best of your ability.</p>" +
+              "<p> Please remember to speak <strong>clearly</strong>.</p>" +
+              "<p> <strong>When you're ready to begin recalling the episode, press the spacebar.</strong></p></div>"
+            ],
+      key_forward: 32
+      //show_clickable_nav: true
   };
 
   // recall
@@ -69,7 +73,8 @@ var runExperiment = function(cb) {
   // finished message
   var finished_message = {
       type: "instructions",
-      pages: ["That's it! You're done!"],
+      pages: ["<div class='instructions'><p>That's it! You're done!</p>" +
+      "<p>Please go get your experimter.</p></div>"]
   };
 
 
