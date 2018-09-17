@@ -8,16 +8,16 @@ var runExperiment = function(cb) {
   var info = {
       type: 'survey-text',
       questions: [
-        {prompt: 'How old are you?', value: 'age', columns: 3},
-        {prompt: 'Where were you born?', value: 'location', columns: 50},
-        {prompt: 'Tell me about your day', value: 'How did it start?', rows:10, columns: 50}
+        {prompt: 'Subject ID?', value: 'subid', columns: 50},
       ]
   };
 
   // instructions
   var instructions = {
-      type: "instructions",
-      pages: ["add instructions here.",  "add another page here"],
+      type: "text",
+      pages: "<div class='instructions'> <p style='font-weight:bold'> PLEASE READ THESE INSTRUCTIONS CAREFULLY </p>" +
+            "<p> In this experiment, you will view a 20-25 minute episode of a TV show and recall what happened in as much detail as possible. </p>" +
+            "<p> Press the NEXT to continue.</p></div>"
       show_clickable_nav: true
   };
 
@@ -67,7 +67,7 @@ var runExperiment = function(cb) {
 
   // initialize
   jsPsych.init({
-    timeline: [info, instructions, video, recall_instructions, recall, finished_message],
+    timeline: [info, instructions, video, recall_instructions, recall, finished_message]
     // on_finish: function() { jsPsych.data.displayData(); }
     // on_finish: function() {
     //   psiTurk.saveData({
