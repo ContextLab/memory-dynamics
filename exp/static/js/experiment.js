@@ -14,11 +14,19 @@ var runExperiment = function(cb) {
 
   // instructions
   var instructions = {
-      type: "text",
-      pages: "<div class='instructions'> <p style='font-weight:bold'> PLEASE READ THESE INSTRUCTIONS CAREFULLY </p>" +
+      type: "instructions",
+      pages: ["<div class='instructions'> <p style='font-weight:bold'> PLEASE READ THESE INSTRUCTIONS CAREFULLY </p>" +
             "<p> In this experiment, you will view a 20-25 minute episode of a TV show and recall what happened in as much detail as possible. </p>" +
-            "<p> Press the NEXT to continue.</p></div>"
-      show_clickable_nav: true
+            "<p> Press the spacebar to continue.</p></div>",
+            "<div class='instructions'> <p> When the episode ends, you will see the microphone icon (<i style='color:red' class='fa fa-microphone'></i>).  This indicates that the computer has started recording. </p>" +
+            "<p> From that point on, you will have 10 minutes to recall the episode as fully as you can.</p> <p> Press the spacebar to continue.</p></div>",
+            "<div class='instructions'> <p> Do your best to recall the events of the video in order using the characters' names, but if you realize you skipped something, feel free to go back and describe it.</p>" +
+            "<p> Press the spacebar to continue.</p></div>",
+            "<div class='instructions'> <p>That's it!</p>" +
+            "<p> When you're ready to begin the episode, press the spacebar.</p></div>"
+          ],
+      key_forward: 32
+      //show_clickable_nav: true
   };
 
   // video
