@@ -76,38 +76,17 @@ var runExperiment = function(options, cb) {
       "<p>Please go get your experimter.</p>" +
       "<p> Prese the spacebar for the post-experiment questionnaire.</div>"],
       key_forward: 32
-  }
+  };
 
 
   // initialize
   jsPsych.init({
     timeline: [info, instructions, video, recall_instructions, recall, finished_message],
-    fullscreen: true,
     on_finish: function() {
-      psiTurk.recordTrialData(uniqueId)
+      psiTurk.recordTrialData(uniqueId),
       psiTurk.saveData({
-        success: function() {
-          $.post("/onfinish", {
-            "data": uniqueId
-          });
-          cb();
-        }
+        success: function() {cb();}
       })
     }
-    // on_finish: function() { jsPsych.data.displayData(); }
-    // on_finish: function() {
-    //   psiTurk.saveData({
-    //     success: function() {
-    //       $.post("/onfinish", {
-    //         "data": uniqueId
-    //         });
-    //         cb();
-    //     }
-    //   })
-    // },
-    // on_data_update: function(data) {
-    //   psiTurk.recordTrialData(data);
-    // }
   })
-
 };
