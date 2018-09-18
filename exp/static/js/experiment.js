@@ -1,14 +1,13 @@
 var timeline = []
 var record_time = 5
 
-
-var runExperiment = function(cb) {
+var runExperiment = function(options, cb) {
 
   // subject info
   var info = {
       type: 'survey-text',
       questions: [
-        {prompt: 'Subject ID?', value: 'subid', columns: 50},
+        {prompt: 'Subject ID?', value: '', columns: 50},
       ]
   };
 
@@ -22,7 +21,7 @@ var runExperiment = function(cb) {
             "<p> From that point on, you will have <strong>10 minutes</strong> to recall the episode as fully as you can.</p> <p> Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p> Do your best to recall the events of the video in order using the characters' names, but if you realize you skipped something, feel free to go back and describe it.</p>" +
             "<p> Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>That's it!</p>" +
+            "<div class='instructions'> <p>Okay that's everything. Ready to start?</p>" +
             "<p> <strong>When you're ready to begin the episode, press the spacebar.</strong></p></div>"
           ],
       key_forward: 32
@@ -77,13 +76,24 @@ var runExperiment = function(cb) {
       "<p>Please go get your experimter.</p>" +
       "<p> Prese the spacebar for the post-experiment questionnaire.</div>"],
       key_forward: 32
-  };
+  }
 
 
   // initialize
   jsPsych.init({
     timeline: [info, instructions, video, recall_instructions, recall, finished_message],
     fullscreen: true,
+    on_finish: function() {
+      psiTurk.recordTrialData(uniqueId)
+      psiTurk.saveData({
+        success: function() {
+          $.post("/onfinish", {
+            "data": uniqueId
+          });
+          cb();
+        }
+      })
+    }
     // on_finish: function() { jsPsych.data.displayData(); }
     // on_finish: function() {
     //   psiTurk.saveData({
