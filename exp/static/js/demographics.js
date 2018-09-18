@@ -10,9 +10,9 @@ var runDemographics = function(options, cb) {
 
 
       $('#nextBtn').click(function() {
-        $("body").append('testtesttesttest')
         $("body").remove();
         cb();
-      });
-    };
+      }),
+    console.log(uniqueId)
+  };
   };
