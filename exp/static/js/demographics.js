@@ -9,7 +9,7 @@ var runDemographics = function(options, cb) {
       $("body").append("<button class='btn btn-success' id='nextBtn' style='position: fixed; bottom: 0px; right: 0px;' id='fixedbutton'>Done</button>")};
 
       $('#nextBtn').click(function() {
-          $("body").remove()
+          $("body").remove();
           cb();
       });
-};
+    };
