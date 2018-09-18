@@ -31,8 +31,8 @@ var runExperiment = function(options, cb) {
   // video
   var video = {
     type: 'video',
-    height: 640,
-    width: 800,
+    height: $(window).height(),//640,
+    width: $(window).width(), //800,
     sources: ['/static/files/sample_video.mp4']
   };
 
