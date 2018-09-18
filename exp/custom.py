@@ -45,6 +45,7 @@ def createFolder():
 
 @custom_code.route('/save_audio', methods=['POST'])
 def save_audio():
+    print('saving audio...')
     """ Save an audio file"""
     try:
         # get file name
@@ -65,6 +66,7 @@ def save_audio():
         resp = {'message' : "Sucessfully saved audio file: " + fname,
                 'fname' : fname}
 
+        print('audio saved!')
     except Exception as e:
         print(e)
         resp = {"message": "There was an error saving the audio file: " + fname}
