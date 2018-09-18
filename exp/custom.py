@@ -21,7 +21,7 @@ import base64
 import json
 import traceback
 cwd = os.getcwd()
-dir_path = os.path.dirname(os.path.realpath(__file__))
+# dir_path = os.path.dirname(os.path.realpath(__file__))
 
 # load the configuration options
 config = PsiturkConfig()
@@ -39,6 +39,7 @@ custom_code = Blueprint('custom_code', __name__, template_folder='templates', st
 def createFolder():
     print('creating audio folder...')
     call('mkdir ' + '/data/' + request.form['data'], shell=True)
+    print(request.form['data'])
     resp = {"folderCreated": "success"}
     return jsonify(**resp)
 
