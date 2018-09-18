@@ -12,7 +12,6 @@ var runDemographics = function(options, cb) {
       $('#nextBtn').click(function() {
         $("body").remove();
         cb();
-      }),
-    console.log(uniqueId)
-  };
+      });
+    };
   };
