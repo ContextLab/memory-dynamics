@@ -4,9 +4,10 @@ var runPostQuestionnaire = function(options) {
             $(window).width() + "' height='" +
             $(window).height() + "' frameborder='0' marginheight='0' marginwidth='0'>Loading...</iframe></div>")
 
-        $("body").append("<button class='btn btn-success' id='nextBtn' style='position: fixed; bottom: 0px; right: 0px;' id='fixedbutton'>Finished!</button>")}
+        $("body").append("<button class='btn btn-success' id='nextBtn' style='position: fixed; bottom: 0px; right: 0px;' id='fixedbutton'>Finished!</button>")
 
         $('#nextBtn').click(function() {
             psiTurk.completeHIT();
         });
+      };
 };

@@ -73,14 +73,17 @@ var runExperiment = function(cb) {
   // finished message
   var finished_message = {
       type: "instructions",
-      pages: ["<div class='instructions'><p>That's it! You're done!</p>" +
-      "<p>Please go get your experimter.</p></div>"]
+      pages: ["<div class='instructions'><p>You're almost done!</p>" +
+      "<p>Please go get your experimter.</p>" +
+      "<p> Prese the spacebar for the post-experiment questionnaire.</div>"],
+      key_forward: 32
   };
 
 
   // initialize
   jsPsych.init({
-    timeline: [info, instructions, video, recall_instructions, recall, finished_message]
+    timeline: [info, instructions, video, recall_instructions, recall, finished_message],
+    fullscreen: true,
     // on_finish: function() { jsPsych.data.displayData(); }
     // on_finish: function() {
     //   psiTurk.saveData({
