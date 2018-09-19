@@ -1,5 +1,8 @@
 var timeline = []
 var record_time = 5
+atlep1 = '/static/files/atlanta-ep1.mp4'
+atlep2 = '/static/files/atlanta-ep2.mp4'
+arrestdevep1 = '/static/files/arrested-development-ep1.mp4'
 
 var runExperiment = function(options, cb) {
 
@@ -21,13 +24,12 @@ var runExperiment = function(options, cb) {
       var returning = JSON.parse(data.responses).Q0;
       var condition = JSON.parse(data.responses).Q1;
       if (returning == 'No') {
-        videostim = 'atlep1'
+        videostim = atlep1
       } else if (condition == 'A') {
-        videostim = 'atlep2'
+        videostim = atlep2
       } else {
-        videostim = 'arrestdevep1'
-      };
-      console.log(videostim)
+        videostim = arrestdevep1
+      }
     }
   };
 
@@ -44,9 +46,7 @@ var runExperiment = function(options, cb) {
             "<div class='instructions'> <p>Okay that's everything. Ready to start?</p>" +
             "<p> <strong>When you're ready to begin the episode, press the spacebar.</strong></p></div>"
           ],
-      key_forward: 32,
-      on_start: function(){ console.log(videostim) }
-      //show_clickable_nav: true
+      key_forward: 32
   };
 
   // video
@@ -54,7 +54,7 @@ var runExperiment = function(options, cb) {
     type: 'video',
     height: $(window).height(),
     width: $(window).width(),
-    sources: ['/static/files/sample_video.mp4']
+    sources: [videostim]
   };
 
   // recall instructions
@@ -65,14 +65,12 @@ var runExperiment = function(options, cb) {
               "<p> <strong>When you're ready to begin recalling the episode, press the spacebar.</strong></p></div>"
             ],
       key_forward: 32
-      //show_clickable_nav: true
   };
 
   // recall
   var recall = {
         type: "free-recall",
         stimulus: "<p class='mic' style='position:absolute;top:31%;left:43%;font-size:20vw;color:red'><i class='fa fa-microphone blink_me' style='color:red'></i></p>",
-        // stimulus: "<p class='mic'><i class='fas fa-microphone></i></p>",
         stim_duration: record_time * 1000,
         trial_duration: record_time * 1000 + 2000,
         record_audio: true,
