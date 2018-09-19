@@ -1,38 +1,7 @@
 var timeline = []
 var record_time = 600 // 10 minutes
-// var videostim = undefined
-// var atlep1 = '/static/files/atlanta-ep1.mp4'
-// var atlep2 = '/static/files/atlanta-ep2.mp4'
-// var arrestdevep1 = '/static/files/arrested-development-ep1.mp4'
 
 var runExperiment = function(options, thevid) {
-
-  // subject info
-  // var info = {
-  //     type: 'survey-text',
-  //     questions: [
-  //       {prompt: 'Subject ID?', value: '', columns: 50}
-  //     ]
-  // };
-  //
-  // var stim_select = {
-  //   type: 'survey-multi-choice',
-  //   questions: [
-  //     {prompt: 'Returning subject?', options: ['No','Yes'], required: true},
-  //     {prompt: 'Condition', options: ['A','B'], required: true}
-  //   ],
-  //   on_finish: function(data){
-  //     var returning = JSON.parse(data.responses).Q0;
-  //     var condition = JSON.parse(data.responses).Q1;
-  //     if (returning == 'No') {
-  //       var videostim = atlep1
-  //     } else if (condition == 'A') {
-  //       var videostim = atlep2
-  //     } else {
-  //       var videostim = arrestdevep1
-  //     }
-  //   }
-  // };
 
   // instructions
   var instructions = {
@@ -86,7 +55,7 @@ var runExperiment = function(options, thevid) {
                     console.log('Data saved!')
                 }
             })
-    }
+      }
   };
 
   // finished message
@@ -98,18 +67,16 @@ var runExperiment = function(options, thevid) {
       key_forward: 32
   };
 
-
   // initialize
   jsPsych.init({
     timeline: [instructions, video, recall_instructions, recall, finished_message],
     on_start: function() {
       console.log(thevid)
-      console.log(typeof thevid)
     },
     on_finish: function() {
       psiTurk.recordTrialData(uniqueId),
       psiTurk.saveData({
-        success: runPostQuestionnaire(options) //function() {cb();}
+        success: runPostQuestionnaire(options)
       })
     }
   })
