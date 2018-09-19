@@ -7,8 +7,28 @@ var runExperiment = function(options, cb) {
   var info = {
       type: 'survey-text',
       questions: [
-        {prompt: 'Subject ID?', value: '', columns: 50},
+        {prompt: 'Subject ID?', value: '', columns: 50}
       ]
+  };
+
+  var stim_select = {
+    type: 'survey-multi-choice',
+    questions: [
+      {prompt: 'Returning subject?', options: ['No','Yes'], required: true},
+      {prompt: 'Condition', options: ['A','B'], required: true}
+    ],
+    on_finish: function(data){
+      var returning = JSON.parse(data.responses).Q0;
+      var condition = JSON.parse(data.responses).Q1;
+      if (returning == 'No') {
+        videostim = 'atlep1'
+      } else if (condition == 'A') {
+        videostim = 'atlep2'
+      } else {
+        videostim = 'arrestdevep1'
+      };
+      console.log(videostim)
+    }
   };
 
   // instructions
@@ -24,15 +44,16 @@ var runExperiment = function(options, cb) {
             "<div class='instructions'> <p>Okay that's everything. Ready to start?</p>" +
             "<p> <strong>When you're ready to begin the episode, press the spacebar.</strong></p></div>"
           ],
-      key_forward: 32
+      key_forward: 32,
+      on_start: function(){ console.log(videostim) }
       //show_clickable_nav: true
   };
 
   // video
   var video = {
     type: 'video',
-    height: $(window).height(),//640,
-    width: $(window).width(), //800,
+    height: $(window).height(),
+    width: $(window).width(),
     sources: ['/static/files/sample_video.mp4']
   };
 
@@ -81,7 +102,7 @@ var runExperiment = function(options, cb) {
 
   // initialize
   jsPsych.init({
-    timeline: [info, instructions, video, recall_instructions, recall, finished_message],
+    timeline: [info, stim_select, instructions, video, recall_instructions, recall, finished_message],
     on_finish: function() {
       psiTurk.recordTrialData(uniqueId),
       psiTurk.saveData({
