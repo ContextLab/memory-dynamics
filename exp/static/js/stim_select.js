@@ -34,24 +34,26 @@ var runStim_select = function(options) {
     // }
   };
 
-  function set_stim() {
+  function set_conditions() {
     var questions = jsPsych.data.getLastTrialData();
     var returning = JSON.parse(questions.values()[0].responses).Q0;
     var condition = JSON.parse(questions.values()[0].responses).Q1;
     if (returning == 'No') {
-      var videostim = atlep1
+      var second_run = false;
+      var videostim = atlep1;
       } else if (condition == 'A') {
+        var second_run = true;
         var videostim = atlep2
       } else {
+        var second_run = true;
         var videostim = arrestdevep1
       };
     console.log(videostim)
-    console.log(typeof videostim)
     psiTurk.recordTrialData(returning)
     psiTurk.recordTrialData(condition)
     psiTurk.recordTrialData(videostim)
-    return videostim
-    };
+    return {second_run : second_run, videostim : videostim}
+  };
 
   // initialize
   jsPsych.init({
@@ -60,10 +62,10 @@ var runStim_select = function(options) {
       // psiTurk.recordTrialData(returning),
       // psiTurk.recordTrialData(condition),
       // psiTurk.recordTrialData(videostim),
-      var chosen_vid = set_stim()
-      console.log(chosen_vid)
+      //var set_conditions = set_condi()
+      //console.log(chosen_vid)
       psiTurk.saveData({
-        success: runExperiment(options, chosen_vid)
+        success: runExperiment(options, set_conditions)
       })
     }
   })
