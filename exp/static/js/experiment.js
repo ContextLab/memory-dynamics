@@ -1,6 +1,6 @@
 var exptimeline = []
-var recall_time = 5 // 10 minutes
-var predict_time = 5 // 5 minutes
+var recall_time = 600 // 10 minutes
+var predict_time = 300 // 5 minutes
 
 var runExperiment = function(options, conditions) {
 
@@ -83,7 +83,7 @@ var runExperiment = function(options, conditions) {
     type: "video",
     height: $(window).height(),
     width: $(window).width(),
-    sources: ['/static/files/sample_video.mp4'] //[conditions.videostim],
+    sources: [conditions.videostim],
   };
   exptimeline.push(video);
 
@@ -164,16 +164,10 @@ var runExperiment = function(options, conditions) {
       key_forward: 32
   };
   exptimeline.push(finished_message);
-  //console.log(exptimeline);
-  //console.log(conditions.second_run);
-  //console.log(conditions.videostim)
 
   // initialize
   jsPsych.init({
     timeline: exptimeline,
-    on_start: function() {
-      //console.log(thevid)
-    },
     on_finish: function() {
       psiTurk.recordTrialData(uniqueId),
       psiTurk.saveData({
