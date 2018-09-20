@@ -18,20 +18,6 @@ var runStim_select = function(options) {
       {prompt: 'Returning subject?', options: ['No','Yes'], required: true},
       {prompt: 'Condition', options: ['A','B'], required: true}
     ],
-    // on_finish: function(data){
-    //   var returning = JSON.parse(data.responses).Q0;
-    //   var condition = JSON.parse(data.responses).Q1;
-    //   if (returning == 'No') {
-    //     var videostim = atlep1
-    //   } else if (condition == 'A') {
-    //     var videostim = atlep2
-    //   } else {
-    //     var videostim = arrestdevep1
-    //   };
-    //   psiTurk.recordTrialData(returning);
-    //   psiTurk.recordTrialData(condition);
-    //   psiTurk.recordTrialData(videostim);
-    // }
   };
 
   function set_conditions() {
@@ -59,13 +45,9 @@ var runStim_select = function(options) {
   jsPsych.init({
     timeline: [info, stim_select],
     on_finish: function() {
-      // psiTurk.recordTrialData(returning),
-      // psiTurk.recordTrialData(condition),
-      // psiTurk.recordTrialData(videostim),
-      //var set_conditions = set_condi()
-      //console.log(chosen_vid)
+      var conditions = set_conditions()
       psiTurk.saveData({
-        success: runExperiment(options, set_conditions)
+        success: runExperiment(options, conditions),
       })
     }
   })

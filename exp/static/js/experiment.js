@@ -8,16 +8,16 @@ var runExperiment = function(options, conditions) {
   var instructions = {
       type: "instructions",
       pages: ["<div class='instructions'> <p style='font-weight:bold'> PLEASE READ THESE INSTRUCTIONS CAREFULLY</p>" +
-            "<p>In this experiment, you will view a 20-25 minute episode of a TV show and recall what happened in as much detail as possible.</p>" +
+            "<p>In this experiment, you will <strong>watch</strong> a 20-25 minute episode of a TV show and <strong>recall</strong> what happened in as much detail as possible.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p> When the episode ends, you will see a red microphone icon (<i style='color:red' class='fa fa-microphone'></i>).  This indicates that the computer has started recording.</p>" +
-            "<p>From that point on, you will have <strong>10 minutes</strong> to recall out loud the episode as fully as you can.</p>" +
+            "<p>From that point on, you will have <strong>10 minutes</strong> to <strong>recall</strong> out loud the episode as fully as you can.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p> Do your best to recall the events of the video in order using the characters' names, but if you realize you skipped something, feel free to go back and describe it.</p>" +
+            "<div class='instructions'> <p> Do your best to recount the events of the video in order using the characters' names, but if you realize you skipped something, feel free to go back and describe it.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>After that, you'll be asked to predict what you think will happen in the next episode.</p>" +
-            "<p>When you see a blue microphone icon (<i style='color:blue' class='fa fa-microphone'></i>), you will have <strong>5 minutes</strong> to predict what will happen.</p>" +
-            "<p><strong>When you're ready to begin the episode, press the spacebar.</strong></p></div>",
+            "<div class='instructions'> <p>After that, you'll be asked to <strong>predict</strong> what you think will happen in the next episode.</p>" +
+            "<p>When you see a blue microphone icon (<i style='color:blue' class='fa fa-microphone'></i>), you will have <strong>5 minutes</strong> to <strong>predict</strong> what will happen.</p>" +
+            "<p><strong>When you're ready to begin viewing the episode, press the spacebar.</strong></p></div>",
             "<div class='instructions'> <p>Okay that's everything! Ready to start?</p>" +
             "<p><strong>When you're ready to begin the episode, press the spacebar.</strong></p></div>"
           ],
@@ -29,17 +29,18 @@ var runExperiment = function(options, conditions) {
   var returning_instructions = {
       type: "instructions",
       pages: ["<div class='instructions'> <p style='font-weight:bold'> PLEASE READ THESE INSTRUCTIONS CAREFULLY </p>" +
-            "<p> In this experiment, you will start by recalling the episode you watched when you were last here.</p>" +
-            "<p> When you see a green microphone icon (<i style='color:green' class='fa fa-microphone'></i>), you will have <strong>10 minutes</strong> to recount the video to the best of your ability</p>" +
+            "<p>In this experiment, you will start by <strong>recalling</strong> the episode you watched when you were last here.</p>" +
+            "<p>When you see a green microphone icon (<i style='color:green' class='fa fa-microphone'></i>), you will have <strong>10 minutes</strong> to <strong>recall</strong> the episode to the best of your ability.</p>" +
+            "<p>Press the spacebar to continue.</p></div>",
+            "<div class='instructions'> <p>You will then <strong>watch</strong> a 20-25 minute episode of a TV show and <strong>recall</strong> what happened in as much detail as possible.</p>" +
+            "<p>Press the spacebar to continue.</p></div>",
+            "<div class='instructions'> <p> When the episode ends, you will see a red microphone icon (<i style='color:red' class='fa fa-microphone'></i>).</p>" +
+            "<p>From that point on, you will have <strong>10 minutes</strong> to <strong>recall</strong> the episode as fully as you can.</p>" +
             "<p> Press the spacebar to continue.</p></div>",
-            "<p> You will then view a 20-25 minute episode of a TV show and recall what happened in as much detail as possible. </p>" +
-            "<p> Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p> When the episode ends, you will see a red microphone icon (<i style='color:red' class='fa fa-microphone'></i>).  This indicates that the computer has started recording. </p>" +
-            "<p> From that point on, you will have <strong>10 minutes</strong> to recall the episode as fully as you can.</p> <p> Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p> Do your best to recall the events of the video in order using the characters' names, but if you realize you skipped something, feel free to go back and describe it.</p>" +
-            "<p> Press the spacebar to continue.</p></div>",
+            "<div class='instructions'> <p> Do your best to recount the events of the video in order using the characters' names, but if you realize you skipped something, feel free to go back and describe it.</p>" +
+            "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>Okay that's everything! Ready to start?</p>" +
-            "<p> <strong>When you're ready to recall the last episode, press the spacebar.</strong></p></div>"
+            "<p><strong>When you're ready to recall the last episode, press the spacebar.</strong></p></div>"
           ],
       key_forward: 32
   };
@@ -48,13 +49,12 @@ var runExperiment = function(options, conditions) {
   // delayed recall instructions (2nd run only)
   var delayed_recall = {
         type: "free-recall",
-        //on_start: function() {var speech_session = 'delayedrecall'},
         stimulus: "<p class='mic' style='position:absolute;top:31%;left:43%;font-size:20vw;color:green'><i class='fa fa-microphone blink_me' style='color:green'></i></p>",
         stim_duration: recall_time * 1000,
         trial_duration: recall_time * 1000 + 2000,
         record_audio: true,
         speech_recognition: 'google',
-        recall_type: 'delayedrecall',
+        recall_type: 'delayed',
         data: {
           listNumber: 0
         },
@@ -72,7 +72,8 @@ var runExperiment = function(options, conditions) {
   // pre-video instructions (2nd run only)
   var video_instructions = {
     type: "instructions",
-    pages: ["<div class='instructions'><p><strong>When you're ready to watch the next episode, press the spacebar.</strong></p></div>"],
+    pages: ["<div class='instructions'><p>Thanks!</p>" +
+    "<p><strong>When you're ready to watch the next episode, press the spacebar.</strong></p></div>"],
     key_forward: 32
   };
   if (conditions.second_run) {exptimeline.push(video_instructions)};
@@ -90,8 +91,8 @@ var runExperiment = function(options, conditions) {
   var recall_instructions = {
       type: "instructions",
       pages: ["<div class='instructions'><p>When you see the <i style='color:red' class='fa fa-microphone'></i>, recall the episode to the best of your ability.</p>" +
-              "<p> Please remember to speak <strong>clearly</strong>.</p>" +
-              "<p> <strong>When you're ready to begin recalling the episode, press the spacebar.</strong></p></div>"
+              "<p>Please remember to speak <strong>clearly</strong>.</p>" +
+              "<p><strong>When you're ready to begin recalling the episode, press the spacebar.</strong></p></div>"
             ],
       key_forward: 32
   };
@@ -100,14 +101,13 @@ var runExperiment = function(options, conditions) {
   // recall
   var recall = {
         type: "free-recall",
-        //on_start: function() {var speech_session = 'recall'},
         stimulus: "<p class='mic' style='position:absolute;top:31%;left:43%;font-size:20vw;color:red'><i class='fa fa-microphone blink_me' style='color:red'></i></p>",
         stim_duration: recall_time * 1000,
         trial_duration: recall_time * 1000 + 2000,
         record_audio: true,
         speech_recognition: 'google',
         recall_type: 'recall',
-data: {
+        data: {
           listNumber: 0
         },
         on_finish: function() {
@@ -125,8 +125,8 @@ data: {
   var predict_instructions = {
       type: "instructions",
       pages: ["<div class='instructions'><p>Now, when you see the <i style='color:blue' class='fa fa-microphone'></i>, pedict what will happen in the next episode to the best of your ability.</p>" +
-      "<p> Please remember to speak <strong>clearly</strong>.</p>" +
-      "<p> <strong>When you're ready to begin predicting, press the spacebar.</strong></p></div>"
+      "<p>Please remember to speak <strong>clearly</strong>.</p>" +
+      "<p><strong>When you're ready to begin predicting, press the spacebar.</strong></p></div>"
       ],
       key_forward: 32
   };
@@ -135,7 +135,6 @@ data: {
   // next episode prediction (1st run only)
   var predict = {
         type: "free-recall",
-        //on_start: function() {var speech_session = 'prediction'},
         stimulus: "<p class='mic' style='position:absolute;top:31%;left:43%;font-size:20vw;color:blue'><i class='fa fa-microphone blink_me' style='color:blue'></i></p>",
         stim_duration: predict_time * 1000,
         trial_duration: predict_time * 1000 + 2000,
@@ -161,11 +160,14 @@ data: {
       type: "instructions",
       pages: ["<div class='instructions'><p>You're almost done!</p>" +
       "<p>Please go get your experimter.</p>" +
-      "<p> Press the spacebar for the post-experiment questionnaire.</div>"],
+      "<p>Press the spacebar for the post-experiment questionnaire.</div>"],
       key_forward: 32
   };
   exptimeline.push(finished_message);
-  console.log(exptimeline);
+  //console.log(exptimeline);
+  //console.log(conditions.second_run);
+  //console.log(conditions.videostim)
+
   // initialize
   jsPsych.init({
     timeline: exptimeline,
