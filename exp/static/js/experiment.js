@@ -150,7 +150,6 @@ var runExperiment = function(options, conditions) {
         record_audio: true,
         speech_recognition: 'google',
         recall_type: 'prediction',
-        allow_exit_after: exit_time * 1000,
         data: {
           listNumber: 0
         },
