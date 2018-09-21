@@ -20,7 +20,7 @@ var runExperiment = function(options, conditions) {
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>After that, you'll be asked to <strong>predict</strong> what you think will happen in the next episode.</p>" +
             "<p>When you see a blue microphone icon (<i style='color:blue' class='fa fa-microphone'></i>), you will have <strong>5 minutes</strong> to <strong>predict</strong> what will happen.</p>" +
-            "<p><strong>Press the spacebar to continue.</strong></p></div>",
+            "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>Okay that's everything! Ready to start?</p>" +
             "<p><strong>When you're ready to begin the episode, press the spacebar.</strong></p></div>"
           ],
