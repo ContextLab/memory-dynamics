@@ -1,14 +1,8 @@
-////////////////////////////////////////////////////////////////////////////////
-// RUN THE EXPERIMENT //////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 var options = {
-  show: true,
-  mode: mode
+  show: true
 };
-runInfo(options, function() {
-  runDemographics(options, function() {
-      runExperiment(options, function() {
-        runPostQuestionnaire(options);
-    });
-  });
-});
+
+// experiment initiates here. Subsequent functions are called individually within previous
+// function's defintion for variable assignment timing. Experiment timeline is:
+// demographics --> stim_select --> experiment --> postqustionnaire
+runDemographics(options)
