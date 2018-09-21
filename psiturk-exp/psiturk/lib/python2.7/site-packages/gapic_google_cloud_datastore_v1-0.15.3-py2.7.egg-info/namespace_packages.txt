@@ -1,4 +1,0 @@
-google
-google.cloud
-google.cloud.gapic
-google.cloud.gapic.datastore

@@ -1,6 +1,6 @@
 [HIT Configuration]
-title = Efficient Learning
-description = View lists of words and verbally recall them
+title = Memory Dynamics
+description = View episodes of TV shows and verbally recall them
 amt_keywords = Psychology, Memory
 lifetime = 24
 us_only = true

@@ -1,4 +1,0 @@
-google.cloud.proto.logging
-google.cloud.proto
-google.cloud
-google

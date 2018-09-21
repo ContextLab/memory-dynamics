@@ -21,7 +21,7 @@ import base64
 import json
 import traceback
 cwd = os.getcwd()
-dir_path = os.path.dirname(os.path.realpath(__file__))
+# dir_path = os.path.dirname(os.path.realpath(__file__))
 
 # load the configuration options
 config = PsiturkConfig()
@@ -38,12 +38,14 @@ custom_code = Blueprint('custom_code', __name__, template_folder='templates', st
 @custom_code.route('/createaudiofolder',methods=['POST'])
 def createFolder():
     print('creating audio folder...')
-    call('mkdir ' + '/psiturk/data/' + request.form['data'], shell=True)
+    call('mkdir ' + '/data/' + request.form['data'], shell=True)
+    print(request.form['data'])
     resp = {"folderCreated": "success"}
     return jsonify(**resp)
 
 @custom_code.route('/save_audio', methods=['POST'])
 def save_audio():
+    print('saving audio...')
     """ Save an audio file"""
     try:
         # get file name
@@ -56,7 +58,7 @@ def save_audio():
         wav = request.files
 
         # file path
-        fname ='/psiturk/data/' + foldername + "/" + filename
+        fname ='/data/' + foldername + "/" + filename
 
         # write out audio file
         wav['audio-blob'].save(fname)
@@ -64,6 +66,7 @@ def save_audio():
         resp = {'message' : "Sucessfully saved audio file: " + fname,
                 'fname' : fname}
 
+        print('audio saved!')
     except Exception as e:
         print(e)
         resp = {"message": "There was an error saving the audio file: " + fname}
