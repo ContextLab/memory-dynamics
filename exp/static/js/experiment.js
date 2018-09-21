@@ -1,6 +1,7 @@
 var exptimeline = []
-var recall_time = 600 // 10 minutes
-var predict_time = 300 // 5 minutes
+var recall_time = 10 // 10 minutes
+var predict_time = 10 // 5 minutes
+var exit_time = 5
 
 var runExperiment = function(options, conditions) {
 
@@ -17,7 +18,7 @@ var runExperiment = function(options, conditions) {
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>After that, you'll be asked to <strong>predict</strong> what you think will happen in the next episode.</p>" +
             "<p>When you see a blue microphone icon (<i style='color:blue' class='fa fa-microphone'></i>), you will have <strong>5 minutes</strong> to <strong>predict</strong> what will happen.</p>" +
-            "<p><strong>When you're ready to begin viewing the episode, press the spacebar.</strong></p></div>",
+            "<p><strong>Press the spacebar to continue.</strong></p></div>",
             "<div class='instructions'> <p>Okay that's everything! Ready to start?</p>" +
             "<p><strong>When you're ready to begin the episode, press the spacebar.</strong></p></div>"
           ],
@@ -55,6 +56,7 @@ var runExperiment = function(options, conditions) {
         record_audio: true,
         speech_recognition: 'google',
         recall_type: 'delayed',
+        allow_exit_after: exit_time * 1000,
         data: {
           listNumber: 0
         },
@@ -107,6 +109,7 @@ var runExperiment = function(options, conditions) {
         record_audio: true,
         speech_recognition: 'google',
         recall_type: 'recall',
+        allow_exit_after: exit_time * 1000,
         data: {
           listNumber: 0
         },
@@ -141,6 +144,7 @@ var runExperiment = function(options, conditions) {
         record_audio: true,
         speech_recognition: 'google',
         recall_type: 'prediction',
+        allow_exit_after: exit_time * 1000,
         data: {
           listNumber: 0
         },
