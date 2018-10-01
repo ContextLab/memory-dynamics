@@ -4,7 +4,7 @@
 # to build and start for the first time:
 #   with docker running:
 #   from enclosing dir: `docker build -t memorydynamics:latest -f memory-dynamics/Dockerfile .`
-#   from eclosing dir: `docker run -it -p 22363:22363 --mount source=$(pwd)/data,target=/data --name MD memorydynamics`
+#   from eclosing dir: `docker run -it -p 22363:22363 --mount type=bind,"source=$(pwd)/data",target=/data --name MD memorydynamics`
 
 # to start subsequent times:
 #   with docker running:
