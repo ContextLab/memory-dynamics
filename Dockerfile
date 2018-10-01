@@ -46,7 +46,7 @@ git+https://github.com/ContextLab/psiTurk.git@expose-gunicorn-timeout-parameter
 RUN apt-get update
 RUN apt-get install -y vim
 
-# add experiment and data folder
+# add experiment and data folders
 COPY memory-dynamics/exp /exp
 COPY memory-dynamics/data /data
 COPY memory-dynamics/code /code
