@@ -378,7 +378,7 @@
         <attribute name="characters on screen">Earn, Swiff</attribute>
       </el>
       <el index="78" start="466.12" end="468.12">
-        <attribute name="narrative details - external">BLACK SCREEN</attribute>
+        <attribute name="narrative details - external">BLACK SCREEN 1</attribute>
       </el>
       <el index="79" start="468.12" end="476.32001">
         <attribute name="narrative details - external">Earn, wearing street clothes and a backpack, walks up to the back door of a house.</attribute>
@@ -767,7 +767,7 @@
         <attribute name="characters on screen">Earn</attribute>
       </el>
       <el index="166" start="823.15997" end="824">
-        <attribute name="narrative details - external">BLACK SCREEN</attribute>
+        <attribute name="narrative details - external">BLACK SCREEN 2</attribute>
       </el>
       <el index="167" start="824" end="830.56">
         <attribute name="narrative details - external">Dave, a young white male wearing a lanyard, opens the door and gets out of his car. Earn walks through the parking lot toward Dave.</attribute>
@@ -1593,7 +1593,7 @@
         <attribute name="characters on screen">Man, Woman, Alfred Paper Boy, Darius, Earn</attribute>
       </el>
       <el index="336" start="1408.52002" end="1411.23999">
-        <attribute name="narrative details - external">BLACK SCREEN</attribute>
+        <attribute name="narrative details - external">BLACK SCREEN 3</attribute>
       </el>
       <el index="337" start="1411.23999" end="1415.28003">
         <attribute name="narrative details - external">Earn's mother picks up her purse and walks toward the door. The news plays on a television on the background</attribute>
@@ -1651,7 +1651,7 @@
         <attribute name="characters on screen">Van</attribute>
       </el>
       <el index="350" start="1462.52002" end="1466.04004">
-        <attribute name="narrative details - external">BLANK SCREEN (with Alfred Paper Boy's song playing)</attribute>
+        <attribute name="narrative details - external">BLACK SCREEN 4 (with Alfred Paper Boy's song playing)</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
     </track>
@@ -2840,7 +2840,7 @@
         <attribute name="character speaking">Reporter</attribute>
       </el>
       <el index="349" start="345" end="345">
-        <attribute name="transcription">"Two suspects, rapper Paper Boy and his manager, Earn Marks, are now in custody.</attribute>
+        <attribute name="transcription">"Two suspects, rapper Paper Boy and his manager, Earn Marks, are now in custody."</attribute>
         <attribute name="character speaking">Reporter</attribute>
       </el>
       <el index="350" start="346" end="346">
