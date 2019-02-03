@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in, right=1in, top=1in]{geometry}
+\usepackage{indentfirst}
+
+\title{Prospectus: \\
+\textit{How do context and time modulate the geometric trajectory of memory?}
+}
+\author{Paxton Fitzpatrick}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Rationale}
+
+In traditional free recall studies, participants are presented with a series of items (e.g.~words, pictures, etc.), then asked to recall them to the best of their abilities. The findings yielded by such studies on recall order and transitions (Murdock, 1962; Kahana, 1996), temporal and semantic clustering tendencies (Kahana, 2002a), and response latency (Murdock and Okada, 1970) have given rise to numerous models of memory encoding, storage, and retrieval (e.g., Atkinson and Shiffrin, 1968; Kahana, 2002b; Sederberg et al., 2008).  These models, in turn, have spurred investigations into the biological underpinnings of their functional predictions (e.g.,~Polyn et al., 2005; Manning et al., 2011).  However, the free recall paradigm is limited in its ability to assess episodic memory for real-world events (see Koriat and Goldsmith, 1994; Huk et al., 2018).  Its inherently discretized stimuli, binary accuracy evaluation, and reliance on subjects' precisely reproduction of the presented stimulus clash with the steady, continuous evolution of real-life situations and the value we instead place on capturing their general gist or substance in assessing our (or others') memories for them.
+
+The emergence and popularization of naturalistic memory paradigms offers the opportunity to create and refine new context-driven models (\textbf{citation needed?}) that better reflect the workings of episodic memory in our day-to-day lives, which, in turn, better inform and constrain subsequent attempts to identify structures and networks behind various memory processes (e.g.,~Baldassano et al., 2017, 2018).  However, the rich complexity and fluidity of naturalistic experiences (and and the numerous idiosyncratic ways they may be later described) make them far more difficult to quantitatively measure and analyze than simple stimuli and responses.  Heusser et al.~(2018a) recently developed a model that depicts the moment-by-moment content of a real-world experience as a geometric trajectory through its self-defined representational space.  Verbal memories of that experience may then be similarly cast as ``thought trajectories" traversing the experience's geometric space.  By examining the similarity between moments of content and subsequent recountings along their trajectories' various axes, this framework disentangles the quality of an episodic memory from limiting "proportion recalled" measures.
+
+Predictions from Heusser et al.'s (2018a) model regarding the geometric structure of narrative experiences and their transformations during encoding have been successfully leveraged to investigate and identify networks of brain regions that participate in processing this structure (e.g., bilateral frontal cortex, cingulate cortex) transformation (e.g., vmPFC, ACC, rMTL).  My thesis will investigate how the geometric structure of episodic memories is modulated by factors including the passage of time, contextual congruence of existing memories, and accuracy in predicting future experiences.  Additionally, I hope to link my findings with established anatomical and physiological studies to inform and constrain future ROI investigations into their neurobiological bases.
+
+\section{Methods}
+\subsection{Experimental design and data collection}
+
+Participants (\textit{n} = 60) were divided into two equal groups. Both groups attended two study sessions, spaced six to eight days apart.  In the first session, all participants viewed the (24-minute) pilot episode of \textit{Atlanta}, and were then given up to one hour (thought all used significantly less time) to recount the episode's events in as much detail as possible, followed by five minutes to predict how the next episode will unfold the following week.  In the second session, both groups began by recounting the prior week's episode.  Then, group 1 viewed and recounts the (22-minute) second episode of \textit{Atlanta}, while group 2 viewed and recounts the (21-minute) pilot episode of \textit{Arrested Development}.  All participant audio was recorded using the viewing computer's built-in microphone and automatically transcribed using Google Cloud Speech-to-Text.
+
+\subsection{Dynamic content modeling}
+
+To generate the content corpus for each stimulus video, I used \texttt{ANVIL} (Kipp, 2001), an audiovisual annotation tool, along with a custom XML specification file to record the following features for each shot: 
+\begin{itemize}
+    \item \textit{Narrative Details -- External Events} (A few sentences describing physical occurrences and characters' actions)
+    \item \textit{Narrative Details -- Internal State} (A few sentences describing characters' current emotional states and subtextual implications)
+    \item A list of characters appearing on-screen
+    \item The presence or absence of music
+    \item A transcription of all dialogue
+    \item The name of the character speaking
+    \item Whether the shot took place indoors or outdoors
+    \item The setting of the shot
+\end{itemize}
+I then concatenated all featural annotations within each shot, and created \textbf{overlapping sliding windows of 50 shots} upon which I trained a topic model (Blei et al., 2003) using \texttt{Hypertools} (Heusser et al., 2018b) to create the representational space for the events of the episode. I used the topic model to transform both the video sliding windows and \textbf{10-sentence sliding windows} of each participant's recall and prediction transcripts into the space defined by the video features. I then used linear interpolation (\textbf{cite Scipy?}) to resample the video model to a one-second resolution and dynamic time warping (Berndt and Clifford, 1994) to standardize the shape across-subjects of the recall and prediction models. 
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+\begin{comment}
+Murdock Jr, B. B. (1962). The serial position effect of free recall. Journal of experimental psychology, 64(5), 482.
+
+Kahana, M. J. (1996). Associative retrieval processes in free recall. Memory & cognition, 24(1), 103-109.
+
+Howard, M. W., & Kahana, M. J. (2002). When does semantic similarity help episodic retrieval?. Journal of Memory and Language, 46(1), 85-98.
+
+Murdock, B. B., & Okada, R. (1970). Interresponse times in single-trial free recall. Journal of Experimental Psychology, 86(2), 263.
+
+Atkinson, R. C., & Shiffrin, R. M. (1968). Human memory: A proposed system and its control processes1. In Psychology of learning and motivation (Vol. 2, pp. 89-195). Academic Press.
+
+Howard, M. W., & Kahana, M. J. (2002). A distributed representation of temporal context. Journal of Mathematical Psychology, 46(3), 269-299.
+
+Sederberg, P. B., Howard, M. W., & Kahana, M. J. (2008). A context-based theory of recency and contiguity in free recall. Psychological review, 115(4), 893.
+
+Polyn, S. M., Natu, V. S., Cohen, J. D., and Norman, K. A. (2005). Category-specific cortical activity precedes retrieval during memory search. Science, 310:1963–1966.
+
+Manning, J. R., Polyn, S. M., Baltuch, G., Litt, B., and Kahana, M. J. (2011). Oscillatory patterns in temporal lobe reveal context reinstatement during memory search. Proceedings of the National Academy of Sciences, USA, 108(31):12893–12897.
+
+Koriat, A., & Goldsmith, M. (1994). Memory in naturalistic and laboratory contexts: Distinguishing the accuracy-oriented and quantity-oriented approaches to memory assessment. Journal of Experimental Psychology: General, 123(3), 297.
+
+Huk, A., Bonnen, K., & He, B. J. (2018). Beyond trial-based paradigms: Continuous behavior, ongoing neural activity, and natural stimuli. Journal of Neuroscience, 38(35), 7551-7558.
+
+Baldassano, C., Chen, J., Zadbood, A., Pillow, J. W., Hasson, U., & Norman, K. A. (2017). Discovering event structure in continuous narrative perception and memory. Neuron, 95(3), 709-721.
+
+Baldassano, C., Hasson, U., and Norman, K. A. (2018). Representation of real-world event schemas during narrative perception. Journal of Neuroscience, 38(45):9689–9699.
+
+
+Heusser, A. C., Fitzpatrick, P. C., and Manning, J. R. (2018a). How is experience transformed into memory? bioRxiv, 409987.
+
+Kipp, M. (2001). Anvil-a generic annotation tool for multimodal dialogue. In Seventh European Conference on Speech Communication and Technology.
+
+Blei, D. M., Ng, A. Y., & Jordan, M. I. (2003). Latent dirichlet allocation. Journal of machine Learning research, 3(Jan), 993-1022.
+
+Heusser, A. C., Ziman, K., Owen, L. L. W., and Manning, J. R. (2018b). HyperTools: a Python toolbox for gaining geometric insights into high-dimensional data. Journal of Machine Learning Research, 18(152):1–6.
+
+Berndt, D. J. and Clifford, J. (1994). Using dynamic time warping to find patterns in time series. In KDD workshop, volume 10, pages 359–370.
+
+
+\end{comment}
