@@ -4,6 +4,9 @@
 *.aux
 *.fdb_latexmk
 *.synctex.gz
+*.bbl
+*.blg
+*.dvi
 *.ipynb_checkpoints
 *.pyc
 *#*
