@@ -20,9 +20,10 @@
 
 In traditional free recall studies, participants are presented with a series of items (e.g.~words, pictures, etc.), then asked to recall them to the best of their abilities. The findings yielded by such studies on recall order and transitions \citep{Murd62a, Kaha96}, temporal and semantic clustering tendencies \citep{HowaKaha02b}, and response latency \citep{MurdOkad70} have given rise to numerous models of memory encoding, storage, and retrieval \citep[e.g.,][]{AtkiShif68, HowaKaha02a, SedeEtal08}.  These models, in turn, have spurred investigations into the biological underpinnings of their functional predictions \citep[e.g.,][]{PolyEtal05a, MannEtal11}.  However, the free recall paradigm is limited in its ability to assess episodic memory for real-world events \citep[see][]{KoriGold94,HukEtal18}.  Its inherently discretized stimuli, binary accuracy evaluation, and reliance on subjects' precisely reproduction of the presented stimulus clash with the steady, continuous evolution of real-life situations and the value we instead place on capturing their general gist or substance in assessing our (or others') memories for them.
 
-The emergence and popularization of naturalistic memory paradigms offers the opportunity to create and refine new context-driven models (\textbf{citation needed?}) that better reflect the workings of episodic memory in our day-to-day lives, which, in turn, better inform and constrain subsequent attempts to identify structures and networks behind various memory processes \citep[e.g.,][]{BaldEtal17,BaldEtal18}.  However, the rich complexity and fluidity of naturalistic experiences (and and the numerous idiosyncratic ways they may be later described) make them far more difficult to quantitatively measure and analyze than simple stimuli and responses.  \cite{HeusEtal18c} recently developed a model that depicts the moment-by-moment content of a real-world experience as a geometric trajectory through its self-defined representational space.  Verbal memories of that experience may then be similarly cast as ``thought trajectories" traversing the experience's geometric space.  By examining the similarity between moments of content and subsequent recountings along their trajectories' various axes, this framework disentangles the quality of an episodic memory from limiting "proportion recalled" measures.
+The emergence and popularization of naturalistic memory paradigms offers the opportunity to create and refine new context-driven models (\textbf{citation needed?}) that better reflect the workings of episodic memory in our day-to-day lives, which, in turn, better inform and constrain subsequent attempts to identify structures and networks behind various memory processes \citep[e.g.,][]{BaldEtal17,BaldEtal18}.  However, the rich complexity and fluidity of naturalistic experiences (and and the numerous idiosyncratic ways they may be later described) make them far more difficult to quantitatively measure and analyze than simple stimuli and responses.  \cite{HeusEtal18c} recently developed a model that depicts the moment-by-moment content of a real-world experience as a geometric trajectory through its self-defined representational space.  Verbal memories of that experience may then be similarly cast as ``thought trajectories" traversing the experience's geometric space.  By examining the similarity between moments of content and subsequent recountings along their trajectories' various axes, this framework disentangles the overall \textit{quality} of an episodic memory from limiting ``proportion recalled" measures.
 
-Predictions from Heusser et al.'s model regarding the geometric structure of narrative experiences and their transformations during encoding have been successfully leveraged to investigate and identify networks of brain regions that participate in processing this structure (e.g., bilateral frontal cortex, cingulate cortex) transformation (e.g., vmPFC, ACC, rMTL).  My thesis will investigate how the geometric structure of episodic memories is modulated by factors including the passage of time, contextual congruence of existing memories, and accuracy in predicting future experiences.  Additionally, I hope to link my findings with established anatomical and physiological studies to inform and constrain future ROIs and hypotheses in investigations into their neurobiological bases.
+Predictions from Heusser et al.'s (2018a) model regarding the geometric structure of narrative experiences and their transformations during encoding have been successfully leveraged to investigate and identify networks of brain regions that participate in processing this structure (e.g., bilateral frontal cortex, cingulate cortex) and transformation (e.g., vmPFC, ACC, rMTL).  However, predictions on how these transformational 
+My thesis will investigate how the geometric structure of episodic memories is modulated by factors including the passage of time, contextual congruence of existing memories, and accuracy in predicting future experiences.  Additionally, I hope to link my findings with established anatomical and physiological studies to inform and constrain future ROIs and hypotheses in investigations into their neurobiological bases.
 
 
 \section{Methods}
@@ -56,23 +57,32 @@ I then divided the continuous video, recall, and prediction models into discrete
 \section{Analyses to be employed and expected results}
 \subsection{Comparing immediate and delayed recall}
 
-To assess how the one-week delay period affects the geometric structure of remembered content, I plan to examine differences in both the across-subjects average recall trajectory and individual participants' recall trajectories for session 1's episode between the immediate recall period and the recall period at the beginning of session 2. 
+To investigate how the one-week delay period alters the spatial unfolding of an episodic memory, I plan to examine differences in both the across-subjects average and individual participants' recall trajectories on a full-model scale, as well as on a per-event basis.  To achieve the first, I will examine how this delay period affects the general figure of retrieved content from session 1's episode.  Building on Heusser et al.'s (2018a) approach, I can use Uniform Manifold Approximation and Projection \citep[UMAP;][]{McInHeal18} to project the models down into a shared 2D plane. In this plane, the evolving content of the video traces out an episode-specific geometric shape that is traversed by participants' 2D-embedded recall models.  Heusser et al.'s embedded recall models showed near-perfect recovery of the video content-embedding averaged across participants, with individuals' shapes displaying idiosyncratic differences.  I plan to measure the change in the variation among individuals' recall shapes with the expectation that the shapes will converge and ``smooth" as participants retain the broad plotline of the episode and discard minor details.
+
+Additionally, I can asses changes in both the proportion of remembered events and the quality of memory for events remembered in both recall phases.
+To do this, I will examine whether, upon segmenting each participant's immediate and delayed recall models, the HMM identifies fewer states for the delayed model, as well as whether the topic space-distance between each remembered event and its corresponding presented event increases for those remembered in both sessions.  I can then examine the features shared by video events whose memory representations were least blurred (i.e.~those whose topic space-distance from the increased the least) to infer what features contribute to successful maintenance in episodic memory.
+
+
+\subsection{Measuring the effect of contextual familiarity on future memory success}
+
+I also intend to explore how prior experience in congruent contexts modulates memory for subsequent events.  First, I will investigate the effect of mere exposure to a situation on 
+
+transformation of experiences into compressed memories has on subsequent memory for similar experiences.
+
+
+\subsection{Relating prediction ability to memory success}
+
+To determine the effect that ability to accurately predict a future event has on its eventual successful encoding, storage, and retrieval, 
+
+
+
+\iffalse
 
 
 
 
 
-
-
-\begin{comment}
-
-
-
-
-
-
-\end{comment}
-
+\fi
 
 
 
