@@ -11,3 +11,4 @@
 *.pyc
 *#*
 credentials.json
+data/db/
