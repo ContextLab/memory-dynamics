@@ -1757,7 +1757,7 @@
       </el>
       <el index="371" start="1083.56006" end="1088.40002">
         <attribute name="narrative details - internal">Earn is at first annoyed the stranger is trying to talk to him</attribute>
-        <attribute name="narrative details - external">Earn takes off his heaphones and looks at the stranger. Earn rolls his eyes.</attribute>
+        <attribute name="narrative details - external">Earn takes off his headphones and looks at the stranger. Earn rolls his eyes.</attribute>
         <attribute name="characters on screen">Earn, Lottie, Strange Man</attribute>
       </el>
       <el index="372" start="1088.40002" end="1093.56006">
@@ -3014,7 +3014,7 @@
         <attribute name="character speaking">Darius</attribute>
       </el>
       <el index="202" start="197" end="197">
-        <attribute name="transcription">"Whatchu usin' it for?"</attribute>
+        <attribute name="transcription">"Whatchu using it for?"</attribute>
         <attribute name="character speaking">Alfred Paper Boy</attribute>
       </el>
       <el index="203" start="198" end="198">
