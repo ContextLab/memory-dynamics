@@ -128,7 +128,7 @@
         <attribute name="characters on screen">Dog</attribute>
       </el>
       <el index="25" start="51.16" end="52.8">
-        <attribute name="narrative details - internal">Aklfred Paper Boy and Earn are confused.</attribute>
+        <attribute name="narrative details - internal">Alfred Paper Boy and Earn are confused.</attribute>
         <attribute name="narrative details - external">Alfred Paper Boy and Earn look across the street at the dog. Earn looks at the man and woman.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy, Earn</attribute>
       </el>
@@ -144,7 +144,7 @@
       </el>
       <el index="28" start="55.52" end="57.88">
         <attribute name="narrative details - internal">The man and woman are angry.</attribute>
-        <attribute name="narrative details - external">The woan recognizes Alfred Paper Boy and tells him to buy another mirror. The man glares.</attribute>
+        <attribute name="narrative details - external">The woman recognizes Alfred Paper Boy and tells him to buy another mirror. The man glares.</attribute>
         <attribute name="characters on screen">Woman, Man</attribute>
       </el>
       <el index="29" start="57.88" end="58.8">
@@ -154,7 +154,7 @@
       </el>
       <el index="30" start="58.8" end="60.12">
         <attribute name="narrative details - internal">Earn is concerned about Alfred Paper Boy being recognized.</attribute>
-        <attribute name="narrative details - external">The man exclaims. Earn looks at Alfred Paper Boy silentely.</attribute>
+        <attribute name="narrative details - external">The man exclaims. Earn looks at Alfred Paper Boy silently.</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
       <el index="31" start="60.12" end="63.16">
@@ -189,7 +189,7 @@
         <attribute name="characters on screen">Alfred Paper Boy, Earn Darius, Man, Woman</attribute>
       </el>
       <el index="38" start="76.84" end="78.36">
-        <attribute name="narrative details - internal">THe man is angry at Alfred Paper Boy.</attribute>
+        <attribute name="narrative details - internal">The man is angry at Alfred Paper Boy.</attribute>
         <attribute name="narrative details - external">The man glares at Alfred Paper Boy. Someone in the background shouts again.</attribute>
         <attribute name="characters on screen">Man, Woman, Alfred Paper Boy</attribute>
       </el>
@@ -302,29 +302,29 @@
         <attribute name="characters on screen">Earn</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="63" start="149.39999" end="152.96">
+      <el index="63" start="149.39999" end="152.96001">
         <attribute name="narrative details - internal">Van is annoyed with Earn's music</attribute>
         <attribute name="narrative details - external">Van, laying next to Earn, reaches over and pulls his headphones off.</attribute>
         <attribute name="characters on screen">Earn, Van</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="64" start="152.96" end="156.64">
+      <el index="64" start="152.96001" end="156.64">
         <attribute name="narrative details - internal">Van is tired and annoyed with Earn's music</attribute>
         <attribute name="narrative details - external">Van, laying next to Earn, reaches over and pulls his headphones off.  She asks him why he is awake so early.</attribute>
         <attribute name="characters on screen">Van, Earn</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="65" start="156.64" end="160.96">
-        <attribute name="narrative details - external">Earn pulls his heaphones off and says he had a strange dream.</attribute>
+      <el index="65" start="156.64" end="160.96001">
+        <attribute name="narrative details - external">Earn pulls his headphones off and says he had a strange dream.</attribute>
         <attribute name="characters on screen">Earn, Van</attribute>
       </el>
-      <el index="66" start="160.96" end="169.6">
+      <el index="66" start="160.96001" end="169.60001">
         <attribute name="narrative details - internal">The dream is symbolic of Earn's dangerous immersion in street culture.</attribute>
         <attribute name="narrative details - external">Earn describes his dream of swimming in a pool like an ocean with seaweed like hands. Earn wiggles his fingers.</attribute>
         <attribute name="characters on screen">Earn, Van</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="67" start="169.6" end="178.39999">
+      <el index="67" start="169.60001" end="178.39999">
         <attribute name="narrative details - internal">The dream is symbolic of Earn's dangerous immersion in street culture.</attribute>
         <attribute name="narrative details - external">Earn wiggles his fingers and describes a girl in his dream who told him to swim above the hands and avoid them or he would drown.</attribute>
         <attribute name="characters on screen">Earn, Van</attribute>
@@ -336,12 +336,12 @@
         <attribute name="characters on screen">Earn, Van</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="69" start="180.75999" end="182.4">
+      <el index="69" start="180.75999" end="182.39999">
         <attribute name="narrative details - external">Earn starts to interpret his dream as having a meaning about society.</attribute>
         <attribute name="characters on screen">Earn, Van</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="70" start="182.4" end="183.08">
+      <el index="70" start="182.39999" end="183.08">
         <attribute name="narrative details - external">Earn talks about his dream.</attribute>
         <attribute name="characters on screen">Van, Earn</attribute>
         <attribute name="Music Presence">true</attribute>
@@ -363,13 +363,13 @@
         <attribute name="characters on screen">Van, Earn</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="74" start="187.75999" end="192.32">
+      <el index="74" start="187.75999" end="192.32001">
         <attribute name="narrative details - internal">Earn realizes Van is jealous that he dreamt about a girl and tries to make her sound unappealing.</attribute>
         <attribute name="narrative details - external">Earn downplays the girl in his dream.</attribute>
         <attribute name="characters on screen">Earn, Van</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="75" start="192.32" end="193.92">
+      <el index="75" start="192.32001" end="193.92">
         <attribute name="narrative details - internal">Van does not believe Earn.</attribute>
         <attribute name="narrative details - external">Van rolls her eyes and responds.</attribute>
         <attribute name="characters on screen">Van, Earn</attribute>
@@ -391,18 +391,18 @@
         <attribute name="characters on screen">Earn, Van</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="79" start="206.92" end="208.04">
+      <el index="79" start="206.92" end="208.03999">
         <attribute name="narrative details - internal">Van is jealous of the dream girl.</attribute>
         <attribute name="narrative details - external">Van directly asks Earn if he and the dream girl made out.</attribute>
         <attribute name="characters on screen">Earn, Van</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="80" start="208.04" end="209.32">
+      <el index="80" start="208.03999" end="209.32001">
         <attribute name="narrative details - external">Earn admits he and the dream girl were making out.</attribute>
         <attribute name="characters on screen">Earn, Van</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="81" start="209.32" end="211.92">
+      <el index="81" start="209.32001" end="211.92">
         <attribute name="narrative details - external">Van laughs and says she knew he was. She turns away from Earn.</attribute>
         <attribute name="characters on screen">Van, Earn</attribute>
         <attribute name="Music Presence">true</attribute>
@@ -419,12 +419,12 @@
         <attribute name="characters on screen">Earn, Van</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="84" start="213" end="216.24">
+      <el index="84" start="213" end="216.24001">
         <attribute name="narrative details - external">Earn tries to kiss Van. Van stops him with her hand because they have bad breath.</attribute>
         <attribute name="characters on screen">Earn, Van</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="85" start="216.24" end="220.44">
+      <el index="85" start="216.24001" end="220.44">
         <attribute name="narrative details - internal">Earn jokes playfully with Van.</attribute>
         <attribute name="narrative details - external">Earn sniffs Van's breath and says he loves it. He asks if she ate curry.</attribute>
         <attribute name="characters on screen">Earn, Van</attribute>
@@ -448,13 +448,13 @@
         <attribute name="characters on screen">Van, Earn</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="89" start="229.36" end="231.68">
+      <el index="89" start="229.36" end="231.67999">
         <attribute name="narrative details - internal">Van and Earn are joking playfully.</attribute>
         <attribute name="narrative details - external">Van and Earn kiss on the bed. Van calls Earn stupid.</attribute>
         <attribute name="characters on screen">Van, Earn</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="90" start="231.68" end="244.28">
+      <el index="90" start="231.67999" end="244.28">
         <attribute name="narrative details - internal">Van and Earn are happy.</attribute>
         <attribute name="narrative details - external">Van and Earn kiss on the bed for a few moments.</attribute>
         <attribute name="characters on screen">Van, Earn</attribute>
@@ -531,11 +531,11 @@
       <el index="105" start="298.35999" end="302.12">
         <attribute name="narrative details - external">Van says she wants Earn to be here with Lottie tonight, not leave her at his parents' house.</attribute>
       </el>
-      <el index="106" start="302.12" end="306.08">
+      <el index="106" start="302.12" end="306.07999">
         <attribute name="narrative details - external">Earn promises he will pic up Lottie and care of her himself.</attribute>
         <attribute name="characters on screen">Van, Earn, Lottie</attribute>
       </el>
-      <el index="107" start="306.08" end="309.56">
+      <el index="107" start="306.07999" end="309.56">
         <attribute name="narrative details - external">Van holds Lottie up high in the air. From the bathroom, Van asks for Earn's help paying rent.</attribute>
         <attribute name="characters on screen">Earn, Lottie, Van</attribute>
       </el>
@@ -554,12 +554,12 @@
         <attribute name="narrative details - external">Earn remarks that eleven is unusually late</attribute>
         <attribute name="characters on screen">Earn, Lottie</attribute>
       </el>
-      <el index="111" start="321.12" end="326.32">
+      <el index="111" start="321.12" end="326.32001">
         <attribute name="narrative details - internal">Earn is curious why Van will be home so late.</attribute>
         <attribute name="narrative details - external">Earn asks if Van will be late because she's taking her parents somewhere.</attribute>
         <attribute name="characters on screen">Earn, Van, Lottie</attribute>
       </el>
-      <el index="112" start="326.32" end="329.12">
+      <el index="112" start="326.32001" end="329.12">
         <attribute name="narrative details - external">Van replies shortly that she has a date and walks down the hall past Earn and Lottie.</attribute>
         <attribute name="characters on screen">Van, Earn, Lottie</attribute>
       </el>
@@ -580,16 +580,16 @@
         <attribute name="narrative details - external">Loretta, a kind, older black woman wishes a man a nice flight.</attribute>
         <attribute name="characters on screen">Loretta</attribute>
       </el>
-      <el index="117" start="347.35999" end="348.8">
+      <el index="117" start="347.35999" end="348.79999">
         <attribute name="narrative details - external">Earn tries to catch a man's attention to sell to him.</attribute>
         <attribute name="characters on screen">Earn, Swiff, Traveler</attribute>
       </el>
-      <el index="118" start="348.8" end="349.76">
+      <el index="118" start="348.79999" end="349.76001">
         <attribute name="narrative details - internal">The traveler is rude to Earn.</attribute>
         <attribute name="narrative details - external">The traveler brushes Earn off.</attribute>
         <attribute name="characters on screen">Earn, Swiff, Traveler</attribute>
       </el>
-      <el index="119" start="349.76" end="351.35999">
+      <el index="119" start="349.76001" end="351.35999">
         <attribute name="narrative details - internal">Earn is used to white travelers being rude to him.</attribute>
         <attribute name="narrative details - external">Earn laughs it off. Swiff points at the traveler.</attribute>
         <attribute name="characters on screen">Earn, Swiff, Traveler</attribute>
@@ -600,15 +600,15 @@
       </el>
       <el index="121" start="353.16" end="361.44">
         <attribute name="narrative details - internal">Earn is disinterested.</attribute>
-        <attribute name="narrative details - external">Swiff tells Earn about his night of partying last night and his plans for tonight. Earn stares striaght ahead.</attribute>
+        <attribute name="narrative details - external">Swiff tells Earn about his night of partying last night and his plans for tonight. Earn stares straight ahead.</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
       </el>
-      <el index="122" start="361.44" end="364.4">
+      <el index="122" start="361.44" end="364.39999">
         <attribute name="narrative details - internal">Earn feels like he is missing out on having fun because he has a daughter and responsibilities.</attribute>
         <attribute name="narrative details - external">Swiff asks if Earn wants to come party with him tonight. Earn stares straight ahead.</attribute>
         <attribute name="characters on screen">Swiff, Earn</attribute>
       </el>
-      <el index="123" start="364.4" end="366.39999">
+      <el index="123" start="364.39999" end="366.39999">
         <attribute name="narrative details - internal">Earn feels like he is missing out on having fun because he has a daughter and responsibilities.</attribute>
         <attribute name="narrative details - external">Earn ignores Swiff and does not reply. Swiff tries to get his attention.</attribute>
         <attribute name="characters on screen">Swiff, Earn</attribute>
@@ -622,27 +622,27 @@
         <attribute name="narrative details - external">Earn turns to look at Swiff. Swiff laughs and takes a picture of him.</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
-      <el index="126" start="373.44" end="379.48">
+      <el index="126" start="373.44" end="379.48001">
         <attribute name="narrative details - internal">Swiff is joking.</attribute>
         <attribute name="narrative details - external">Swiff types on his phone that Earn is high at work.</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
       </el>
-      <el index="127" start="379.48" end="381.36">
+      <el index="127" start="379.48001" end="381.35999">
         <attribute name="narrative details - internal">Earn is upset.</attribute>
         <attribute name="narrative details - external">Earn tells Swiff that Van is dating other people.</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
       </el>
-      <el index="128" start="381.36" end="387.39999">
+      <el index="128" start="381.35999" end="387.39999">
         <attribute name="narrative details - internal">Earn is worried about Van, his living situation, and his job. He feels he cannot do as well as an old black lady because he is a young black man.</attribute>
         <attribute name="narrative details - external">Swiff looks at Earn. Earn complains that Van is going to kick him out of her house, and that he is broke and cannot make money at his job.</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
       </el>
-      <el index="129" start="387.39999" end="389.04">
+      <el index="129" start="387.39999" end="389.04001">
         <attribute name="narrative details - internal">Loretta is having success with white customers.</attribute>
         <attribute name="narrative details - external">A young white male asks Loretta if he can use the card she is selling to fly to the Caribbean.</attribute>
         <attribute name="characters on screen">Loretta, Boy</attribute>
       </el>
-      <el index="130" start="389.04" end="395.56">
+      <el index="130" start="389.04001" end="395.56">
         <attribute name="narrative details - internal">Loretta flirts and uses her harmless, endearing, homely stereotype to her advantage in making sales.</attribute>
         <attribute name="narrative details - external">Loretta, the old black lady, successfully signs up another white customer. She acts friendly and flirtatious with him.</attribute>
         <attribute name="characters on screen">Loretta, Boy</attribute>
@@ -662,39 +662,39 @@
         <attribute name="narrative details - external">Loretta starts pretending to hump the young boy from behind while he signs up.</attribute>
         <attribute name="characters on screen">Loretta, Boy</attribute>
       </el>
-      <el index="134" start="408.04001" end="409.4">
+      <el index="134" start="408.04001" end="409.39999">
         <attribute name="narrative details - internal">Swiff is impressed by Loretta's sales skills.</attribute>
         <attribute name="narrative details - external">Swiff remarks that Loretta is good at her job.</attribute>
         <attribute name="characters on screen">Swiff, Earn</attribute>
       </el>
-      <el index="135" start="409.4" end="410.64">
+      <el index="135" start="409.39999" end="410.64001">
         <attribute name="narrative details - internal">Earn is disgusted by Loretta.</attribute>
         <attribute name="narrative details - external">Earn replies to Swiff</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
       </el>
-      <el index="136" start="410.64" end="412.32">
+      <el index="136" start="410.64001" end="412.32001">
         <attribute name="narrative details - external">Swiff says he would watch Loretta have sex.</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
       </el>
-      <el index="137" start="412.32" end="413.60001">
+      <el index="137" start="412.32001" end="413.60001">
         <attribute name="narrative details - internal">Earn is disgusted.</attribute>
         <attribute name="narrative details - external">Earn responds to Swiff.</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
       </el>
-      <el index="138" start="413.60001" end="417.48">
+      <el index="138" start="413.60001" end="417.48001">
         <attribute name="narrative details - external">Swiff asks Earn if he's heard the new Paper Boy mixtape coming out on Friday.</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
       </el>
-      <el index="139" start="417.48" end="418.68">
+      <el index="139" start="417.48001" end="418.67999">
         <attribute name="narrative details - external">Swiff Says Paper Boy's last mixtape was good.</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
       </el>
-      <el index="140" start="418.68" end="422.32">
+      <el index="140" start="418.67999" end="422.32001">
         <attribute name="narrative details - internal">Earn is disinterested.</attribute>
         <attribute name="narrative details - external">Earn says he does not follow new music and does not know who Paper Boy is.</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
       </el>
-      <el index="141" start="422.32" end="425.84">
+      <el index="141" start="422.32001" end="425.84">
         <attribute name="narrative details - internal">Swiff is surprised and makes fun of Earn.</attribute>
         <attribute name="narrative details - external">Swiff tells Earn he needs to get out more and shows him Paper Boy's music video.</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
@@ -705,7 +705,7 @@
         <attribute name="Music Presence">true</attribute>
       </el>
       <el index="143" start="429.28" end="433.44">
-        <attribute name="narrative details - external">Earn watches the music video on Swiff's phone. In the video, Alfred Paper Boy throws a brock of cocaine that lands on a woman with dancing women in the background.</attribute>
+        <attribute name="narrative details - external">Earn watches the music video on Swiff's phone. In the video, Alfred Paper Boy throws a brick of cocaine that lands on a woman with dancing women in the background.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
@@ -730,114 +730,114 @@
         <attribute name="characters on screen">Earn</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="148" start="444.67999" end="447.32">
+      <el index="148" start="444.67999" end="447.32001">
         <attribute name="narrative details - external">Swiff says if Paper Boy is Earn's cousin, he needs to get to him before he is signed by a record label.</attribute>
         <attribute name="characters on screen">Swiff</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="149" start="447.32" end="449.04">
+      <el index="149" start="447.32001" end="449.04001">
         <attribute name="narrative details - external">Earn looks at Swiff, then back at Alfred Paper Boy's music video.</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="150" start="449.04" end="452.16">
+      <el index="150" start="449.04001" end="452.16">
         <attribute name="narrative details - internal">Alfred Paper Boy is becoming successful quickly.</attribute>
         <attribute name="narrative details - external">Earn watches Alfred Paper Boy dance and rap in the music video on Swiff's phone. Swiff says Alfred Paper Boy has a seven million dollar offer on the table.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="151" start="452.16" end="453.32">
+      <el index="151" start="452.16" end="453.32001">
         <attribute name="narrative details - external">Earn asks Swiff if Alfred Paper Boy's seven million dollar offer is real.</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
       </el>
-      <el index="152" start="453.32" end="455.36">
+      <el index="152" start="453.32001" end="455.35999">
         <attribute name="narrative details - external">Swiff says the offer is real.</attribute>
         <attribute name="characters on screen">Swiff, Earn</attribute>
       </el>
-      <el index="153" start="455.36" end="458.24">
+      <el index="153" start="455.35999" end="458.23999">
         <attribute name="narrative details - internal">Earn realizes he could make money working with his cousin, Alfred Paper Boy, and leaves to go find him.</attribute>
         <attribute name="narrative details - external">Earn hands the phone back to Swiff and says he will see him later.</attribute>
         <attribute name="characters on screen">Earn, Swiff</attribute>
       </el>
-      <el index="154" start="458.24" end="460.92">
+      <el index="154" start="458.23999" end="460.92001">
         <attribute name="narrative details - external">Swiff asks if Earn is going to talk to Alfred Paper Boy. Earn walks away and does not reply.</attribute>
         <attribute name="characters on screen">Swiff, Earn</attribute>
       </el>
-      <el index="155" start="460.92" end="463.6">
+      <el index="155" start="460.92001" end="463.60001">
         <attribute name="narrative details - internal">Swiff is still confused and does not believe Earn.</attribute>
         <attribute name="narrative details - external">Swiff asks Earn if the dancer in Alfred Paper Boy's music video is actually his cousin.</attribute>
         <attribute name="characters on screen">Swiff</attribute>
       </el>
-      <el index="156" start="463.6" end="466.12">
+      <el index="156" start="463.60001" end="466.12">
         <attribute name="narrative details - internal">Earn realizes he could make money working with his cousin, Alfred Paper Boy, and leaves to go find him. Swiff does not believe Alfred Paper Boy is Earn's cousin.</attribute>
         <attribute name="narrative details - external">Swiff calls after Earn and says he does not know Paper Boy. He laughs.</attribute>
         <attribute name="characters on screen">Swiff</attribute>
       </el>
-      <el index="157" start="466.12" end="468.6">
+      <el index="157" start="466.12" end="468.60001">
         <attribute name="narrative details - external">BLACK SCREEN 2</attribute>
       </el>
-      <el index="158" start="468.6" end="471.88">
+      <el index="158" start="468.60001" end="471.88">
         <attribute name="narrative details - external">Earn, wearing street clothes and a backpack, walks up the driveway of a house.</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
-      <el index="159" start="471.88" end="476.32">
+      <el index="159" start="471.88" end="476.32001">
         <attribute name="narrative details - internal">The house belongs to Earn's parents.</attribute>
         <attribute name="narrative details - external">Earn slowly walks up to the side door of a house.</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
-      <el index="160" start="476.32" end="479.56">
+      <el index="160" start="476.32001" end="479.56">
         <attribute name="narrative details - internal">Earn is at his parents' house.</attribute>
         <attribute name="narrative details - external">Earn walks up to the door. Earn's father stands in the doorway and greets him.</attribute>
         <attribute name="characters on screen">Earn, Dad</attribute>
       </el>
-      <el index="161" start="479.56" end="480.76">
+      <el index="161" start="479.56" end="480.76001">
         <attribute name="narrative details - internal">Earn is uncomfortable.</attribute>
         <attribute name="narrative details - external">Earn greets his father.</attribute>
         <attribute name="characters on screen">Earn, Dad</attribute>
       </el>
-      <el index="162" start="480.76" end="482.52">
+      <el index="162" start="480.76001" end="482.51999">
         <attribute name="narrative details - external">Earn's father stands in the doorway, looking down at Earn. Earn asks where his mother is.</attribute>
         <attribute name="characters on screen">Dad, Earn</attribute>
       </el>
-      <el index="163" start="482.52" end="483.52">
+      <el index="163" start="482.51999" end="483.51999">
         <attribute name="narrative details - external">Earn's mother greets him.</attribute>
         <attribute name="characters on screen">Dad, Earn</attribute>
       </el>
-      <el index="164" start="483.52" end="485.6">
+      <el index="164" start="483.51999" end="485.60001">
         <attribute name="narrative details - external">Earn greets his mother.</attribute>
         <attribute name="characters on screen">Earn, Dad, Mom</attribute>
       </el>
-      <el index="165" start="485.6" end="487.88">
+      <el index="165" start="485.60001" end="487.88">
         <attribute name="narrative details - internal">Earn's relationship with his parents is strained and awkward.</attribute>
         <attribute name="narrative details - external">After a moment, Earn asks how his parents are doing.</attribute>
         <attribute name="characters on screen">Earn, Dad</attribute>
       </el>
-      <el index="166" start="487.88" end="491.36">
+      <el index="166" start="487.88" end="491.35999">
         <attribute name="narrative details - internal">Earn's relationship with his parents is strained and awkward.</attribute>
         <attribute name="narrative details - external">Earn's father answers, pauses for a moment, and asks how Earn is doing.</attribute>
         <attribute name="characters on screen">Earn, Dad, Mom</attribute>
       </el>
-      <el index="167" start="491.36" end="492.88">
+      <el index="167" start="491.35999" end="492.88">
         <attribute name="narrative details - internal">Earn's relationship with his parents is strained and awkward.</attribute>
         <attribute name="narrative details - external">Earn says he is doing well.</attribute>
         <attribute name="characters on screen">Earn, Dad, Mom</attribute>
       </el>
-      <el index="168" start="492.88" end="494.8">
+      <el index="168" start="492.88" end="494.79999">
         <attribute name="narrative details - internal">Earn's relationship with his parents is strained and awkward.</attribute>
         <attribute name="narrative details - external">Earn's father replies shortly.</attribute>
         <attribute name="characters on screen">Earn, Dad, Mom</attribute>
       </el>
-      <el index="169" start="494.8" end="498.08">
+      <el index="169" start="494.79999" end="498.07999">
         <attribute name="narrative details - internal">Earn's relationship with his parents is strained and awkward.</attribute>
         <attribute name="narrative details - external">After a long pause, Earn asks if his parents are going to ask him to come inside.</attribute>
         <attribute name="characters on screen">Earn, Dad</attribute>
       </el>
-      <el index="170" start="498.08" end="499.04">
+      <el index="170" start="498.07999" end="499.04001">
         <attribute name="narrative details - internal">Earn's relationship with his parents is strained and awkward.</attribute>
         <attribute name="narrative details - external">Earn's father laughs and says no.</attribute>
         <attribute name="characters on screen">Earn, Dad</attribute>
       </el>
-      <el index="171" start="499.04" end="499.84">
+      <el index="171" start="499.04001" end="499.84">
         <attribute name="narrative details - internal">Earn's relationship with his parents is strained and awkward. Earn is a little hurt.</attribute>
         <attribute name="narrative details - external">Earn asks his father why he cannot come inside the house.</attribute>
         <attribute name="characters on screen">Earn, Dad</attribute>
@@ -847,66 +847,66 @@
         <attribute name="narrative details - external">Earn's father smiles and says he cannot afford to let Earn in the house.</attribute>
         <attribute name="characters on screen">Dad, Earn</attribute>
       </el>
-      <el index="173" start="501.12" end="502.6">
+      <el index="173" start="501.12" end="502.60001">
         <attribute name="narrative details - internal">Earn is offended.</attribute>
         <attribute name="narrative details - external">Earn asks if his parents think he came to ask for money.</attribute>
         <attribute name="characters on screen">Earn, Dad</attribute>
       </el>
-      <el index="174" start="502.6" end="503.76">
+      <el index="174" start="502.60001" end="503.76001">
         <attribute name="narrative details - internal">Earn's father thinks Earn came to ask for money.</attribute>
         <attribute name="narrative details - external">Earn's father looks at him and says nothing.</attribute>
         <attribute name="characters on screen">Dad, Earn</attribute>
       </el>
-      <el index="175" start="503.76" end="505.48">
+      <el index="175" start="503.76001" end="505.48001">
         <attribute name="narrative details - internal">Earn's parents are not fond of him.</attribute>
         <attribute name="narrative details - external">Earn's mother answers yes.</attribute>
         <attribute name="characters on screen">Mom</attribute>
       </el>
-      <el index="176" start="505.48" end="508.12">
+      <el index="176" start="505.48001" end="508.12">
         <attribute name="narrative details - external">Earn tells his parents that he is looking for Alfred Paper Boy, and asks if his parents can pick up Lottie.</attribute>
         <attribute name="characters on screen">Earn, Dad, Mom</attribute>
       </el>
-      <el index="177" start="508.12" end="510.2">
+      <el index="177" start="508.12" end="510.20001">
         <attribute name="narrative details - internal">Earn is upset about Van's date.</attribute>
         <attribute name="narrative details - external">Earn explains that he has a job interview and Van has a date.</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
-      <el index="178" start="510.2" end="511.92">
+      <el index="178" start="510.20001" end="511.92001">
         <attribute name="narrative details - internal">Earn's father is surprised and skeptical. His mother is more interested in Van's date. Earn's parents are not proud of him.</attribute>
         <attribute name="narrative details - external">Earn's father asks if Earn really got a Job. His mother congratulates Van on her date.</attribute>
         <attribute name="characters on screen">Earn, Dad, Mom</attribute>
       </el>
-      <el index="179" start="511.92" end="514.08">
+      <el index="179" start="511.92001" end="514.08002">
         <attribute name="narrative details - internal">Earn sarcastically thanks his mother.</attribute>
         <attribute name="narrative details - external">Earn confirms that he got a job, and thanks his mother.</attribute>
         <attribute name="characters on screen">Earn, Dad, Mom</attribute>
       </el>
-      <el index="180" start="514.08" end="517.16">
+      <el index="180" start="514.08002" end="517.15997">
         <attribute name="narrative details - internal">Earn is sarcastic, hurt, and offended.</attribute>
         <attribute name="narrative details - external">Earn reminds his parents that he is their son and used to live in their house with them.</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
-      <el index="181" start="517.16" end="518.48">
+      <el index="181" start="517.15997" end="518.47998">
         <attribute name="narrative details - internal">Earn's relationship with his parents is strained and awkward. They do not particularly like him.</attribute>
         <attribute name="narrative details - external">Earn's mother glares at him and turns away. Earn's father replies.</attribute>
         <attribute name="characters on screen">Mom</attribute>
       </el>
-      <el index="182" start="518.48" end="522.96">
+      <el index="182" start="518.47998" end="522.96002">
         <attribute name="narrative details - internal">Earn's parents are angry at him.</attribute>
         <attribute name="narrative details - external">Earn's father chides him for using their bathroom without their permission and not flushing the toilet.</attribute>
         <attribute name="characters on screen">Dad</attribute>
       </el>
-      <el index="183" start="522.96" end="524.79999">
+      <el index="183" start="522.96002" end="524.79999">
         <attribute name="narrative details - internal">Earn's parents are angry at him.</attribute>
         <attribute name="narrative details - external">Earns father continues to berate him for using their bathroom and not flushing the toilet. Earn shakes his head.</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
-      <el index="184" start="524.79999" end="525.76">
+      <el index="184" start="524.79999" end="525.76001">
         <attribute name="narrative details - internal">Earn is lying.</attribute>
         <attribute name="narrative details - external">Earn denies using the toilet.</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
-      <el index="185" start="525.76" end="526.44">
+      <el index="185" start="525.76001" end="526.44">
         <attribute name="narrative details - external">Earn's mother says he used the toilet.</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
@@ -922,29 +922,29 @@
       </el>
       <el index="188" start="534.40002" end="538.52002">
         <attribute name="narrative details - internal">Earn's father dismisses him</attribute>
-        <attribute name="narrative details - external">Earn's father tells him where his cousin, Alfred,is. He tells Earn he loves him and shuts the door.</attribute>
+        <attribute name="narrative details - external">Earn's father tells him where his cousin, Alfred, is. He tells Earn he loves him and shuts the door.</attribute>
         <attribute name="characters on screen">Dad</attribute>
       </el>
-      <el index="189" start="538.52002" end="542.4">
+      <el index="189" start="538.52002" end="542.40002">
         <attribute name="narrative details - internal">Earn is surprised and disappointed his parents were so unwelcoming.</attribute>
         <attribute name="narrative details - external">Earn's father shuts the door and Earn turns and walks away.</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
-      <el index="190" start="542.4" end="548.88">
+      <el index="190" start="542.40002" end="548.88">
         <attribute name="narrative details - external">Earn walks back down the driveway, away from his parents' house. A red car passes him, playing Alfred Paper Boy's song.</attribute>
         <attribute name="characters on screen">Earn</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
       <el index="191" start="548.88" end="551.96002">
-        <attribute name="narrative details - external">The red car turns and pulls into the driveway nextdoor</attribute>
+        <attribute name="narrative details - external">The red car turns and pulls into a driveway.</attribute>
         <attribute name="characters on screen">Earn</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="192" start="551.96002" end="554.52">
+      <el index="192" start="551.96002" end="554.52002">
         <attribute name="narrative details - external">One man sits on a car smoking a blunt. Another man stands next to him drinking alcohol from a bottle in a brown bag. Alfred Paper Boy's song is playing.</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="193" start="554.52" end="559.96002">
+      <el index="193" start="554.52002" end="559.96002">
         <attribute name="narrative details - external">Earn walks past the two men on his way to Alfred Paper Boy's house.</attribute>
         <attribute name="characters on screen">Earn</attribute>
         <attribute name="Music Presence">true</attribute>
@@ -961,31 +961,31 @@
         <attribute name="narrative details - external">Darius, wearing an apron and carrying a carton of milk, walks up behind Alfred Paper Boy and asks if the milk is still good</attribute>
         <attribute name="characters on screen">Alfred Paper Boy, Darius</attribute>
       </el>
-      <el index="197" start="573.35999" end="574.76">
+      <el index="197" start="573.35999" end="574.76001">
         <attribute name="narrative details - external">Without looking up from his video game, Alfred Paper Boy asks what Darius wants to use the milk for.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy, Darius</attribute>
       </el>
-      <el index="198" start="574.76" end="575.96">
+      <el index="198" start="574.76001" end="575.96002">
         <attribute name="narrative details - external">Darius says he plans to drink the milk.</attribute>
         <attribute name="characters on screen">Darius, Alfred Paper Boy</attribute>
       </el>
-      <el index="199" start="575.96" end="579">
+      <el index="199" start="575.96002" end="579">
         <attribute name="narrative details - external">Alfred Paper Boy tells Darius he should not drink the milk.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy, Darius</attribute>
       </el>
-      <el index="200" start="579" end="580.64">
+      <el index="200" start="579" end="580.64001">
         <attribute name="narrative details - external">Alfred Paper Boy and Darius hear a knock on the door.  They both look toward the sound.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy, Darius</attribute>
       </el>
-      <el index="201" start="580.64" end="582.12">
+      <el index="201" start="580.64001" end="582.12">
         <attribute name="narrative details - external">Alfred Paper Boy looks up from his video game.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy</attribute>
       </el>
-      <el index="202" start="582.12" end="582.72">
+      <el index="202" start="582.12" end="582.71997">
         <attribute name="narrative details - external">The door opens. Earn is standing outside.</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
-      <el index="203" start="582.72" end="587.64001">
+      <el index="203" start="582.71997" end="587.64001">
         <attribute name="narrative details - internal">Earn makes a joke.</attribute>
         <attribute name="narrative details - external">A gun sticks out from the door, pointed directly at Earn's head. Earn comments on their peep hole.</attribute>
         <attribute name="characters on screen">Earn</attribute>
@@ -1008,44 +1008,44 @@
         <attribute name="narrative details - external">Earn takes a cookie, thanks Darius, and follows Alfred Paper Boy into the house.</attribute>
         <attribute name="characters on screen">Earn, Darius, Alfred Paper Boy</attribute>
       </el>
-      <el index="208" start="601.52002" end="604.8">
+      <el index="208" start="601.52002" end="604.79999">
         <attribute name="narrative details - external">Earn walks into the room and starts to make small talk.</attribute>
         <attribute name="characters on screen">Earn, Alfred Paper Boy, Darius</attribute>
       </el>
-      <el index="209" start="604.8" end="606.12">
+      <el index="209" start="604.79999" end="606.12">
         <attribute name="narrative details - internal">Alfred Paper Boy cuts right to the chase.</attribute>
         <attribute name="narrative details - external">Alfred Paper Boy cuts Earn off and accuses him of wanting to get in on his fame.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy</attribute>
       </el>
-      <el index="210" start="606.12" end="608.32">
+      <el index="210" start="606.12" end="608.32001">
         <attribute name="narrative details - internal">Earn feigns surprise at being called out.</attribute>
         <attribute name="narrative details - external">Earn laughs and denies wanting to get in on Alfred Paper Boy's fame.</attribute>
         <attribute name="characters on screen">Earn, Darius, Alfred Paper Boy</attribute>
       </el>
-      <el index="211" start="608.32" end="609.16">
+      <el index="211" start="608.32001" end="609.15997">
         <attribute name="narrative details - external">Alfred Paper Boy starts to reply to Earn.</attribute>
         <attribute name="characters on screen">Earn, Darius, Alfred Paper Boy</attribute>
       </el>
-      <el index="212" start="609.16" end="613.24">
+      <el index="212" start="609.15997" end="613.23999">
         <attribute name="narrative details - internal">Alfred Paper Boy does not believe Earn.</attribute>
         <attribute name="narrative details - external">Alfred Paper Boy says that people are only nice when they want something.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy</attribute>
       </el>
-      <el index="213" start="613.24" end="614.08">
+      <el index="213" start="613.23999" end="614.08002">
         <attribute name="narrative details - internal">Earn is referring to Lottie, his daughter.</attribute>
         <attribute name="narrative details - external">Earn replies that he was nice to a girl this morning.</attribute>
         <attribute name="characters on screen">Earn, Darius, Alfred Paper Boy</attribute>
       </el>
-      <el index="214" start="614.08" end="616">
+      <el index="214" start="614.08002" end="616">
         <attribute name="narrative details - external">Alfred paper Boy replies that talking about his daughter is gross.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy</attribute>
       </el>
-      <el index="215" start="616" end="618.08">
+      <el index="215" start="616" end="618.08002">
         <attribute name="narrative details - internal">Earn tries to make a joke.</attribute>
         <attribute name="narrative details - external">Earn says it would be gross if he was trying to have sex with his daughter. Darius stands and eats cookies in the background.</attribute>
         <attribute name="characters on screen">Earn, Darius, Alfred Paper Boy</attribute>
       </el>
-      <el index="216" start="618.08" end="620.35999">
+      <el index="216" start="618.08002" end="620.35999">
         <attribute name="narrative details - external">No one laughs at Earn's joke. Alfred Paper Boy sighs and stands.</attribute>
         <attribute name="characters on screen">Earn, Darius, Alfred Paper Boy</attribute>
       </el>
@@ -1053,16 +1053,16 @@
         <attribute name="narrative details - external">Alfred Paper Boy and Darius sit down on couches. Earn tells Alfred Paper Boy he wants to manage him. Alfred Paper Boy laughs.</attribute>
         <attribute name="characters on screen">Earn, Alfred Paper Boy, Darius</attribute>
       </el>
-      <el index="218" start="624.15997" end="626.32">
+      <el index="218" start="624.15997" end="626.32001">
         <attribute name="narrative details - internal">Alfred Paper Boy does not take Earn seriously.</attribute>
         <attribute name="narrative details - external">Alfred Paper Boy starts rolling weed (marijuana) into a blunt. He asks Earn if he knows where the word manage comes from.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy</attribute>
       </el>
-      <el index="219" start="626.32" end="628.2">
+      <el index="219" start="626.32001" end="628.20001">
         <attribute name="narrative details - external">Earn sits on the arm of the sofa and correctly responds that manus comes from the Latin word for hand. Darius eats a cookie on the couch behind him.</attribute>
         <attribute name="characters on screen">Earn, Darius</attribute>
       </el>
-      <el index="220" start="628.2" end="635.12">
+      <el index="220" start="628.20001" end="635.12">
         <attribute name="narrative details - external">Alfred Paper Boy continues rolling the blunt (marijuana cigar). He says Earn is probably right, but the point he's trying to make is that you have to be a man to manage, and Earn is not man enough.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy</attribute>
       </el>
@@ -1070,12 +1070,12 @@
         <attribute name="narrative details - external">Earn questions what Alfred Paper Boy means about being a man not being his lane.</attribute>
         <attribute name="characters on screen">Earn, Darius</attribute>
       </el>
-      <el index="222" start="635.88" end="636.92">
+      <el index="222" start="635.88" end="636.91998">
         <attribute name="narrative details - internal">Alfred Paper Boy is referring to Malcolm X, and means he wants someone tough and aggressive.</attribute>
-        <attribute name="narrative details - external">Alfred Paper Boy says he needs a managor who is like Malcolm.</attribute>
+        <attribute name="narrative details - external">Alfred Paper Boy says he needs a manager who is like Malcolm.</attribute>
         <attribute name="characters on screen">Earn, Darius</attribute>
       </el>
-      <el index="223" start="636.92" end="640">
+      <el index="223" start="636.91998" end="640">
         <attribute name="narrative details - internal">Alfred Paper Boy sees Earn as more gentle and reserved, like Martin Luther King Jr. He thinks gentle, reserved people get killed in his line of work.</attribute>
         <attribute name="narrative details - external">Alfred Paper Boy sits back and rolls the blunt (marijuana cigar) between his fingers. He says Earn is too much like Martin. He then says that they killed Martin.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy</attribute>
@@ -1096,11 +1096,11 @@
         <attribute name="narrative details - external">Earn continues trying to convince Alfred Paper Boy he would be a good manager. Alfred Paper Boy licks the blunt (marijuana cigar) and looks up and Earn.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy</attribute>
       </el>
-      <el index="228" start="654.35999" end="655.76">
+      <el index="228" start="654.35999" end="655.76001">
         <attribute name="narrative details - external">Earn continues trying to convince Alfred Paper Boy he would make a good manager.</attribute>
         <attribute name="characters on screen">Earn, Darius</attribute>
       </el>
-      <el index="229" start="655.76" end="656.88">
+      <el index="229" start="655.76001" end="656.88">
         <attribute name="narrative details - external">Darius compares Earn to Don Lemon.</attribute>
         <attribute name="characters on screen">Darius, Earn</attribute>
       </el>
@@ -1111,7 +1111,7 @@
       </el>
       <el index="231" start="660.56" end="662.03998">
         <attribute name="narrative details - internal">Darius realizes they missed four twenty, a ceremonial time of day for them to smoke</attribute>
-        <attribute name="narrative details - external">Darius cuts Earn off, suddenly realizing it's four thirty</attribute>
+        <attribute name="narrative details - external">Darius cuts Earn off, suddenly realizing it is four thirty</attribute>
         <attribute name="characters on screen">Earn, Darius</attribute>
       </el>
       <el index="232" start="662.03998" end="663.52002">
@@ -1185,7 +1185,7 @@
       </el>
       <el index="247" start="703.88" end="709.52002">
         <attribute name="narrative details - internal">Earn does not trust Darius or take him seriously</attribute>
-        <attribute name="narrative details - external">Earn turns and sits on the couch in the grass facinng Alfred Paper Boy. He asks if there is somewhere they can talk about business without Darius around, because he does not know him</attribute>
+        <attribute name="narrative details - external">Earn turns and sits on the couch in the grass facing Alfred Paper Boy. He asks if there is somewhere they can talk about business without Darius around, because he does not know him</attribute>
         <attribute name="characters on screen">Earn, Alfred Paper Boy</attribute>
       </el>
       <el index="248" start="709.52002" end="712.76001">
@@ -1260,7 +1260,7 @@
       </el>
       <el index="264" start="759.15997" end="766.71997">
         <attribute name="narrative details - internal">Earn is taken aback by Darius's comment and replies sarcastically.</attribute>
-        <attribute name="narrative details - external">Earn replies that apparenly now is the time to talk about it. He then turns to Alfred Paper Boy and argues that he will have difficulty selling his music because he is old, does not have a fan base, is not white, and is not selling sex.</attribute>
+        <attribute name="narrative details - external">Earn replies that apparently now is the time to talk about it. He then turns to Alfred Paper Boy and argues that he will have difficulty selling his music because he is old, does not have a fan base, is not white, and is not selling sex.</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
       <el index="265" start="766.71997" end="769.67999">
@@ -1354,11 +1354,11 @@
         <attribute name="narrative details - external">Dave recognizes earn and greets him. The two shake hands and hug briefly."</attribute>
         <attribute name="characters on screen">Earn, Dave</attribute>
       </el>
-      <el index="286" start="836.52002" end="838.16">
+      <el index="286" start="836.52002" end="838.15997">
         <attribute name="narrative details - external">Dave looks over his shoulder, points, and asks Earn if he just came from a dumpster nearby.</attribute>
         <attribute name="characters on screen">Earn, Dave</attribute>
       </el>
-      <el index="287" start="838.16" end="840.08002">
+      <el index="287" start="838.15997" end="840.08002">
         <attribute name="narrative details - internal">Earn finds the question weird but brushes it off quickly.</attribute>
         <attribute name="narrative details - external">Earn says he was not behind the dumpster and asks Dave how he is doing.</attribute>
         <attribute name="characters on screen">Earn, Dave</attribute>
@@ -1396,7 +1396,7 @@
         <attribute name="characters on screen">Dave, Earn</attribute>
       </el>
       <el index="295" start="858.84003" end="861.28003">
-        <attribute name="narrative details - internal">Earn awkwardly laughs and casually asks if Dave said that, but is interally taken aback and surprised he said "nigga," especially around him</attribute>
+        <attribute name="narrative details - internal">Earn awkwardly laughs and casually asks if Dave said that, but is internally taken aback and surprised he said "nigga," especially around him</attribute>
         <attribute name="narrative details - external">Earn asks if Dave really said that</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
@@ -1420,12 +1420,12 @@
         <attribute name="narrative details - external">Earn tells Dave he should play Paper Boy on the radio.</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
-      <el index="300" start="869.56" end="871.24">
+      <el index="300" start="869.56" end="871.23999">
         <attribute name="narrative details - internal">Dave says he should play Alfred Paper Boy's song but makes no promises to do so.</attribute>
         <attribute name="narrative details - external">Dave agrees with Earn.</attribute>
         <attribute name="characters on screen">Dave, Earn</attribute>
       </el>
-      <el index="301" start="871.24" end="874.76001">
+      <el index="301" start="871.23999" end="874.76001">
         <attribute name="narrative details - external">Earn repeats his suggestion that Dave play Paper Boy on the radio</attribute>
         <attribute name="characters on screen">Earn, Dave</attribute>
       </el>
@@ -1442,11 +1442,11 @@
         <attribute name="narrative details - external">Dave says KP will play a song if someone pays him upfront.</attribute>
         <attribute name="characters on screen">Earn, Dave</attribute>
       </el>
-      <el index="305" start="881.28003" end="882.48">
+      <el index="305" start="881.28003" end="882.47998">
         <attribute name="narrative details - external">Earn walks after Dave. Earn asks how much money Dave and KP want to play Paper Boy's song.</attribute>
         <attribute name="characters on screen">Earn, Dave</attribute>
       </el>
-      <el index="306" start="882.48" end="883.59998">
+      <el index="306" start="882.47998" end="883.59998">
         <attribute name="narrative details - internal">Dave is asking for a bribe to do Earn a favor</attribute>
         <attribute name="narrative details - external">Dave tells him KP would want five hundred dollars to play the song.</attribute>
         <attribute name="characters on screen">Dave, Earn</attribute>
@@ -1456,11 +1456,11 @@
         <attribute name="narrative details - external">Earn and Dave walk toward the radio station. Earn questions the high price.</attribute>
         <attribute name="characters on screen">Earn, Dave</attribute>
       </el>
-      <el index="308" start="886.76001" end="887.96">
+      <el index="308" start="886.76001" end="887.96002">
         <attribute name="narrative details - external">Earn and Dave walk through the parking lot, Dave carrying the drinks. Dave waves to people he knows and says that connections are important.</attribute>
         <attribute name="characters on screen">Earn, Dave</attribute>
       </el>
-      <el index="309" start="887.96" end="889">
+      <el index="309" start="887.96002" end="889">
         <attribute name="narrative details - external">Earn asks Dave to introduce him to his boss, KP.</attribute>
         <attribute name="characters on screen">Earn, Dave</attribute>
       </el>
@@ -1538,22 +1538,22 @@
         <attribute name="narrative details - external">Earn walks toward Prince and the garbage dumpster, and asks Prince his name</attribute>
         <attribute name="characters on screen">Earn</attribute>
       </el>
-      <el index="326" start="946.35999" end="947.68">
+      <el index="326" start="946.35999" end="947.67999">
         <attribute name="narrative details - internal">Prince and Earn seem to get along well, immediately</attribute>
         <attribute name="narrative details - external">Prince tells Earn his name</attribute>
         <attribute name="characters on screen">Earn, Prince the Janitor</attribute>
       </el>
-      <el index="327" start="947.68" end="948.72">
+      <el index="327" start="947.67999" end="948.71997">
         <attribute name="narrative details - internal">Prince and Earn seem to get along well, immediately.</attribute>
         <attribute name="narrative details - external">Prince the Janitor and Earn shake hands. Earn asks if that is really his name.</attribute>
         <attribute name="characters on screen">Earn, Prince the Janitor</attribute>
       </el>
-      <el index="328" start="948.72" end="949.52">
+      <el index="328" start="948.71997" end="949.52002">
         <attribute name="narrative details - internal">Prince and Earn seem to get along well, immediately</attribute>
         <attribute name="narrative details - external">Earn and Prince the Janitor shake hands. Prince the Janitor says that really is his name.</attribute>
         <attribute name="characters on screen">Earn, Prince the Janitor</attribute>
       </el>
-      <el index="329" start="949.52" end="952">
+      <el index="329" start="949.52002" end="952">
         <attribute name="narrative details - internal">Earn is hatching a plan to get into the radio station</attribute>
         <attribute name="narrative details - external">Earn asks Prince how late he is working at the radio station that night</attribute>
         <attribute name="characters on screen">Earn, Prince the Janitor</attribute>
@@ -1607,11 +1607,11 @@
         <attribute name="narrative details - external">Alfred Paper Boy asks what Earn's mother said.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy, Dad</attribute>
       </el>
-      <el index="341" start="983.12" end="983.64">
+      <el index="341" start="983.12" end="983.64001">
         <attribute name="narrative details - external">Earn's father greets Darius.</attribute>
         <attribute name="characters on screen">Dad, Alfred Paper Boy</attribute>
       </el>
-      <el index="342" start="983.64" end="985.59998">
+      <el index="342" start="983.64001" end="985.59998">
         <attribute name="narrative details - external">Alfred Paper Boy tells Earn's father that his wife is weird.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy, Dad</attribute>
       </el>
@@ -1651,17 +1651,17 @@
         <attribute name="narrative details - external">Alfred Paper Boy says he does not trust Earn</attribute>
         <attribute name="characters on screen">Alfred Paper Boy</attribute>
       </el>
-      <el index="351" start="1012.47998" end="1013.64">
+      <el index="351" start="1012.47998" end="1013.64001">
         <attribute name="narrative details - internal">Neither man thinks Earn is trustworthy. Earn must have done something in the past to lose their trust.</attribute>
         <attribute name="narrative details - external">Earn's father says he understands.</attribute>
         <attribute name="characters on screen">Dad, Alfred Paper Boy</attribute>
       </el>
-      <el index="352" start="1013.64" end="1014.6">
+      <el index="352" start="1013.64001" end="1014.59998">
         <attribute name="narrative details - internal">Neither man thinks Earn is trustworthy. Earn must have done something in the past to break their trust.</attribute>
         <attribute name="narrative details - external">Alfred Paper Boy says it is wrong that he feels he cannot trust Earn.</attribute>
         <attribute name="characters on screen">Dad</attribute>
       </el>
-      <el index="353" start="1014.6" end="1019.76001">
+      <el index="353" start="1014.59998" end="1019.76001">
         <attribute name="narrative details - external">Alfred Paper Boy tells Earn's father he does not feel like he knows Earn anymore. On screen, Earn digs through a shoebox in a bag. He pulls a wad of bills out of a shoe.</attribute>
         <attribute name="characters on screen">Earn</attribute>
         <attribute name="Music Presence">true</attribute>
@@ -1710,7 +1710,7 @@
       </el>
       <el index="362" start="1042.76001" end="1051.95996">
         <attribute name="narrative details - internal">Earn knows Dave would keep the money for himself, and gives it to KP instead</attribute>
-        <attribute name="narrative details - external">Earn walks up to a door that says Kyle P. and slips an envoleope with the CD and money under the door.</attribute>
+        <attribute name="narrative details - external">Earn walks up to a door that says Kyle P. and slips an envelope with the CD and money under the door.</attribute>
         <attribute name="characters on screen">Earn</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
@@ -1776,7 +1776,7 @@
         <attribute name="characters on screen">Earn, Lottie, Strange Man</attribute>
       </el>
       <el index="375" start="1104.07996" end="1107.64001">
-        <attribute name="narrative details - external">Earn continues wondering aloud to the stranger about his luck and balance. The stranger spreads nutella on bread with a plastic knife to make a sandwich.</attribute>
+        <attribute name="narrative details - external">Earn continues wondering aloud to the stranger about his luck and balance. The stranger spreads Nutella on bread with a plastic knife to make a sandwich.</attribute>
         <attribute name="characters on screen">Earn, Strange Man</attribute>
       </el>
       <el index="376" start="1107.64001" end="1112.80005">
@@ -1805,7 +1805,7 @@
         <attribute name="characters on screen">Strange Man, Earn</attribute>
       </el>
       <el index="382" start="1136.28003" end="1141.95996">
-        <attribute name="narrative details - internal">Earn misunderstands the stranger, and thinks the man is giving him adivce on how to pick up women</attribute>
+        <attribute name="narrative details - internal">Earn misunderstands the stranger, and thinks the man is giving him advice on how to pick up women</attribute>
         <attribute name="narrative details - external">Earn politely tells the stranger he does not need that advice, thanks him, and turns away.</attribute>
         <attribute name="characters on screen">Earn, Lottie, Strange Man</attribute>
       </el>
@@ -1814,7 +1814,7 @@
         <attribute name="characters on screen">Earn, Lottie, Strange Man</attribute>
       </el>
       <el index="384" start="1144.68005" end="1147.76001">
-        <attribute name="narrative details - external">The stranger turns and reaches toward Earn, holding the sandwhich, and tells him to bite it</attribute>
+        <attribute name="narrative details - external">The stranger turns and reaches toward Earn, holding the sandwich, and tells him to bite it</attribute>
         <attribute name="characters on screen">Strange Man, Earn</attribute>
       </el>
       <el index="385" start="1147.76001" end="1149.23999">
@@ -1840,7 +1840,7 @@
         <attribute name="characters on screen">Earn, Lottie</attribute>
       </el>
       <el index="390" start="1166.04004" end="1168.80005">
-        <attribute name="narrative details - external">Earn sits up and looks out the window of the ubs</attribute>
+        <attribute name="narrative details - external">Earn sits up and looks out the window of the bus.</attribute>
         <attribute name="characters on screen">Earn, Lottie</attribute>
       </el>
       <el index="391" start="1168.80005" end="1173.88">
@@ -1881,11 +1881,11 @@
         <attribute name="narrative details - external">Earn looks around, pulls his headphones out of the phone, and answers</attribute>
         <attribute name="characters on screen">Earn, Lottie</attribute>
       </el>
-      <el index="400" start="1210" end="1211.44">
+      <el index="400" start="1210" end="1211.43994">
         <attribute name="narrative details - external">Earn answers the phone.</attribute>
         <attribute name="characters on screen">Earn, Lottie</attribute>
       </el>
-      <el index="401" start="1211.44" end="1213.52002">
+      <el index="401" start="1211.43994" end="1213.52002">
         <attribute name="narrative details - internal">Alfred Paper Boy is excited.</attribute>
         <attribute name="narrative details - external">Alfred Paper Boy asks him if he hears the song playing in the background</attribute>
         <attribute name="characters on screen">Earn, Lottie</attribute>
@@ -1911,7 +1911,7 @@
       </el>
       <el index="406" start="1221.80005" end="1226.31995">
         <attribute name="narrative details - internal">Earn knows he is responsible for the song playing on the radio and is pleased with himself</attribute>
-        <attribute name="narrative details - external">Earn smiles, laughs, looks around, and jokinly remarks how quickly Alfred Paper Boy's song made it on the radio</attribute>
+        <attribute name="narrative details - external">Earn smiles, laughs, looks around, and remarks how quickly Alfred Paper Boy's song made it on the radio</attribute>
         <attribute name="characters on screen">Earn, Lottie</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
@@ -1941,7 +1941,7 @@
         <attribute name="narrative details - external">A street light above the convenience store parking lot is visible. Lightning flashes in the background.</attribute>
       </el>
       <el index="412" start="1242.47998" end="1250.43994">
-        <attribute name="narrative details - external">ALfred Paper Boy and Darius are sitting and dancing in the car in the parking lot outside the convenience store. Earn walks up to the car. Paper Boy's song is playing.</attribute>
+        <attribute name="narrative details - external">Alfred Paper Boy and Darius are sitting and dancing in the car in the parking lot outside the convenience store. Earn walks up to the car. Paper Boy's song is playing.</attribute>
         <attribute name="characters on screen">Earn, Alfred Paper Boy, Darius</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
@@ -1993,17 +1993,17 @@
         <attribute name="characters on screen">Earn, Alfred Paper Boy</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="422" start="1277.04004" end="1279.72">
+      <el index="422" start="1277.04004" end="1279.71997">
         <attribute name="narrative details - external">Dave walks up to the car and leans on the open door. Earn greets him.</attribute>
         <attribute name="characters on screen">Dave</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="423" start="1279.72" end="1280.44">
+      <el index="423" start="1279.71997" end="1280.43994">
         <attribute name="narrative details - external">Dave greets Earn, Alfred Paper Boy, and Darius.</attribute>
         <attribute name="characters on screen">Dave</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="424" start="1280.44" end="1281.56006">
+      <el index="424" start="1280.43994" end="1281.56006">
         <attribute name="narrative details - external">Earn nods. Alfred Paper Boy and Darius, who is sitting in the back seat of the car, greet Dave</attribute>
         <attribute name="characters on screen">Earn, Darius, Alfred Paper Boy</attribute>
         <attribute name="Music Presence">true</attribute>
@@ -2016,7 +2016,7 @@
       </el>
       <el index="426" start="1284.52002" end="1288">
         <attribute name="narrative details - internal">Earn is using Dave's words from earlier ("it's all about who you know") against him, to answer his question without telling him how.</attribute>
-        <attribute name="narrative details - external">Earn shurgs and coolly tells Dave that he knew somebody who let him in.</attribute>
+        <attribute name="narrative details - external">Earn shrugs and coolly tells Dave that he knew somebody who let him in.</attribute>
         <attribute name="characters on screen">Earn</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
@@ -2111,7 +2111,7 @@
         <attribute name="Music Presence">true</attribute>
       </el>
       <el index="443" start="1344.59998" end="1346.40002">
-        <attribute name="narrative details - internal">Earn grins faceteously, trying to convey to Dave that he noticed the difference and wants Dave to be conscious that he told it differently.</attribute>
+        <attribute name="narrative details - internal">Earn grins facetiously, trying to convey to Dave that he noticed the difference and wants Dave to be conscious that he told it differently.</attribute>
         <attribute name="narrative details - external">Earn grins and says he does not know</attribute>
         <attribute name="characters on screen">Earn, Darius, Alfred Paper Boy</attribute>
         <attribute name="Music Presence">true</attribute>
@@ -2159,18 +2159,18 @@
         <attribute name="characters on screen">Alfred Paper Boy, Earn</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="452" start="1365.80005" end="1367.36">
+      <el index="452" start="1365.80005" end="1367.35999">
         <attribute name="narrative details - external">Alfred tells the girl that the song playing on the radio is his.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy, Earn, Woman</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="453" start="1367.36" end="1368.76">
+      <el index="453" start="1367.35999" end="1368.76001">
         <attribute name="narrative details - internal">The woman responds rudely.</attribute>
         <attribute name="narrative details - external">The woman brushes Alfred Paper Boy off.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy, Earn, Woman</attribute>
         <attribute name="Music Presence">true</attribute>
       </el>
-      <el index="454" start="1368.76" end="1372.12">
+      <el index="454" start="1368.76001" end="1372.12">
         <attribute name="narrative details - internal">Alfred Paper Boy is offended and hurt that the woman is not impressed by him.</attribute>
         <attribute name="narrative details - external">Alfred Paper Boy yells after the woman and insults her.</attribute>
         <attribute name="characters on screen">Alfred Paper Boy, Earn</attribute>
@@ -2857,7 +2857,7 @@
       </el>
       <el index="152" start="149" end="149" />
       <el index="153" start="150" end="150">
-        <attribute name="transcription">"They offerin' that boy seven m's on the table."</attribute>
+        <attribute name="transcription">"They offering that boy seven m's on the table."</attribute>
         <attribute name="character speaking">Swiff</attribute>
       </el>
       <el index="154" start="151" end="151">
@@ -3161,7 +3161,7 @@
         <attribute name="character speaking">Darius</attribute>
       </el>
       <el index="244" start="239" end="239">
-        <attribute name="transcription">"VH1 is hiring interns. And that sounds like a joke, but they actually, they tweeted that this morninng."</attribute>
+        <attribute name="transcription">"VH1 is hiring interns. And that sounds like a joke, but they actually, they tweeted that this morning."</attribute>
         <attribute name="character speaking">Darius</attribute>
       </el>
       <el index="245" start="240" end="240" />
@@ -3191,7 +3191,7 @@
         <attribute name="character speaking">Earn</attribute>
       </el>
       <el index="253" start="248" end="248">
-        <attribute name="transcription">"I'm Darius, man! We met over there by the, when you frist walked in." "No I'm fine with talking right here."</attribute>
+        <attribute name="transcription">"I'm Darius, man! We met over there by the, when you first walked in." "No I'm fine with talking right here."</attribute>
         <attribute name="character speaking">Darius, Alfred Paper Boy</attribute>
       </el>
       <el index="254" start="249" end="249">
@@ -3648,7 +3648,7 @@
         <attribute name="character speaking">Earn</attribute>
       </el>
       <el index="380" start="376" end="376">
-        <attribute name="transcription">"are supposed to be here just to make it easier for th winners."</attribute>
+        <attribute name="transcription">"are supposed to be here just to make it easier for the winners."</attribute>
         <attribute name="character speaking">Earn</attribute>
       </el>
       <el index="381" start="377" end="377">
@@ -5911,7 +5911,7 @@
         <attribute name="scene name">Earn's Airport Job</attribute>
       </el>
       <el index="5" start="158" end="191">
-        <attribute name="scene name">Earn Visits his Parnts</attribute>
+        <attribute name="scene name">Earn Visits his Parents</attribute>
       </el>
       <el index="6" start="192" end="232">
         <attribute name="scene name">Earn visits Alfred Paper Boy</attribute>
