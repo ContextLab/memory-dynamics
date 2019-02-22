@@ -1757,7 +1757,7 @@
       </el>
       <el index="371" start="1083.56006" end="1088.40002">
         <attribute name="narrative details - internal">Earn is at first annoyed the stranger is trying to talk to him</attribute>
-        <attribute name="narrative details - external">Earn takes off his heaphones and looks at the stranger. Earn rolls his eyes.</attribute>
+        <attribute name="narrative details - external">Earn takes off his headphones and looks at the stranger. Earn rolls his eyes.</attribute>
         <attribute name="characters on screen">Earn, Lottie, Strange Man</attribute>
       </el>
       <el index="372" start="1088.40002" end="1093.56006">
@@ -2832,7 +2832,7 @@
         <attribute name="character speaking">Alfred Paper Boy</attribute>
       </el>
       <el index="146" start="143" end="143">
-        <attribute name="transcription">"Paper man, paper man, catch me in the paper, man, like Wall Street</attribute>
+        <attribute name="transcription">"Paper man, paper man, catch me in the paper, man, like Wall Street"</attribute>
         <attribute name="character speaking">Alfred Paper Boy</attribute>
       </el>
       <el index="147" start="144" end="144">
@@ -2963,7 +2963,7 @@
         <attribute name="character speaking">Dad, Mom</attribute>
       </el>
       <el index="184" start="179" end="179">
-        <attribute name="transcription">"Yes, I got a job. And thanks, Mom.</attribute>
+        <attribute name="transcription">"Yes, I got a job. And thanks, Mom."</attribute>
         <attribute name="character speaking">Earn</attribute>
       </el>
       <el index="185" start="180" end="180">
@@ -3215,7 +3215,7 @@
         <attribute name="character speaking">Alfred Paper Boy</attribute>
       </el>
       <el index="259" start="254" end="254">
-        <attribute name="transcription">"Wait, wait, not if it worked, man. Nah, if you could use a rat as a phone, that'd be genius.</attribute>
+        <attribute name="transcription">"Wait, wait, not if it worked, man. Nah, if you could use a rat as a phone, that'd be genius."</attribute>
         <attribute name="character speaking">Darius</attribute>
       </el>
       <el index="260" start="255" end="255">
@@ -3327,7 +3327,7 @@
         <attribute name="character speaking">Dave</attribute>
       </el>
       <el index="290" start="286" end="286">
-        <attribute name="transcription">"You just come from that dumpster?</attribute>
+        <attribute name="transcription">"You just come from that dumpster?"</attribute>
         <attribute name="character speaking">Dave</attribute>
       </el>
       <el index="291" start="287" end="287">
