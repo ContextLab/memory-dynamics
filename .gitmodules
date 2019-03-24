@@ -1,3 +1,7 @@
 [submodule "exp/static/lib/jsPsych"]
 	path = exp/static/lib/jsPsych
 	url = https://github.com/jspsych/jsPsych.git
+[submodule "code/cluster-scripts"]
+	path = code/cluster-scripts
+	url = https://github.com/ContextLab/cluster-tools-dartmouth.git
+	branch = eventseg
