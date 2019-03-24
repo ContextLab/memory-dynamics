@@ -1,6 +1,3 @@
 [submodule "exp/static/lib/jsPsych"]
 	path = exp/static/lib/jsPsych
 	url = https://github.com/jspsych/jsPsych.git
-[submodule "code/cluster-tools-dartmouth"]
-	path = code/cluster-tools-dartmouth
-	url = https://github.com/paxtonfitzpatrick/cluster-tools-dartmouth.git
