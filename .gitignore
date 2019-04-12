@@ -15,3 +15,4 @@ data/db/
 data/google-form-data
 data/audio/
 data/pickles/participant_models.p
+data/brains/HuthModelWeights.npy
