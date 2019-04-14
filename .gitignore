@@ -15,4 +15,6 @@ data/db/
 data/google-form-data
 data/audio/
 data/pickles/participant_models.p
+data/pickles/neurosynth_dataset.p
 data/brains/HuthModelWeights.npy
+code/neurosynth/data
