@@ -222,7 +222,7 @@ def automatic(subject, xfmname, reference, noclean=False, bbrtype="signed", pre_
     from .xfm import Transform
     from .options import config
 
-    fsl_prefix = config.get("basic", "fsl_prefix")
+    fsl_prefix = '' # config.get("basic", "fsl_prefix")
     schfile = os.path.join(os.path.split(os.path.abspath(__file__))[0], "bbr.sch")
 
     retval = None

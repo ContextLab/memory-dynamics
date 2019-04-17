@@ -11,13 +11,14 @@ from .database import db
 from .options import config
 from .xfm import Transform
 
-fsl_prefix = config.get('basic', 'fsl_prefix')
+fsl_prefix = '' #= config.get('basic', 'fsl_prefix')
 
 
 def brainmask(outfile, subject):
     raw = db.get_anat(subject, type='raw').get_filename()
     print('Brain masking anatomical...')
-    cmd = '{fsl_prefix}bet {raw} {bet} -B -v'.format(fsl_prefix=fsl_prefix, raw=raw, bet=outfile)
+    # cmd = '{fsl_prefix}bet {raw} {bet} -B -v'.format(fsl_prefix=fsl_prefix, raw=raw, bet=outfile)
+    cmd = 'bet {raw} {bet} -B -v'.format(fsl_prefix=fsl_prefix, raw=raw, bet=outfile)
     print("Calling: %s"%cmd)
     assert sp.call(cmd, shell=True) == 0, "Error calling fsl-bet"
 
@@ -29,7 +30,7 @@ def whitematter(outfile, subject, do_voxelize=False):
             voxelize(outfile, subject, surf="wm")
     except IOError:
         import nibabel
-        
+
         try:
             cache = tempfile.mkdtemp()
             print ("Attempting to segment the brain with freesurfer...")
@@ -46,7 +47,8 @@ def whitematter(outfile, subject, do_voxelize=False):
             cache = tempfile.mkdtemp()
             print("Attempt with freesurfer failed, trying again with FSL...")
             bet = db.get_anat(subject, type='brainmask').get_filename()
-            cmd = '{fsl_prefix}fast -o {cache}/fast {bet}'.format(fsl_prefix=fsl_prefix, cache=cache, bet=bet)
+            # cmd = '{fsl_prefix}fast -o {cache}/fast {bet}'.format(fsl_prefix=fsl_prefix, cache=cache, bet=bet)
+            cmd = 'fast -o {cache}/fast {bet}'.format(cache=cache, bet=bet)
             assert sp.call(cmd, shell=True) == 0, "Error calling fsl-fast"
 
             wmfl = 'fast_pve_2'
@@ -78,7 +80,7 @@ def voxelize(outfile, subject, surf='wm', mp=True):
     for pts, polys in db.get_surf(subject, surf, nudge=False):
         xfm = Transform(np.linalg.inv(nib.get_affine()), nib)
         vox += polyutils.voxelize(xfm(pts), polys, shape=shape, center=(0,0,0), mp=mp).astype('bool')
-        
+
     nib = nibabel.Nifti1Image(vox, nib.get_affine(), header=nib.get_header())
     nib.to_filename(outfile)
 
