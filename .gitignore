@@ -17,4 +17,5 @@ data/audio/
 data/pickles/participant_models.p
 data/pickles/neurosynth_dataset.p
 data/brains/HuthModelWeights.npy
+data/brains/neurosynth_decoder.joblib
 code/neurosynth/data
