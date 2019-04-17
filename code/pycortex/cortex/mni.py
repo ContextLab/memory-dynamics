@@ -53,30 +53,38 @@ def compute_mni_transform(subject, xfm,
 
     # Get anatomical image
     anat_filename = db.get_anat(subject, "brainmask").get_filename()
-    
+
     # First use flirt to align masked subject anatomical to MNI template
-    cmd = shlex.split(" ".join(["{fslprefix}flirt".format(fslprefix=fslprefix),
+    # cmd = shlex.split(" ".join(["{fslprefix}flirt".format(fslprefix=fslprefix),
+    #                  "-searchrx -180 180",
+    #                  "-searchry -180 180",
+    #                  "-searchrz -180 180",
+    #                  "-ref", template,
+    #                  "-in", anat_filename,
+    #                  "-omat", anat_to_mni_xfm]))
+
+    cmd = shlex.split(" ".join(["flirt",
                      "-searchrx -180 180",
                      "-searchry -180 180",
                      "-searchrz -180 180",
                      "-ref", template,
                      "-in", anat_filename,
                      "-omat", anat_to_mni_xfm]))
-    
+
     subprocess.call(cmd)
 
     # Then load that transform and concatenate it with the functional to anatomical transform
     anat_to_mni = np.loadtxt(anat_to_mni_xfm)
     func_to_anat = db.get_xfm(subject, xfm).to_fsl(anat_filename)
-    
+
     func_to_mni = np.dot(anat_to_mni, func_to_anat)
 
     return func_to_mni
 
-def transform_to_mni(volumedata, func_to_mni, 
+def transform_to_mni(volumedata, func_to_mni,
                      template=default_template):
     """
-    Transform data in `volumedata` to MNI space, resample at the resolution of 
+    Transform data in `volumedata` to MNI space, resample at the resolution of
     the atlas image.
 
     Parameters
@@ -87,7 +95,7 @@ def transform_to_mni(volumedata, func_to_mni,
         Transformation matrix from the space of `volumedata` to MNI space. Get this
         from `compute_mni_transform`.
     template : str, optional
-        Path to MNI template volume, used as reference for flirt. Defaults to FSL's 
+        Path to MNI template volume, used as reference for flirt. Defaults to FSL's
         MNI152_T1_1mm_brain.
 
     Returns
@@ -103,9 +111,15 @@ def transform_to_mni(volumedata, func_to_mni,
     # Save out relevant things
     volumedata.save_nii(func_nii)
     _save_fsl_xfm(func_to_mni_xfm, func_to_mni)
-    
+
     # Use flirt to resample functional data
-    subprocess.call(["{fslprefix}flirt".format(fslprefix=fslprefix),
+    # subprocess.call(["{fslprefix}flirt".format(fslprefix=fslprefix),
+    #                  "-in", func_nii,
+    #                  "-ref", template,
+    #                  "-applyxfm", "-init", func_to_mni_xfm,
+    #                  "-out", func_in_mni])
+
+    subprocess.call(["flirt",
                      "-in", func_nii,
                      "-ref", template,
                      "-applyxfm", "-init", func_to_mni_xfm,
@@ -168,7 +182,7 @@ def transform_mni_to_subject(subject, xfm, volarray, func_to_mni,
         Transformation matrix from `xfm` space to MNI space. Get this
         from compute_mni_transform.
     template : str, optional
-        Path to MNI template volume, used as reference. Defaults to FSL's 
+        Path to MNI template volume, used as reference. Defaults to FSL's
         MNI152_T1_1mm_brain.
 
     Returns
@@ -189,8 +203,14 @@ def transform_mni_to_subject(subject, xfm, volarray, func_to_mni,
 
     # Use flirt to resample data to functional space
     ref_filename = db.get_xfm(subject, xfm).reference.get_filename()
-    
-    subprocess.call(["{fslprefix}flirt".format(fslprefix=fslprefix),
+
+    # subprocess.call(["{fslprefix}flirt".format(fslprefix=fslprefix),
+    #                  "-in", mnispace_func_nii,
+    #                  "-ref", ref_filename,
+    #                  "-applyxfm", "-init", mni_to_func_xfm,
+    #                  "-out", funcspace_nii])
+
+    subprocess.call(["flirt",
                      "-in", mnispace_func_nii,
                      "-ref", ref_filename,
                      "-applyxfm", "-init", mni_to_func_xfm,
