@@ -73,7 +73,7 @@ I then estimated the content comprising each episode, recall, and prediction eve
 
 
 \subsection{Cortical map generation and activity decoding}
-To create the maps of inferred neural representation of episode and recall content, I drew upon a model derived by \cite{HuthEtal16}.  Huth et al.~created a high dimensional word-embedding space based on the co-occurence rate of more than 10,000 common words pulled from a wide range of sources.  They then fit regularized linear regression models to all voxels in the cerebral cortex (separately) of seven participants (separately), yielding the mean contribution of each dimension in their word-embedding space to each voxel's activity.  Huth et al.~cross-validated their regression model against participants' real BOLD responses while listening to a narrative held out of training.  
+To create the maps of inferred neural representation of episode and recall content, I drew upon a ``semantic atlas" derived by \cite{HuthEtal16}.  Huth et al.~created a high dimensional word-embedding space based on the co-occurence rate of more than 10,000 common words pulled from a wide range of sources.  They then fit regularized linear regression models to all voxels in the cerebral cortex (separately) of seven participants (separately), yielding the mean contribution of each dimension in their word-embedding space to each voxel's activity.  Huth et al.~cross-validated their regression model against participants' real BOLD responses while listening to a narrative held out of training.  
 
 Due to the considerable size of the Huth model's corpus, its vocabulary encompassed a high percentage of the vocabulary from my episode annotations (78\% and 76\% of words describing \textit{Atlanta} episodes one and two, and 75\% of words describing \textit{Arrested Development}).  For each of my stimulus annotation corpora, I projected the words shared between the two vocabularies into the Huth model's semantic space and weighted the resulting vector by the output of Huth et al.'s regression model.  This resulted in a number-of-voxels (37,226) by number-of-words (1,022-1,201) matrix of voxel-wise activations corresponding to each word.  By then computing the dot product of this matrix and each word's contribution to each of my 100 topic dimensions, I created a number-of-voxels by number-of-dimension (100) matrix of the neural responses corresponding to each topic dimension.  This allowed me to compute an activation map for any content vector in my topic space by weighting each dimension's brain map by the vector's coordinate along that axis.  I visualized these activation maps using the \texttt{Pycortex} toolbox \citep{GaoEtal15}.  
 
@@ -83,8 +83,10 @@ Given the activation map corresponding to an event (or a single timepoint), I so
 
 
 
-\section{Analyses to be employed and expected results}
+\section{Results}
 \subsection{Comparing immediate and delayed recall}
+I projected both the immediate and delayed recall transcripts into the topic space defined by \textit{Atlanta} episode one.  
+
 
 
 
