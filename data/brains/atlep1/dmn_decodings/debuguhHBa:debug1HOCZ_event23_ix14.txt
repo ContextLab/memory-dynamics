@@ -1,0 +1,6 @@
+Feature,../../data/brains/atlep1/rec_events/debuguhHBa:debug1HOCZ_event23_mni.nii.gz
+default mode,0.1911
+precuneus,0.1771
+default,0.1886
+mode network,0.1898
+posterior cingulate,0.1965
