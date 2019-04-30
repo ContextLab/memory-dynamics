@@ -4,10 +4,12 @@
 \usepackage{indentfirst}
 \usepackage{geometry}
 \usepackage{natbib}
+\usepackage{pxfonts}
 \usepackage{setspace}
 \usepackage{graphicx}
-\usepackage{float}
-
+%\usepackage{float}
+\usepackage{newfloat}
+\usepackage{hyperref}
 \usepackage[font=small,labelfont=bf]{caption}
 
 
@@ -16,7 +18,7 @@
 \doublespacing
 
 \title{\textit{A REALLY GOOD TITLE}}
-\author{Paxton Fitzpatrick}
+\author{Paxton C. Fitzpatrick}
 \date{\today}
 
 \bibliographystyle{apa}
@@ -25,7 +27,8 @@
 
 \maketitle
 
-\section{Introduction}
+%--------------------------------------------------INTRO--------------------------------------------------
+\section*{Introduction}
 
 In traditional free recall studies, participants are presented with a series of items (e.g.,~words, pictures, etc.), then asked to recall them to the best of their abilities. The behavioral findings yielded by such studies on recall order and transitions \citep{Murd62a, Kaha96}, temporal and semantic clustering tendencies \citep{HowaKaha02b}, and response latency \citep{MurdOkad70} have given rise to numerous models of memory encoding, storage, and retrieval \citep[e.g.,][]{AtkiShif68, HowaKaha02a, SedeEtal08}.  The functional predictions of these models have, in turn, spurred investigations into their biological underpinnings \citep[e.g.,][]{PolyEtal05a, MannEtal11,MannEtal12,HowaEtal12}.  However, the free recall paradigm is limited in its ability to assess episodic memory for real-world events \citep[see][]{KoriGold94,ChenEtal17,HukEtal18,BaldEtal18,HeusEtal18c,Mann19}.  Its inherently discretized stimuli, binary accuracy evaluation, and reliance on participants' precise reproduction of presented stimuli clash with the steady, continuous evolution of real-life experiences and the value we instead place on capturing their general gist in assessing our (or others') memories for them.
 
@@ -39,17 +42,16 @@ Predictions from \cite{HeusEtal18c}'s model have been successfully leveraged to 
 
 The human brain represents both ongoing experiences and memories in a highly distributed fashion across a range of cortical and subcortical regions (see \citealp{RissWagn12} for review).  These distributed traces map onto various extracted attributes (or ``features") of the experience, comprising both external events and the host's internal state \citep{Tulv72, Bowe72, TulvThom73,Tulv83}.  For high-level cognitive processing of a current or past experience to take place,  its distributed representations are ``bound" together and integrated to form a coherent episodic percept \citep{Trei96, AshbEtal96, Trei98}.  For memory, this process involves reinstating the cortical representations active during the event's encoding, stored across this distributed network \citep{PolyEtal05a, GelbEtal08, DankAnde10, MannEtal11, Wagn16}.  This segregated storage structure for episodic memories thereby gives rise to our cognitive ability to perceive temporally distant events as somehow related, based on the overall similarity between representations of their various contextual features \citep{AtkiShif68,HowaKaha02a,DianEtal07,SedeEtal08,PolyEtal09,ShanEtal09,ShanHowa10,ShanHowa12,HowaEtal14,Rang18}.  In turn, existing memories within this framework influence how we process and remember subsequent experiences, and each iteration of updating this framework causes subtle shifts in its stored content.  
 
-The content-sensitivity of \cite{HeusEtal18c}'s computational model and its geometric framing of experience and memory enable examining the changes to memories that reside within this framework by quantifying the geometric distortions of thought trajectories for a given experience.  Here, I leverage our modeling approach to study how episodic memories are modulated by factors including the passage of time and the contextual congruence of existing memories.  I then build upon a semantic map of content representations in the neocortex derived by \cite{HuthEtal16} to infer neural representations of 
-
-Broadly, its approach to representing episodic content reflects the brain's feature-based breakdown of an experience into distributed neural representations.  
+The content-sensitivity of \cite{HeusEtal18c}'s computational model and its geometric framing of experience and memory enable examining the changes to memories that reside within this framework by quantifying the geometric distortions of thought trajectories for a given experience.  Here, I leverage our modeling approach to study how episodic memories are modulated by factors including the passage of time and the contextual congruence of existing memories.  I then draw upon a semantic mapping of the neocortex derived by \cite{HuthEtal16} to infer neural representations of experienced and remembered content, and propose a neural basis for the inherent memorability of certain experiences beyond that of others.  
 
 
 
 
 %My thesis will investigate how the geometric structure of episodic memory is modulated by factors including the passage of time, contextual congruence of existing memories, and accuracy in predicting future experiences.  Additionally, I plan to link my findings with established anatomical and physiological results to inform and constrain hypotheses for investigations into these interactions' neurobiological bases.
 
+%--------------------------------------------------METHODS--------------------------------------------------
 
-\section{Methods}
+\section*{Methods}
 
 \begin{figure}[h]
 \centering
@@ -58,11 +60,11 @@ Broadly, its approach to representing episodic content reflects the brain's feat
 \label{fig:paradigm}
 \end{figure}
 
-\subsection{Experimental design and data collection}
+\subsection*{Experimental design and data collection}
 The experiment was designed and implemented via the PsiTurk platform \citep{GureEtal15}, and coded in a combination of JavaScript \citep[specifically, the JsPsych library;][]{deLe15} and Python.  The study took place over two one-hour sessions, separated by six to eight days (mean 6.7 days; median 6.9 days) to approximate the common time span between releases of subsequent television episodes (see Figure \ref{fig:paradigm}).  Participants ($N$=70) were divided into two equal groups. In the first session, all participants viewed the 24-minute pilot episode of the FX series, \textit{Atlanta}.  Following the episode, participants were then given up to an hour to recall its events, in order, to the best of their abilities.  Mirroring \cite{ChenEtal17} , they were asked to try to speak for a minimum of ten minutes and told that they were free to go back and describe earlier events, should they realize they missed any.  Finally, they were given up to five minutes to predict what they thought would happen in the next episode.  In the second session, all participants were again given up to one hour to recall to recall the episode viewed the prior week.  Group one then viewed the second episode of \textit{Atlanta}, while group two viewed the pilot of \textit{Arrested Development}.  Both groups finished by recalling the newly watched episode in the same manner.  Eleven subjects' data were discarded for various reasons prior to processing and analysis: five did not follow the provided instructions, two did not complete the task, two did not return for the second session, one dropped out due to illness, and one was unable to complete the experiment due to technical issues.  The data analyzed comprise the remaining 59 participants (30 in group one; 29 in group two).
 
 
-\subsection{Stimulus annotation and audio transcription}
+\subsection*{Stimulus annotation and audio transcription}
 The ability of \cite{HeusEtal18c}'s approach to model the explicit content of a naturalistic experience relies on the availability of detailed, hand-generated annotations that characterize the experience's evolving content.  To create the annotation corpus for each television episode, I used ANVIL \citep{Kipp01}, along with a custom XML specification file to record the following features for every camera shot (see Figure \ref{fig:schematic}A for partial example):
 
 \singlespacing
@@ -90,20 +92,20 @@ All participant audio was transcribed using the Google Cloud Speech-to-Text API 
 \end{figure}
 
 
-\subsection{Dynamic content modeling}
+\subsection*{Dynamic content modeling}
 Building off of \cite{HeusEtal18c}, I created a separate representational space corresponding to each episode.  Using \texttt{Hypertools} \citep{HeusEtal18a} and its underlying \texttt{scikit-learn} \citep{PedrEtal11} implementation, I trained a topic model \citep{BleiEtal03} on the collection of hand-generated annotations for each presented episode.
-This topic modeling approach gives rise to a high-dimensional space whose axes represent the latent themes (or ``topics") present in the collection of ``documents" (in this case, annotations) upon which the model was trained.  To create the document corpus for the topic models, I first concatenated the text describing all features within a single shot to create a multiset of words that captures the shot's content.  I then organized these ``bags of words" into overlapping sliding windows spanning 50 consecutive shots, with each window offset from the previous by one (i.e., the first window encompassed shots 1-50, the second encompassed shots 2-51, etc.).  The fact that the composition of each window changes by only a small fraction with each shift of its center reflects the well established theory that features of both the external world and individuals' internal mental states tend to drift gradually over time (\citealt{HowaKaha02a}; see \citealt{Kaha12,MannEtal15} for review).  
+This topic modeling approach gives rise to a high-dimensional space whose axes represent the latent themes (or ``topics") present in the collection of ``documents" (in this case, annotations) upon which the model was trained.  To create the document corpus for the topic models, I first concatenated the text describing all features within a single shot to create a multiset of words that, together, capture the shot's content.  I then organized these ``bags of words" into overlapping sliding windows spanning 50 consecutive shots, with each window offset from the previous by one (i.e., the first window encompassed shots 1-50, the second encompassed shots 2-51, etc.).  The fact that the composition of each window changes by only a small fraction with each shift of its center reflects the well established theory that features of both the external world and individuals' internal mental states tend to drift gradually over time (\citealt{HowaKaha02a}; see \citealt{Kaha12,MannEtal15} for review).  
 % move defining topic models and discussion of them to intro?
 
-Training a topic model on the resulting document corpus entails multiple steps.  First, I fit an instance of \texttt{scikit-learn}'s \texttt{CountVectorizer} class to the union of words across all windows (excluding English stop-words).  I used this vectorizer to subsequently transform the windows into a series of vectors describing the number of times each word appeared in each window.  I then fit a \texttt{LatentDirichletAllocation} instance to these vectors, yielding a number-of-annotations by number-of-topics matrix.  This matrix describes the trajectory of the episode's evolving content through its self-defined representational space.  Along this trajectory, the coordinates at each point reflect the weighted combination of topics present in the content at that point. 
+Training a topic model on the resulting document corpus entailed multiple steps.  First, I fit an instance of \texttt{scikit-learn}'s \texttt{CountVectorizer} class to the union of words across all annotation sliding windows (excluding English stop-words).  I used this vectorizer to subsequently transform the windows into a series of vectors denoting the number of times each word appeared in each window.  I then fit a \texttt{LatentDirichletAllocation} instance to these vectors, yielding a number-of-annotations by number-of-topics matrix.  This matrix describes the trajectory of the episode's evolving content through its self-defined representational space.  Along this trajectory, the coordinates at each point reflect the weighted combination of topics present in the content at that point. 
 
 Within this framework, enabling comparison between the trajectory of an episode's content and that of participants' corresponding recalls or predictions requires that the trajectories share two features: the space in which they are defined and their temporal dimension.  To facilitate the first, I similarly parsed participants' transcripts into overlapping sliding windows (of 200 words) and used the \texttt{CountVectorizer} instance fit to the corresponding episode's vocabulary to create word-count vectors. I then used the \texttt{LatentDirichletAllocation} instance already trained on that episode's content to transform the recall/prediction windows into the \textit{same} representational space as the reference episode.  In order to standardize the lengths of a given episode and each participant's recall/prediction for it, I interpolated the time series of the episode trajectory to a resolution of one second (using the time at the midpoint of each shot as a reference, Figure \ref{fig:schematic}C) and resampled all participant trajectories to the same length (Figure \ref{fig:schematic}F).  
 
 Note: as part of my topic modeling procedure, I chose to inherit various parameters from \cite{HeusEtal18c}, specifically the episode and recall sliding window lengths and the number of topics passed to the model.  Heusser et al. performed a grid search over these parameters, choosing a combination that resulted in the strongest relationship between model- and human-generated memory memory quality metrics (50-annotation stimulus windows, 10-sentence recall windows, and 100 topics).  As the decoding algorithm I used does not identify sentence breaks, I set my recall window size based on the average number of words in Heusser et al.'s recall windows.
 
 
-\subsection{Event segmentation, and video-recall mapping}
-Next, I used Hidden Markov models \citep{Rabi89} to segment the continuous episode, recall, and prediction trajectories into $K$ discrete ``events" (Figure \ref{fig:schematic}D,G).  Given a series of real-life events, the content within a  tends to be highly self-similar (i.e., revolving around a specific set of people, actions, or ideas) and dissimilar to other, separate events.  For each trajectory, I searched over a range of possible $K$-values (2-50) to identify the division that most likely corresponded to the episodes' distinct scenes and participants' descriptions of them.  The optimal $K$-values were selected based on the maximum ratio of within-event content similarity to across-event content similarity, given by the expression
+\subsection*{Event segmentation, and video-recall mapping}
+Next, I used Hidden Markov models \citep{Rabi89} to segment the continuous episode, recall, and prediction trajectories into $K$ discrete ``events" (Figure \ref{fig:schematic}D,G).  Given a series of real-life events, the content within an event tends to be highly self-similar (i.e., revolving around a specific set of people, actions, or ideas) and dissimilar to other, separate events.  For each trajectory, I searched over a range of possible $K$-values (2-50) to identify the division that most likely corresponded to the episodes' distinct scenes and participants' descriptions of them.  The optimal $K$-values were selected based on the maximum ratio of within-event content similarity to across-event content similarity, given by the expression
 \[
   \argmax_K \left[\frac{a}{b} - \frac{K}{\alpha}\right].
 \]
@@ -112,12 +114,17 @@ Here, $a$ represents the average correlation between topic vectors at timepoints
 I then estimated the content comprising each episode, recall, and prediction event by averaging over the topic vectors contained between the event boundaries (Figure \ref{fig:schematic}E,H).  This allowed me to map between recalled/predicted content and presented content by finding the episode event to which each recall/prediction event was maximally similar, based on their average topic vectors (Figure \ref{fig:schematic}I).  Importantly, these matches were computed in a non-exclusive way (i.e., multiple recall events were allowed to correspond to the same episode event), enabling me to account for participants who chose to go back further describe an early scene at a later point during the recall session.  
 
 
-\subsection{Trajectory embedding and visualization}
+\subsection*{Trajectory embedding and visualization}
 
-To visualize the high-dimensional content trajectories in an intuitive way, I used Uniform Manifold Approximation and Projection \citep[UMAP;][]{McInHeal18} to project the 100 topic dimensions onto a 2D plane.  In order for the episode, recall, and prediction content to be comparable within the UMAP embedding space, the 2D plane in which they are embedded must share the same dimensions.  To ensure this, I concatenated the event-segmented episode, average recall, and individual recall trajectories into a total-number-of-events by topics (100) matrix and embedded them simultaneously.  I then separated the resulting matrix (of shape total-number-of-events by two) along the row indices of the originally concatenated trajectories to recover a separate embedding for the episode, average recall, and individual recalls on a shared plane.  
+To visualize the high-dimensional content trajectories in an intuitive way, I used Uniform Manifold Approximation and Projection \citep[UMAP;][]{McInHeal18} to project the 100 topic dimensions onto a 2D plane.  In order for the episode, recall, and prediction content to be comparable within the UMAP embedding space, the 2D plane in which they are embedded must share the same dimensions.  To ensure this, I concatenated the event-segmented episode, average recall, and individual recall trajectories into a total-number-of-events by topics (100) matrix and embedded them simultaneously.  I then separated the resulting matrix (of shape total-number-of-events by two) along the row indices of the originally concatenated trajectories to recover a separate embedding for the episode, average recall, and individual recalls on a shared plane.
+
+To estimate the variability across participants' recall vectors, I computed, for each participant, the line segments connecting successive recall events.  I then divided the embedding space into a 24 x 24 grid of evenly spaced points and defined a circular area centered on each point whose radius was the distance between adjacent points.  I found the set of line segments across all participants that passed through this circle and performed a Rayleigh test on the angles formed by the these segments and the embedding space's $x$-axis to discern whether the event transition directions were reliably similar.  The resulting $p$-values were corrected using the Benjamani-Hochberg procedure.
+
+%To create Fig_____
+%I corrected  and scaled the arrow lengths to be inversely proportional to the corrected $p$-value (shorter arrows denote more highly significant results).  
 
 
-\subsection{Cortical map generation and activity decoding}
+\subsection*{Cortical map generation and activity decoding}
 To create the maps of inferred neural representation of episode and recall content, I drew upon a ``semantic atlas" derived by \cite{HuthEtal16}.  Huth et al.~created a high dimensional word-embedding space based on the co-occurence rate of more than 10,000 common words pulled from a wide range of sources.  They then fit regularized linear regression models to all voxels in the cerebral cortex (separately) of seven participants (separately), yielding the mean contribution of each dimension in their word-embedding space to each voxel's activity.  Huth et al.~cross-validated their regression model against participants' real BOLD responses while listening to a narrative held out of training.
 
 Due to the considerable size of the Huth model's corpus, its vocabulary encompassed a high percentage of the vocabulary from my episode annotations (78\% and 76\% of words describing \textit{Atlanta} episodes one and two, and 75\% of words describing \textit{Arrested Development}).  For each of my stimulus annotation corpora, I projected the words shared between the two vocabularies into the Huth model's semantic space and weighted the resulting vector by the output of Huth et al.'s regression model.  This resulted in a number-of-voxels (37,226) by number-of-words (1,022-1,201) matrix of voxel-wise activations corresponding to each word.  By then computing the dot product of this matrix and each word's contribution to each of my 100 topic dimensions, I created a number-of-voxels by number-of-dimension (100) matrix of the neural responses corresponding to each topic dimension.  This allowed me to compute an activation map for any content vector in my topic space by weighting each dimension's brain map by the vector's coordinate along that axis.  I visualized these activation maps using the \texttt{Pycortex} toolbox \citep{GaoEtal15}.
@@ -127,9 +134,9 @@ Given the activation map corresponding to an event (or a single timepoint), I so
 
 
 
-
-\section{Results}
-\subsection{Comparing immediate and delayed recall}
+%--------------------------------------------------RESULTS--------------------------------------------------
+\section*{Results}
+\subsection*{Comparing immediate and delayed recall}
 I projected both the immediate and delayed recall transcripts into the topic space defined by \textit{Atlanta} episode one.  
 
 
@@ -145,9 +152,9 @@ I projected both the immediate and delayed recall transcripts into the topic spa
 
 
 
-
-\section{Implications}
-
+%--------------------------------------------------DISCUSSION--------------------------------------------------
+\section{Discussion}
+Broadly, my approach to representing episodic content reflects the brain's feature-based breakdown of an experience into distributed neural representations.  
 
 
 
