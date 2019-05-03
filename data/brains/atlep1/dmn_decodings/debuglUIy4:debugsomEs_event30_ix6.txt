@@ -1,0 +1,6 @@
+Feature,../../data/brains/atlep1/rec_events/debuglUIy4:debugsomEs_event30_mni.nii.gz
+default mode,0.2095
+precuneus,0.1865
+default,0.2097
+mode network,0.2101
+posterior cingulate,0.1968

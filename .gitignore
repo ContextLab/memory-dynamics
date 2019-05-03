@@ -7,9 +7,12 @@
 *.bbl
 *.blg
 *.dvi
+*.out
 *.ipynb_checkpoints
 *.pyc
 *#*
+*.ai
+*.joblib
 credentials.json
 data/db/
 data/google-form-data
@@ -18,5 +21,7 @@ data/pickles/participant_models.p
 data/pickles/neurosynth_dataset.p
 data/brains/HuthModelWeights.npy
 data/brains/neurosynth_decoder.joblib
+data/brains/*/rec_events/
+data/brains/*/pres_events/
 code/neurosynth/
 code/pycortex/
