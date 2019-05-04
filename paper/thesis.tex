@@ -55,7 +55,7 @@ The content-sensitivity of \cite{HeusEtal18c}'s computational model and its geom
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{figures/paradigm}
+\includegraphics[width=\textwidth]{figures/paradigm-rast}
 \caption{\small \textbf{Experimental paradigm.}  Visual timeline of the two study sessions, taking place approximately one week apart.  During session 1, participants viewed \textit{Atlanta} episode 1, immediately recalled its content for up to an hour (10 minutes minimum), and predicted what would happen in the next episode for up to five minutes.  During session 2, participants again recalled \textit{Atlanta} episode 1 before viewing recalling either \textit{Atlanta} episode 2 or \textit{Arrested Development}.}
 \label{fig:paradigm}
 \end{figure}
@@ -86,7 +86,7 @@ All participant audio was transcribed using the Google Cloud Speech-to-Text API 
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\textwidth]{figures/modeling-schematic}
+\includegraphics[width=\textwidth]{figures/modeling-schematic-rast}
 \caption{\small \textbf{Modeling the explicit content of episodes and recalls.}  \textbf{A.} Three of the eight features hand-annotated for each scene and fed to the episode content model, corresponding to a sample scene from \textit{Atlanta} episode 1. \textbf{B.} A short segment of an example participant's recall, corresponding to the same scene.  \textbf{C.} The distribution of weights for each topic (100) for each second of \textit{Atlanta} episode 1 (1466).  \textbf{D.} Temporal correlation matrix of the episode topic vectors shown in panel C.  Boundaries between events ($K=32$) identified by the HMM are shown in yellow.  \textbf{E.} Average topic vectors for each of the 32 \textit{Atlanta} episode 1 events. \textbf{F.}  Topic weight distribution at each timepoint of an example participant's immediate recall for \textit{Atlanta} episode 1 (resampled to the episode's length). \textbf{G.} Temporal correlation matrix of the recall topic vectors shown in panel F.  Event boundaries ($K=13$) are outlined in yellow, analogously to panel D.  \textbf{H.} Average topic vectors for each of the example participant's 13 recall events.  \textbf{I.} Correlations between average topic vectors for every pair of \textit{Atlanta} episode 1 events (panel E) and the example participant's recall events (panel H).  The most similar (i.e., most highly correlated) episode event to each recall event is outlined in yellow.  \textbf{J.} Average correlations between each \textit{Atlanta} episode 1 event and each recall event across all participants ($N=59$).  The best-matching episode event for each recall event is outlined in yellow, analogously to panel I.  \textbf{Panels C-J}: darker colors indicate greater values; range: [0, 1].  Heat maps were generated using \texttt{Seaborn} \citep{WaskEtal16}.} 
 \label{fig:schematic}
 \end{figure}
@@ -114,9 +114,9 @@ I then estimated the content comprising each episode, recall, and prediction eve
 
 
 \subsection*{Trajectory embedding and visualization}\label{sec:embedding}
-To visualize the high-dimensional content trajectories in an intuitive way, I used Uniform Manifold Approximation and Projection \citep[UMAP;][]{McInHeal18} to project the 100 topic dimensions onto a 2D plane.  In order for the episode, recall, and prediction content to be comparable within the UMAP embedding space, the 2D plane in which they are embedded must share the same dimensions.  To ensure this, I concatenated the event-segmented episode, average recall, and individual recall trajectories into a total-number-of-events by topics (100) matrix and embedded them simultaneously.  I then separated the resulting matrix (of shape total-number-of-events by two) along the row indices of the originally concatenated trajectories to recover a separate embedding for the episode, average recall, and individual recalls on a shared plane.
+To visualize the high-dimensional content trajectories in an intuitive way, I used Uniform Manifold Approximation and Projection \citep[UMAP;][]{McInHeal18} to project the 100 topic dimensions onto a 2D plane.  In order for the episode, recall, and prediction content to be comparable within the UMAP embedding space, the 2D plane in which they are embedded must share the same dimensions.  To ensure this, I concatenated the event-segmented episode, average recall, and all individual recall trajectories into a total-number-of-events by topics (100) matrix and embedded them simultaneously.  I then separated the resulting matrix (of shape total-number-of-events by two) along the row indices of the originally concatenated trajectories to recover a separate embedding for the episode, average recall, and individual recalls on a shared plane.
 
-To estimate the variability across participants' recall vectors, I computed, for each participant, the line segments connecting successive recall events.  I then divided the embedding space into a 24 x 24 grid of evenly spaced points and defined a circular area centered on each point whose radius was the distance between adjacent points.  I found the set of line segments across all participants that passed through this circle and performed a Rayleigh test on the angles formed by the these segments and the embedding space's $x$-axis to discern whether the event transition directions were reliably similar.  The resulting $p$-values were corrected using the Benjamani-Hochberg procedure.
+To estimate the consistency of participants' recall transitions, I computed, for each participant, the line segments connecting successive recall events.  I then divided the embedding space into a 48 x 48 grid of evenly spaced points and defined a circular area centered on each point whose radius was the distance between adjacent points.  I found the set of line segments across all participants that passed through this circle, and performed a Rayleigh test on the angles formed by the these segments and the embedding space's $x$-axis to discern whether the event transition directions were reliably similar.  The resulting $p$-values were corrected using the Benjamani-Hochberg procedure.
 
 %To create Fig_____
 %I corrected  and scaled the arrow lengths to be inversely proportional to the corrected $p$-value (shorter arrows denote more highly significant results).  
@@ -152,21 +152,56 @@ While timepoint-wise assessments are the simplest form of comparison between tho
 
 I segmented the episode and recall trajectories, found the episode event to which each recall event corresponded (see \hyperref[sec:eventseg]{\textit{Event segmentation and episode-recall mapping}} for details).  Figure \ref{fig:immdel}D shows that nearly all episode events were, on average, recalled more precisely immediately following viewing than after the delay.  Though intuitive, this finding confirmed an improvement in my models' reflection of real-world memory due to the segmentation.  These differences, surprisingly, are fairly small in scale and average event-wise recall precision is strikingly similar between immediate and delayed sessions (Figure \ref{fig:immdel}B). 
 
-I then examined the interactions between immediate and delayed recall precision on a per-participant basis.  For each participant, I computed the average immediate and delayed precisions across events that he/she recalled in both sessions.  As may be expected, participants who immediately recalled events with a high degree of precision were also more likely to perform well in the delayed recall task (Figure \ref{fig:immdel}G).  Interestingly, however, higher performance in immediate recall also led to a larger loss in precision over the course of the delay (Figure \ref{fig:immdel}I).  This was true in terms of both raw precision decrease and proportional decrease relative to their immediate recall precision.  The same set of relationships surfaced in analyzing the overall memorability of \textit{Atlanta} episode one events: those that were highly memorable (i.e., recalled with high precision, on average) immediately following viewing retained this quality a week later (Figure \ref{fig:immdel}H), but participants were more likely to discard information pertinent to precise recall of those events in that time (Figure \ref{fig:immdel}J).
+I then examined the interactions between immediate and delayed recall precision on a per-participant basis.  For each participant, I computed the average immediate and delayed precisions across events that he or she recalled in both sessions.  As may be expected, participants who immediately recalled events with a high degree of precision were also more likely to perform well in the delayed recall task (Figure \ref{fig:immdel}G).  Interestingly, however, higher performance in immediate recall also led to a larger loss in precision over the course of the delay (Figure \ref{fig:immdel}I).  This was true in terms of both raw precision decrease and proportional decrease relative to their immediate recall precision.  The same set of relationships surfaced in analyzing the overall memorability of \textit{Atlanta} episode one events: those that were highly memorable (i.e., recalled with high precision, on average) immediately following viewing retained this quality a week later (Figure \ref{fig:immdel}H), but participants were more likely to discard information pertinent to precise recall of those events in that time (Figure \ref{fig:immdel}J).
 
 \subsection*{Visualizing recall variation}
-Panels A and B of Figure \ref{fig:immdel} show that recall precision was, on average, highly similar between immediate and delayed sessions, and panels E and F suggest that recalled content was statistically equivalent.  However, bearing in mind that these thought trajectories exist in a high-dimensional space, they may differ from the experience's trajectory or from each other along numerous axes.  Thus, while they are informative measures of overall content representation, the 2D analyses outlined in \ref{fig:immdel}A, B, E, and F fail to capture the nuance of memory variation.
+Panels A and B of Figure \ref{fig:immdel} show that recall precision was, on average, highly consistent between immediate and delayed sessions, and panels E and F suggest that variability in recalled content was statistically similar.  However, because thought trajectories exist in high-dimensional spaces, they may differ from the corresponding experience's trajectory (or from each other) along numerous axes.  Thus, while they are useful baseline measures of overall content representation, the 2D analyses outlined in \ref{fig:immdel}A, B, E, and F fail to capture more nuanced trends in memory variation.
 
-To better visualize and assess the content of the episodes and their recovery though memory, I embedded their high-dimensional trajectories in a shared plane using Uniform Manifold Approximation and Projection \citep[UMAP;][]{McInHeal18}, as outlined in \hyperref[sec:embedding]{\textit{Trajectory embedding and visualization}}.  Although this embedding is also a two-dimensional space, a major advantage to the UMAP algorithm is the creation of an embedding space that best preserves the distribution of relative similarities between data in their native high-dimensional space (in other words, nearby points in the UMAP space are also clustered together in the 100D topic space, along their most significant axes).  UMAP's approach to dimensionality reduction is in many aspects similar to that of t-SNE, but differs in two ways that make it the optimal choice in this case.  While t-SNE intentionally magnifies the embedding distance between nearby points, UMAP more successfully preserves the data's global structure \citep{BechEtal19}.  Because many events were remembered with high precision (Figure \ref{fig:immdel}B, recall content across both participants and sessions was highly similar (\ref{fig:immdel}F), increasing small differences would blur the distinction between well and poorly remembered events, and improperly upweight recall variability.  Further, \cite{BechEtal19} found UMAP to be better suited to preserving the structure of continuous trajectories, providing a basis for its preferability when working with time series data.
+To better visualize and assess the content of the episodes and their recovery though memory, I embedded their high-dimensional trajectories in a shared plane using Uniform Manifold Approximation and Projection \citep[UMAP;][]{McInHeal18}, as outlined in \hyperref[sec:embedding]{\textit{Trajectory embedding and visualization}}.  Although this embedding also gives rise to a two-dimensional space, a major advantage to the UMAP algorithm is the creation of a Euclidean distance-based embedding plane that best preserves the distribution of relative similarities between data in their native high-dimensional space (in other words, nearby points in the UMAP space are also clustered together in the 100D topic space, along their most significant axes).  UMAP's approach to dimensionality reduction is in many aspects similar to that of t-SNE, but differs in two ways that make it the optimal choice for reducing memory vectors.  While t-SNE intentionally magnifies the embedding distance between nearby points, UMAP more successfully preserves the data's global structure \citep{BechEtal19}.  Because many events were remembered with high precision (Figure \ref{fig:immdel}B), recalled content across both participants and sessions was highly similar (\ref{fig:immdel}F), increasing small differences would unjustly blur the distinction between poorly and well remembered events, and expand minor deviations in topic proportions.  Further, \cite{BechEtal19} found UMAP to be better suited to preserving the structure of continuous trajectories, providing a basis for its preferability when working with time series data.
 
+Figures \ref{fig:a1emb}, \ref{fig:delemb}, \ref{fig:a2emb}, and \ref{fig:ademb} display the reduced content of each recall session in a space shared by the reference episode.  In each figure, panel A shows the path followed by the episode's content, with colored dots representing the location in space of each segmented event.  Panel B analogously shows the average recall across participants, alongside the episode (grey).  Visual inspection of panel B reveals that while distances between the average recall events and those of the episode vary (reflective of the pattern in \ref{fig:immdel}B), participants were, overall, highly successful in preserving the general \textit{shape} of the episode content's path in memory.  This suggests that while the memorability of the various subsections of an experience may differ, human memory preserves both a broad overview of the experience (its general ``gist") and those subsections' relationship to one another.  To assess how consistently this shape was recovered across participants, I analyzed whether the direction in which a thought trajectory travels as a person transitions to recalling successive events could be predicted by the location in space of the current recall event.  For each participant, I computed the set of angles formed by line segments connecting successive recall events and the embedding space's $x$-axis.  I then divided the embedding space into a 48x48 grid and performed a Rayleigh test on the distribution of angles passing through each grid point (see \hyperref[sec:embedding]{\textit{Trajectory embedding and visualization}} for details). The blue arrows in \ref{fig:a1emb}B, \ref{fig:delemb}B, \ref{fig:a2emb}B, and \ref{fig:ademb}B reflect grid points where the angles were reliably consistent ($p < 0.05$, corrected).  Unfortunately, this test is not sensitive to points where line segments between consecutive embedded events intersect (see \ref{fig:a2emb}B, \ref{fig:ademb}B).  
+
+Panel C of each embedding figure shows individuals' recall pathes (grey) and segmented events, with the average participant overlaid in black. Here, recall events are colored by their corresponding episode event.  In most instances, the series of events recalled by individual participants follows a rough outline of the across-participant average.  However, the number of events identified by segmentation approach (see \hyperref[sec:eventseg]{\textit{Event segmentation and episode-recall mapping}}) is highly variant.  In other words, the content comprising individuals' high-level gists of an experience as captured in memory are fairly regular—what varies among people is the sampling rate along that gist's trajectory, or the distinctiveness of memory for different sections of content.
+
+I initially hypothesized that over time, differences across individuals' thought trajectories for \textit{Atlanta} episode one would fade, as idiosyncratic recall of specific details of viewed content were discarded and individuals converged upon a memory representation of events' high-level details.  The similarity between immediate and delayed precision scores (Figure \ref{fig:immdel}A,B) content variability trends (\ref{fig:immdel}E,F) would appear to refute this idea, as would the analysis conducted in Figure \ref{fig:immdelemb}.  Here, I projected both immediate and delayed recall onto a shared embedding space so as to directly compare between the two trajectories.  Again one can see the striking similarity between the paths traversed by the average immediate and delayed recalls (\ref{fig:immdelemb}B,C) as well as the fidelity with which they recover the episode's evolving content (\ref{fig:immdelemb}A).  However, the nature of recall idiosyncrasies revealed in Figures \ref{fig:a1emb}, \ref{fig:delemb}, \ref{fig:a2emb}, and \ref{fig:ademb} (consistent recovery of a common recall trajectory, but at inconsistent sampling rates) suggest a better method of comparing memory generalization over time.
+
+Figure \ref{fig:immdelemb} displays each participant's immediate and delayed event recalls, overlaid on the episode trajectory (grey).  Immediate recall events are outlined in black so as to be distinguishable from delayed recalls.  Comparing participants' sampling rates between the two recall sessions, I found that after a week's time, the trajectories segmented into fewer events than they did initially (an average of 14.2, down from 17.4) and that this difference was significant ($t(58)=-2.2, p=0.03$).  I a similar result when comparing the number of \textit{unique} episode events the recall events mapped onto: 
 
 
 
 \begin{figure}[p!]
 \centering
-\includegraphics[width=\textwidth]{figures/embedding-atlep1}
+\includegraphics[width=\textwidth]{figures/embedding-atlep1-rast}
 \caption{\small \textbf{Atlanta episode }}
 \label{fig:a1emb}
+\end{figure}
+
+\begin{figure}[p!]
+\centering
+\includegraphics[width=\textwidth]{figures/embedding-delayed-rast}
+\caption{\small \textbf{Atlanta episode }}
+\label{fig:delemb}
+\end{figure}
+
+\begin{figure}[p!]
+\centering
+\includegraphics[width=\textwidth]{figures/embedding-atlep2-rast}
+\caption{\small \textbf{Atlanta episode }}
+\label{fig:a2emb}
+\end{figure}
+
+\begin{figure}[p!]
+\centering
+\includegraphics[width=\textwidth]{figures/embedding-arrdev-rast}
+\caption{\small \textbf{Atlanta episode }}
+\label{fig:ademb}
+\end{figure}
+
+\begin{figure}[p!]
+\centering
+\includegraphics[width=\textwidth]{figures/embedding-immdel-rast}
+\caption{\small \textbf{Atlanta episode }}
+\label{fig:immdelemb}
 \end{figure}
 
 
@@ -182,56 +217,56 @@ The repeated exposure of participants in group A (i.e., those who viewed another
 
 
 
-\begin{figure}[H]
+\begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth]{figures/content-memorability-atlep1}
+\includegraphics[width=\textwidth]{figures/content-memorability-atlep1-rast}
 \caption{\small \textbf{insert caption}}
 \label{fig:a1content}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth]{figures/content-memorability-delayed}
+\includegraphics[width=\textwidth]{figures/content-memorability-delayed-rast}
 \caption{\small \textbf{insert caption}}
 \label{fig:delcontent}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth]{figures/content-memorability-atlep2}
+\includegraphics[width=.5\textwidth]{figures/content-memorability-atlep2-rast}
 \caption{\small \textbf{insert caption}}
 \label{fig:a2content}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth]{figures/content-memorability-arrdev}
+\includegraphics[width=\textwidth]{figures/content-memorability-arrdev-rast}
 \caption{\small \textbf{insert caption}}
 \label{fig:adcontent}
 \end{figure}
 
-\begin{figure}[p!]
+\begin{figure}[p]
 \centering
 \includegraphics[width=\textwidth]{figures/corrmats-atlep1}
 \caption{\small \textbf{Atlanta episode }}
 \label{fig:a1corrmats}
 \end{figure}
 
-\begin{figure}[p!]
+\begin{figure}[p]
 \centering
 \includegraphics[width=\textwidth]{figures/corrmats-delayed}
 \caption{\small \textbf{Atlanta episode }}
 \label{fig:delcorrmats}
 \end{figure}
 
-\begin{figure}[p!]
+\begin{figure}[p]
 \centering
 \includegraphics[width=\textwidth]{figures/corrmats-atlep2}
 \caption{\small \textbf{Atlanta episode }}
 \label{fig:a2corrmats}
 \end{figure}
 
-\begin{figure}[p!]
+\begin{figure}[p]
 \centering
 \includegraphics[width=\textwidth]{figures/corrmats-arrdev}
 \caption{\small \textbf{Atlanta episode }}
