@@ -154,7 +154,7 @@ I segmented the episode and recall trajectories, found the episode event to whic
 
 I then examined the interactions between immediate and delayed recall precision on a per-participant basis.  For each participant, I computed the average immediate and delayed precisions across events that he or she recalled in both sessions.  As may be expected, participants who immediately recalled events with a high degree of precision were also more likely to perform well in the delayed recall task (Figure \ref{fig:immdel}G).  Interestingly, however, higher performance in immediate recall also led to a larger loss in precision over the course of the delay (Figure \ref{fig:immdel}I).  This was true in terms of both raw precision decrease and proportional decrease relative to their immediate recall precision.  The same set of relationships surfaced in analyzing the overall memorability of \textit{Atlanta} episode one events: those that were highly memorable (i.e., recalled with high precision, on average) immediately following viewing retained this quality a week later (Figure \ref{fig:immdel}H), but participants were more likely to discard information pertinent to precise recall of those events in that time (Figure \ref{fig:immdel}J).
 
-\subsection*{Visualizing recall variation}\label{trajresults}
+\subsection*{Visualizing recall variation}\label{sec:trajresults}
 Panels A and B of Figure \ref{fig:immdel} show that recall precision was, on average, highly consistent between immediate and delayed sessions, and panels E and F suggest that variability in recalled content was statistically similar.  However, because thought trajectories exist in high-dimensional spaces, they may differ from the corresponding experience's trajectory (or from each other) along numerous axes.  Thus, while they are useful baseline measures of overall content representation, the 2D analyses outlined in \ref{fig:immdel}A, B, E, and F fail to capture more nuanced trends in memory variation.
 
 To better visualize and assess the content of the episodes and their recovery though memory, I embedded their high-dimensional trajectories in a shared plane using Uniform Manifold Approximation and Projection \citep[UMAP;][]{McInHeal18}, as outlined in \hyperref[sec:embedding]{\textit{Trajectory embedding and visualization}}.  Although this embedding also gives rise to a two-dimensional space, a major advantage to the UMAP algorithm is the creation of a Euclidean distance-based embedding plane that best preserves the distribution of relative similarities between data in their native high-dimensional space (in other words, nearby points in the UMAP space are also clustered together in the 100D topic space, along their most significant axes).  UMAP's approach to dimensionality reduction is in many aspects similar to that of t-SNE, but differs in two ways that make it the optimal choice for reducing memory vectors.  While t-SNE intentionally magnifies the embedding distance between nearby points, UMAP more successfully preserves the data's global structure \citep{BechEtal19}.  Because many events were remembered with high precision (Figure \ref{fig:immdel}B), recalled content across both participants and sessions was highly similar (\ref{fig:immdel}F), increasing small differences would unjustly blur the distinction between poorly and well remembered events, and expand minor deviations in topic proportions.  Further, \cite{BechEtal19} found UMAP to be better suited to preserving the structure of continuous trajectories, providing a basis for its preferability when working with time series data.
@@ -215,61 +215,61 @@ The repeated exposure of participants in group A (i.e., those who viewed another
 
 
 
-\begin{figure}[p]
-\centering
-\includegraphics[width=\textwidth]{figures/content-memorability-atlep1-rast}
-\caption{\small \textbf{insert caption}}
-\label{fig:a1content}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[width=\textwidth]{figures/content-memorability-delayed-rast}
-\caption{\small \textbf{insert caption}}
-\label{fig:delcontent}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[width=.5\textwidth]{figures/content-memorability-atlep2-rast}
-\caption{\small \textbf{insert caption}}
-\label{fig:a2content}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[width=\textwidth]{figures/content-memorability-arrdev-rast}
-\caption{\small \textbf{insert caption}}
-\label{fig:adcontent}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[width=\textwidth]{figures/corrmats-atlep1}
-\caption{\small \textbf{Atlanta episode }}
-\label{fig:a1corrmats}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[width=\textwidth]{figures/corrmats-delayed}
-\caption{\small \textbf{Atlanta episode }}
-\label{fig:delcorrmats}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[width=\textwidth]{figures/corrmats-atlep2}
-\caption{\small \textbf{Atlanta episode }}
-\label{fig:a2corrmats}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[width=\textwidth]{figures/corrmats-arrdev}
-\caption{\small \textbf{Atlanta episode }}
-\label{fig:adcorrmats}
-\end{figure}
+%\begin{figure}[p]
+%\centering
+%\includegraphics[width=\textwidth]{figures/content-memorability-atlep1-rast}
+%\caption{\small \textbf{insert caption}}
+%\label{fig:a1content}
+%\end{figure}
+%
+%\begin{figure}[p]
+%\centering
+%\includegraphics[width=\textwidth]{figures/content-memorability-delayed-rast}
+%\caption{\small \textbf{insert caption}}
+%\label{fig:delcontent}
+%\end{figure}
+%
+%\begin{figure}[p]
+%\centering
+%\includegraphics[width=.5\textwidth]{figures/content-memorability-atlep2-rast}
+%\caption{\small \textbf{insert caption}}
+%\label{fig:a2content}
+%\end{figure}
+%
+%\begin{figure}[p]
+%\centering
+%\includegraphics[width=\textwidth]{figures/content-memorability-arrdev-rast}
+%\caption{\small \textbf{insert caption}}
+%\label{fig:adcontent}
+%\end{figure}
+%
+%\begin{figure}[p]
+%\centering
+%\includegraphics[width=\textwidth]{figures/corrmats-atlep1}
+%\caption{\small \textbf{Atlanta episode }}
+%\label{fig:a1corrmats}
+%\end{figure}
+%
+%\begin{figure}[p]
+%\centering
+%\includegraphics[width=\textwidth]{figures/corrmats-delayed}
+%\caption{\small \textbf{Atlanta episode }}
+%\label{fig:delcorrmats}
+%\end{figure}
+%
+%\begin{figure}[p]
+%\centering
+%\includegraphics[width=\textwidth]{figures/corrmats-atlep2}
+%\caption{\small \textbf{Atlanta episode }}
+%\label{fig:a2corrmats}
+%\end{figure}
+%
+%\begin{figure}[p]
+%\centering
+%\includegraphics[width=\textwidth]{figures/corrmats-arrdev}
+%\caption{\small \textbf{Atlanta episode }}
+%\label{fig:adcorrmats}
+%\end{figure}
 
 
 \subsection*{Neural correlates of content memorability}
@@ -284,12 +284,14 @@ The repeated exposure of participants in group A (i.e., those who viewed another
 
 
 %--------------------------------------------------DISCUSSION--------------------------------------------------
-\section{Discussion}
+\section*{Discussion}
 Broadly, my approach to representing episodic content reflects the brain's feature-based breakdown of an experience into distributed neural representations.  
 
-I initially hypothesized that over time, differences across participants' thought trajectories for \textit{Atlanta} episode one would fade, as idiosyncratic memories of specific details were discarded and individuals converged upon a high-level representation of the episode's content.  The correspondence between immediate and delayed precision scores (Figure \ref{fig:immdel}A,B) content variability trends (\ref{fig:immdel}E,F) would appear to refute this idea, as would the similarity between averaged immediate and delayed recalls visible in Figure \ref{fig:immdelemb}B,C.  However, the memory compression algorithm I propose \hyperref[sec:trajresults]{textit{Visualizing recall variation}} offers a method by which individuals' memory representations for a given experience may converge with the passage of time.  Take, for example, two digital files holding representations of the natural world: one containing a picture, and another containing audio recording.  Both file types may be represented at range of resolutions (pixels-per-inch and kilobytes-per-second, respectively).  When high-resolution images are viewed, or high-resolution recordings are played back, their recovery of the real-world content they represent is objectively clearer than it would be at a lower resolution.  Naturally, higher-resolution use greater storage in a framework where computers' hard disk space is limited.  In practice, people tend to delete old or unimportant files from their computers altogether, sacrificing the existence of those representations to free up ``memory" for files more relevant to their current needs.  
+I initially hypothesized that over time, differences across participants' thought trajectories for \textit{Atlanta} episode one would fade, as idiosyncratic memories of specific details were discarded and individuals converged upon a high-level representation of the episode's content.  The surprising correspondance between immediate and delayed precision scores (Figure \ref{fig:immdel}A,B) and between content variability trends (\ref{fig:immdel}E,F) would appear to refute this idea, as would the similarity between averaged immediate and delayed recalls visible in Figure \ref{fig:immdelemb}B,C.  However, the memory compression algorithm I propose in \hyperref[sec:trajresults]{\textit{Visualizing recall variation}} offers a mechanism by which individuals' memory representations for a given experience may converge with the passage of time.  Take, for example, two digital files holding representations of the natural world: one containing a picture, and another containing audio recording.  Both file types may be represented at range of resolutions (i.e., pixels-per-inch and kilobytes-per-second, respectively).  When high-resolution images are viewed, or high-resolution recordings are played back, their recovery of the real-world content they capture is objectively clearer than it would be at a lower resolution.  Naturally, higher-resolution files require more resources to store in a framework where space is limited, and in practice, one tends to delete old or unimportant files altogether, sacrificing any ability to recover their representations in the interest of creating ``memory space" for files more relevant to one's current situation.  Human memory similarly prioritizes information by its functional relevance, but forgetting is not a sudden deletion so much as a gradual decay function.  I observed this decay in fidelity as the decrease in trajectory sampling rate (total number of segmented events) between immediate and delayed recall.  With repeated compressions, unique image or audio files become indistinguishable from one another, and those that were initially similar converge more rapidly than those that were initially dissimilar.  This idea is reflected as well in the decreased number of unique episode events to which delayed recall events were matched, compared to immediate recall events.  Though preliminary, these observations suggest that not only do individuals' memories for components of an experience become more generalized, but differences across participants will be minimized as their representations are gradually compressed to optimize the distributed memory storage framework for novel, relevant information.  
 
- After numerous compressions, two initially dissimilar images become less and less distinguishable.  Though preliminary, these changes in recall sampling rate propose an algorithm by which 
+A central finding of \cite{HeusEtal18c} was that the temporal activation patterns in the ventromedial prefrontal cortex (vmPFC) during an experience predicted the structure of its representation in memory.  This 
+I hope to expand upon this theory in future work that examines delayed recall effects across greater timescales and more follow-up sessions, as well as explore the neural basis of a possible \textit{decompression} algorithm that allows for recovery of compressed information in response to the proper internal and external contexts.
+
 
 
 \pagebreak
