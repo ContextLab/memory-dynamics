@@ -116,20 +116,21 @@ I then estimated the content comprising each episode, recall, and prediction eve
 \subsection*{Trajectory embedding and visualization}\label{sec:embedding}
 To visualize the high-dimensional content trajectories in an intuitive way, I used Uniform Manifold Approximation and Projection \citep[UMAP;][]{McInHeal18} to project the 100 topic dimensions onto a 2D plane.  In order for the episode, recall, and prediction content to be comparable within the UMAP embedding space, the 2D plane in which they are embedded must share the same dimensions.  To ensure this, I concatenated the event-segmented episode, average recall, and all individual recall trajectories into a total-number-of-events by topics (100) matrix and embedded them simultaneously.  I then separated the resulting matrix (of shape total-number-of-events by two) along the row indices of the originally concatenated trajectories to recover a separate embedding for the episode, average recall, and individual recalls on a shared plane.
 
-To estimate the consistency of participants' recall transitions, I computed, for each participant, the line segments connecting successive recall events.  I then divided the embedding space into a 48 x 48 grid of evenly spaced points and defined a circular area centered on each point whose radius was the distance between adjacent points.  I found the set of line segments across all participants that passed through this circle, and performed a Rayleigh test on the angles formed by the these segments and the embedding space's $x$-axis to discern whether the event transition directions were reliably similar.  The resulting $p$-values were corrected using the Benjamani-Hochberg procedure.
+To estimate the consistency of participants' recall transitions, I computed, for each participant, the line segments connecting successive recall events.  I then divided the embedding space into a 48 x 48 grid of evenly spaced points and defined a circular area centered on each point whose radius was the distance between adjacent points.  I found the set of line segments across all participants that passed through this circle, and calculated the angle formed by each line segment and the embedding space's $x$-axis. I performed a Rayleigh test on the angles at each grid point to determine whether their distribution was reliably peaked (i.e., event transition directions through a given circle were similar across participants).  The resulting $p$-values were corrected using the Benjamani-Hochberg procedure.
 
-%To create Fig_____
-%I corrected  and scaled the arrow lengths to be inversely proportional to the corrected $p$-value (shorter arrows denote more highly significant results).  
+The arrows in Figures \ref{fig:a1emb}B, \ref{fig:delemb}B, \ref{fig:a2emb}B, \ref{fig:ademb}B, and \ref{fig:immdelemb}B,C are drawn at each grid point in the direction of the average transition vector through that point (or, the circular mean of angles formed with the $x$-axis), with with a length proportional to the average vector's magnitude.  Arrows at grid points where transitions were significantly consistent by the Rayleigh test ($p<0.05$, corrected) are drawn in blue, and darker blue arrows denote more significant results.  
 
 
-\subsection*{Cortical map generation and activity decoding}
+\subsection*{Cortical map generation and activity decoding}\label{sec:brainmethods}
 To create the maps of inferred neural representation of episode and recall content, I drew upon a ``semantic atlas" derived by \cite{HuthEtal16}.  Huth et al.~created a high dimensional word-embedding space based on the co-occurence rate of more than 10,000 common words pulled from a wide range of sources.  They then fit regularized linear regression models to all voxels in the cerebral cortex (separately) of seven participants (separately), yielding the mean contribution of each dimension in their word-embedding space to each voxel's activity.  Huth et al.~cross-validated their regression model against participants' real BOLD responses while listening to a narrative held out of training.
 
 Due to the considerable size of the Huth model's corpus, its vocabulary encompassed a high percentage of the vocabulary from my episode annotations (78\% and 76\% of words describing \textit{Atlanta} episodes one and two, and 75\% of words describing \textit{Arrested Development}).  For each of my stimulus annotation corpora, I projected the words shared between the two vocabularies into the Huth model's semantic space and weighted the resulting vector by the output of \cite{HuthEtal16}'s regression model.  This resulted in a number-of-voxels (37,226) by number-of-words (1,022-1,201) matrix of voxel-wise activations corresponding to each word.  By then computing the dot product of this matrix and each word's contribution to each of my 100 topic dimensions, I created a number-of-voxels by number-of-dimension (100) matrix of the neural responses corresponding to each topic dimension.  This allowed me to create an activation map for any content vector in my topic space by weighting each dimension's brain map by the vector's coordinate along that axis.  I visualized these activation maps using the \texttt{Pycortex} toolbox \citep{GaoEtal15}.
 
-Given the activation map corresponding to an event (or a single timepoint), I sought to identify whether there was a relationship between \textbf{\_\_\_\_\_\_} 
+I decoded the activity patterns in these brain maps using Neurosynth \citep{YarkEtal11}.  Neurosynth offers an online database of over 500,000 stereotactically aligned activation maps parsed from more than 14,000 functional imaging studies.  Every study Neurosynth encounters is tagged with psychology- and anatomy-related terms (e.g., "Stroop effect," "motor cortex") that occur more than 20 times in its text.  Then, each of the 150,000 MNI-space coordinates across all activation maps in Neurosynth's database is then tagged with terms from articles in which that coordinate is active.  From this learned coordinate-term mappings, Neurosynth can perform multiple types of meta analyses relating the reliability of activations to the occurrence of words or topics across its corpus.  These tools have successfully been employed for a number of purposes, including decoding of mental states from imaging data, identifying co-activation rates across regions and networks, synthesizing predicted activation maps based on provided of terms or topics, and discerning the anatomical or functional subdivisions of seemingly heterogeneous regions. \citep{Pold11,ChanEtal12,DelaEtal16,RubiEtal17}.
 
+I first created a \texttt{Decoder} to which I could pass my content activation maps.  This decoder contained a nifti image for each of the 1,335 terms in Neurosynth's database, where the activation strength at each voxel was the $z$-score from an association test between the given term and that voxel's activation.  The association test result was computed as a two-way ANOVA between term usage and voxel activity (i.e., a positive $z$-score means studies tagged with the term are more likely to report activity at that voxel than those that do not).  Passing my activation maps to this decoder returned a correlation value (Pearson's $r$) for each term, describing the similarity between my activation map and that term's meta-analysis image.  Broadly, these correlation values may be read as the overlap between areas active in my content-based maps and those comprising regions or involved in processes denoted by the given term.  
 
+In order to avoid the multiple resampling steps that lead to aliasing and decreased resolution in most MRI plotting packages, \texttt{Pycortex} creates volumes in the anatomical space of a sample subject at a 1mm resolution and uses pixel resampling to project the volume 3D MNI-space surface for visualization \citep{GaoEtal15}.  However, Neurosynth strictly accepts NMI152 2mm space images for decoding.  To convert the NIFTI images generated by \texttt{Pycortex} to the proper format, I computed the MNI coordinate transform using \texttt{FLIRT} \citep{FiscMode03} called from \texttt{Pycortex}.  I then created a 2mm MNI space using the \texttt{SuperEEG} toolbox \citep{OwenEtal18}, and resampled the image to the accepted resolution using \texttt{Nilearn} \citep{AbraEtal14}.  
 
 
 %--------------------------------------------------RESULTS--------------------------------------------------
@@ -167,7 +168,7 @@ The surprisingly high degree of correspondence between immediate and delayed rec
 % move last 2 sentences to discussion?
 
 
-\begin{figure}[p!]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{figures/embedding-atlep1-rast}
 \caption{\small \textbf{Atlanta episode }}
@@ -204,82 +205,121 @@ The surprisingly high degree of correspondence between immediate and delayed rec
 
 
 \subsection*{Assessing the memorability of various content}
+
 The trends shown in Figure \ref{fig:immdel}A, B, and H suggest that the content of certain experiences are inherently easier to remember than that of others.  This result prompted me to investigate what dynamic features of each episode contributed to their various patterns of memorability.  Because the dimensions of the common space in which these trajectories reside correspond to topics, and because those topics represent weighted sets of words in the episode's vocabulary, it is possible to recover the content makeup of each topic dimension (and therefore, each trajectory's many topic vectors).  To retrieve the explicit content giving rise to each topic space, I first parsed the \texttt{LatentDirichletAllocation} objects used to create them and obtained the weighted combination of words represented by each dimension.  Then, I computed a weighted average of the topic vectors for each episode event, based on their memorability (i.e., average recall precision across participants).  By mapping the resulting vector's magnitude along each axis to the word weights it represents, I was able to find to find the overall best- and worst-remembered content across the full experience. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{figures/content-memorability-atlep1-rast}
+\caption{\small \textbf{insert caption}}
+\label{fig:a1content}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth]{figures/content-memorability-delayed-rast}
+\caption{\small \textbf{insert caption}}
+\label{fig:delcontent}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth]{figures/content-memorability-atlep2-rast}
+\caption{\small \textbf{insert caption}}
+\label{fig:a2content}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth]{figures/content-memorability-arrdev-rast}
+\caption{\small \textbf{insert caption}}
+\label{fig:adcontent}
+\end{figure}
 
 In figures \ref{fig:a1content}, \ref{fig:delcontent}, \ref{fig:a2content}, and \ref{fig:adcontent}, I have visualized the result of these memorability investigations as ``wordles" \citep{MuelEtal18}.  The top right panel of each figure (\ref{fig:a1content}B, \ref{fig:delcontent}B, \ref{fig:a2content}B, \ref{fig:adcontent}B) display wordles of the most-and least-memorable content, where the word sizes are derived from their weighted topic vector representations.  Here, larger words in green-outlined wordles denote content better remembered.  The red-outlined full-episode wordles were created by weighting event vectors by the \textit{inverse} of their memorability and thus less memorable content is shown larger.  I further added a level of specificity by similarly retrieving the content comprising each individual episode and recall event.  The top left panel of figures \ref{fig:a1content}, \ref{fig:delcontent}, \ref{fig:a2content}, and \ref{fig:adcontent} show event-wise memorability for each episode, with the single most and least memorable events annotated.  Panels D and E show wordles for the episode (left) and recall (right) content for the two annotated events.  
 
 % move to discussion?
-These content-focused analyses offer a number of interesting results.  \cite{HeusEtal18c} suggested that events revolving around principal characters and locations tended to be better remembered than those centered on minor characters.  This hypothesis is broadly supported by my results (see the ``most-memorable" worldes in \ref{fig:a1content}B, \ref{fig:delcontent}B, \ref{fig:adcontent}B and the ``least-memorable" wordles in \ref{fig:a2content}B and \ref{fig:adcontent}B).  However, it would not predict the presence of ``Alfred" (or his rap alter ego ``Paper Boy") in the least memorable content of \ref{fig:a1content}B.  Though the episode's narrative primarily follows Earn's character, Alfred is significantly more central than another character, Dave (who appears in the episode's most memorable content).  Visual inspection of Figure \ref{fig:a1content}D reveals that the best-remembered event (19) is highly similar to the most memorable overall content.  This event corresponds to an emotionally jarring scene in which Dave, a white friend of Earn's who works at a radio station, casually directs a racial slur toward the main character.  The salience of this scene seemingly serves to increment its memorability in viewers' minds at the expense of content involving a character who appears more frequently but elicits less emotional response.
+These content-focused analyses offer a number of interesting results.  \cite{HeusEtal18c} suggested that events revolving around principal characters and locations tended to be better remembered than those centered on minor characters.  This hypothesis is broadly supported by my results (see the ``most-memorable" worldes in \ref{fig:a1content}B, \ref{fig:delcontent}B, \ref{fig:adcontent}B and the ``least-memorable" wordles in \ref{fig:a2content}B and \ref{fig:adcontent}B).  However, it would not predict the presence of ``Alfred" (or his rap pseudonym ``Paper Boy") in the least memorable content of \ref{fig:a1content}B.  Though the episode's narrative primarily follows Earn's character, Alfred is significantly more central than another character, Dave (who appears in the episode's most memorable content).  Visual inspection of Figure \ref{fig:a1content}D reveals that the best-remembered event (19) is highly similar to the most memorable overall content.  This event corresponds to an emotionally jarring scene in which Dave, a white friend of Earn's who works at a radio station, casually directs a racial slur toward the main character.  The salience of this scene seemingly serves to increment its memorability in viewers' minds at the expense of content involving a character who appears more frequently but elicits less emotional response.
 
-The repeated exposure of participants in group A (i.e., those who viewed another \textit{Atlanta} episode in session two) to similar contexts allows for an analysis of content memorability under a condition where the characters and themes are already familiar.  The second \textit{Atlanta} episode jumps between scenes of Earn sitting in a chair, waiting to be released from prison and Alfred's various actions in the outside world.  The oscillatory pattern of event memorability in Figure \ref{fig:a2content}A follows this narrative structure.  In this case, both the most memorable overall content and single best-recalled events (Figure \ref{fig:a2content}B,D) refer heavily to Alfred, while the least memorable content is that involving Earn (Figure \ref{fig:a2content}B, E).  This suggests that after sufficient exposure to a core set of characters, memorability is driven by the \textit{uniqueness} of events, rather than the familiarity of their subjects. 
-
-
-
-%\begin{figure}[p]
-%\centering
-%\includegraphics[width=\textwidth]{figures/content-memorability-atlep1-rast}
-%\caption{\small \textbf{insert caption}}
-%\label{fig:a1content}
-%\end{figure}
-%
-%\begin{figure}[p]
-%\centering
-%\includegraphics[width=\textwidth]{figures/content-memorability-delayed-rast}
-%\caption{\small \textbf{insert caption}}
-%\label{fig:delcontent}
-%\end{figure}
-%
-%\begin{figure}[p]
-%\centering
-%\includegraphics[width=.5\textwidth]{figures/content-memorability-atlep2-rast}
-%\caption{\small \textbf{insert caption}}
-%\label{fig:a2content}
-%\end{figure}
-%
-%\begin{figure}[p]
-%\centering
-%\includegraphics[width=\textwidth]{figures/content-memorability-arrdev-rast}
-%\caption{\small \textbf{insert caption}}
-%\label{fig:adcontent}
-%\end{figure}
-%
-%\begin{figure}[p]
-%\centering
-%\includegraphics[width=\textwidth]{figures/corrmats-atlep1}
-%\caption{\small \textbf{Atlanta episode }}
-%\label{fig:a1corrmats}
-%\end{figure}
-%
-%\begin{figure}[p]
-%\centering
-%\includegraphics[width=\textwidth]{figures/corrmats-delayed}
-%\caption{\small \textbf{Atlanta episode }}
-%\label{fig:delcorrmats}
-%\end{figure}
-%
-%\begin{figure}[p]
-%\centering
-%\includegraphics[width=\textwidth]{figures/corrmats-atlep2}
-%\caption{\small \textbf{Atlanta episode }}
-%\label{fig:a2corrmats}
-%\end{figure}
-%
-%\begin{figure}[p]
-%\centering
-%\includegraphics[width=\textwidth]{figures/corrmats-arrdev}
-%\caption{\small \textbf{Atlanta episode }}
-%\label{fig:adcorrmats}
-%\end{figure}
+The repeated exposure of participants in group A (i.e., those who viewed another \textit{Atlanta} episode in session two) to similar contexts allows for an analysis of content memorability under a condition where the characters and themes are already familiar.  The second \textit{Atlanta} episode jumps between scenes of Earn sitting in a chair, waiting to be released from prison and Alfred's various actions in the outside world.  The oscillatory pattern of event memorability in Figure \ref{fig:a2content}A follows this narrative structure.  In this case, both the most memorable overall content and single best-recalled events (Figure \ref{fig:a2content}B,D) refer heavily to Alfred, while the least memorable content is that involving Earn (Figure \ref{fig:a2content}B, E).  This suggests that after sufficient exposure to a core set of characters, memorability is driven by the \textit{uniqueness} of episodic content, rather than the familiarity of the subject driving that content.
 
 
-\subsection*{Neural correlates of content memorability}
 
 
+
+\subsection*{Neural correlates of content memorability}\label{sec:brainresults}
+
+The previous set of analyses address semantic and thematic attributes that may drive differences in the inherent memorability of episodic content.  I next sought to investigate \textit{why} certain features may be better remember than others.  Relationships between processing-dependent properties (e.g., attentiveness, mood, emotional salience, situational relevance, etc.) and episodic memory have been probed for decades \citep{ChunTurk07,TyngEtal17}, but little research has been conducted into a neural basis for memorability originating from the external world.  To address this question, I extended an approach originally conceived by \cite{HuthEtal16}. Researchers modeled a vocabulary of over 10,000 words and generated a ``semantic atlas" of activity in the cerebral cortex corresponding to individual words (see \hyperref[sec:brainmethods]{\textit{Cortical map generation and activity decoding}} for details).  I transformed each of my three topic spaces into a brain map of voxelwise responses from which I could retrieve the activation pattern representing any topic vector traversing those spaces.  Figures \ref{fig:a1content}, \ref{fig:delcontent}, \ref{fig:a2content}, and \ref{fig:adcontent} show left medial views of voxel responses recovered from the topic proportions for the most and least memorable overall content (panel B) and events (panels D and E) from each episode.  
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/termweight-ep-precision}
+\caption{\small \textbf{insert caption}}
+\label{fig:eptermweight}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/termweight-rec-precision}
+\caption{\small \textbf{insert caption}}
+\label{fig:rectermweight}
+\end{figure}
+
+To objectively quantify differences between the maps for various semantic content, I decoded the activation patterns using Neurosynth \citep{YarkEtal11}.  Neurosynth parses a massive database of neuroimaging studies and builds meta-analysis images for specified psychology- and neuroscience-related terms, based on results reported in studies that use those terms heavily (see \hyperref[sec:brainmethods]{\textit{Cortical map generation and activity decoding}} for details).  Decoding the overlap of active voxels between these meta-analysis images and my semantic content mappings allowed me to compare patterns in the neural representations of viewed and recalled content to anatomical and functional regions and networks in a blind, unbiased manner.  
+
+I validated this combined approach of projecting my topic space onto a cortical activation map and subsequently decoding that map's activity by comparing a ``baseline" map against Neurosynth's full database of term-based meta analyses. Given that any vector within my topic spaces corresponds to a certain weighted combination of features, such a baseline is difficult to quantify. A topic proportions matrix of all zeroes was not viable, as it would instantiate a brain map with no activity for neurosynth to decode. However, a collection of results gleaned from analyses conducted thus far enabled me to estimate a highly content-poor map of activations.  Figures \ref{fig:immdel}B, \ref{fig:immdelemb} show that on average, memory precision between immediate and delayed recall is strikingly similar.  Further, visual inspection of the wordles in Figures \ref{fig:a1content}B and \ref{fig:delcontent}B reveals that the most memorable content in each session is nearly identical.  In fact, the topic proportions underlying these two wordles are over 99\% correlated.  I therefore used the displacement between these two vectors to create a pattern of activations that represent less than 1\% of content-related activity. 
+
+The list of terms whose meta-analysis images were most highly similar to this baseline mapping was populated exclusively with those related to language (e.g., ``speech," ``listening," ``sentences," ``superior temporal," ``auditory," ``temporal gyrus").  Given that I projected the space in which these content vectors exist onto the ``semantic atlas" mapped by \cite{HuthEtal16}, this recovery indicated the decoding approach was generally effective enough to use in probing my question of interest.  
+
+Additionally, the least-similar images were derived from terms pertaining to regions involved in the default mode and in memory networks (e.g., ``precuneus," ``dorsolateral prefrontal," ``frontoparietal," ``retrosplenial").  This incidental finding suggested that these two networks may have been identified by the minimal amount of content-related activity not isolated by my baseline estimation, and motivated the analysis conducted in Figure \ref{fig:eptermweight}.  Here, I created two Neurosynth \texttt{Decoder} objects: one containing meta-analysis images for five broad terms related to the default mode network (based on 2,249 studies), and a second one with analogous terms related to memory (based on 3,797 studies).  For a given episode, I first created a cortical map of activity driven by the content represented in each event's average topic vector.  I then passed each episode content-based brain map to the default mode network \texttt{Decoder} and computed the average ($z$-transformed) correlation between voxels active in the event-map and those active in each of the five term-based meta-analysis images.  This resulted in a single value describing the extent to which voxels activated by the event's content overlapped with with those implicated in the default mode network, across the full brain.  Next, I found the event-wise recall precision for each participant, and computed the correlation between their precision for each event and its DMN-overlap.  This step returned a single coefficient for each participant, describing whether they tended to remember events represented heavily by DMN-related regions better or worse than those represented by less related regions.  Repeating this procedure for each participant resulted in a distribution of DMN-overlap-precision relationships.  Analogous distributions for each episode/recall session pairing are shown in Figure \ref{fig:eptermweight}A.  I performed a (two-tailed) one-sample $t$-test on each distribution to determine whether the mean was significantly different from zero (the null hypothesis being that there is no relationship between DMN-overlap and an event's memorability; see statistics in each plot of \ref{fig:eptermweight}A).  Figure \ref{fig:eptermweight}B shows this analysis performed using the second \texttt{Decoder} to investigate the relationship between content memorability and overlap with memory networks.  
+
+Consistent across all four repetitions of the first decoding analysis is a clear positive relationship between participants' ability to precisely recall an event and representation of that event's content by voxels within the default mode network.  Conversely, content across all episodes also showed a (slightly weaker, on average) inverse relationship between memorability and representation by voxels active in memory networks.  Interestingly, both of these effects appear to fade over time, as distributions for the relationship between delayed recall precision for \textit{Atlanta} episode one and overlap with these two networks are centered closer to zero than their immediate recall counterparts.  In the case of memory network-overlap, this effect is no longer significant a week later.  
+
+Curious as to whether I could recover these relationships in neural representations of content that was ultimately remembered, I repeated this full set of analyses, instead decoding the representational overlap between the content of recall events and the two networks.  Figure \ref{fig:rectermweights} shows 
 
 
 
 
 \subsection{Relating prediction ability to memory success}
+
+
+
+\begin{figure}[p!]
+\centering
+\includegraphics[width=\textwidth]{figures/corrmats-atlep1}
+\caption{\small \textbf{Atlanta episode }}
+\label{fig:a1corrmats}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth]{figures/corrmats-delayed}
+\caption{\small \textbf{Atlanta episode }}
+\label{fig:delcorrmats}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth]{figures/corrmats-atlep2}
+\caption{\small \textbf{Atlanta episode }}
+\label{fig:a2corrmats}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth]{figures/corrmats-arrdev}
+\caption{\small \textbf{Atlanta episode }}
+\label{fig:adcorrmats}
+\end{figure}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -289,7 +329,9 @@ Broadly, my approach to representing episodic content reflects the brain's featu
 
 I initially hypothesized that over time, differences across participants' thought trajectories for \textit{Atlanta} episode one would fade, as idiosyncratic memories of specific details were discarded and individuals converged upon a high-level representation of the episode's content.  The surprising correspondance between immediate and delayed precision scores (Figure \ref{fig:immdel}A,B) and between content variability trends (\ref{fig:immdel}E,F) would appear to refute this idea, as would the similarity between averaged immediate and delayed recalls visible in Figure \ref{fig:immdelemb}B,C.  However, the memory compression algorithm I propose in \hyperref[sec:trajresults]{\textit{Visualizing recall variation}} offers a mechanism by which individuals' memory representations for a given experience may converge with the passage of time.  Take, for example, two digital files holding representations of the natural world: one containing a picture, and another containing audio recording.  Both file types may be represented at range of resolutions (i.e., pixels-per-inch and kilobytes-per-second, respectively).  When high-resolution images are viewed, or high-resolution recordings are played back, their recovery of the real-world content they capture is objectively clearer than it would be at a lower resolution.  Naturally, higher-resolution files require more resources to store in a framework where space is limited, and in practice, one tends to delete old or unimportant files altogether, sacrificing any ability to recover their representations in the interest of creating ``memory space" for files more relevant to one's current situation.  Human memory similarly prioritizes information by its functional relevance, but forgetting is not a sudden deletion so much as a gradual decay function.  I observed this decay in fidelity as the decrease in trajectory sampling rate (total number of segmented events) between immediate and delayed recall.  With repeated compressions, unique image or audio files become indistinguishable from one another, and those that were initially similar converge more rapidly than those that were initially dissimilar.  This idea is reflected as well in the decreased number of unique episode events to which delayed recall events were matched, compared to immediate recall events.  Though preliminary, these observations suggest that not only do individuals' memories for components of an experience become more generalized, but differences across participants will be minimized as their representations are gradually compressed to optimize the distributed memory storage framework for novel, relevant information.  
 
-A central finding of \cite{HeusEtal18c} was that the temporal activation patterns in the ventromedial prefrontal cortex (vmPFC) during an experience predicted the structure of its representation in memory.  This 
+A central finding of \cite{HeusEtal18c} was that the temporal pattern of vmPFC activation during encoding of an experience predicted the temporal structure of participants' later recalls.  What appears to have been captured here is a memory compression function.  
+
+
 I hope to expand upon this theory in future work that examines delayed recall effects across greater timescales and more follow-up sessions, as well as explore the neural basis of a possible \textit{decompression} algorithm that allows for recovery of compressed information in response to the proper internal and external contexts.
 
 
