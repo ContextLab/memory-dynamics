@@ -13,6 +13,7 @@
 *#*
 *.ai
 *.joblib
+*.key
 credentials.json
 data/db/
 data/google-form-data
