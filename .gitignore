@@ -18,6 +18,7 @@ credentials.json
 data/db/
 data/google-form-data
 data/audio/
+data/transcriptions/*/drops/
 data/pickles/participant_models.p
 data/pickles/neurosynth_dataset.p
 data/brains/HuthModelWeights.npy
