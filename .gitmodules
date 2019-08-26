@@ -3,5 +3,5 @@
 	url = https://github.com/jspsych/jsPsych.git
 [submodule "code/cluster-scripts"]
 	path = code/cluster-scripts
-	url = https://github.com/ContextLab/cluster-tools-dartmouth.git
+	url = https://github.com/paxtonfitzpatrick/cluster-tools-dartmouth.git
 	branch = eventseg
