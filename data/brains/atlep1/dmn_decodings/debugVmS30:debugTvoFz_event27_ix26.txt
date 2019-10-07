@@ -1,6 +1,0 @@
-Feature,../../data/brains/atlep1/rec_events/debugVmS30:debugTvoFz_event27_mni.nii.gz
-default mode,0.1027
-precuneus,0.1538
-default,0.1001
-mode network,0.1039
-posterior cingulate,0.1107

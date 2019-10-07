@@ -1,6 +1,0 @@
-Feature,../../data/brains/atlep1/rec_events/debugfO0us:debug6tlz1_event21_mni.nii.gz
-default mode,0.2015
-precuneus,0.216
-default,0.202
-mode network,0.2001
-posterior cingulate,0.2032

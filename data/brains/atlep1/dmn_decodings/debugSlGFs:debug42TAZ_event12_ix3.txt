@@ -1,6 +1,0 @@
-Feature,../../data/brains/atlep1/rec_events/debugSlGFs:debug42TAZ_event12_mni.nii.gz
-default mode,0.2364
-precuneus,0.238
-default,0.24
-mode network,0.2368
-posterior cingulate,0.2343
