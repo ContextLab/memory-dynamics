@@ -8,3 +8,6 @@
 [submodule "code/HuthSpeechModel"]
 	path = code/HuthSpeechModel
 	url = https://github.com/paxtonfitzpatrick/speechmodeltutorial.git
+[submodule "code/neurosynth"]
+	path = code/neurosynth
+	url = https://github.com/paxtonfitzpatrick/neurosynth.git
