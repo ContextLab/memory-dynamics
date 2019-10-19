@@ -26,5 +26,4 @@ data/brains/HuthModelWeights.npy
 data/brains/neurosynth_decoder.joblib
 data/brains/*/rec_events/
 data/brains/*/pres_events/
-code/pycortex/
 Paper/figures/*rast.pdf
