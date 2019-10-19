@@ -1,6 +1,0 @@
-Feature,../../data/brains/atlep1/rec_events/debug3lixg:debugdwpeu_event7_mni.nii.gz
-default mode,0.153
-precuneus,0.1837
-default,0.1511
-mode network,0.1532
-posterior cingulate,0.1584

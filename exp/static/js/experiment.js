@@ -1,5 +1,5 @@
 var exptimeline = []
-var recall_time = 1800 // 30 minutes
+var recall_time = 3600 // 60 minutes
 var predict_time = 300 // 5 minutes
 var exit_time = 600 // 10 minutes
 
@@ -16,7 +16,7 @@ var runExperiment = function(options, conditions) {
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>Do your best to recount the events of the episode in order, using the characters' names and as much detail as you can remember, but if you realize you skipped something, feel free to go back and describe it.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>You will have <strong>30 minutes</strong> to recall the episode, but if you feel you can't remember any more, you may stop after <strong>10 minutes</strong> by pressing the spacebar.</p>" +
+            "<div class='instructions'> <p>You will have <strong>60 minutes</strong> to recall the episode, but if you feel you can't remember any more, you may stop after <strong>10 minutes</strong> by pressing the spacebar.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>After that, you'll be asked to <strong>predict</strong> what you think will happen in the next episode.</p>" +
             "<p>When you see a blue microphone icon (<i style='color:blue' class='fa fa-microphone'></i>), you will have <strong>5 minutes</strong> to <strong>predict</strong> what will happen.</p>" +
@@ -35,7 +35,7 @@ var runExperiment = function(options, conditions) {
             "<p>In this experiment, you will start by <strong>recalling</strong> the episode you watched when you were last here.</p>" +
             "<p>When you see a green microphone icon (<i style='color:green' class='fa fa-microphone'></i>), <strong>recall</strong> the episode to the best of your ability.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>You will have <strong>30 minutes</strong> to recall the episode, but if you feel you can't remember any more, you may stop after <strong>10 minutes</strong> by pressing the spacebar.</p>" +
+            "<div class='instructions'> <p>You will have <strong>60 minutes</strong> to recall the episode, but if you feel you can't remember any more, you may stop after <strong>10 minutes</strong> by pressing the spacebar.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>You will then <strong>watch</strong> a 20-25 minute episode of a TV show and <strong>recall</strong> what happened in as much detail as possible.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
@@ -44,7 +44,7 @@ var runExperiment = function(options, conditions) {
             "<p> Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>Do your best to recount the events of the episode in order, using the characters' names and as much detail as you can remember, but if you realize you skipped something, feel free to go back and describe it.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
-            "<div class='instructions'> <p>You will have <strong>30 minutes</strong> to recall the episode, but if you feel you can't remember any more, you may stop after <strong>10 minutes</strong> by pressing the spacebar.</p>" +
+            "<div class='instructions'> <p>You will have <strong>60 minutes</strong> to recall the episode, but if you feel you can't remember any more, you may stop after <strong>10 minutes</strong> by pressing the spacebar.</p>" +
             "<p>Press the spacebar to continue.</p></div>",
             "<div class='instructions'> <p>Okay that's everything! Ready to start?</p>" +
             "<p><strong>When you're ready to recall the last episode, press the spacebar.</strong></p></div>"
