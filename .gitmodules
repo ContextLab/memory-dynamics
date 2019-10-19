@@ -11,3 +11,6 @@
 [submodule "code/neurosynth"]
 	path = code/neurosynth
 	url = https://github.com/paxtonfitzpatrick/neurosynth.git
+[submodule "code/pycortex"]
+	path = code/pycortex
+	url = https://github.com/paxtonfitzpatrick/pycortex.git
