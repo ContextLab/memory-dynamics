@@ -1,0 +1,4 @@
+# Since repo will be mounted to container, can ignore almost everything...
+*
+# ...except for local helper package copied in during build
+!/code/helpers/
