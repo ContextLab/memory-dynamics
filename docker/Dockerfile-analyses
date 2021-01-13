@@ -20,9 +20,10 @@ RUN apt-get update --fix-missing \
     && rm -rf /var/lib/apt/lists/* \
     && conda install -Sy \
         matplotlib=3.2.2 \
+        mpi4py=3.0.3 \
         nltk=3.4.4 \
         num2words=0.5.10 \
-        numba=0.50.1 \
+        numba=0.52.0 \
         numpy=1.19.1 \
         pandas=1.1.2 \
         scikit-learn=0.23.2 \
@@ -37,7 +38,7 @@ RUN apt-get update --fix-missing \
         git+https://github.com/ContextLab/hypertools.git@36c12fd6d1706fb75e596a62b555ee819ddada6a#egg=hypertools \
         git+https://github.com/ContextLab/quail.git@71dd53c792dd915dc84879d8237e3582dd68b7a4#egg=quail \
     && if [ "$DEVELOP" == "0" ]; then \
-           pip install /tmp/helpers;
+           pip install /tmp/helpers; \
        fi \
     && rm -rf ~/.cache/pip \
     && rm -rf /tmp/
