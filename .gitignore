@@ -30,10 +30,10 @@ credentials.json
 *.db
 
 # raw participant audio
-data/audio/
+data/raw/audio/
 
 # participants dropped from analyses
-data/transcriptions/*/drops/
+data/raw/transcriptions/*/drops/
 
 # LaTeX-related files
 *.log
@@ -52,15 +52,15 @@ data/transcriptions/*/drops/
 # thesis defense slides (136.3MB; too large for GitHub)
 *.key
 # Neurosynth document/NIfTI dataset
-data/pickles/neurosynth_dataset.p
+data/processed/pickles/neurosynth_dataset.p
 # Neurosynth Decoder objects
-data/brains/*.joblib
+data/processed/brains/*.joblib
 # voxels x words matrix of weights from Huth et al., 2016
-data/brains/HuthModelWeights.npy
+data/processed/brains/HuthModelWeights.npy
 # predicted activity maps constructed from presented events
-data/brains/*/pres_events/
+data/processed/brains/*/pres_events/
 # predicted activity maps constructe from recall events
-data/brains/*/rec_events/
+data/processed/brains/*/rec_events/
 # rasterized versions of large figures for thesis
 Paper/figures/*rast.pdf
 # ==============================================================================
