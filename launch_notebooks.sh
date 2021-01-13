@@ -43,7 +43,7 @@ parse_args() {
                 DETACH=1
                 shift
                 ;;
-            -D | --dev)
+            -D | --develop)
                 check_arg 0 "$@"
                 DEVELOP=1
                 shift
