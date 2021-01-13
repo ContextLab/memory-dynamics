@@ -1,4 +1,7 @@
 from pathlib import Path
+
+from IPython.display import display, Markdown
+
 from analysis_helpers.episode import Episode
 from analysis_helpers.participant import Participant
 
@@ -18,7 +21,6 @@ def _imported_from_notebook() -> bool:
         instead
     """
     try:
-        # noinspection PyUnresolvedReferences
         dict.__getitem__(get_ipython().config, 'IPKernelApp')
     except (NameError, KeyError):
         return False
@@ -35,7 +37,6 @@ def _display_message() -> None:
     to show the source code in the notebook directly
 
     """
-    from IPython.display import display, Markdown
 
     github_link = "https://github.com/ContextLab/memory-dynamics/tree/" \
                   "master/code/analysis-helpers"
