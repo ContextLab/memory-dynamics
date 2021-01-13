@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from IPython.display import display, Markdown
+from IPython.display import display, HTML
 
 from analysis_helpers.episode import Episode
 from analysis_helpers.participant import Participant
@@ -34,20 +34,27 @@ def _display_message() -> None:
     analysis functions/other objects imported from 'analysis_helpers'
     rather than defined in the notebook, displays a brief message at the
     bottom of the import cell with a link to the package on GitHub how
-    to show the source code in the notebook directly
-
+    to show the source code in the notebook directly.
     """
 
     github_link = "https://github.com/ContextLab/memory-dynamics/tree/" \
                   "master/code/analysis-helpers"
     pkg_dir = Path(__file__).resolve().parent
-    message = Markdown(
-        "Experiment & Participant classes, helper functions, and "
-        "variables used across multiple notebooks can be found in "
-        f"`{pkg_dir}`, or on GitHub, [here]({github_link}).<br />You "
-        "can also view source code directly from the notebook with:"
-        "<br /><pre>    from analysis_helpers.functions import "
-        "show_source<br />    show_source(foo)</pre>"
+    snippet = (
+        '<div class="highlight" style="background: #f8f8f8; margin-left: 4ch; width: fit-content; padding: 2px 4px">'
+            '<pre style="line-height: 125%;">'
+                '<span style="color: #008000; font-weight: bold">from</span> '
+                '<span style="color: #0000FF; font-weight: bold">analysis_helpers.functions</span> '
+                '<span style="color: #008000; font-weight: bold">import</span> '
+                'show_source<br />show_source(foo)'
+            '</pre>'
+        '</div>'
+    )
+    message = HTML(
+        'Experiment & Participant classes, helper functions, and variables '
+        f'used across multiple notebooks can be found in <code>{pkg_dir}</code>, '
+        f'or on GitHub, <a href="{github_link}">here</a>.<br />You can also '
+        f'view source code directly from the notebook with:<br />{snippet}'
     )
     # noinspection PyTypeChecker
     display(message)
