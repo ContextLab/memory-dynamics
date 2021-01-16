@@ -52,7 +52,7 @@ data/raw/transcriptions/*/drops/
 # thesis defense slides (136.3MB; too large for GitHub)
 *.key
 # Neurosynth document/NIfTI dataset
-data/processed/pickles/neurosynth_dataset.p
+data/processed/etc/neurosynth_dataset.p
 # Neurosynth Decoder objects
 data/processed/brains/*.joblib
 # voxels x words matrix of weights from Huth et al., 2016
