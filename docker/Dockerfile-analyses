@@ -41,6 +41,8 @@ RUN apt-get update --fix-missing \
            pip install /tmp/helpers; \
        fi \
     && rm -rf ~/.cache/pip \
-    && rm -rf /tmp/
+    && rm -rf /tmp/ \
+    && python -uBW ignore -m nltk.downloader stopwords \
+    && rm ~/nltk_data/corpora/stopwords.zip
 
 WORKDIR $WORKDIR
