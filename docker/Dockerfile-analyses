@@ -42,7 +42,10 @@ RUN apt-get update --fix-missing \
        fi \
     && rm -rf ~/.cache/pip \
     && rm -rf /tmp/ \
-    && python -uBW ignore -m nltk.downloader stopwords \
-    && rm ~/nltk_data/corpora/stopwords.zip
+    && python -uBW ignore -m nltk.downloader stopwords averaged_perceptron_tagger wordnet punkt \
+    && rm ~/nltk_data/corpora/stopwords.zip \
+    && rm ~/nltk_data/taggers/averaged_perceptron_tagger.zip \
+    && rm ~/nltk_data/corpora/wordnet.zip \
+    && rm ~/nltk_data/tokenizers/punkt.zip
 
 WORKDIR $WORKDIR
