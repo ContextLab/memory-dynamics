@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import pandas as pd
 
-from analysis_helpers.episode import lazy_data
 from analysis_helpers.constants import PROCESSED_DIR
+from analysis_helpers.internals import lazy_data, Multiton
 
 
-class Participant:
+class Participant(metaclass=Multiton):
     ID_MAPPING: pd.DataFrame = pd.read_pickle(
         PROCESSED_DIR.joinpath('etc', 'subid_mapping.p')
     )

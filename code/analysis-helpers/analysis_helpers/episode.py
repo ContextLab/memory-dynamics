@@ -3,10 +3,10 @@ from typing import Literal
 import pandas as pd
 
 from analysis_helpers.constants import ANNOTATIONS_DIR, ENDFRAME_TIMES
-from analysis_helpers.internals import lazy_data
+from analysis_helpers.internals import lazy_data, Multiton
 
 
-class Episode:
+class Episode(metaclass=Multiton):
     # ADD DOCSTRING
     def __init__(self, name: Literal['atlep1', 'atlep2', 'arrdev']) -> None:
         # ADD DOCSTRING

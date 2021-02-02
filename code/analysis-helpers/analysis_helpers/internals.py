@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import re
-from typing import Dict
 from functools import update_wrapper
+from inspect import getcallargs
 
 
-from typing import Callable, Optional, overload, Type, TYPE_CHECKING, TypeVar, Union
+from typing import (Any, Callable, Dict, Optional, overload, Tuple, Type,
+                    TYPE_CHECKING, TypeVar, Union)
 
 if TYPE_CHECKING:
     _FgetReturn = TypeVar('_FgetReturn')
@@ -39,6 +40,35 @@ class lazy_data:
 
     def __set_name__(self, owner: Type[_T], name: str) -> None:
         self.name = name
+
+
+class Multiton(type):
+    # ADD DOCSTRING
+    # mangle names just in case derived class uses one of these
+    __instances: Dict[Union[Type[_T], Tuple[Type[_T], Tuple, ...]], _T] = dict()
+    __inits: Dict[Type, Callable] = dict()
+
+    def __init__(
+            cls: Type[_T],
+            name: str,
+            bases: Tuple[Type, ...],
+            namespace: Dict[str, Any]
+    ) -> None:
+        # ADD DOCSTRING
+        super().__init__(name, bases, namespace)
+        Multiton.__inits[cls] = namespace.get('__init__')
+
+    def __call__(cls: Type[_T], *args, **kwargs):
+        init = Multiton.__inits[cls]
+        if init is None:
+            key = cls
+        else:
+            callargs = getcallargs(init, None, *args, **kwargs)
+            key = (cls, *tuple(callargs.items()))
+
+        if key not in Multiton.__instances:
+            Multiton.__instances[key] = super(Multiton, cls).__call__(*args, **kwargs)
+        return Multiton.__instances[key]
 
 
 class RegexReplacer(dict):
