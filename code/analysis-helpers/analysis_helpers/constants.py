@@ -23,23 +23,17 @@ RECALL_DATA_DIR = PROCESSED_DIR.joinpath('models', 'recalls')
 #                      TOPIC MODELING PARAMETERS                       #
 ########################################################################
 EPISODE_WSIZE = 50    # annotations
-REACALL_WSIZE = 200   # words
+RECALL_WSIZE = 200    # words
 
-VECTORIZER_PARAMS = {
-    'model': 'CountVectorizer',
-    'params': {
-        'strip_accents': 'unicode',
-        'stop_words': None    # stop words handled separately
-    }
+CV_PARAMS = {
+    'strip_accents': 'unicode',
+    'stop_words': None    # stop words handled separately
 }
 
-SEMANTIC_PARAMS = {
-    'model': 'LatentDirichletAllocation',
-    'params': {
-        'n_components': 100,
-        'learning_ethod': 'batch',
-        'random_state': 0
-    }
+LDA_PARAMS = {
+    'n_components': 100,
+    'learning_method': 'batch',
+    'random_state': 0
 }
 
 

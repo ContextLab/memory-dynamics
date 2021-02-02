@@ -3,7 +3,6 @@ import re
 import string
 from typing import Dict, List, Literal, Union
 
-import numpy as np
 import pandas as pd
 from IPython.core.oinspect import pylight, getsource as ipy_getsource
 from IPython.display import display, DisplayHandle, HTML
@@ -11,7 +10,7 @@ from nltk import pos_tag, word_tokenize
 from nltk.stem import WordNetLemmatizer
 from num2words import num2words
 
-from analysis_helpers.constants import POS_MAPPING, STOP_WORDS, TEXT_SUBSTITUTIONS
+from analysis_helpers.constants import POS_MAPPING, STOP_WORDS
 
 
 ########################################################################
@@ -20,7 +19,7 @@ from analysis_helpers.constants import POS_MAPPING, STOP_WORDS, TEXT_SUBSTITUTIO
 _lemmatizer = WordNetLemmatizer()
 
 
-def format_text(text_ser: pd.Series):
+def preprocess_text(text_ser: pd.Series):
     # ADD DOCSTRING
     # concat all features for given shot. Adding period as delimiter
     # helps POS tagger
@@ -48,28 +47,18 @@ def lemmatize(text: str, pos_dict: Dict[str, str] = POS_MAPPING) -> str:
     return ' '.join(lemmas)
 
 
-def preprocess_text(
-        data: Union[pd.DataFrame, str],
-        /,
-        data_type: Literal['episode', 'recall']
-) -> List[str]:
-    # ADD DOCSTRING
-    if data_type == 'episode':
-        df = data.loc[:, 'Narrative details (external events)':'Setting']
-    elif data_type == 'recall':
-        df = pd.DataFrame(np.atleast_2d(data))
-    else:
-        raise ValueError(
-            "Invalid value for 'data_type', must be either 'episode' or 'recall'"
-        )
-    # combine multi-word tokens, standardize names, replace euphemisms,
-    # etc. **before** tokenizing & lemmatizing**
-    df = df.replace(TEXT_SUBSTITUTIONS, regex=True)
-    # meat of preprocessing happens in format_text
-    words_bag = df.apply(format_text, axis=1).tolist()
-    return words_bag[0].split() if data_type == 'recall' else words_bag
+def parse_windows(textlist, wsize):
+    windows = []
+    for ix in range(wsize // 2, wsize):
+        windows.append(' '.join(textlist[0 : ix]))
+    for ix in range(len(textlist) - wsize // 2 + 1):
+        windows.append(' '.join(textlist[ix : ix + wsize]))
+    return windows
 
 
+########################################################################
+#                          NOTEBOOK DISPLAYS                           #
+########################################################################
 def show_source(obj: object) -> DisplayHandle:
     """
     Inspects an arbitrary object and displays its source code or
