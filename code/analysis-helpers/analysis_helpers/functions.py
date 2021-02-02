@@ -1,7 +1,7 @@
 import pprint
 import re
 import string
-from typing import Dict
+from typing import Dict, List, Literal, Union
 
 import numpy as np
 import pandas as pd
@@ -30,7 +30,9 @@ def format_text(text_ser: pd.Series):
     # convert digits to words
     no_digit = re.sub(r"(\d+)", lambda x: num2words(int(x.group(0))), joined)
     lemmatized = lemmatize(no_digit)
-    no_punc = lemmatized.translate(str.maketrans('', '', string.punctuation))    #re.sub("[^\w\s-]+", '', lemmatized.lower())
+    # remove punctuation
+    no_hyphen = lemmatized.replace('-', ' ')
+    no_punc = no_hyphen.translate(str.maketrans('', '', string.punctuation))    #re.sub("[^\w\s-]+", '', lemmatized.lower())
     # lowercase everything, remove stopwords, normalize spacing
     lower_list = no_punc.lower().split()
     return ' '.join(word for word in lower_list if word not in STOP_WORDS)
@@ -46,7 +48,11 @@ def lemmatize(text: str, pos_dict: Dict[str, str] = POS_MAPPING) -> str:
     return ' '.join(lemmas)
 
 
-def preprocess_text(data, /, data_type):
+def preprocess_text(
+        data: Union[pd.DataFrame, str],
+        /,
+        data_type: Literal['episode', 'recall']
+) -> List[str]:
     # ADD DOCSTRING
     if data_type == 'episode':
         df = data.loc[:, 'Narrative details (external events)':'Setting']
@@ -56,14 +62,12 @@ def preprocess_text(data, /, data_type):
         raise ValueError(
             "Invalid value for 'data_type', must be either 'episode' or 'recall'"
         )
-
     # combine multi-word tokens, standardize names, replace euphemisms,
     # etc. **before** tokenizing & lemmatizing**
     df = df.replace(TEXT_SUBSTITUTIONS, regex=True)
     # meat of preprocessing happens in format_text
     words_bag = df.apply(format_text, axis=1).tolist()
     return words_bag[0].split() if data_type == 'recall' else words_bag
-
 
 
 def show_source(obj: object) -> DisplayHandle:
