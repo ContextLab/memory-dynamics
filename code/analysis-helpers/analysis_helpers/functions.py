@@ -1,7 +1,7 @@
 import pprint
 import re
 import string
-from typing import Dict, List, Literal, Union
+from typing import Dict
 
 import pandas as pd
 from IPython.core.oinspect import pylight, getsource as ipy_getsource
@@ -61,12 +61,12 @@ def parse_windows(textlist, wsize):
 ########################################################################
 def show_source(obj: object) -> DisplayHandle:
     """
-    Inspects an arbitrary object and displays its source code or
-    definition as inline HTML in the notebook, with syntax highlighting
-    applied. If the object is a module, class, method, property,
-    function, traceback, frame, or code object, its source code is
-    displayed. Otherwise, its '__repr__' formatted as HTML, highlighted,
-    and pretty-printed.
+    Extracts and displays source code for most object types (modules,
+    classes, methods, properties, functions, tracebacks, frames, & code
+    objects) as inline HTML in a notebook, with syntax highlighting
+    applied (note: GitHub notebook previews don't support syntax
+    highlighting). Falls back to displaying the object's '__repr__' as
+    highlighted, pretty-printed HTML.
 
     Parameters
     ----------
