@@ -5,12 +5,20 @@ from functools import update_wrapper
 from inspect import getcallargs
 
 
-from typing import (Any, Callable, Dict, Optional, overload, Tuple, Type,
-                    TYPE_CHECKING, TypeVar, Union)
+from typing import (Any, Callable, Dict, Literal, NoReturn, Optional, overload,
+                    Tuple, Type, TYPE_CHECKING, TypedDict, TypeVar, Union)
 
 if TYPE_CHECKING:
+    from analysis_helpers import Participant
+
     _FgetReturn = TypeVar('_FgetReturn')
     _T = TypeVar('_T')
+
+    class _LazyDataDictInput(TypedDict, total=False):
+        atlep1: str
+        delayed: str
+        atlep2: str
+        arrdev: str
 
 
 # noinspection PyPep8Naming
@@ -40,6 +48,25 @@ class lazy_data:
 
     def __set_name__(self, owner: Type[_T], name: str) -> None:
         self.name = name
+
+
+class LazyDataDict(dict):
+    # ADD DOCSTRING
+    def __init__(
+            self,
+            inst: Participant,
+            dict_: _LazyDataDictInput
+    ) -> None:
+        # ADD DOCSTRING
+        super().__init__(dict_)
+        self.owner_inst = inst
+        self.owner_cls = inst.__class__
+
+    def __getitem__(self, name: str) -> Any:
+        return getattr(self.owner_inst, super().__getitem__(name))
+
+    def __setitem__(self, name: str, value: Any) -> NoReturn:
+        raise TypeError("'LazyDataDict' does not support item assignment")
 
 
 class Multiton(type):
