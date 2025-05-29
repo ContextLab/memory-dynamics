@@ -90,7 +90,7 @@ check_arg() {
 
 
 show_usage() {
-    echo "launch_notebooks.sh [-h] [-d] [-b] [-i NAME] [-c NAME]"
+    echo "./launch_notebooks.sh [-h] [-d] [-b] [-i NAME] [-c NAME]"
 }
 
 
@@ -342,7 +342,7 @@ local_image_exists() {
 
 build_local_image() {
     fancy_echo "building image: $IMAGE_NAME"
-    docker build \
+    DOCKER_SCAN_SUGGEST=false docker build \
         --rm \
         --force-rm \
         --build-arg WORKDIR="/mnt/$NOTEBOOKS_DIR" \
@@ -390,6 +390,7 @@ get_nbserver_url() {
     local url_dir_info="${running_nbserver#Currently running servers:}"
     nbserver_url="${url_dir_info%% *}"
     nbserver_url="${nbserver_url//$'\n'}"
+    nbserver_url="${nbserver_url/0.0.0.0/127.0.0.1}"
 }
 
 
