@@ -1,5 +1,41 @@
+# Mac Finder display config
 *.DS_Store
+
+# PyCharm project config dir
+*.idea
+
+# IPython notebook checkpoints
+*.ipynb_checkpoints
+
+# Python bytecode
+*__pycache__
+
+# Python package distribution egg
+*.egg-info
+
+# scratch Python scripts & Jupyter notebooks for debugging
+code/notebooks/*scratch.ipynb
+code/analysis-helpers/*scratch.py
+
+# emacs lockfiles
+*.#*
+
+# psiTurk & AWS private keys
+exp/.psiturkconfig
+
+# Google Cloud credentials for speech decoding
+credentials.json
+
+# psiTurk SQLite database files (exported to JSON files in data/db/exported)
 *.db
+
+# raw participant audio
+data/raw/audio/
+
+# participants dropped from analyses
+data/raw/transcriptions/*/drops/
+
+# LaTeX-related files
 *.log
 *.aux
 *.fdb_latexmk
@@ -8,22 +44,23 @@
 *.blg
 *.dvi
 *.out
-*.ipynb_checkpoints/
-*.pyc
-*#*
+
+# Adobe Illustrator files
 *.ai
-*.joblib
+
+# ========================= Files too large for GitHub =========================
+# thesis defense slides (136.3MB; too large for GitHub)
 *.key
-credentials.json
-data/db/
-data/google-form-data
-data/audio/
-data/pickles/participant_models.p
-data/pickles/neurosynth_dataset.p
-data/brains/HuthModelWeights.npy
-data/brains/neurosynth_decoder.joblib
-data/brains/*/rec_events/
-data/brains/*/pres_events/
-code/neurosynth/
-code/pycortex/
+# Neurosynth document/NIfTI dataset
+data/processed/etc/neurosynth_dataset.p
+# Neurosynth Decoder objects
+data/processed/brains/*.joblib
+# voxels x words matrix of weights from Huth et al., 2016
+data/processed/brains/HuthModelWeights.npy
+# predicted activity maps constructed from presented events
+data/processed/brains/*/pres_events/
+# predicted activity maps constructe from recall events
+data/processed/brains/*/rec_events/
+# rasterized versions of large figures for thesis
 Paper/figures/*rast.pdf
+# ==============================================================================

@@ -1,6 +1,0 @@
-Feature,../../data/brains/atlep1/rec_events/debugfGFHT:debugLCOgS_event17_mni.nii.gz
-default mode,0.1995
-precuneus,0.2038
-default,0.2011
-mode network,0.2002
-posterior cingulate,0.1984
