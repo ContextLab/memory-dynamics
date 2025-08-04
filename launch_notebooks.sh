@@ -385,12 +385,21 @@ start_container() {
 #          NOTEBOOK FUNCTIONS          #
 ########################################
 get_nbserver_url() {
-    local running_nbserver
-    running_nbserver=$(docker exec "$CONTAINER_NAME" bash -c 'jupyter notebook list')
-    local url_dir_info="${running_nbserver#Currently running servers:}"
-    nbserver_url="${url_dir_info%% *}"
-    nbserver_url="${nbserver_url//$'\n'}"
-    nbserver_url="${nbserver_url/0.0.0.0/127.0.0.1}"
+    local running_nbserver=$(docker exec "$CONTAINER_NAME" bash -c 'jupyter nbclassic list')
+    # remove first line so output is empty if no servers are running
+    local url_line="${running_nbserver#Currently running servers:}"
+    if [ -n "$url_line" ]; then
+        # extract notebook server URL from output
+        local raw_url="${url_line#*http://}"
+        raw_url="http://${raw_url%% *}"
+        # extract port number
+        local port="${raw_url##*:}"
+        port="${port%%/*}"
+        # extract query params following port (?token=...)
+        local params="${raw_url##*$port/}"
+        # reconstruct URL with container hostname replaced with 127.0.0.1
+        nbserver_url="http://127.0.0.1:${port}/${params}"
+    fi
 }
 
 

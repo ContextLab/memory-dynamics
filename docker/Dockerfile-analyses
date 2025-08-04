@@ -52,7 +52,7 @@ RUN --mount=type=bind,source=docker,target=/mnt \
     # mamba env update -f <path-to-analysis-environment.yml> --prune && \
     mamba install -y \
         ipykernel \
-        notebook \
+        nbclassic \
         tini && \
     mamba clean -afy && \
     # TODO: may want to do additional cleanup?:
@@ -89,7 +89,7 @@ WORKDIR "/mnt"
 
 ENTRYPOINT ["tini", "-g", "--"]
 
-CMD ["jupyter", "notebook"]
+CMD ["jupyter", "nbclassic"]
 
 
 
