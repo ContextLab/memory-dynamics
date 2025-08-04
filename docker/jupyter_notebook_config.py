@@ -14,5 +14,6 @@ c.NotebookApp.port = int(getenv("NOTEBOOK_PORT"))
 c.NotebookApp.notebook_dir = getenv("NOTEBOOK_DIR")
 c.NotebookApp.open_browser = False
 c.NotebookApp.allow_root = True
+c.NotebookApp.show_banner = False
 # https://github.com/jupyter/notebook/issues/3130
 c.FileContentsManager.delete_to_trash = False
