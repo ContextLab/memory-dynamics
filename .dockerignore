@@ -1,4 +1,6 @@
 # Since repo will be mounted to container, can ignore almost everything...
 *
-# ...except for local helper package copied in during build
+# ...except for local helper package installed during build...
 !/code/helpers/
+# ... and the directory containing the conda & Jupyter config files.
+!/docker/

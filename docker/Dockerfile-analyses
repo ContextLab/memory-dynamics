@@ -1,51 +1,95 @@
 # builds an image for running the notebooks to reproduce analyses and figures
-FROM contextlab/cdl-jupyter:3.8
+# TODO: might need to do some sort of check to make sure submodules are initialized
 
-LABEL maintainer="Paxton Fitzpatrick <paxton.c.fitzpatrick@dartmouth.edu>"
+FROM debian:bookworm-slim
 
-ARG NB_PORT=8888
-ARG WORKDIR="/mnt"
-ARG DEVELOP=0
+LABEL maintainer="Paxton Fitzpatrick <Paxton.C.Fitzpatrick.GR@Dartmouth.edu>"
 
-ENV NOTEBOOK_PORT $NB_PORT
-ENV NOTEBOOK_DIR $WORKDIR
+ARG DEBIAN_FRONTEND=noninteractive \
+    notebook_ip=0.0.0.0 \
+    notebook_port=8888 \
+    notebook_dir="/mnt/code/notebooks" \
+    develop=0
 
-COPY code/helpers/ /tmp/helpers/
+ENV LANG="C.UTF-8" \
+    LC_ALL="C.UTF-8" \
+    CONDA_DIR="/opt/conda" \
+    MAMBA_NO_BANNER=1 \
+    NOTEBOOK_IP="$notebook_ip" \
+    NOTEBOOK_PORT="$notebook_port" \
+    NOTEBOOK_DIR="$notebook_dir"
+ENV PATH="${CONDA_DIR}/bin:${PATH}"
 
-RUN apt-get update --fix-missing \
-    && apt-get install -y --no-install-recommends \
-        g++ \
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN --mount=type=bind,source=docker,target=/mnt \
+    sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashrc && \
+    apt-get update --fix-missing && \
+    apt-get install -y --no-install-recommends eatmydata && \
+    eatmydata apt-get install -y --no-install-recommends \
+        bzip2 \
+        ca-certificates \
+        curl \
         git \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && conda install -Sy \
-        matplotlib=3.2.2 \
-        mpi4py=3.0.3 \
-        nltk=3.4.4 \
-        num2words=0.5.10 \
-        numba=0.52.0 \
-        numpy=1.19.1 \
-        pandas=1.2.0 \
-        scikit-learn=0.23.2 \
-        scipy=1.5.2 \
-        seaborn=0.11.1 \
-        umap-learn=0.4.6 \
-        wordcloud=1.8.1 \
-    && conda clean -afy \
-    && pip install \
-        pycircstat==0.0.2 \
-        git+https://github.com/brainiak/brainiak.git@v0.11#egg=brainiak \
-        git+https://github.com/ContextLab/hypertools.git@36c12fd6d1706fb75e596a62b555ee819ddada6a#egg=hypertools \
-        git+https://github.com/ContextLab/quail.git@71dd53c792dd915dc84879d8237e3582dd68b7a4#egg=quail \
-    && if [ "$DEVELOP" == "0" ]; then \
-           pip install /tmp/helpers; \
-       fi \
-    && rm -rf ~/.cache/pip \
-    && rm -rf /tmp/ \
-    && python -uBW ignore -m nltk.downloader stopwords averaged_perceptron_tagger wordnet punkt \
-    && rm ~/nltk_data/corpora/stopwords.zip \
-    && rm ~/nltk_data/taggers/averaged_perceptron_tagger.zip \
-    && rm ~/nltk_data/corpora/wordnet.zip \
-    && rm ~/nltk_data/tokenizers/punkt.zip
+        vim-tiny && \
+        # TODO: may need gcc and/or libc6-dev?
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    curl --progress-bar \
+        -L "https://github.com/conda-forge/miniforge/releases/download/25.3.1-0/Miniforge3-25.3.1-0-Linux-$(uname -m).sh" \
+        -o "$HOME/miniforge.sh" && \
+    /bin/bash "$HOME/miniforge.sh" -bp $CONDA_DIR && \
+    # TODO: confirm installed Python version is 3.13
+    rm "$HOME/miniforge.sh" && \
+    # TODO: may want to configure conda for reproducibility?:
+    # mamba config --set auto_update_conda false && \
+    # mamba config --set notify_outdated_conda false && \
+    # mamba config --prepend channels conda-forge && \
+    # mamba config --set channel_priority strict && \
+    # mamba config --set show_channel_urls true && \
+    # mamba config --set remote_max_retries 5 && \
+    # TODO: switch to building from full, explicit environment.yml file:
+    # mamba env update -f <path-to-analysis-environment.yml> --prune && \
+    mamba install -y \
+        ipykernel \
+        notebook \
+        tini && \
+    mamba clean -afy && \
+    # TODO: may want to do additional cleanup?:
+    # find ${CONDA_DIR} -follow -type f -name '*.a' -delete && \
+    # find ${CONDA_DIR} -follow -type f -name '*.pyc' -delete && \
+    # TODO: likely need to pip-install some non-conda packages (e.g., hypertools, wordcloud, etc.)
+    # pip install --disable-pip-version-check --no-cache-dir \
+    #     hypertools \
+    #     git+https://github.com/amueller/word_cloud.git<@some-hash> \
+    #     etc... && \
+    # TODO: install NTLK corpora/models/etc. (unclear if all of these are needed):
+    # python -uBW ignore -m nltk.downloader \
+    #     stopwords \
+    #     averaged_perceptron_tagger \
+    #     wordnet \
+    #     punkt && \
+    # TODO: install analysis_helpers package (note: NLTK stuff must be installed
+    #  first if referenced at top level of helpers package)
+    # pip install --disable-pip-version-check --no-cache-dir <path-to-analysis-helpers-package> && \
+    # rm -rf <path-to-analysis-helpers-package> && \
+    # rm -f "$HOME/nltk_data/*/*.zip" && \
+    mkdir -p "$HOME/.jupyter" && \
+    cp /mnt/jupyter_notebook_config.py "$HOME/.jupyter/jupyter_notebook_config.py"
+    # TODO: once image is finalized, remove not-needed apt packages:
+    # apt-get purge -y --auto-remove \
+    #     eatmydata \
+    #     bzip2 \
+    #     ca-certificates \
+    #     curl \
+    #     git \
+    #     etc... && \
 
-WORKDIR $WORKDIR
+WORKDIR "/mnt"
+
+ENTRYPOINT ["tini", "-g", "--"]
+
+CMD ["jupyter", "notebook"]
+
+
+
