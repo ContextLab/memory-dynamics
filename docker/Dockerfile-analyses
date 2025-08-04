@@ -24,6 +24,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN --mount=type=bind,source=docker,target=/mnt \
     sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashrc && \
+    # install basic system packages
     apt-get update --fix-missing && \
     apt-get install -y --no-install-recommends eatmydata && \
     eatmydata apt-get install -y --no-install-recommends \
@@ -35,25 +36,20 @@ RUN --mount=type=bind,source=docker,target=/mnt \
         # TODO: may need gcc and/or libc6-dev?
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
+    # symlink "vim.tiny" to just "vim" for simplicity
+    ln -s /usr/bin/vim.tiny /usr/bin/vim && \
+    # install conda & mamba (faster C++ reimplementation) via miniforge
     curl --progress-bar \
         -L "https://github.com/conda-forge/miniforge/releases/download/25.3.1-0/Miniforge3-25.3.1-0-Linux-$(uname -m).sh" \
         -o "$HOME/miniforge.sh" && \
     /bin/bash "$HOME/miniforge.sh" -bp $CONDA_DIR && \
-    # TODO: confirm installed Python version is 3.13
     rm "$HOME/miniforge.sh" && \
-    # TODO: may want to configure conda for reproducibility?:
-    # mamba config --set auto_update_conda false && \
-    # mamba config --set notify_outdated_conda false && \
-    # mamba config --prepend channels conda-forge && \
-    # mamba config --set channel_priority strict && \
-    # mamba config --set show_channel_urls true && \
-    # mamba config --set remote_max_retries 5 && \
-    # TODO: switch to building from full, explicit environment.yml file:
-    # mamba env update -f <path-to-analysis-environment.yml> --prune && \
-    mamba install -y \
-        ipykernel \
-        nbclassic \
-        tini && \
+    # configure conda for long-term stability/reproducibility
+    mamba config --set auto_update_conda false && \
+    mamba config --set notify_outdated_conda false && \
+    mamba config --set channel_priority strict && \
+    # reconstruct analysis environment from conda env spec
+    mamba env update -f /mnt/analysis-environment.yml --prune && \
     mamba clean -afy && \
     # TODO: may want to do additional cleanup?:
     # find ${CONDA_DIR} -follow -type f -name '*.a' -delete && \
@@ -74,6 +70,7 @@ RUN --mount=type=bind,source=docker,target=/mnt \
     # pip install --disable-pip-version-check --no-cache-dir <path-to-analysis-helpers-package> && \
     # rm -rf <path-to-analysis-helpers-package> && \
     # rm -f "$HOME/nltk_data/*/*.zip" && \
+    # copy in Jupyter notebook config file from build context
     mkdir -p "$HOME/.jupyter" && \
     cp /mnt/jupyter_notebook_config.py "$HOME/.jupyter/jupyter_notebook_config.py"
     # TODO: once image is finalized, remove not-needed apt packages:
