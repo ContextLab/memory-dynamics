@@ -104,7 +104,7 @@ show_help() {
         '-b, --no-browser'
         '-i, --image-name NAME'
         '-c, --container-name NAME'
-        '-D, --dev'
+        '-D, --develop'
     )
     local -a descriptions=(
         'Show this help message and exit'
