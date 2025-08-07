@@ -32,10 +32,12 @@ RUN --mount=type=bind,source=docker,target=/mnt \
         ca-certificates \
         curl \
         git \
-        vim-tiny && \
-        # TODO: may need gcc and/or libc6-dev?
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
+        vim-tiny \
+        # packages required to build brainiak from source:
+        build-essential \
+        libgomp1 \
+        libmpich-dev \
+        mpich && \
     # symlink "vim.tiny" to just "vim" for simplicity
     ln -s /usr/bin/vim.tiny /usr/bin/vim && \
     # install conda & mamba (faster C++ reimplementation) via miniforge
@@ -43,22 +45,18 @@ RUN --mount=type=bind,source=docker,target=/mnt \
         -L "https://github.com/conda-forge/miniforge/releases/download/25.3.1-0/Miniforge3-25.3.1-0-Linux-$(uname -m).sh" \
         -o "$HOME/miniforge.sh" && \
     /bin/bash "$HOME/miniforge.sh" -bp $CONDA_DIR && \
-    rm "$HOME/miniforge.sh" && \
     # configure conda for long-term stability/reproducibility
-    mamba config --set auto_update_conda false && \
-    mamba config --set notify_outdated_conda false && \
-    mamba config --set channel_priority strict && \
+    conda config --set auto_update_conda false && \
+    conda config --set notify_outdated_conda false && \
+    conda config --set channel_priority strict && \
     # reconstruct analysis environment from conda env spec
     mamba env update -f /mnt/analysis-environment.yml --prune && \
-    mamba clean -afy && \
-    # TODO: may want to do additional cleanup?:
-    # find ${CONDA_DIR} -follow -type f -name '*.a' -delete && \
-    # find ${CONDA_DIR} -follow -type f -name '*.pyc' -delete && \
-    # TODO: likely need to pip-install some non-conda packages (e.g., hypertools, wordcloud, etc.)
-    # pip install --disable-pip-version-check --no-cache-dir \
-    #     hypertools \
-    #     git+https://github.com/amueller/word_cloud.git<@some-hash> \
-    #     etc... && \
+    # pip-install some packages that aren't available via conda and/or don't
+    # provide conda builds for linux-aarch64
+    pip install --disable-pip-version-check --no-cache-dir \
+        nitime==0.11 \
+        pymanopt==2.2.1 \
+        brainiak==0.12 && \
     # TODO: install NTLK corpora/models/etc. (unclear if all of these are needed):
     # python -uBW ignore -m nltk.downloader \
     #     stopwords \
@@ -72,15 +70,26 @@ RUN --mount=type=bind,source=docker,target=/mnt \
     # rm -f "$HOME/nltk_data/*/*.zip" && \
     # copy in Jupyter notebook config file from build context
     mkdir -p "$HOME/.jupyter" && \
-    cp /mnt/jupyter_notebook_config.py "$HOME/.jupyter/jupyter_notebook_config.py"
-    # TODO: once image is finalized, remove not-needed apt packages:
-    # apt-get purge -y --auto-remove \
-    #     eatmydata \
-    #     bzip2 \
-    #     ca-certificates \
-    #     curl \
-    #     git \
-    #     etc... && \
+    cp /mnt/jupyter_notebook_config.py "$HOME/.jupyter/jupyter_notebook_config.py" && \
+    # cleanup to reduce image size
+    apt-get clean && \
+    apt-get purge -y --auto-remove \
+        eatmydata \
+        bzip2 \
+        ca-certificates \
+        curl \
+        git \
+        build-essential \
+        libgomp1 \
+        libmpich-dev \
+        mpich && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm "$HOME/miniforge.sh" && \
+    mamba clean -afy && \
+    find ${CONDA_DIR} -follow -type f -name '*.a' -delete && \
+    find ${CONDA_DIR} -follow -type f -name '*.pyc' -delete && \
+    rm -rf "$HOME/.cache/pip"
+    # rm -f "$HOME/nltk_data/*/*.zip" && \
 
 WORKDIR "/mnt"
 
