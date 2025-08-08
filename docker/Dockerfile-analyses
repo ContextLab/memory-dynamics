@@ -88,6 +88,7 @@ RUN --mount=type=bind,source=docker,target=/mnt \
     mamba clean -afy && \
     find ${CONDA_DIR} -follow -type f -name '*.a' -delete && \
     find ${CONDA_DIR} -follow -type f -name '*.pyc' -delete && \
+    find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
     rm -rf "$HOME/.cache/pip"
     # rm -f "$HOME/nltk_data/*/*.zip" && \
 

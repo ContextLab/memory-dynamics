@@ -1,21 +1,23 @@
-# Mac Finder display config
+# MacOS Finder display config files
 *.DS_Store
 
 # PyCharm project config dir
-*.idea
+*.idea/
 
-# IPython notebook checkpoints
-*.ipynb_checkpoints
+# VS Code project config dir
+*.vscode/
+
+# Jupyter notebook checkpoints
+*.ipynb_checkpoints/
 
 # Python bytecode
-*__pycache__
+*__pycache__/
 
-# Python package distribution egg
-*.egg-info
+# analysis-helpers package distribution egg
+code/analysis-helpers/analysis_helpers.egg-info/
 
-# scratch Python scripts & Jupyter notebooks for debugging
-code/notebooks/*scratch.ipynb
-code/analysis-helpers/*scratch.py
+# scratch files
+scratch/
 
 # emacs lockfiles
 *.#*
@@ -23,44 +25,24 @@ code/analysis-helpers/*scratch.py
 # psiTurk & AWS private keys
 exp/.psiturkconfig
 
-# Google Cloud credentials for speech decoding
-credentials.json
+# psiTurk shell history
+exp/.psiturk_history
 
-# psiTurk SQLite database files (exported to JSON files in data/db/exported)
-*.db
+# psiTurk experiment server logfile
+exp/server.log
 
-# raw participant audio
+# psiTurk SQLite databases (exported to JSON files in data/raw/psiturk/)
+data/raw/psiturk/test-room-[12].db
+
+# raw participant audio files
 data/raw/audio/
 
-# participants dropped from analyses
-data/raw/transcriptions/*/drops/
-
-# LaTeX-related files
-*.log
-*.aux
-*.fdb_latexmk
-*.synctex.gz
-*.bbl
-*.blg
-*.dvi
-*.out
-
-# Adobe Illustrator files
-*.ai
-
-# ========================= Files too large for GitHub =========================
-# thesis defense slides (136.3MB; too large for GitHub)
-*.key
-# Neurosynth document/NIfTI dataset
-data/processed/etc/neurosynth_dataset.p
-# Neurosynth Decoder objects
-data/processed/brains/*.joblib
-# voxels x words matrix of weights from Huth et al., 2016
-data/processed/brains/HuthModelWeights.npy
-# predicted activity maps constructed from presented events
-data/processed/brains/*/pres_events/
-# predicted activity maps constructe from recall events
-data/processed/brains/*/rec_events/
-# rasterized versions of large figures for thesis
-Paper/figures/*rast.pdf
-# ==============================================================================
+# LaTeX/BibTeX intermediate/generated files
+paper/**/*.aux
+paper/**/*.bbl
+paper/**/*.blg
+paper/**/*.fdb_latexmk
+paper/**/*.fls
+paper/**/*.log
+paper/**/*.out
+paper/**/*.synctex.gz
