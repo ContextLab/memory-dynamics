@@ -345,9 +345,10 @@ build_local_image() {
     DOCKER_SCAN_SUGGEST=false docker build \
         --rm \
         --force-rm \
-        --build-arg WORKDIR="/mnt/$NOTEBOOKS_DIR" \
-        --build-arg NB_PORT="$CONTAINER_PORT" \
-        --build-arg DEVELOP="$DEVELOP" \
+        --build-arg notebook_ip="$NOTEBOOK_IP" \
+        --build-arg notebook_port="$CONTAINER_PORT" \
+        --build-arg notebook_dir="/mnt/$NOTEBOOKS_DIR" \
+        --build-arg develop="$DEVELOP" \
         -t "$IMAGE_NAME" \
         -f "$repo_root/$DOCKERFILE_PATH" \
         "$repo_root"
