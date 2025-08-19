@@ -22,7 +22,7 @@ ENV PATH="${CONDA_DIR}/bin:${PATH}"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN --mount=type=bind,source=docker,target=/mnt \
+RUN --mount=type=bind,source=.,target=/mnt \
     sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashrc && \
     # install basic system packages
     apt-get update --fix-missing && \
@@ -32,6 +32,7 @@ RUN --mount=type=bind,source=docker,target=/mnt \
         ca-certificates \
         curl \
         git \
+        rsync \
         vim-tiny \
         # packages required to build brainiak from source:
         build-essential \
@@ -50,7 +51,7 @@ RUN --mount=type=bind,source=docker,target=/mnt \
     conda config --set notify_outdated_conda false && \
     conda config --set channel_priority strict && \
     # reconstruct analysis environment from conda env spec
-    mamba env update -f /mnt/analysis-environment.yml --prune && \
+    mamba env update -f /mnt/docker/analysis-environment.yml --prune && \
     # pip-install some packages that aren't available via conda and/or don't
     # provide conda builds for linux-aarch64
     pip install --disable-pip-version-check --no-cache-dir \
@@ -70,7 +71,7 @@ RUN --mount=type=bind,source=docker,target=/mnt \
     # rm -f "$HOME/nltk_data/*/*.zip" && \
     # copy in Jupyter notebook config file from build context
     mkdir -p "$HOME/.jupyter" && \
-    cp /mnt/jupyter_notebook_config.py "$HOME/.jupyter/jupyter_notebook_config.py" && \
+    cp /mnt/docker/jupyter_notebook_config.py "$HOME/.jupyter/jupyter_notebook_config.py" && \
     # cleanup to reduce image size
     apt-get clean && \
     apt-get purge -y --auto-remove \
