@@ -110,7 +110,7 @@ show_help() {
         'Show this help message and exit'
         'Don'\''t attach the terminal to the streaming notebook server log'
         'Don'\''t try to automatically open notebooks in a browser window'
-        'Mirror container conda environment to host and install helpers package in editable mode'
+        'Install helpers package in editable mode when building the image'
         'Run a container from existing image NAME, or build a new image and tag it NAME'
         'Start the existing container NAME, or create a new container named NAME'
     )
@@ -359,82 +359,22 @@ container_exists() {
     [ -n "$(docker ps -aqf "name=^$CONTAINER_NAME$")" ]
 }
 
-setup_dev_environment() {
-    # in dev mode (`-D`/`--develop` flag passed), the container's conda
-    # environment (/opt/conda) is mirrored to a directory on the host
-    # (docker/dev-environment) so that it can be used by a local IDE. This is
-    # done by:
-    #   1. running a one-off container from the image to copy (rsync) the conda
-    #      environment to the mounted host directory
-    #   2. creating the "final" container with that host directory mounted in
-    #      place of the container's conda environment, in addition to mounting
-    #      the repo root to /mnt
-
-    fancy_echo "Dev mode: mirroring container conda environment to host"
-
-    local -r dev_env_dir="$repo_root/docker/dev-environment"
-    mkdir -p "$dev_env_dir"
-
-    # if the host directory is already populated (probably from a previous
-    # build's conda environment), prompt the user for confirmation before
-    # overwriting it
-    if [ -n "$(ls -A "$dev_env_dir" 2>/dev/null)" ]; then
-        echo "The directory \'"${dev_env_dir#$repo_root/}"\' already exists and is not empty."
-        while true; do
-            read -r -p "Overwrite it with a new Conda environment for the current build? [Y/n]: " reply
-            case "$reply" in
-                ""|[yY])
-                    rm -rf "$dev_env_dir"/* "$dev_env_dir"/.[!.]* "$dev_env_dir"/..?* 2>/dev/null || true
-                    break
-                    ;;
-                [nN])
-                    echo "Aborting: will not overwrite \'"${dev_env_dir#$repo_root/}"\'."
-                    exit 1
-                    ;;
-                *)
-                    echo "Please enter 'y' or 'n'."
-                    ;;
-            esac
-        done
-    fi
-
-    docker run \
-        -it \
-        --rm \
-        -v "$repo_root/docker/dev-environment:/mnt/docker/dev-environment" \
-        "$IMAGE_NAME" \
-        bash -lc 'rsync -aH --info=progress2 "$CONDA_DIR/" /mnt/docker/dev-environment/'
-        # ^CONDA_DIR env var is set in Dockerfile-analyses
-}
-
 
 create_container() {
-    fancy_echo "creating new container: $CONTAINER_NAME"
-
-    if (( DEVELOP )); then
-        docker create \
-            -it \
-            -p "$LOCAL_PORT":"$CONTAINER_PORT" \
-            -v "$repo_root:/mnt" \
-            -v "$repo_root/docker/dev-environment:/opt/conda" \
-            --name "$CONTAINER_NAME" \
-            "$IMAGE_NAME" \
-            > /dev/null
-    else
-        docker create \
-            -it \
-            -p "$LOCAL_PORT":"$CONTAINER_PORT" \
-            -v "$repo_root:/mnt" \
-            --name "$CONTAINER_NAME" \
-            "$IMAGE_NAME" \
-            > /dev/null
-    fi
+    echo "creating new container: $CONTAINER_NAME"
+    docker create \
+        -it \
+        -p "$LOCAL_PORT":"$CONTAINER_PORT" \
+        -v "$repo_root:/mnt" \
+        --name "$CONTAINER_NAME" \
+        "$IMAGE_NAME" \
+        > /dev/null
 }
 
 
 start_container() {
+    echo "starting container: $CONTAINER_NAME"
     # record container start time to show relevant notebook server logs in case of failure
-    fancy_echo "starting container"
     container_start_time=$(date +%s)
     docker start "$CONTAINER_NAME" > /dev/null
 }
@@ -444,7 +384,9 @@ start_container() {
 #          NOTEBOOK FUNCTIONS          #
 ########################################
 get_nbserver_url() {
-    local running_nbserver=$(docker exec "$CONTAINER_NAME" bash -c 'jupyter nbclassic list')
+    local running_nbserver
+
+    running_nbserver=$(docker exec "$CONTAINER_NAME" bash -c 'jupyter nbclassic list')
     # remove first line so output is empty if no servers are running
     local url_line="${running_nbserver#Currently running servers:}"
     if [ -n "$url_line" ]; then
@@ -455,7 +397,7 @@ get_nbserver_url() {
         local port="${raw_url##*:}"
         port="${port%%/*}"
         # extract query params following port (?token=...)
-        local params="${raw_url##*$port/}"
+        local params="${raw_url##*"$port"/}"
         # reconstruct URL with container hostname replaced with 127.0.0.1
         nbserver_url="http://127.0.0.1:${port}/${params}"
     fi
@@ -530,15 +472,8 @@ main() {
     check_docker_daemon
     trap '' EXIT
 
-    if ! local_image_exists; then
-        build_local_image
-    fi
-
-    if ! container_exists; then
-        (( DEVELOP )) && setup_dev_environment
-        create_container
-    fi
-
+    ! local_image_exists && build_local_image
+    ! container_exists && create_container
     start_container
     wait_for_nbserver
     (( LAUNCH_BROWSER )) && attempt_launch_browser

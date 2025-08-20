@@ -46,6 +46,3 @@ paper/**/*.fls
 paper/**/*.log
 paper/**/*.out
 paper/**/*.synctex.gz
-
-# mounted container's conda environment location if built in dev mode
-docker/dev-environment/
