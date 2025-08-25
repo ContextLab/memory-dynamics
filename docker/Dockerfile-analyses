@@ -1,0 +1,103 @@
+# builds an image for running the notebooks to reproduce analyses and figures
+# TODO: might need to do some sort of check to make sure submodules are initialized
+
+FROM debian:bookworm-slim
+
+LABEL maintainer="Paxton Fitzpatrick <Paxton.C.Fitzpatrick.GR@Dartmouth.edu>"
+
+ARG DEBIAN_FRONTEND=noninteractive \
+    notebook_ip=0.0.0.0 \
+    notebook_port=8888 \
+    notebook_dir="/mnt/code/notebooks" \
+    develop=0
+
+ENV LANG="C.UTF-8" \
+    LC_ALL="C.UTF-8" \
+    CONDA_DIR="/opt/conda" \
+    MAMBA_NO_BANNER=1 \
+    NOTEBOOK_IP="$notebook_ip" \
+    NOTEBOOK_PORT="$notebook_port" \
+    NOTEBOOK_DIR="$notebook_dir"
+ENV PATH="${CONDA_DIR}/bin:${PATH}"
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN --mount=type=bind,source=.,target=/mnt \
+    sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashrc && \
+    # install basic system packages
+    apt-get update --fix-missing && \
+    apt-get install -y --no-install-recommends eatmydata && \
+    eatmydata apt-get install -y --no-install-recommends \
+        bzip2 \
+        ca-certificates \
+        curl \
+        git \
+        rsync \
+        vim-tiny \
+        # packages required to build brainiak from source:
+        build-essential \
+        libgomp1 \
+        libmpich-dev \
+        mpich && \
+    # symlink "vim.tiny" to just "vim" for simplicity
+    ln -s /usr/bin/vim.tiny /usr/bin/vim && \
+    # install conda & mamba (faster C++ reimplementation) via miniforge
+    curl --progress-bar \
+        -L "https://github.com/conda-forge/miniforge/releases/download/25.3.1-0/Miniforge3-25.3.1-0-Linux-$(uname -m).sh" \
+        -o "$HOME/miniforge.sh" && \
+    /bin/bash "$HOME/miniforge.sh" -bp $CONDA_DIR && \
+    # configure conda for long-term stability/reproducibility
+    conda config --set auto_update_conda false && \
+    conda config --set notify_outdated_conda false && \
+    conda config --set channel_priority strict && \
+    # reconstruct analysis environment from conda env spec
+    mamba env update -f /mnt/docker/analysis-environment.yml --prune && \
+    # pip-install some packages that aren't available via conda and/or don't
+    # provide conda builds for linux-aarch64
+    pip install --disable-pip-version-check --no-cache-dir \
+        nitime==0.11 \
+        pymanopt==2.2.1 \
+        brainiak==0.12 && \
+    # TODO: install NTLK corpora/models/etc. (unclear if all of these are needed):
+    # python -uBW ignore -m nltk.downloader \
+    #     stopwords \
+    #     averaged_perceptron_tagger \
+    #     wordnet \
+    #     punkt && \
+    # TODO: install analysis_helpers package (note: NLTK stuff must be installed
+    #  first if referenced at top level of helpers package)
+    # pip install --disable-pip-version-check --no-cache-dir <path-to-analysis-helpers-package> && \
+    # rm -rf <path-to-analysis-helpers-package> && \
+    # rm -f "$HOME/nltk_data/*/*.zip" && \
+    # copy in Jupyter notebook config file from build context
+    mkdir -p "$HOME/.jupyter" && \
+    cp /mnt/docker/jupyter_notebook_config.py "$HOME/.jupyter/jupyter_notebook_config.py" && \
+    # cleanup to reduce image size
+    apt-get clean && \
+    apt-get purge -y --auto-remove \
+        eatmydata \
+        bzip2 \
+        ca-certificates \
+        curl \
+        git \
+        build-essential \
+        libgomp1 \
+        libmpich-dev \
+        mpich && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm "$HOME/miniforge.sh" && \
+    mamba clean -afy && \
+    find ${CONDA_DIR} -follow -type f -name '*.a' -delete && \
+    find ${CONDA_DIR} -follow -type f -name '*.pyc' -delete && \
+    find ${CONDA_DIR}/ -follow -type f -name '*.js.map' -delete && \
+    rm -rf "$HOME/.cache/pip"
+    # rm -f "$HOME/nltk_data/*/*.zip" && \
+
+WORKDIR "/mnt"
+
+ENTRYPOINT ["tini", "-g", "--"]
+
+CMD ["jupyter", "nbclassic"]
+
+
+

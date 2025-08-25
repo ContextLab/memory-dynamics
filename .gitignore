@@ -1,29 +1,48 @@
+# MacOS Finder display config files
 *.DS_Store
-*.db
-*.log
-*.aux
-*.fdb_latexmk
-*.synctex.gz
-*.bbl
-*.blg
-*.dvi
-*.out
-*.ipynb_checkpoints
-*.pyc
-*.idea
-*#*
-*.ai
-*.joblib
-*.key
-credentials.json
-data/db/
-data/google-form-data
-data/audio/
-data/transcriptions/*/drops/
-data/pickles/participant_trajectories.p
-data/pickles/neurosynth_dataset.p
-data/brains/HuthModelWeights.npy
-data/brains/neurosynth_decoder.joblib
-data/brains/*/rec_events/
-data/brains/*/pres_events/
-Paper/figures/*rast.pdf
+
+# PyCharm project config dir
+*.idea/
+
+# VS Code project config dir
+*.vscode/
+
+# Jupyter notebook checkpoints
+*.ipynb_checkpoints/
+
+# Python bytecode
+*__pycache__/
+
+# analysis-helpers package distribution egg
+code/analysis-helpers/analysis_helpers.egg-info/
+
+# scratch files
+scratch/
+
+# emacs lockfiles
+*.#*
+
+# psiTurk & AWS private keys
+exp/.psiturkconfig
+
+# psiTurk shell history
+exp/.psiturk_history
+
+# psiTurk experiment server logfile
+exp/server.log
+
+# psiTurk SQLite databases (exported to JSON files in data/raw/psiturk/)
+data/raw/psiturk/test-room-[12].db
+
+# raw participant audio files
+data/raw/audio/
+
+# LaTeX/BibTeX intermediate/generated files
+paper/**/*.aux
+paper/**/*.bbl
+paper/**/*.blg
+paper/**/*.fdb_latexmk
+paper/**/*.fls
+paper/**/*.log
+paper/**/*.out
+paper/**/*.synctex.gz
