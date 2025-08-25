@@ -13,6 +13,7 @@ declare -i DEVELOP=0                                     # false by default
 # NOTE: changing these has no effect after image is built & container is created
 declare -r DOCKERFILE_PATH="docker/Dockerfile-analyses"  # relative path from repository root to Dockerfile
 declare -r NOTEBOOKS_DIR="code/notebooks"                # relative path from repository root to notebooks folder
+declare -r NOTEBOOK_IP="0.0.0.0"                         # IP address used to run notebook server inside container
 declare -ir CONTAINER_PORT=8888                          # container port used to run notebook server and published to host
 declare -ir LOCAL_PORT=8888                              # host port bound to container port and used to run notebooks in browser
 
@@ -261,13 +262,26 @@ fancy_echo() {
 catch_daemon_failures() {
     # trap function for dealing with errors related to Docker daemon
     if [[ "$1" == "127" ]]; then
-        # triggered by daemon_is_running if Docker isn't installed
-        echo "Docker does not appear to be installed on your system. See the README for installation instructions." >&2
+        # triggered by daemon_is_running if Docker isn't installed/available
+        if (( is_windows_wsl )); then
+            echo "Docker CLI not available in WSL. Ensure Docker Desktop is installed, running, and WSL integration " \
+                 "is enabled for your Ubuntu distro (Docker Desktop -> Settings -> Resources -> WSL Integration)." >&2
+        else
+            echo "Docker does not appear to be installed on your system. See the README for installation " \
+                 "instructions." >&2
+        fi
+        exit 1
+    elif [[ "$1" == "252" ]]; then
+        # triggered by attempt_start_daemon if running in WSL and Docker Desktop
+        # isn't running on Windows side
+        echo "Docker Desktop does not appear to be running on the Windows side of WSL. Please start Docker Desktop " \
+             "and try again." >&2
         exit 1
     elif [[ "$1" == "253" ]]; then
-        # triggered by attempt_start_daemon if none of the 3 common utilities
-        # that can start Docker are available
-        echo "Couldn't determine how to start the Docker daemon automatically. Please start the daemon manually and try again." >&2
+        # triggered by attempt_start_daemon if none of the common utilities that
+        # can start Docker on Linux are available
+        echo "Couldn't determine how to start the Docker daemon automatically. Please start Docker manually and try " \
+             "again." >&2
         exit 1
     elif [[ "$1" == "254" ]]; then
         # triggered by attempt_start_daemon if the daemon still isn't running
@@ -304,6 +318,10 @@ attempt_start_daemon() {
     # https://docs.docker.com/config/daemon/systemd/
     if (( is_mac )); then
         open -ga Docker &
+    elif (( is_windows_wsl )); then
+        # can't programmatically start Docker Desktop for Windows from WSL, so
+        # just ask user to start it manually (in catch_daemon_failures)
+        exit 252
     elif is_executable systemctl; then
         systemctl start docker &
     elif is_executable service; then
@@ -439,6 +457,17 @@ attempt_launch_browser() {
     if (( is_mac )); then
         # Mac command counterpart
         open "$nbserver_url"
+    elif (( is_windows_wsl )); then
+        if is_executable wslview; then
+            wslview "$nbserver_url"
+        elif is_executable cmd.exe; then
+            # escape ampersands for Windows cmd.exe. Notebook server URL
+            # shouldn't contain any, but just in case
+            local safe_url="${nbserver_url//&/^&}"
+            cmd.exe /C start "$safe_url" >/dev/null 2>&1
+        else
+            echo "Open this URL in your web browser: $nbserver_url"
+        fi
     elif [ -n "$BROWSER" ]; then
         # prefer BROWSER environment variable, if set
         "$BROWSER" "$nbserver_url"
@@ -448,6 +477,9 @@ attempt_launch_browser() {
     elif is_executable gnome-open; then
         # also try gnome if no others work
         gnome-open "$nbserver_url"
+    else
+        # fallback: just print the URL
+        echo "Open this URL in your web browser: $nbserver_url"
     fi
 }
 
@@ -458,15 +490,19 @@ attempt_launch_browser() {
 main() {
     local repo_root
     local -i is_mac
+    local -i is_windows_wsl
     local -i container_start_time
     local nbserver_url
 
     parse_args "$@"
 
     repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
-    [[ $(uname) == "Darwin" ]] && is_mac=1 || is_mac=0
     readonly repo_root
+
+    [[ $(uname) == "Darwin" ]] && is_mac=1 || is_mac=0
+    [[ -f "/proc/sys/fs/binfmt_misc/WSLInterop" ]] && is_windows_wsl=1 || is_windows_wsl=0
     readonly is_mac
+    readonly is_windows_wsl
 
     trap 'catch_daemon_failures $? $LINENO' EXIT
     check_docker_daemon
