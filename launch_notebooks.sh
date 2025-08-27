@@ -361,8 +361,6 @@ local_image_exists() {
 build_local_image() {
     fancy_echo "building image: $IMAGE_NAME"
     DOCKER_SCAN_SUGGEST=false docker build \
-        --rm \
-        --force-rm \
         --build-arg notebook_ip="$NOTEBOOK_IP" \
         --build-arg notebook_port="$CONTAINER_PORT" \
         --build-arg notebook_dir="/mnt/$NOTEBOOKS_DIR" \
