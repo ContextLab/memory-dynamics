@@ -55,17 +55,16 @@ RUN --mount=type=bind,source=.,target=/mnt,rw \
     conda config --set notify_outdated_conda false && \
     conda config --set channel_priority strict && \
     # reconstruct analysis environment from conda-lock file (multi-platform)
-    mamba install -n base -f /mnt/docker/conda-lock.yml && \
+    mamba install -yn base -f /mnt/docker/conda-lock.yml && \
     # TODO: install NTLK corpora/models/etc. (unclear if all of these are needed):
     # python -uBW ignore -m nltk.downloader \
     #     stopwords \
     #     averaged_perceptron_tagger \
     #     wordnet \
     #     punkt && \
-    # TODO: install analysis_helpers package (note: NLTK stuff must be installed
-    #  first if referenced at top level of helpers package)
-    # pip install --disable-pip-version-check --no-cache-dir <path-to-analysis-helpers-package> && \
-    # rm -rf <path-to-analysis-helpers-package> && \
+    # install helpers package for analyses (NLTK data must be downloaded first)
+    if [[ $develop -eq 1 ]]; then editable_flag="-e" ; else editable_flag="" ; fi && \
+    pip install --disable-pip-version-check --no-cache-dir "$editable_flag" /mnt/code/analysis-helpers && \
     # copy in Jupyter notebook config file from build context
     mkdir -p "$HOME/.jupyter" && \
     cp /mnt/docker/jupyter_notebook_config.py "$HOME/.jupyter/jupyter_notebook_config.py" && \
