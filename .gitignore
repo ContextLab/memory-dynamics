@@ -31,9 +31,6 @@ exp/.psiturk_history
 # psiTurk experiment server logfile
 exp/server.log
 
-# psiTurk SQLite databases (exported to JSON files in data/raw/psiturk/)
-data/raw/psiturk/test-room-[12].db
-
 # raw participant audio files
 data/raw/audio/
 
