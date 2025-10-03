@@ -1,6 +1,30 @@
+from __future__ import annotations
+
 import inspect
-from collections.abc import Mapping
+from collections.abc import Callable, Iterator, Mapping
+from functools import update_wrapper
+from typing import Self, TYPE_CHECKING
 from weakref import WeakKeyDictionary
+
+if TYPE_CHECKING:
+    from analysis_helpers.participant import Participant
+
+
+# noinspection PyPep8Naming
+class cached_classproperty[T, R]:
+    """
+    Decorator for creating cached/lazily loaded attributes defined on a
+    class. Similar to `functools.cached_property`, but for class
+    variables instead of instance attributes.
+    """
+    def __init__(self: Self, func: Callable[[type[T]], R]) -> None:
+        self.func = func
+        update_wrapper(self, func)
+
+    def __get__(self, instance: T | None, owner: type[T]) -> R:
+        value = self.func(owner)
+        setattr(owner, self.func.__name__, value)
+        return value
 
 
 class LazyDataDict(Mapping):
@@ -10,20 +34,20 @@ class LazyDataDict(Mapping):
     on a per-item basis. Repr displays values for already-loaded
     properties and function objects for unloaded ones.
     """
-    def __init__(self, instance, mapping):
+    def __init__(self, instance: Participant, mapping: Mapping[str, str]) -> None:
         self._instance = instance
         self._mapping = dict(mapping)
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: str) -> str | Callable[[Participant], ...]:
         return getattr(self._instance, self._mapping[key])
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[str]:
         return iter(self._mapping)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._mapping)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         items = {}
         for k, attr in self._mapping.items():
             if attr in self._instance.__dict__:
@@ -43,7 +67,7 @@ class Multiton(type):
     # track instances and cache signatures by class in weak-key dict
     _class_cache = WeakKeyDictionary()
 
-    def __call__(cls, *args, **kwargs):
+    def __call__[T, **P](cls: type[T], *args: P.args, **kwargs: P.kwargs) -> T:
         if cls not in Multiton._class_cache:
             Multiton._class_cache[cls] = {
                 'init_signature': inspect.signature(cls.__init__),
