@@ -62,8 +62,7 @@ RUN --mount=type=bind,source=.,target=/mnt,rw \
     jupyter nbclassic-extension enable --sys-prefix --py jupyter_nbextensions_configurator && \
     jupyter nbclassic-serverextension enable --sys-prefix --py jupyter_nbextensions_configurator && \
     # TODO: install NTLK corpora/models/etc. (unclear if all of these are needed):
-    # python -uBW ignore -m nltk.downloader \
-    #     stopwords \
+     python -uBW ignore -m nltk.downloader stopwords && \
     #     averaged_perceptron_tagger \
     #     wordnet \
     #     punkt && \
@@ -93,8 +92,8 @@ RUN --mount=type=bind,source=.,target=/mnt,rw \
     find ${CONDA_PREFIX} -follow -type f -name '*.a' -delete && \
     find ${CONDA_PREFIX} -follow -type f -name '*.pyc' -delete && \
     find ${CONDA_PREFIX}/ -follow -type f -name '*.js.map' -delete && \
-    rm -rf "$HOME/.cache/pip"
-    # rm -f "$HOME/nltk_data/*/*.zip"
+    rm -rf "$HOME/.cache/pip" && \
+    rm -f $HOME/nltk_data/*/*.zip
 
 WORKDIR "/mnt"
 
