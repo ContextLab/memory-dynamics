@@ -22,7 +22,7 @@ RECALL_DATA_DIR = PROCESSED_DIR.joinpath('recalls')
 ########################################################################
 # timestamp of last video frame, used for interpolating timeseries
 ENDFRAME_TIMES = {
-    'atlep1': 1466.0,
-    'atlep2': 1316.52,
-    'arrdev': 1236.6
+    'atlep1': 1454.16,
+    'atlep2': 1302.6,
+    'arrdev': 1232.76
 }
