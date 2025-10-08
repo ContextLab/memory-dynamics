@@ -61,20 +61,17 @@ RUN --mount=type=bind,source=.,target=/mnt,rw \
     jupyter nbclassic-extension install --sys-prefix --py jupyter_nbextensions_configurator --overwrite && \
     jupyter nbclassic-extension enable --sys-prefix --py jupyter_nbextensions_configurator && \
     jupyter nbclassic-serverextension enable --sys-prefix --py jupyter_nbextensions_configurator && \
-    # install NTLK corpora, models, etc.
-    python -uBW ignore -m nltk.downloader \
-        averaged_perceptron_tagger_eng \
-        punkt_tab \
-        stopwords \
-        wordnet && \
-    # install helpers package for analyses (NLTK data must be downloaded first)
-    if [[ $develop -eq 1 ]]; then editable_flag="-e"; else editable_flag=""; fi && \
-    pip install --disable-pip-version-check --no-cache-dir $editable_flag /mnt/code/analysis-helpers && \
     # copy in Jupyter server & extensions config files from build context
     mkdir -p "$HOME/.jupyter/serverconfig" && \
     cp /mnt/docker/jupyter_notebook_config.py "$HOME/.jupyter/jupyter_notebook_config.py" && \
     cp /mnt/docker/notebook.json "$HOME/.jupyter/serverconfig/notebook.json" && \
     echo -e '{\n  "nbext_hide_incompat": false\n}' > "$HOME/.jupyter/serverconfig/common.json" && \
+    # copy in vendored NTLK corpora & models from build context, unzip
+    cp -r /mnt/docker/nltk_data "$HOME/nltk_data" && \
+    for zf in $HOME/nltk_data/*/*.zip; do python -m zipfile -e "$zf" "$(dirname "$zf")"; done && \
+    # install helpers package for analyses (NLTK data must be in place first)
+    if [[ $develop -eq 1 ]]; then editable_flag="-e"; else editable_flag=""; fi && \
+    pip install --disable-pip-version-check --no-cache-dir $editable_flag /mnt/code/analysis-helpers && \
     # cleanup to reduce image size
     apt-get clean && \
     apt-get purge -y --auto-remove \
