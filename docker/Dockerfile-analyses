@@ -61,13 +61,14 @@ RUN --mount=type=bind,source=.,target=/mnt,rw \
     jupyter nbclassic-extension install --sys-prefix --py jupyter_nbextensions_configurator --overwrite && \
     jupyter nbclassic-extension enable --sys-prefix --py jupyter_nbextensions_configurator && \
     jupyter nbclassic-serverextension enable --sys-prefix --py jupyter_nbextensions_configurator && \
-    # TODO: install NTLK corpora/models/etc. (unclear if all of these are needed):
-     python -uBW ignore -m nltk.downloader stopwords && \
-    #     averaged_perceptron_tagger \
-    #     wordnet \
-    #     punkt && \
+    # install NTLK corpora, models, etc.
+    python -uBW ignore -m nltk.downloader \
+        averaged_perceptron_tagger_eng \
+        punkt_tab \
+        stopwords \
+        wordnet && \
     # install helpers package for analyses (NLTK data must be downloaded first)
-    if [[ $develop -eq 1 ]]; then editable_flag="-e" ; else editable_flag="" ; fi && \
+    if [[ $develop -eq 1 ]]; then editable_flag="-e"; else editable_flag=""; fi && \
     pip install --disable-pip-version-check --no-cache-dir $editable_flag /mnt/code/analysis-helpers && \
     # copy in Jupyter server & extensions config files from build context
     mkdir -p "$HOME/.jupyter/serverconfig" && \
