@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 
@@ -37,3 +38,52 @@ ENDFRAME_TIMES = {
     'atlep2': 1302.6,
     'arrdev': 1232.76
 }
+
+TEXT_SUBSTITUTIONS = {
+    re.compile(pattern, flags=re.IGNORECASE): repl for pattern, repl in
+    {
+        # bigrams/trigrams to be tokenized as single unit
+        r'\bd[ée]ja +vu\b': 'deja_vu',
+        r'\bflo[- ]rida\b': 'flo_rida',
+        r'\bt[- ]pain\b': 't_pain',
+        r'\blow[- ]key\b': 'low_key',
+        # r'\bex[- ](?:girlfriend|wife)\b': 'ex_girlfriend',
+        # 'parking lot': 'parking_lot',
+        # 'night club': 'night_club',
+        # 'ex girlfriend': 'ex_girlfriend', TODO: include "baby[- ]mama"?
+        # 'ex-girlfriend': 'ex_girlfriend',
+        # 'ex wife': 'ex_wife',
+        # 'ex-wife': 'ex_wife',
+        # map alternate forms of characters' names, nicknames/pseudonyms,
+        # actors' names, slight mispronunciations/inaccuracies/typos, etc.
+        # to common form.
+        r'\b(?:earnest|ernie|earnst|earl|(?:donald\s+)?glover|(?:childish\s+)?gambino)\b': 'earn',
+        r'\b(?:alfred paper boy|alfred|alford|paper boy|albert|play boy)\b': 'alfred_paper_boy',
+        r'\b(?:darr?en|darrell|daryle|dario)\b': 'darius',
+        r'\b(?:vanessa|lan|venn?)\b': 'van',
+        r'\bdavid\b': 'dave',
+        r'\b(?:jp|kyle(?:\s+p)?)\b': 'kp',
+        r'\b(?:swift|smith)\b': 'swiff',
+        r'\blonnie\b': 'lottie',
+        r'\b(?:george[- ]?michael|michael-george)\b': 'george_michael',
+        r'\bjoe\b': 'gob',
+        r'\bmae\b': 'maeby',
+        r'\b(?:lill?y)\b': 'lindsay',
+        # expletives -- see CONTENT_WARNING above
+        r'\b(?:nigga|(?:the\s+)?n-word|racial\s+slurs?|(?:racist|offensive)\s+word)\b': 'n***a',
+        r'\b(?:fag(?:got)?|(?:the\s+)?f-word)\b': 'f****t',
+        # accepted English shortenings of words
+        r"(\w+)in'(?!\w)": r'\1ing',
+        r'\bgonna\b': 'going to',
+        r'\bwanna\b': 'want to',
+        r'\bkinda\b': 'kind of',
+        r'\bsorta\b': 'sort of',
+        r'\blotta\b': 'lot of',
+        # other words/phrases to consider equivalent
+        r'\b(?:joint|blunt(?: \(marijuana cigar\))?|weed|pot(?!\s+belly))\b': 'marijuana',
+        r'\bcigarillos\b': 'cigars',
+        r'\bhomosexuals?\b': 'gay'
+    }.items()
+}
+
+# TODO: add "cause" to stop-words dict -- based on spot check, always used as "because" rather than verb
