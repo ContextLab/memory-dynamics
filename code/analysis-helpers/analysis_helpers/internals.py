@@ -53,8 +53,7 @@ class LazyDataDict(Mapping):
             if attr in self._instance.__dict__:
                 items[k] = self._instance.__dict__[attr]
             else:
-                fget = getattr(type(self._instance), attr).fget
-                items[k] = fget
+                items[k] = getattr(type(self._instance), attr).func
 
         return f"{self.__class__.__name__}({items!r})"
 
