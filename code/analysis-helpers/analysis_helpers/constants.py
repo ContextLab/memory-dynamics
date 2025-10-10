@@ -1,6 +1,17 @@
 from pathlib import Path
 
 
+CONTENT_WARNING = """\
+⚠️ The episodes of [*Atlanta*](https://en.wikipedia.org/wiki/Atlanta_(TV_series)) \
+viewed by participants in this study explore themes of racism, homophobia, \
+and other forms of discrimination. Consequently, certain files in this \
+repository&mdash;possibly including this one&mdash;contain references to \
+language that may be offensive or harmful. This language appears only in \
+service of accurately representing and analyzing the stimuli and participants' \
+responses, and its inclusion does not reflect an endorsement of its use by \
+the authors."""
+
+
 ########################################################################
 #                                PATHS                                 #
 ########################################################################

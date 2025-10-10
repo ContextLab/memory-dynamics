@@ -92,3 +92,28 @@ class Multiton(type):
             instances[key] = super().__call__(*args, **kwargs)
 
         return instances[key]
+
+
+def _imported_from_notebook() -> bool:
+    """
+    Determine if the package was imported from inside Jupyter Notebook.
+
+    Returns
+    -------
+    bool
+        True if imported from Jupyter Notebook, False otherwise.
+
+    Notes
+    -----
+    - `get_ipython` function exists in global namespace if running in
+      any IPython environment (notebook, shell, console, etc.)
+    - `IPKernelApp` instance exists in IPython config only if running
+      in a notebook
+    - IPython config object is a `traitlets.config.Config` instance:
+      https://traitlets.readthedocs.io/en/stable/config-api.html#traitlets.config.Config
+    """
+    try:
+        # noinspection PyUnresolvedReferences
+        return get_ipython().config.has_key('IPKernelApp')
+    except NameError:
+        return False
