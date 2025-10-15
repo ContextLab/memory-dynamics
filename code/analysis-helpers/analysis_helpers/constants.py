@@ -58,7 +58,7 @@ TEXT_SUBSTITUTIONS = {
         # actors' names, slight mispronunciations/inaccuracies/typos, etc.
         # to common form.
         r'\b(?:earnest|ernie|earnst|earl|(?:donald\s+)?glover|(?:childish\s+)?gambino)\b': 'earn',
-        r'\b(?:alfred paper boy|alfred|alford|paper boy|albert|play boy)\b': 'alfred_paper_boy',
+        r'\b(?:alfred paper boy|alfred|alford|albert|paper boy|play boy)\b': 'alfred_paper_boy',
         r'\b(?:darr?en|darrell|daryle|dario)\b': 'darius',
         r'\b(?:vanessa|lan|venn?)\b': 'van',
         r'\bdavid\b': 'dave',
@@ -68,7 +68,9 @@ TEXT_SUBSTITUTIONS = {
         r'\b(?:george[- ]?michael|michael-george)\b': 'george_michael',
         r'\bjoe\b': 'gob',
         r'\bmae\b': 'maeby',
-        r'\b(?:lill?y)\b': 'lindsay',
+        r'\blill?y\b': 'lindsay',
+        r'\bcecile\b': 'lucille',
+        r'\bboosh\b': 'bluth',
         # expletives -- see CONTENT_WARNING above
         r'\b(?:nigga|(?:the\s+)?n-word|racial\s+slurs?|(?:racist|offensive)\s+word)\b': 'n***a',
         r'\b(?:fag(?:got)?|(?:the\s+)?f-word)\b': 'f****t',
