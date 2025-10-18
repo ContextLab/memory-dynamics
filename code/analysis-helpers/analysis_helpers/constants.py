@@ -39,6 +39,31 @@ ENDFRAME_TIMES = {
     'arrdev': 1232.76
 }
 
+STOP_WORDS = set(stopwords.words('english')) | {
+    # tokens that appear in NLTK stopwords after lemmatization
+    "'m",      # -> "be"
+    "'re",     # -> "be"
+    "'s",      # -> "be"
+    "'ve",     # -> "have"
+    "'d",      # -> "have"/"will"
+    "'ll",     # -> "will"
+    'would',   # -> "will"
+    'could',   # -> "can"
+    'done',    # -> "do"
+    'others',  # -> "other"
+    # other non-content/low-information words
+    'okay',
+    'ok',
+    'like'
+    'um',
+    'umm',
+    'uh',
+    'uhh',
+    'yes',
+    'yeah',
+    'nah'
+}
+
 TEXT_SUBSTITUTIONS = {
     re.compile(pattern, flags=re.IGNORECASE): repl for pattern, repl in
     {
