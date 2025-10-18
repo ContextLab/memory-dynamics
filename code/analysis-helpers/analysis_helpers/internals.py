@@ -1,113 +1,118 @@
 from __future__ import annotations
 
-import re
+import inspect
+from collections.abc import Callable, Iterator, Mapping
 from functools import update_wrapper
-from inspect import getcallargs
-
-
-from typing import (Any, Callable, Dict, Literal, NoReturn, Optional, overload,
-                    Tuple, Type, TYPE_CHECKING, TypedDict, TypeVar, Union)
+from typing import Self, TYPE_CHECKING
+from weakref import WeakKeyDictionary
 
 if TYPE_CHECKING:
-    from analysis_helpers import Participant
-
-    _FgetReturn = TypeVar('_FgetReturn')
-    _T = TypeVar('_T')
-
-    class _LazyDataDictInput(TypedDict, total=False):
-        atlep1: str
-        delayed: str
-        atlep2: str
-        arrdev: str
+    from analysis_helpers.participant import Participant
 
 
 # noinspection PyPep8Naming
-class lazy_data:
-    # ADD DOCSTRING
-    def __init__(self, fget: Callable[[_T], _FgetReturn]) -> None:
-        # ADD DOCSTRING
-        self.fget = fget
-        # adopt decorated method's __name__, __doc__, etc. for owner cls
-        update_wrapper(self, fget)
+class cached_classproperty[T, R]:
+    """
+    Decorator for creating cached/lazily loaded attributes defined on a
+    class. Similar to `functools.cached_property`, but for class
+    variables instead of instance attributes.
+    """
+    def __init__(self: Self, func: Callable[[type[T]], R]) -> None:
+        self.func = func
+        update_wrapper(self, func)
 
-    @overload
-    def __get__(self, instance: _T, owner: Type[_T]) -> _FgetReturn: ...
-    @overload
-    def __get__(self, instance: None, owner: Type[_T]) -> lazy_data: ...
-    def __get__(
-            self,
-            instance: Optional[_T],
-            owner: Optional[Type[_T]] = None
-    ) -> Union[_FgetReturn, lazy_data]:
-        if instance is None:
-            # return wrapped method when called on owner class object
-            return self
-        attr_val = self.fget(instance)
-        setattr(instance, self.name, attr_val)
-        return attr_val
-
-    def __set_name__(self, owner: Type[_T], name: str) -> None:
-        self.name = name
+    def __get__(self, instance: T | None, owner: type[T]) -> R:
+        value = self.func(owner)
+        setattr(owner, self.func.__name__, value)
+        return value
 
 
-class LazyDataDict(dict):
-    # ADD DOCSTRING
-    def __init__(
-            self,
-            inst: Participant,
-            dict_: _LazyDataDictInput
-    ) -> None:
-        # ADD DOCSTRING
-        super().__init__(dict_)
-        self.owner_inst = inst
-        self.owner_cls = inst.__class__
+class LazyDataDict(Mapping):
+    """
+    Helper class that enables dict-like access to various properties of
+    the Participant class while retaining lazy loading/caching behavior
+    on a per-item basis. Repr displays values for already-loaded
+    properties and function objects for unloaded ones.
+    """
+    def __init__(self, instance: Participant, mapping: Mapping[str, str]) -> None:
+        self._instance = instance
+        self._mapping = dict(mapping)
 
-    def __getitem__(self, name: str) -> Any:
-        return getattr(self.owner_inst, super().__getitem__(name))
+    def __getitem__(self, key: str) -> str | Callable[[Participant], ...]:
+        return getattr(self._instance, self._mapping[key])
 
-    def __setitem__(self, name: str, value: Any) -> NoReturn:
-        raise TypeError("'LazyDataDict' does not support item assignment")
+    def __iter__(self) -> Iterator[str]:
+        return iter(self._mapping)
+
+    def __len__(self) -> int:
+        return len(self._mapping)
+
+    def __repr__(self) -> str:
+        items = {}
+        for k, attr in self._mapping.items():
+            if attr in self._instance.__dict__:
+                items[k] = self._instance.__dict__[attr]
+            else:
+                items[k] = getattr(type(self._instance), attr).func
+
+        return f"{self.__class__.__name__}({items!r})"
 
 
 class Multiton(type):
-    # ADD DOCSTRING
-    # mangle names just in case derived class uses one of these
-    __instances: Dict[Union[Type[_T], Tuple[Type[_T], Tuple, ...]], _T] = dict()
-    __inits: Dict[Type, Callable] = dict()
+    """
+    Metaclass that enforces multiton behavior (single class instance per
+    unique set of constructor args).
+    """
+    # track instances and cache signatures by class in weak-key dict
+    _class_cache = WeakKeyDictionary()
 
-    def __init__(
-            cls: Type[_T],
-            name: str,
-            bases: Tuple[Type, ...],
-            namespace: Dict[str, Any]
-    ) -> None:
-        # ADD DOCSTRING
-        super().__init__(name, bases, namespace)
-        Multiton.__inits[cls] = namespace.get('__init__')
+    def __call__[T, **P](cls: type[T], *args: P.args, **kwargs: P.kwargs) -> T:
+        if cls not in Multiton._class_cache:
+            Multiton._class_cache[cls] = {
+                'init_signature': inspect.signature(cls.__init__),
+                'instances': {}
+            }
 
-    def __call__(cls: Type[_T], *args, **kwargs):
-        init = Multiton.__inits[cls]
-        if init is None:
-            key = cls
+        init_sig = Multiton._class_cache[cls]['init_signature']
+        instances = Multiton._class_cache[cls]['instances']
+
+        if cls.__init__ is object.__init__:
+            key = ()
         else:
-            callargs = getcallargs(init, None, *args, **kwargs)
-            key = (cls, *tuple(callargs.items()))
+            # bind None to 'self' arg
+            bound_args = init_sig.bind(None, *args, **kwargs)
+            bound_args.apply_defaults()
+            # exclude 'self' from key
+            # NOTE: this method of constructing keys requires all
+            # arguments to `cls.__init__` are hashable.
+            key = tuple(bound_args.arguments.items())[1:]
 
-        if key not in Multiton.__instances:
-            Multiton.__instances[key] = super(Multiton, cls).__call__(*args, **kwargs)
-        return Multiton.__instances[key]
+        if key not in instances:
+            instances[key] = super().__call__(*args, **kwargs)
+
+        return instances[key]
 
 
-class RegexReplacer(dict):
-    # ADD DOCSTRING
-    # exists so that replacement can be done on text corpora without
-    # having to lowercase everything, which messes up the POS tagger
-    def __init__(self, dict_: Dict[str, str]) -> None:
-        # ADD DOCSTRING
-        regex_dict = {
-            re.compile(k, flags=re.I): v.capitalize() for k, v in dict_.items()
-        }
-        super().__init__(regex_dict)
+def _imported_from_notebook() -> bool:
+    """
+    Determine if the package was imported from inside Jupyter Notebook.
 
-    def __repr__(self):
-        return dict.__repr__({k.pattern: v for k, v in self.items()})
+    Returns
+    -------
+    bool
+        True if imported from Jupyter Notebook, False otherwise.
+
+    Notes
+    -----
+    - `get_ipython` function exists in global namespace if running in
+      any IPython environment (notebook, shell, console, etc.)
+    - `IPKernelApp` instance exists in IPython config only if running
+      in a notebook
+    - IPython config object is a `traitlets.config.Config` instance:
+      https://traitlets.readthedocs.io/en/stable/config-api.html#traitlets.config.Config
+    """
+    try:
+        # noinspection PyUnresolvedReferences
+        return get_ipython().config.has_key('IPKernelApp')
+    except NameError:
+        return False

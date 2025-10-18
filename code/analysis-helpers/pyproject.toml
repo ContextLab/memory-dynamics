@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "analysis-helpers"
+version = "0.1.0"
+description = "Helper functions, classes, and constants used in the analysis code."
+readme = "README.md"
+requires-python = "~=3.12.11"
+authors = [
+    { name = "Paxton Fitzpatrick", email = "Paxton.C.Fitzpatrick.GR@Dartmouth.edu" },
+    { name = "Contextual Dynamics Lab", email = "contextualdynamics@gmail.com" }
+]
+maintainers = [
+    { name = "Paxton Fitzpatrick", email = "Paxton.C.Fitzpatrick.GR@Dartmouth.edu" },
+]

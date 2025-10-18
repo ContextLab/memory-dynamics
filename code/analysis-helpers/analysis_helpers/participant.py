@@ -1,96 +1,125 @@
 from __future__ import annotations
 
-from typing import Tuple
+from functools import cached_property
+from typing import ClassVar, Self
 
 import pandas as pd
 
 from analysis_helpers.constants import PROCESSED_DIR, TRANSCRIPTIONS_DIR
-from analysis_helpers.internals import lazy_data, LazyDataDict, Multiton
+from analysis_helpers.internals import cached_classproperty, LazyDataDict, Multiton
 
 
 class Participant(metaclass=Multiton):
-    # ADD DOCSTRING
-    ID_MAPPING: pd.DataFrame = pd.read_pickle(
-        PROCESSED_DIR.joinpath('etc', 'subid_mapping.p')
+    """
+    Class that represents an individual participant and provides access
+    to their data via attributes. Data sources are lazily loaded and
+    cached on first access to keep instances as lightweight as possible.
+    """
+    id_mapping: ClassVar[pd.DataFrame] = pd.read_csv(
+            PROCESSED_DIR.joinpath('subid-mapping.csv'),
+            index_col='Subject ID',
+            dtype_backend='numpy_nullable'
     )
 
     @classmethod
-    def load_all(cls) -> Tuple[Participant, ...]:
-        # ADD DOCSTRING
-        return tuple(cls(n) for n in range(1, len(cls.ID_MAPPING) + 1))
+    def from_subid(cls, subid: str) -> Self:
+        """
+        Factory method for creating Participant instances from Subject
+        IDs.
 
-    @classmethod
-    def from_subid(cls, subid: str) -> Participant:
-        # ADD DOCSTRING
+        Parameters
+        ----------
+        subid : str
+            The participant's Subject ID (beginning with "MD-").
+
+        Returns
+        -------
+        Participant
+            A new instance of the Participant class.
+        """
         try:
-            sub_n = Participant.ID_MAPPING.index.get_loc(subid) + 1
+            sub_n = cls.id_mapping.index.get_loc(subid) + 1
         except KeyError as e:
-            raise ValueError(f"No participant with Subject ID '{subid}'") from e
-        else:
-            return cls(sub_n=sub_n)
+            raise ValueError(
+                    f'No participant found with Subject ID "{subid}"'
+            ) from e
+        return cls(sub_n)
 
     @classmethod
-    def from_sesid(cls, sesid: str) -> Participant:
-        # ADD DOCSTRING
-        row_mask = Participant.ID_MAPPING.eq(sesid).any(axis=1)
-        try:
-            subid = Participant.ID_MAPPING.index[row_mask][0]
-        except IndexError as e:
-            raise ValueError(f"No participant with session ID '{sesid}'") from e
-        else:
-            return cls.from_subid(subid=subid)
+    def load_all(cls) -> tuple[Participant, ...]:
+        """
+        Create instances for all participants and return them as a tuple.
+
+        Returns
+        -------
+        tuple of Participant
+        """
+        return tuple(cls(n) for n in range(1, cls.id_mapping.shape[0] + 1))
 
     def __init__(self, sub_n: int) -> None:
-        # ADD DOCSTRING
-        if sub_n not in range(1, len(Participant.ID_MAPPING) + 1):
-            raise ValueError(
-                "Participant indices range from 1 to "
-                f"{len(Participant.ID_MAPPING)} (inclusive)"
-            )
-        self.sub_n = sub_n
-        id_mapping_row = Participant.ID_MAPPING.iloc[sub_n - 1]
-        self.subid = id_mapping_row.name
-        self.ses1_id = id_mapping_row[0]
-        self.ses2_id = id_mapping_row[1]
-        self.group = 1 if 'A' in self.subid else 2
+        """
+        Main constructor for the Participant class.
 
-    ####################################################################
-    #                        RECALL TRANSCRIPTS                        #
-    ####################################################################
-    @lazy_data
+        Creates an object that provides access to an individual
+        participant's data given their numeric index (see below). To
+        create Participant instances directly from subject IDs, use the
+        `Participant.from_subid()` factory method.
+
+        Parameters
+        ----------
+        sub_n : int
+            The **1-indexed** row-index of the participant in
+            `subid-mapping.csv` (corresponds to the order in which
+            participants were collected).
+        """
+        if sub_n not in range(1, Participant.id_mapping.shape[0] + 1):
+            raise ValueError(
+                    'Participant indices range from 1 to '
+                    f'{Participant.id_mapping.shape[0]} (inclusive).'
+            )
+        id_mapping_row = Participant.id_mapping.iloc[sub_n - 1]
+        self.sub_n = sub_n
+        self.subid = id_mapping_row.name
+        self.ses1_id = id_mapping_row['session 1']
+        self.ses2_id = id_mapping_row['session 2']
+        self.condition = self.subid.split('-')[2]
+
+        self.transcripts = LazyDataDict(self, {
+            'atlep1': 'atlep1_recall_transcript',
+            'delayed': 'delayed_recall_transcript',
+            'atlep2': 'atlep2_recall_transcript',
+            'arrdev': 'arrdev_recall_transcript'
+        })
+
+    @cached_property
     def atlep1_recall_transcript(self) -> str:
         return TRANSCRIPTIONS_DIR.joinpath(
-            self.subid, self.ses1_id, f'{self.ses1_id}-recall.txt'
+                self.subid, self.ses1_id, f'{self.ses1_id}-recall.txt'
         ).read_text()
 
-    @lazy_data
+    @cached_property
     def delayed_recall_transcript(self) -> str:
         return TRANSCRIPTIONS_DIR.joinpath(
-            self.subid, self.ses2_id, f'{self.ses2_id}-delayed.txt'
+                self.subid, self.ses2_id, f'{self.ses2_id}-delayed.txt'
         ).read_text()
 
-    @lazy_data
-    def ses2_recall_transcript(self) -> str:
+    @cached_property
+    def atlep2_recall_transcript(self) -> str:
+        if self.condition == 'B':
+            raise AttributeError(
+                    f'Condition B participant "{self.subid}" did not view atlep2'
+            )
         return TRANSCRIPTIONS_DIR.joinpath(
-            self.subid, self.ses2_id, f'{self.ses2_id}-recall.txt'
+                self.subid, self.ses2_id, f'{self.ses2_id}-recall.txt'
         ).read_text()
 
-    @lazy_data
-    def atlep1_recall_traj(self):
-        ...
+    @cached_property
+    def arrdev_recall_transcript(self) -> str:
+        if self.condition == 'A':
+            raise AttributeError(
+                    f'Condition A participant "{self.subid}" did not view arrdev'
+            )
+        return TRANSCRIPTIONS_DIR.joinpath(
+                self.subid, self.ses2_id, f'{self.ses2_id}-recall.txt'
+        ).read_text()
 
-    # noinspection PyTypeChecker
-    # (PyCharm's type checker doesn't recognize ses2_key as a valid
-    # literal key TypedDict because of conditional)
-    def _construct_attr_dicts(self) -> None:
-        """
-        provides alternate method for accessing data attributes that's
-        sometimes more convenient (e.g., p.transcripts['atlep1'])
-        """
-        ses2_key = 'atlep2' if self.group == 1 else 'arrdev'
-        # transcripts
-        self.transcripts = LazyDataDict(self, {
-                    'atlep1': 'atlep1_recall_transcript',
-                    'delayed': 'delayed_recall_transcript',
-                    ses2_key: 'ses2_recall_transcript'
-                })

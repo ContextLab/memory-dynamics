@@ -1,93 +1,16 @@
-import pprint
 import re
-import string
-from typing import Dict
 
-import pandas as pd
-from IPython.core.oinspect import pylight, getsource as ipy_getsource
-from IPython.display import display, DisplayHandle, HTML
-from nltk import pos_tag, word_tokenize
-from nltk.stem import WordNetLemmatizer
-from num2words import num2words
+from IPython.display import display, Markdown
 
-from analysis_helpers.constants import POS_MAPPING, STOP_WORDS
+from analysis_helpers.constants import CONTENT_WARNING
+from analysis_helpers.internals import _imported_from_notebook
 
 
-########################################################################
-#                          TEXT PREPROCESSING                          #
-########################################################################
-_lemmatizer = WordNetLemmatizer()
-
-
-def preprocess_text(text_ser: pd.Series):
-    # ADD DOCSTRING
-    # concat all features for given shot. Adding period as delimiter
-    # helps POS tagger
-    joined = '. '.join(list(text_ser.dropna()))
-    # remove duplicate if one already existed
-    joined = joined.replace('..', '.')
-    # convert digits to words
-    no_digit = re.sub(r"(\d+)", lambda x: num2words(int(x.group(0))), joined)
-    lemmatized = lemmatize(no_digit)
-    # remove punctuation
-    no_hyphen = lemmatized.replace('-', ' ')
-    no_punc = no_hyphen.translate(str.maketrans('', '', string.punctuation))    #re.sub("[^\w\s-]+", '', lemmatized.lower())
-    # lowercase everything, remove stopwords, normalize spacing
-    lower_list = no_punc.lower().split()
-    return ' '.join(word for word in lower_list if word not in STOP_WORDS)
-
-
-def lemmatize(text: str, pos_dict: Dict[str, str] = POS_MAPPING) -> str:
-    # ADD DOCSTRING
-    words_tags = pos_tag(word_tokenize(text))
-    lemmas = []
-    for word, tag in words_tags:
-        lemma = _lemmatizer.lemmatize(word, pos_dict[tag[0]])
-        lemmas.append(lemma)
-    return ' '.join(lemmas)
-
-
-def parse_windows(textlist, wsize):
-    windows = []
-    for ix in range(wsize // 2, wsize):
-        windows.append(' '.join(textlist[0 : ix]))
-    for ix in range(len(textlist) - wsize // 2 + 1):
-        windows.append(' '.join(textlist[ix : ix + wsize]))
-    return windows
-
-
-########################################################################
-#                          NOTEBOOK DISPLAYS                           #
-########################################################################
-def show_source(obj: object) -> DisplayHandle:
-    """
-    Extracts and displays source code for most object types (modules,
-    classes, methods, properties, functions, tracebacks, frames, & code
-    objects) as inline HTML in a notebook, with syntax highlighting
-    applied (note: GitHub notebook previews don't support syntax
-    highlighting). Falls back to displaying the object's '__repr__' as
-    highlighted, pretty-printed HTML.
-
-    Parameters
-    ----------
-    obj : object
-        The object to display.
-
-    Returns
-    -------
-    obj_html: IPython.core.display.DisplayHandle
-        The object's source code or definition is displayed inline in
-        the notebook.
-
-    Notes
-    -----
-    'IPython.core.oinspect.getsource' handles properties and objects
-    defined in the same notebook as the call, while 'inspect.getsource'
-    doesn't.
-
-    """
-    src = ipy_getsource(obj)
-    if src is None:
-        src = pprint.pformat(obj)
-    # noinspection PyTypeChecker
-    return display(HTML(pylight(src)))
+def show_content_warning() -> None:
+    if _imported_from_notebook():
+        display(Markdown(CONTENT_WARNING))
+    else:
+        plaintext_warning = re.sub(
+                r"\[\*?(.+?)\*?]\(.+\)", r"\1", CONTENT_WARNING
+        ).replace('&mdash;', '—')
+        print(plaintext_warning)

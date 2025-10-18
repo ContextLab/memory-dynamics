@@ -1,0 +1,24 @@
+{
+  "ruler_column": [
+    "79",
+    "72"
+  ],
+  "ruler_color": [
+    "#ff0000",
+    "#a5a5a5"
+  ],
+  "ruler_linestyle": [
+    "solid",
+    "dashed"
+  ],
+  "load_extensions": {
+    "ruler/main": true,
+    "collapsible_headings/main": true,
+    "varInspector/main": true,
+    "codefolding/main": true,
+    "execute_time/ExecuteTime": true
+  },
+  "ExecuteTime": {
+    "display_right_aligned": true
+  }
+}

@@ -167,7 +167,7 @@ analysis environment following the steps below
    image from the [Dockerfile-analyses](docker/Dockerfile-analyses) file in the
    [docker](docker) directory:
    ```sh
-   docker build --rm -f docker/Dockerfile-analyses -t 🚨memory-dynamics🚨 .
+   docker build -f docker/Dockerfile-analyses -t 🚨memory-dynamics🚨 .
    ```
    (see [Dockerfile-analyses](docker/Dockerfile-analyses) for the various 
    [build arguments](https://docs.docker.com/engine/reference/builder/#arg)
@@ -203,7 +203,7 @@ analysis environment following the steps below
    [docker](docker) directory:
 
    ```sh
-   docker build --rm -f docker/Dockerfile-experiment -t khan-exp .
+   docker build -f docker/Dockerfile-experiment -t khan-exp .
    ```
 
 3. Run a container (named "`Khan-exp`") from the newly built image:
