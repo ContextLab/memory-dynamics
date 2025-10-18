@@ -67,6 +67,9 @@ STOP_WORDS = set(stopwords.words('english')) | {
 TEXT_SUBSTITUTIONS = {
     re.compile(pattern, flags=re.IGNORECASE): repl for pattern, repl in
     {
+        # replace "smart quotes" with "dumb quotes"
+        r'[“”]': '"',
+        r'[‘’]': "'",
         # bigrams/trigrams to be tokenized as single unit
         r'\bd[ée]ja +vu\b': 'deja_vu',
         r'\bflo[- ]rida\b': 'flo_rida',
