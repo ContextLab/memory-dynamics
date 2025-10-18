@@ -1,6 +1,8 @@
 import re
 from pathlib import Path
 
+from nltk.corpus import stopwords
+
 
 CONTENT_WARNING = """\
 ⚠️ The episodes of [*Atlanta*](https://en.wikipedia.org/wiki/Atlanta_(TV_series)) \
@@ -32,6 +34,9 @@ RECALL_DATA_DIR = PROCESSED_DIR.joinpath('recalls')
 ########################################################################
 #                      TOPIC MODELING PARAMETERS                       #
 ########################################################################
+EPISODE_WINDOW_SIZE = 50  # annotations
+RECALL_WINDOW_SIZE = 200  # words
+
 # timestamp of last video frame, used for interpolating timeseries
 ENDFRAME_TIMES = {
     'atlep1': 1454.16,
@@ -79,14 +84,6 @@ TEXT_SUBSTITUTIONS = {
         r'\bgucci mane\b': 'Gucci_Mane',
         r'\bfetty wap\b': 'Fetty_Wap',
         r'\bmobb deep\b': 'Mobb_Deep',
-        # r'\bfour twenty\b': 'four_twenty',
-        # r'\bex[- ](?:girlfriend|wife)\b': 'ex_girlfriend',
-        # 'parking lot': 'parking_lot',
-        # 'night club': 'night_club',
-        # 'ex girlfriend': 'ex_girlfriend', TODO: include "baby[- ]mama"?
-        # 'ex-girlfriend': 'ex_girlfriend',
-        # 'ex wife': 'ex_wife',
-        # 'ex-wife': 'ex_wife',
         # map alternate forms of characters' names, nicknames/pseudonyms,
         # actors' names, slight mispronunciations/inaccuracies/typos, etc.
         # to common form.
