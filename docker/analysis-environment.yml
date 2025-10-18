@@ -35,6 +35,7 @@ dependencies:
   - pip:
       - brainiak==0.12
       - jupyter_nbextensions_configurator==0.6.4
+      - lemminflect==0.2.3
       - nitime==0.11
       - pymanopt==2.2.1
 
