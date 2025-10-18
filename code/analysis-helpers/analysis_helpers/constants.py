@@ -143,7 +143,47 @@ TEXT_SUBSTITUTIONS = {
         r'\bcause\b': 'because',
         r'\bafterwards\b': 'afterward',
         r'\bexecs?\b': 'executive'
+        # TODO: map mother/mom, father/dad to same tokens?
     }.items()
 }
 
-# TODO: add "cause" to stop-words dict -- based on spot check, always used as "because" rather than verb
+# words to exclude from lemmatization
+# (commented words are not always correctly lemmatized, but only appear 
+# in the recall transcripts so have no real impact)
+LEMMATIZER_EXCLUSIONS = {
+    'adios',
+    'annoyed',
+    'atlanta',
+    'broke',
+    'cans',
+    # 'chobani',
+    'cortes',
+    # 'cred',
+    'dice',
+    'downstairs',
+    # 'fedora',
+    'glasses',
+    'houdini',
+    'hundred',
+    'interesting',
+    'manus',
+    'meaning',
+    'marks',
+    'nutella',
+    'outburst',
+    # 'paris',
+    'prior',
+    # 'refuse',
+    'sideways',
+    'something',
+    'striped',
+    # 'tiara',
+    'texas',
+    # 'thanksgiving',
+    'tired',
+    'unfinished',
+    'upstairs',
+    # 'whereas',
+    # 'worldstar',
+    # 'yada'
+}
