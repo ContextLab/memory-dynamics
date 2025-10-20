@@ -7,7 +7,7 @@ from nltk.corpus import stopwords
 CONTENT_WARNING = """\
 ⚠️ The episodes of [*Atlanta*](https://en.wikipedia.org/wiki/Atlanta_(TV_series)) \
 viewed by participants in this study explore themes of racism, homophobia, \
-and other forms of discrimination. Consequently, certain files in this \
+and other forms of discrimination. As a result, certain files in this \
 repository&mdash;possibly including this one&mdash;contain references to \
 language that may be offensive or harmful. This language appears only in \
 service of accurately representing and analyzing the stimuli and participants' \
@@ -32,20 +32,11 @@ RECALL_DATA_DIR = PROCESSED_DIR.joinpath('recalls')
 
 
 ########################################################################
-#                      TOPIC MODELING PARAMETERS                       #
+#                          TEXT PREPROCESSING                          #
 ########################################################################
-EPISODE_WINDOW_SIZE = 50  # annotations
-RECALL_WINDOW_SIZE = 200  # words
-
-# timestamp of last video frame, used for interpolating timeseries
-ENDFRAME_TIMES = {
-    'atlep1': 1454.16,
-    'atlep2': 1302.6,
-    'arrdev': 1232.76
-}
-
-STOP_WORDS = set(stopwords.words('english')) | {
-    # tokens that appear in NLTK stopwords after lemmatization
+STOP_WORDS = frozenset(stopwords.words('english')) | {
+    # additional tokens that would be lemmatized to stop words
+    "n't",     # -> "not"
     "'m",      # -> "be"
     "'re",     # -> "be"
     "'s",      # -> "be"
@@ -59,12 +50,15 @@ STOP_WORDS = set(stopwords.words('english')) | {
     # other non-content/low-information words
     'okay',
     'ok',
-    'like'
+    'like',
     'um',
     'umm',
+    'hmm',
     'uh',
     'uhh',
-    'yes',
+    'huh',
+    'oh',
+    'yes',    # "no" already in NLTK stopwords corpus
     'yeah',
     'nah'
 }
@@ -129,7 +123,8 @@ TEXT_SUBSTITUTIONS = {
         r'\b(?:prison|jailhouse)\b': 'jail',
         r'\btrans\b': 'transgender',
         r'\bhomosexuals?\b': 'gay',
-        r"'90s": 'nineties',
+        r'\b(?:x ?|double )x ?l\b': 'XXL',
+        r"'?90s": 'nineties',
         r'\bdr\.': 'doctor',
         r'\bt-shirt\b': 'tee shirt',
         r'\ba\.?p\.?d\.?\b': 'APD',
@@ -144,43 +139,90 @@ TEXT_SUBSTITUTIONS = {
     }.items()
 }
 
-# words to exclude from lemmatization
-# (commented words are not always correctly lemmatized, but only appear 
-# in the recall transcripts so have no real impact)
+# map Treebank POS tags to subset of Universal Dependencies tags
+# accepted by lemminflect (NOUN, PROPN, VERB, ADJ, ADV, AUX)
+POS_MAPPING = {
+    'JJ': 'ADJ',
+    'JJR': 'ADJ',
+    'JJS': 'ADJ',
+    'MD': 'AUX',
+    'NN': 'NOUN',
+    'NNS': 'NOUN',
+    'NNP': 'PROPN',
+    'NNPS': 'PROPN',
+    'RB': 'ADV',
+    'RBR': 'ADV',
+    'RBS': 'ADV',
+    'VB': 'VERB',
+    'VBD': 'VERB',
+    'VBG': 'VERB',
+    'VBN': 'VERB',
+    'VBP': 'VERB',
+    'VBZ': 'VERB',
+}
+
 LEMMATIZER_EXCLUSIONS = {
-    'adios',
-    'annoyed',
-    'atlanta',
-    'broke',
-    'cans',
-    # 'chobani',
-    'cortes',
-    # 'cred',
-    'dice',
-    'downstairs',
-    # 'fedora',
-    'glasses',
-    'houdini',
-    'hundred',
-    'interesting',
-    'manus',
-    'meaning',
-    'marks',
-    'nutella',
-    'outburst',
-    # 'paris',
-    'prior',
-    # 'refuse',
-    'sideways',
-    'something',
-    'striped',
-    # 'tiara',
-    'texas',
-    # 'thanksgiving',
-    'tired',
-    'unfinished',
-    'upstairs',
-    # 'whereas',
-    # 'worldstar',
-    # 'yada'
+    'treebank_tags': frozenset({
+        '.', ',', "''", '``', ':', '(', ')',    # punctuation
+        'CC',   # coordinating conjunction, always stopwords
+        'CD',   # cardinal number, not lemmatizeable
+        'EX',   # "existential 'there'", always literal "there"
+        'FW',   # foreign word (really mis-tagged tokens)
+        'POS',  # possessive ending
+        'RP',   # particle
+        'TO',   # literal "to"
+        'UH'    # interjection
+    }),
+    # specific words to exclude from lemmatization
+    # (commented words are not always correctly lemmatized, but appear
+    # only in the recall transcripts so they don't affect the analyses)
+    'words': frozenset({
+        'adios',
+        'annoyed',
+        'atlanta',
+        'broke',
+        'cans',
+        # 'chobani',
+        'cortes',
+        # 'cred',
+        'dice',
+        'downstairs',
+        # 'fedora',
+        'glasses',
+        'houdini',
+        'hundred',
+        'interesting',
+        'manus',
+        'meaning',
+        'marks',
+        'nutella',
+        'outburst',
+        # 'paris',
+        'prior',
+        # 'refuse',
+        'sideways',
+        'something',
+        'striped',
+        # 'tiara',
+        'texas',
+        # 'thanksgiving',
+        'tired',
+        'unfinished',
+        'upstairs',
+        # 'yada'
+    })
+}
+
+
+########################################################################
+#                      TOPIC MODELING PARAMETERS                       #
+########################################################################
+EPISODE_WINDOW_SIZE = 50  # annotations
+RECALL_WINDOW_SIZE = 200  # words
+
+# timestamp of last video frame, used for interpolating timeseries
+ENDFRAME_TIMES = {
+    'atlep1': 1454.16,
+    'atlep2': 1302.6,
+    'arrdev': 1232.76
 }
