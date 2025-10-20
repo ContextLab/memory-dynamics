@@ -226,3 +226,16 @@ ENDFRAME_TIMES = {
     'atlep2': 1302.6,
     'arrdev': 1232.76
 }
+
+CV_PARAMS = {
+    'strip_accents': 'ascii',
+    'stop_words': None,  # stopword removal handled separately
+    'token_pattern': r'\b\w[_*\w]*\b',  # allow single-character tokens, don't treat * or _ as separators
+    'analyzer': 'word',
+}
+
+LDA_PARAMS = {
+    'n_components': 100,
+    'learning_method': 'batch',
+    'random_state': 0
+}
