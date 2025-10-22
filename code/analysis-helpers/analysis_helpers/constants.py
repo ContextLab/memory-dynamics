@@ -28,7 +28,7 @@ TRANSCRIPTIONS_DIR = RAW_DIR.joinpath('transcriptions')
 
 PROCESSED_DIR = DATA_DIR.joinpath('processed')
 EPISODE_DATA_DIR = PROCESSED_DIR.joinpath('episodes')
-RECALL_DATA_DIR = PROCESSED_DIR.joinpath('recalls')
+PARTICIPANT_DATA_DIR = PROCESSED_DIR.joinpath('participants')
 
 
 ########################################################################
