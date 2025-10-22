@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import inspect
-from collections.abc import Callable, Iterator, Mapping
+from collections.abc import Callable, Iterator, MutableMapping
 from typing import TYPE_CHECKING
 from weakref import WeakKeyDictionary
 
@@ -9,19 +9,25 @@ if TYPE_CHECKING:
     from analysis_helpers.participant import Participant
 
 
-class LazyDataDict(Mapping):
+class LazyDataDict(MutableMapping):
     """
     Helper class that enables dict-like access to various properties of
     the Participant class while retaining lazy loading/caching behavior
     on a per-item basis. Repr displays values for already-loaded
     properties and function objects for unloaded ones.
     """
-    def __init__(self, instance: Participant, mapping: Mapping[str, str]) -> None:
+    def __init__(self, instance: Participant, mapping: MutableMapping[str, str]) -> None:
         self._instance = instance
         self._mapping = dict(mapping)
 
     def __getitem__(self, key: str) -> str | Callable[[Participant], ...]:
         return getattr(self._instance, self._mapping[key])
+    
+    def __setitem__(self, key: str, value: str | Callable[[Participant], ...]) -> None:
+        setattr(self._instance, self._mapping[key], value)
+    
+    def __delitem__(self, key: str) -> None:
+        delattr(self._instance, self._mapping[key])
 
     def __iter__(self) -> Iterator[str]:
         return iter(self._mapping)
