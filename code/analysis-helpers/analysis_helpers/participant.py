@@ -131,6 +131,9 @@ class Participant(metaclass=Multiton):
             'arrdev': 'arrdev_recall_trajectory'
         })
 
+    def __repr__(self) -> str:
+        return f'{self.__class__.__name__}({self.subid!r})'
+
     ########################### TRANSCRIPTS ############################
     @cached_property
     @exclude_avg_participant

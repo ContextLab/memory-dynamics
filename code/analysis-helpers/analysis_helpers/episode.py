@@ -26,6 +26,9 @@ class Episode(metaclass=Multiton):
         self.endframe_time = ENDFRAME_TIMES[name]
         self.data_dir = EPISODE_DATA_DIR.joinpath(name)
 
+    def __repr__(self) -> str:
+        return f'{self.__class__.__name__}({self.name!r})'
+
     @cached_property
     def annotations(self) -> pd.DataFrame:
         return pd.read_csv(ANNOTATIONS_DIR.joinpath(f'{self.name}.csv'),
