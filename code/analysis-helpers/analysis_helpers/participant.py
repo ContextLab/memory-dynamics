@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from functools import cached_property
-from typing import ClassVar, Self
+from typing import ClassVar, Self, Literal
 
 import numpy as np
 import pandas as pd
@@ -25,6 +25,10 @@ class Participant(metaclass=Multiton):
             index_col='Subject ID',
             dtype_backend='numpy_nullable'
     )
+    
+    @classmethod
+    def average(cls) -> Self:
+        return cls('average')
 
     @classmethod
     def from_subid(cls, subid: str) -> Self:
@@ -61,7 +65,7 @@ class Participant(metaclass=Multiton):
         """
         return tuple(cls(n) for n in range(1, cls.id_mapping.shape[0] + 1))
 
-    def __init__(self, sub_n: int) -> None:
+    def __init__(self, sub_n: int | Literal['average']) -> None:
         """
         Main constructor for the Participant class.
 
@@ -77,17 +81,23 @@ class Participant(metaclass=Multiton):
             `subid-mapping.csv` (corresponds to the order in which
             participants were collected).
         """
-        if sub_n not in range(1, Participant.id_mapping.shape[0] + 1):
-            raise ValueError(
-                    'Participant indices range from 1 to '
-                    f'{Participant.id_mapping.shape[0]} (inclusive).'
-            )
-        id_mapping_row = Participant.id_mapping.iloc[sub_n - 1]
+        if sub_n == 'average':
+            self.subid = 'average'
+            self.ses1_id = None
+            self.ses2_id = None
+            self.condition = None
+        else:
+            if sub_n not in range(1, Participant.id_mapping.shape[0] + 1):
+                raise ValueError(
+                        'Participant indices range from 1 to '
+                        f'{Participant.id_mapping.shape[0]} (inclusive).'
+                )
+            id_mapping_row = Participant.id_mapping.iloc[sub_n - 1]
+            self.subid = id_mapping_row.name
+            self.ses1_id = id_mapping_row['session 1']
+            self.ses2_id = id_mapping_row['session 2']
+            self.condition = self.subid.split('-')[2]
         self.sub_n = sub_n
-        self.subid = id_mapping_row.name
-        self.ses1_id = id_mapping_row['session 1']
-        self.ses2_id = id_mapping_row['session 2']
-        self.condition = self.subid.split('-')[2]
         self.data_dir = PARTICIPANT_DATA_DIR.joinpath(self.subid)
 
         self.transcripts = LazyDataDict(self, {
