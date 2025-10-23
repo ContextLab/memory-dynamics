@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from functools import cached_property
+from functools import cached_property, wraps
 from typing import ClassVar, Self, Literal
 
 import numpy as np
@@ -12,6 +12,16 @@ from analysis_helpers.constants import (
     TRANSCRIPTIONS_DIR
 )
 from analysis_helpers.internals import LazyDataDict, Multiton
+
+
+def exclude_avg_participant(func):
+    """Decorator for data properties not defined for average participant"""
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        if self.subid == 'average':
+            raise AttributeError('not available for "average" Participant object')
+        return func(self, *args, **kwargs)
+    return wrapper
 
 
 class Participant(metaclass=Multiton):
@@ -123,18 +133,21 @@ class Participant(metaclass=Multiton):
 
     ########################### TRANSCRIPTS ############################
     @cached_property
+    @exclude_avg_participant
     def atlep1_recall_transcript(self) -> str:
         return TRANSCRIPTIONS_DIR.joinpath(
                 self.subid, self.ses1_id, f'{self.ses1_id}-recall.txt'
         ).read_text()
 
     @cached_property
+    @exclude_avg_participant   
     def delayed_recall_transcript(self) -> str:
         return TRANSCRIPTIONS_DIR.joinpath(
                 self.subid, self.ses2_id, f'{self.ses2_id}-delayed.txt'
         ).read_text()
 
     @cached_property
+    @exclude_avg_participant
     def atlep2_recall_transcript(self) -> str:
         if self.condition == 'B':
             raise AttributeError(
@@ -145,6 +158,7 @@ class Participant(metaclass=Multiton):
         ).read_text()
 
     @cached_property
+    @exclude_avg_participant
     def arrdev_recall_transcript(self) -> str:
         if self.condition == 'A':
             raise AttributeError(
@@ -156,14 +170,17 @@ class Participant(metaclass=Multiton):
 
     ############################# WINDOWS ##############################
     @cached_property
+    @exclude_avg_participant
     def atlep1_recall_windows(self) -> np.ndarray:
         return np.load(self.data_dir.joinpath('atlep1_recall_windows.npy'))
     
     @cached_property
+    @exclude_avg_participant
     def delayed_recall_windows(self) -> np.ndarray:
         return np.load(self.data_dir.joinpath('delayed_recall_windows.npy'))
     
     @cached_property
+    @exclude_avg_participant
     def atlep2_recall_windows(self) -> np.ndarray:
         if self.condition == 'B':
             raise AttributeError(
@@ -172,6 +189,7 @@ class Participant(metaclass=Multiton):
         return np.load(self.data_dir.joinpath('atlep2_recall_windows.npy'))
     
     @cached_property
+    @exclude_avg_participant
     def arrdev_recall_windows(self) -> np.ndarray:
         if self.condition == 'A':
             raise AttributeError(
