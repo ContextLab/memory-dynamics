@@ -77,7 +77,10 @@ TEXT_SUBSTITUTIONS = {
         r'[‘’]': "'",
         # bigrams/trigrams to be tokenized as single unit
         r'\bd[ée]j[àa] vu\b': 'deja_vu',
+        r'\bradio station\b': 'radio_station',
+        r'\bparking lot\b': 'parking_lot',
         r'\bflo[- ]rid[ae]\b': 'Flo_Rida',
+        r'\bmalcolm(?: x)?\b': 'Malcolm_X',
         r'\bt[- ]pain\b': 'T_Pain',
         r'\blow[- ]key\b': 'low_key',
         r'oj da juiceman': 'OJ_da_Juiceman',
@@ -118,8 +121,10 @@ TEXT_SUBSTITUTIONS = {
         r'\blotta\b': 'lot of',
         r'\bgotta\b': 'got to',
         # other words/phrases to consider equivalent
+        r'\bmom\b': 'mother',
+        r'\bdad\b': 'father',
         r'\b(?:blunt \(marijuana cigar\)|(?:(?<!pepper )(?<!grass )joints?|blunts?|weed|pot(?!\s+belly))\b)': 'marijuana',
-        r"(?:paper|play) boy(?= on\b| song)|(?<=play |song )paper boy(?!'s)|(?<=playing )paper boy(?!'s)|(?<=song, )paper boy(?!'s)": 'Paper_Boy_song',
+        r"(?:paper|play) boy(?= on\b| song| by)|(?<=play |song )paper boy(?!'s)|(?<=playing )paper boy(?!'s)|(?<=song, )paper boy(?!'s)": 'Paper_Boy_song',
         r"\bmuckin['g]?\b": 'muckin_song',
         r'\b106\.5|one oh? (?:five|six) point (?:five|seven)\b': 'one_o_six_point_five',
         r"\bdj(?:'?s|ing)?\b": 'DJ',
@@ -141,7 +146,6 @@ TEXT_SUBSTITUTIONS = {
         r'\bcause\b': 'because',
         r'\bafterwards\b': 'afterward',
         r'\bexecs?\b': 'executive'
-        # TODO: map mother/mom, father/dad to same tokens?
     }.items()
 }
 
