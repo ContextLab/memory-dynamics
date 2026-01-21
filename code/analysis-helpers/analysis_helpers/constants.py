@@ -47,6 +47,10 @@ STOP_WORDS = frozenset(stopwords.words('english')) | {
     'could',   # -> "can"
     'done',    # -> "do"
     'others',  # -> "other"
+    # contractions not split by tokenizer how NLTK stop words corpus assumes
+    'ca',      # "can't" -> "ca" + "n't" (instead of "can" + "'t")
+    'wo',      # "won't" -> "wo" + "n't" (instead of "won" + "'t")
+    'ai',      # "ain't" -> "ai" + "n't" (instead of "ain" + "'t")'
     # other non-content/low-information words
     'okay',
     'ok',
@@ -54,13 +58,15 @@ STOP_WORDS = frozenset(stopwords.words('english')) | {
     'um',
     'umm',
     'hmm',
+    'ah',
     'uh',
     'uhh',
     'huh',
     'oh',
     'yes',    # "no" already in NLTK stopwords corpus
     'yeah',
-    'nah'
+    'nah',
+    'c'
 }
 
 TEXT_SUBSTITUTIONS = {
