@@ -2,12 +2,10 @@ from __future__ import annotations
 
 import pickle
 from functools import cached_property
-from typing import Literal
+from typing import Literal, TYPE_CHECKING
 
 import numpy as np
 import pandas as pd
-from sklearn.decomposition import LatentDirichletAllocation
-from sklearn.feature_extraction.text import CountVectorizer
 
 from analysis_helpers.constants import (
     ANNOTATIONS_DIR, 
@@ -15,6 +13,11 @@ from analysis_helpers.constants import (
     EPISODE_DATA_DIR
 )
 from analysis_helpers.internals import Multiton
+
+if TYPE_CHECKING:
+    from brainiak.eventseg.event import EventSegment
+    from sklearn.decomposition import LatentDirichletAllocation
+    from sklearn.feature_extraction.text import CountVectorizer
 
 
 class Episode(metaclass=Multiton):
@@ -33,6 +36,22 @@ class Episode(metaclass=Multiton):
     def annotations(self) -> pd.DataFrame:
         return pd.read_csv(ANNOTATIONS_DIR.joinpath(f'{self.name}.csv'),
                            dtype_backend='numpy_nullable')
+    
+    @cached_property
+    def event_bounds(self) -> np.ndarray:
+        return np.load(self.data_dir.joinpath('event_bounds.npy'))
+    
+    @cached_property
+    def events(self) -> np.ndarray:
+        return np.load(self.data_dir.joinpath('events.npy'))
+    
+    @cached_property
+    def eventseg_kvals(self) -> np.ndarray:
+        return np.load(self.data_dir.joinpath('eventseg_kvals.npy'))
+    
+    @cached_property
+    def eventseg_model(self) -> EventSegment:
+        return pickle.loads(self.data_dir.joinpath('eventseg_model.p').read_bytes())
 
     @cached_property
     def fit_cv(self) -> CountVectorizer:
