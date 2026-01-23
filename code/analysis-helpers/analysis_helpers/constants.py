@@ -228,7 +228,7 @@ LEMMATIZER_EXCLUSIONS = {
 #                      TOPIC MODELING PARAMETERS                       #
 ########################################################################
 EPISODE_WINDOW_SIZE = 25  # annotations
-RECALL_WINDOW_SIZE = 200  # words
+RECALL_WINDOW_SIZE = 50   # words
 
 # timestamp of last video frame, used for interpolating timeseries
 ENDFRAME_TIMES = {
