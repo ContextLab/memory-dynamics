@@ -20,8 +20,6 @@ the authors."""
 ########################################################################
 DATA_DIR = Path('/mnt/data')
 
-FONTS_DIR = DATA_DIR.joinpath('fonts')
-
 RAW_DIR = DATA_DIR.joinpath('raw')
 ANNOTATIONS_DIR = RAW_DIR.joinpath('annotations')
 GOOGLE_FORM_DIR = RAW_DIR.joinpath('google-form-data')
@@ -31,6 +29,10 @@ TRANSCRIPTIONS_DIR = RAW_DIR.joinpath('transcriptions')
 PROCESSED_DIR = DATA_DIR.joinpath('processed')
 EPISODE_DATA_DIR = PROCESSED_DIR.joinpath('episodes')
 PARTICIPANT_DATA_DIR = PROCESSED_DIR.joinpath('participants')
+
+FONTS_DIR = DATA_DIR.joinpath('fonts')
+
+FIG_DIR = Path('/mnt/paper/figures/source')
 
 
 ########################################################################
@@ -251,3 +253,8 @@ LDA_PARAMS = {
     'learning_method': 'batch',
     'random_state': 0
 }
+
+########################################################################
+#                            FIGURE STYLING                            #
+########################################################################
+EVENTSEG_EDGECOLOR = '#FFF9AE'
