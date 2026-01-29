@@ -6,6 +6,7 @@ from typing import ClassVar, Self, Literal
 import numpy as np
 import pandas as pd
 
+from analysis_helpers import Episode
 from analysis_helpers.constants import (
     PARTICIPANT_DATA_DIR, 
     PROCESSED_DIR, 
@@ -111,24 +112,31 @@ class Participant(metaclass=Multiton):
         self.data_dir = PARTICIPANT_DATA_DIR.joinpath(self.subid)
 
         self.transcripts = LazyDataDict(self, {
-            'atlep1': 'atlep1_recall_transcript',
-            'delayed': 'delayed_recall_transcript',
-            'atlep2': 'atlep2_recall_transcript',
-            'arrdev': 'arrdev_recall_transcript'
+            'atlep1': '_atlep1_recall_transcript',
+            'delayed': '_delayed_recall_transcript',
+            'atlep2': '_atlep2_recall_transcript',
+            'arrdev': '_arrdev_recall_transcript'
         })
         
         self.windows = LazyDataDict(self, {
-            'atlep1': 'atlep1_recall_windows',
-            'delayed': 'delayed_recall_windows',
-            'atlep2': 'atlep2_recall_windows',
-            'arrdev': 'arrdev_recall_windows'
+            'atlep1': '_atlep1_recall_windows',
+            'delayed': '_delayed_recall_windows',
+            'atlep2': '_atlep2_recall_windows',
+            'arrdev': '_arrdev_recall_windows'
         })
-        
+
+        self.full_trajectories = LazyDataDict(self, {
+            'atlep1': '_atlep1_full_recall_trajectory',
+            'delayed': '_delayed_full_recall_trajectory',
+            'atlep2': '_atlep2_full_recall_trajectory',
+            'arrdev': '_arrdev_full_recall_trajectory'
+        })
+
         self.trajectories = LazyDataDict(self, {
-            'atlep1': 'atlep1_recall_trajectory',
-            'delayed': 'delayed_recall_trajectory',
-            'atlep2': 'atlep2_recall_trajectory',
-            'arrdev': 'arrdev_recall_trajectory'
+            'atlep1': '_atlep1_recall_trajectory',
+            'delayed': '_delayed_recall_trajectory',
+            'atlep2': '_atlep2_recall_trajectory',
+            'arrdev': '_arrdev_recall_trajectory'
         })
 
     def __repr__(self) -> str:
@@ -137,21 +145,21 @@ class Participant(metaclass=Multiton):
     ########################### TRANSCRIPTS ############################
     @cached_property
     @exclude_avg_participant
-    def atlep1_recall_transcript(self) -> str:
+    def _atlep1_recall_transcript(self) -> str:
         return TRANSCRIPTIONS_DIR.joinpath(
                 self.subid, self.ses1_id, f'{self.ses1_id}-recall.txt'
         ).read_text()
 
     @cached_property
     @exclude_avg_participant   
-    def delayed_recall_transcript(self) -> str:
+    def _delayed_recall_transcript(self) -> str:
         return TRANSCRIPTIONS_DIR.joinpath(
                 self.subid, self.ses2_id, f'{self.ses2_id}-delayed.txt'
         ).read_text()
 
     @cached_property
     @exclude_avg_participant
-    def atlep2_recall_transcript(self) -> str:
+    def _atlep2_recall_transcript(self) -> str:
         if self.condition == 'B':
             raise AttributeError(
                     f'Condition B participant "{self.subid}" did not view atlep2'
@@ -162,7 +170,7 @@ class Participant(metaclass=Multiton):
 
     @cached_property
     @exclude_avg_participant
-    def arrdev_recall_transcript(self) -> str:
+    def _arrdev_recall_transcript(self) -> str:
         if self.condition == 'A':
             raise AttributeError(
                     f'Condition A participant "{self.subid}" did not view arrdev'
@@ -174,17 +182,17 @@ class Participant(metaclass=Multiton):
     ############################# WINDOWS ##############################
     @cached_property
     @exclude_avg_participant
-    def atlep1_recall_windows(self) -> np.ndarray:
+    def _atlep1_recall_windows(self) -> np.ndarray:
         return np.load(self.data_dir.joinpath('atlep1_recall_windows.npy'))
     
     @cached_property
     @exclude_avg_participant
-    def delayed_recall_windows(self) -> np.ndarray:
+    def _delayed_recall_windows(self) -> np.ndarray:
         return np.load(self.data_dir.joinpath('delayed_recall_windows.npy'))
     
     @cached_property
     @exclude_avg_participant
-    def atlep2_recall_windows(self) -> np.ndarray:
+    def _atlep2_recall_windows(self) -> np.ndarray:
         if self.condition == 'B':
             raise AttributeError(
                     f'Condition B participant "{self.subid}" did not view atlep2'
@@ -193,34 +201,62 @@ class Participant(metaclass=Multiton):
     
     @cached_property
     @exclude_avg_participant
-    def arrdev_recall_windows(self) -> np.ndarray:
+    def _arrdev_recall_windows(self) -> np.ndarray:
         if self.condition == 'A':
             raise AttributeError(
                     f'Condition A participant "{self.subid}" did not view arrdev'
             )
         return np.load(self.data_dir.joinpath('arrdev_recall_windows.npy'))
 
-    ########################### TRAJECTORIES ###########################
-    @cached_property
-    def atlep1_recall_trajectory(self) -> np.ndarray:
-        return np.load(self.data_dir.joinpath('atlep1_recall_trajectory.npy'))
+    ######################## FULL TRAJECTORIES #########################
     
     @cached_property
-    def delayed_recall_trajectory(self) -> np.ndarray:
-        return np.load(self.data_dir.joinpath('delayed_recall_trajectory.npy'))
+    def _atlep1_full_recall_trajectory(self) -> np.ndarray:
+        return np.load(self.data_dir.joinpath('atlep1_full_recall_trajectory.npy'))
     
     @cached_property
-    def atlep2_recall_trajectory(self) -> np.ndarray:
+    def _delayed_full_recall_trajectory(self) -> np.ndarray:
+        return np.load(self.data_dir.joinpath('delayed_full_recall_trajectory.npy'))
+    
+    @cached_property
+    def _atlep2_full_recall_trajectory(self) -> np.ndarray:
         if self.condition == 'B':
             raise AttributeError(
                     f'Condition B participant "{self.subid}" did not view atlep2'
             )
-        return np.load(self.data_dir.joinpath('atlep2_recall_trajectory.npy'))
+        return np.load(self.data_dir.joinpath('atlep2_full_recall_trajectory.npy'))
     
     @cached_property
-    def arrdev_recall_trajectory(self) -> np.ndarray:
+    def _arrdev_full_recall_trajectory(self) -> np.ndarray:
         if self.condition == 'A':
             raise AttributeError(
                     f'Condition A participant "{self.subid}" did not view arrdev'
             )
-        return np.load(self.data_dir.joinpath('arrdev_recall_trajectory.npy'))
+        return np.load(self.data_dir.joinpath('arrdev_full_recall_trajectory.npy'))
+
+    ########################### TRAJECTORIES ###########################
+    @cached_property
+    def _atlep1_recall_trajectory(self) -> np.ndarray:
+        episode = Episode('atlep1')
+        trajectory = self._atlep1_full_recall_trajectory[:, episode.active_topics]
+        return trajectory / trajectory.sum(axis=1, keepdims=True)
+
+    @cached_property
+    def _delayed_recall_trajectory(self) -> np.ndarray:
+        episode = Episode('atlep1')
+        trajectory = self._delayed_full_recall_trajectory[:, episode.active_topics]
+        return trajectory / trajectory.sum(axis=1, keepdims=True)
+
+    @cached_property
+    def _atlep2_recall_trajectory(self) -> np.ndarray:
+        episode = Episode('atlep2')
+        trajectory = self._atlep2_full_recall_trajectory[:, episode.active_topics]
+        return trajectory / trajectory.sum(axis=1, keepdims=True)
+
+    @cached_property
+    def _arrdev_recall_trajectory(self) -> np.ndarray:
+        episode = Episode('arrdev')
+        trajectory = self._arrdev_full_recall_trajectory[:, episode.active_topics]
+        return trajectory / trajectory.sum(axis=1, keepdims=True)
+
+

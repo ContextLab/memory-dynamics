@@ -32,6 +32,10 @@ class Episode(metaclass=Multiton):
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.name!r})'
 
+    @property
+    def active_topics(self):
+        return self.fit_lda.components_.var(axis=1).nonzero()[0]
+    
     @cached_property
     def annotations(self) -> pd.DataFrame:
         return pd.read_csv(ANNOTATIONS_DIR.joinpath(f'{self.name}.csv'),
@@ -62,9 +66,14 @@ class Episode(metaclass=Multiton):
         return pickle.loads(self.data_dir.joinpath('fit_lda.p').read_bytes())
     
     @cached_property
+    def full_trajectory(self) -> np.ndarray:
+        return np.load(self.data_dir.joinpath('full_trajectory.npy'))
+    
+    @cached_property
     def trajectory(self) -> np.ndarray:
-        return np.load(self.data_dir.joinpath('trajectory.npy'))
-
+        traj = self.full_trajectory[:, self.active_topics]
+        return traj / traj.sum(axis=1, keepdims=True)
+        
     @cached_property
     def windows(self) -> list[str]:
         return np.load(self.data_dir.joinpath('windows.npy'))
