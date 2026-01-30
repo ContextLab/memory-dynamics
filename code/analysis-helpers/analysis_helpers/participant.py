@@ -13,7 +13,7 @@ from analysis_helpers.constants import (
     PROCESSED_DIR,
     TRANSCRIPTIONS_DIR
 )
-from analysis_helpers.internals import LazyDataDict, Multiton
+from analysis_helpers.internals import LazyDataDict, Multiton, _get_event_bounds
 
 if TYPE_CHECKING:
     from brainiak.eventseg.event import EventSegment
@@ -188,6 +188,13 @@ class Participant(metaclass=Multiton):
             'atlep2': '_atlep2_recall_eventseg_kvals',
             'arrdev': '_arrdev_recall_eventseg_kvals'
         })
+        
+        self.event_bounds = LazyDataDict(self, {
+            'atlep1': '_atlep1_recall_event_bounds',
+            'delayed': '_delayed_recall_event_bounds',
+            'atlep2': '_atlep2_recall_event_bounds',
+            'arrdev': '_arrdev_recall_event_bounds'
+        })
 
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.subid!r})'
@@ -354,3 +361,23 @@ class Participant(metaclass=Multiton):
     @exclude_participants(avg=True, condition='A')
     def _arrdev_recall_eventseg_kvals(self) -> np.ndarray:
         return np.load(self.data_dir.joinpath('arrdev_recall_eventseg_kvals.npy'))
+    
+    ######################### EVENT BOUNDARIES #########################
+    @cached_property
+    def _atlep1_recall_event_bounds(self) -> np.ndarray:
+        return _get_event_bounds(self._atlep1_recall_eventseg_model)
+    
+    @cached_property
+    def _delayed_recall_event_bounds(self) -> np.ndarray:
+        return _get_event_bounds(self._delayed_recall_eventseg_model)
+    
+    @cached_property
+    @exclude_participants(condition='B')
+    def _atlep2_recall_event_bounds(self) -> np.ndarray:
+        return _get_event_bounds(self._atlep2_recall_eventseg_model)
+    
+    @cached_property
+    @exclude_participants(condition='A')
+    def _arrdev_recall_event_bounds(self) -> np.ndarray:
+        return _get_event_bounds(self._arrdev_recall_eventseg_model)
+    

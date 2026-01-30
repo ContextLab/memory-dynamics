@@ -12,7 +12,7 @@ from analysis_helpers.constants import (
     ENDFRAME_TIMES,
     EPISODE_DATA_DIR
 )
-from analysis_helpers.internals import Multiton
+from analysis_helpers.internals import Multiton, _get_event_bounds
 
 if TYPE_CHECKING:
     from brainiak.eventseg.event import EventSegment
@@ -43,7 +43,7 @@ class Episode(metaclass=Multiton):
     
     @cached_property
     def event_bounds(self) -> np.ndarray:
-        return np.load(self.data_dir.joinpath('event_bounds.npy'))
+        return _get_event_bounds(self.eventseg_model)
     
     @cached_property
     def events(self) -> np.ndarray:

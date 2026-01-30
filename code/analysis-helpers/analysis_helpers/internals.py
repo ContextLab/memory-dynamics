@@ -6,6 +6,9 @@ from typing import TYPE_CHECKING
 from weakref import WeakKeyDictionary
 
 if TYPE_CHECKING:
+    import numpy as np
+    from brainiak.eventseg.event import EventSegment
+
     from analysis_helpers.participant import Participant
 
 
@@ -79,6 +82,27 @@ class Multiton(type):
             instances[key] = super().__call__(*args, **kwargs)
 
         return instances[key]
+
+
+def _get_event_bounds(eventseg_model: EventSegment) -> np.ndarray:
+    """
+    Extract event boundaries given an EventSegment model.
+    
+    Parameters
+    ----------
+    eventseg_model : brainiak.eventseg.event.EventSegment
+        Fit event segmentation model.
+
+    Returns
+    -------
+    np.ndarray
+        number-of-events x 2 matrix. Each row contains the index of the 
+        first and last trajectory timepoint comprising the given event.
+
+    """
+    labels = eventseg_model.segments_[0].argmax(axis=1)
+    bounds_aug = np.flatnonzero(np.diff(labels, prepend=-1, append=-1))
+    return np.column_stack((bounds_aug[:-1], bounds_aug[1:] - 1))
 
 
 def _imported_from_notebook() -> bool:
