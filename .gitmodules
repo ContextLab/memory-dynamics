@@ -1,10 +1,6 @@
 [submodule "exp/static/lib/jsPsych"]
 	path = exp/static/lib/jsPsych
 	url = https://github.com/paxtonfitzpatrick/jsPsych.git
-[submodule "code/cluster-scripts"]
-	path = code/cluster-scripts
-	url = https://github.com/paxtonfitzpatrick/cluster-tools-dartmouth.git
-	branch = memdyn
 [submodule "code/HuthSpeechModel"]
 	path = code/HuthSpeechModel
 	url = https://github.com/paxtonfitzpatrick/speechmodeltutorial.git
