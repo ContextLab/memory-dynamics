@@ -34,8 +34,8 @@ def exclude_participants(
         If True, accessing the decorated property on the "average
         participant" instance will raise an AttributeError.
     condition : {'A','B'}, optional
-        If provided, accessing the decorated property on Participant 
-        instances with the given `self.condition` value will raise an 
+        If provided, accessing the decorated property on Participant
+        instances with the given `self.condition` value will raise an
         AttributeError.
     """
     def decorator(func):
@@ -167,28 +167,28 @@ class Participant(metaclass=Multiton):
             'atlep2': '_atlep2_recall_trajectory',
             'arrdev': '_arrdev_recall_trajectory'
         })
-        
+
         self.events = LazyDataDict(self, {
             'atlep1': '_atlep1_recall_events',
             'delayed': '_delayed_recall_events',
             'atlep2': '_atlep2_recall_events',
             'arrdev': '_arrdev_recall_events'
         })
-        
+
         self.eventseg_models = LazyDataDict(self, {
             'atlep1': '_atlep1_recall_eventseg_model',
             'delayed': '_delayed_recall_eventseg_model',
             'atlep2': '_atlep2_recall_eventseg_model',
             'arrdev': '_arrdev_recall_eventseg_model'
         })
-        
+
         self.eventseg_kvals = LazyDataDict(self, {
             'atlep1': '_atlep1_recall_eventseg_kvals',
             'delayed': '_delayed_recall_eventseg_kvals',
             'atlep2': '_atlep2_recall_eventseg_kvals',
             'arrdev': '_arrdev_recall_eventseg_kvals'
         })
-        
+
         self.event_bounds = LazyDataDict(self, {
             'atlep1': '_atlep1_recall_event_bounds',
             'delayed': '_delayed_recall_event_bounds',
@@ -346,38 +346,39 @@ class Participant(metaclass=Multiton):
     @exclude_participants(avg=True)
     def _atlep1_recall_eventseg_kvals(self) -> np.ndarray:
         return np.load(self.data_dir.joinpath('atlep1_recall_eventseg_kvals.npy'))
-    
+
     @cached_property
     @exclude_participants(avg=True)
     def _delayed_recall_eventseg_kvals(self) -> np.ndarray:
         return np.load(self.data_dir.joinpath('delayed_recall_eventseg_kvals.npy'))
-    
+
     @cached_property
     @exclude_participants(avg=True, condition='B')
     def _atlep2_recall_eventseg_kvals(self) -> np.ndarray:
         return np.load(self.data_dir.joinpath('atlep2_recall_eventseg_kvals.npy'))
-    
+
     @cached_property
     @exclude_participants(avg=True, condition='A')
     def _arrdev_recall_eventseg_kvals(self) -> np.ndarray:
         return np.load(self.data_dir.joinpath('arrdev_recall_eventseg_kvals.npy'))
-    
+
     ######################### EVENT BOUNDARIES #########################
     @cached_property
+    @exclude_participants(avg=True)
     def _atlep1_recall_event_bounds(self) -> np.ndarray:
         return _get_event_bounds(self._atlep1_recall_eventseg_model)
-    
+
     @cached_property
+    @exclude_participants(avg=True)
     def _delayed_recall_event_bounds(self) -> np.ndarray:
         return _get_event_bounds(self._delayed_recall_eventseg_model)
-    
+
     @cached_property
-    @exclude_participants(condition='B')
+    @exclude_participants(avg=True, condition='B')
     def _atlep2_recall_event_bounds(self) -> np.ndarray:
         return _get_event_bounds(self._atlep2_recall_eventseg_model)
-    
+
     @cached_property
-    @exclude_participants(condition='A')
+    @exclude_participants(avg=True, condition='A')
     def _arrdev_recall_event_bounds(self) -> np.ndarray:
         return _get_event_bounds(self._arrdev_recall_eventseg_model)
-    
