@@ -5,8 +5,9 @@ from collections.abc import Callable, Iterator, MutableMapping
 from typing import TYPE_CHECKING
 from weakref import WeakKeyDictionary
 
+import numpy as np
+
 if TYPE_CHECKING:
-    import numpy as np
     from brainiak.eventseg.event import EventSegment
 
     from analysis_helpers.participant import Participant
@@ -25,10 +26,10 @@ class LazyDataDict(MutableMapping):
 
     def __getitem__(self, key: str) -> str | Callable[[Participant], ...]:
         return getattr(self._instance, self._mapping[key])
-    
+
     def __setitem__(self, key: str, value: str | Callable[[Participant], ...]) -> None:
         setattr(self._instance, self._mapping[key], value)
-    
+
     def __delitem__(self, key: str) -> None:
         delattr(self._instance, self._mapping[key])
 
@@ -74,8 +75,8 @@ class Multiton(type):
             bound_args = init_sig.bind(None, *args, **kwargs)
             bound_args.apply_defaults()
             # exclude 'self' from key
-            # NOTE: this method of constructing keys requires all
-            # arguments to `cls.__init__` are hashable.
+            # Note: this method of constructing keys requires all
+            # arguments to `cls.__init__` to be hashable.
             key = tuple(bound_args.arguments.items())[1:]
 
         if key not in instances:
@@ -87,7 +88,7 @@ class Multiton(type):
 def _get_event_bounds(eventseg_model: EventSegment) -> np.ndarray:
     """
     Extract event boundaries given an EventSegment model.
-    
+
     Parameters
     ----------
     eventseg_model : brainiak.eventseg.event.EventSegment
@@ -96,7 +97,7 @@ def _get_event_bounds(eventseg_model: EventSegment) -> np.ndarray:
     Returns
     -------
     np.ndarray
-        number-of-events x 2 matrix. Each row contains the index of the 
+        number-of-events x 2 matrix. Each row contains the index of the
         first and last trajectory timepoint comprising the given event.
 
     """
