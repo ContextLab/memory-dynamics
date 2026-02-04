@@ -46,7 +46,9 @@ recall_corrmat = np.corrcoef(recall_trajectory)
 wasserstein_dists = []
 max_wd = 0
 
-for n_events in range(MIN_K, MAX_K + 1):
+n_events_range = np.arange(MIN_K, MAX_K + 1)
+
+for i, n_events in enumerate(n_events_range, start=1):
     hmm = EventSegment(n_events,
                        split_merge=True,
                        split_merge_proposals=N_SPLIT_MERGE_PROPOSALS)
@@ -64,12 +66,10 @@ for n_events in range(MIN_K, MAX_K + 1):
         max_wd = wd
         best_eventseg = hmm
     wasserstein_dists.append(wd)
-    print(n_events)
+    print(f'{i}/{len(n_events_range)}', flush=True)
 
 np.save(PARTICIPANT_DATA_DIR.joinpath(f'{RECTYPE}_recall_eventseg_kvals.npy'),
         np.array(wasserstein_dists))
 PARTICIPANT_DATA_DIR.joinpath(f'{RECTYPE}_recall_eventseg_model.p').write_bytes(
     pickle.dumps(best_eventseg)
 )
-
-print('finished')
