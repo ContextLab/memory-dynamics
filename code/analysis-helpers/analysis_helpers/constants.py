@@ -7,7 +7,7 @@ from nltk.corpus import stopwords
 CONTENT_WARNING = """\
 ⚠️ The episodes of [*Atlanta*](https://en.wikipedia.org/wiki/Atlanta_(TV_series)) \
 viewed by participants in this study explore themes of racism, homophobia, \
-and other forms of discrimination. Consequently, certain files in this \
+and other forms of discrimination. As a result, certain files in this \
 repository&mdash;possibly including this one&mdash;contain references to \
 language that may be offensive or harmful. This language appears only in \
 service of accurately representing and analyzing the stimuli and participants' \
@@ -28,24 +28,19 @@ TRANSCRIPTIONS_DIR = RAW_DIR.joinpath('transcriptions')
 
 PROCESSED_DIR = DATA_DIR.joinpath('processed')
 EPISODE_DATA_DIR = PROCESSED_DIR.joinpath('episodes')
-RECALL_DATA_DIR = PROCESSED_DIR.joinpath('recalls')
+PARTICIPANT_DATA_DIR = PROCESSED_DIR.joinpath('participants')
+
+FONTS_DIR = DATA_DIR.joinpath('fonts')
+
+FIG_DIR = Path('/mnt/paper/figures/source')
 
 
 ########################################################################
-#                      TOPIC MODELING PARAMETERS                       #
+#                          TEXT PREPROCESSING                          #
 ########################################################################
-EPISODE_WINDOW_SIZE = 50  # annotations
-RECALL_WINDOW_SIZE = 200  # words
-
-# timestamp of last video frame, used for interpolating timeseries
-ENDFRAME_TIMES = {
-    'atlep1': 1454.16,
-    'atlep2': 1302.6,
-    'arrdev': 1232.76
-}
-
-STOP_WORDS = set(stopwords.words('english')) | {
-    # tokens that appear in NLTK stopwords after lemmatization
+STOP_WORDS = frozenset(stopwords.words('english')) | {
+    # additional tokens that would be lemmatized to stop words
+    "n't",     # -> "not"
     "'m",      # -> "be"
     "'re",     # -> "be"
     "'s",      # -> "be"
@@ -56,17 +51,26 @@ STOP_WORDS = set(stopwords.words('english')) | {
     'could',   # -> "can"
     'done',    # -> "do"
     'others',  # -> "other"
+    # contractions not split by tokenizer how NLTK stop words corpus assumes
+    'ca',      # "can't" -> "ca" + "n't" (instead of "can" + "'t")
+    'wo',      # "won't" -> "wo" + "n't" (instead of "won" + "'t")
+    'ai',      # "ain't" -> "ai" + "n't" (instead of "ain" + "'t")'
     # other non-content/low-information words
     'okay',
     'ok',
-    'like'
+    'like',
     'um',
     'umm',
+    'hmm',
+    'ah',
     'uh',
     'uhh',
-    'yes',
+    'huh',
+    'oh',
+    'yes',    # "no" already in NLTK stopwords corpus
     'yeah',
-    'nah'
+    'nah',
+    'c'
 }
 
 TEXT_SUBSTITUTIONS = {
@@ -77,7 +81,10 @@ TEXT_SUBSTITUTIONS = {
         r'[‘’]': "'",
         # bigrams/trigrams to be tokenized as single unit
         r'\bd[ée]j[àa] vu\b': 'deja_vu',
+        r'\bradio station\b': 'radio_station',
+        r'\bparking lot\b': 'parking_lot',
         r'\bflo[- ]rid[ae]\b': 'Flo_Rida',
+        r'\bmalcolm(?: x)?\b': 'Malcolm_X',
         r'\bt[- ]pain\b': 'T_Pain',
         r'\blow[- ]key\b': 'low_key',
         r'oj da juiceman': 'OJ_da_Juiceman',
@@ -118,8 +125,10 @@ TEXT_SUBSTITUTIONS = {
         r'\blotta\b': 'lot of',
         r'\bgotta\b': 'got to',
         # other words/phrases to consider equivalent
+        r'\bmom\b': 'mother',
+        r'\bdad\b': 'father',
         r'\b(?:blunt \(marijuana cigar\)|(?:(?<!pepper )(?<!grass )joints?|blunts?|weed|pot(?!\s+belly))\b)': 'marijuana',
-        r"(?:paper|play) boy(?= on\b| song)|(?<=play |song )paper boy(?!'s)|(?<=playing )paper boy(?!'s)|(?<=song, )paper boy(?!'s)": 'Paper_Boy_song',
+        r"(?:paper|play) boy(?= on\b| song| by)|(?<=play |song )paper boy(?!'s)|(?<=playing )paper boy(?!'s)|(?<=song, )paper boy(?!'s)": 'Paper_Boy_song',
         r"\bmuckin['g]?\b": 'muckin_song',
         r'\b106\.5|one oh? (?:five|six) point (?:five|seven)\b': 'one_o_six_point_five',
         r"\bdj(?:'?s|ing)?\b": 'DJ',
@@ -129,7 +138,8 @@ TEXT_SUBSTITUTIONS = {
         r'\b(?:prison|jailhouse)\b': 'jail',
         r'\btrans\b': 'transgender',
         r'\bhomosexuals?\b': 'gay',
-        r"'90s": 'nineties',
+        r'\b(?:x ?|double )x ?l\b': 'XXL',
+        r"'?90s": 'nineties',
         r'\bdr\.': 'doctor',
         r'\bt-shirt\b': 'tee shirt',
         r'\ba\.?p\.?d\.?\b': 'APD',
@@ -140,47 +150,111 @@ TEXT_SUBSTITUTIONS = {
         r'\bcause\b': 'because',
         r'\bafterwards\b': 'afterward',
         r'\bexecs?\b': 'executive'
-        # TODO: map mother/mom, father/dad to same tokens?
     }.items()
 }
 
-# words to exclude from lemmatization
-# (commented words are not always correctly lemmatized, but only appear 
-# in the recall transcripts so have no real impact)
-LEMMATIZER_EXCLUSIONS = {
-    'adios',
-    'annoyed',
-    'atlanta',
-    'broke',
-    'cans',
-    # 'chobani',
-    'cortes',
-    # 'cred',
-    'dice',
-    'downstairs',
-    # 'fedora',
-    'glasses',
-    'houdini',
-    'hundred',
-    'interesting',
-    'manus',
-    'meaning',
-    'marks',
-    'nutella',
-    'outburst',
-    # 'paris',
-    'prior',
-    # 'refuse',
-    'sideways',
-    'something',
-    'striped',
-    # 'tiara',
-    'texas',
-    # 'thanksgiving',
-    'tired',
-    'unfinished',
-    'upstairs',
-    # 'whereas',
-    # 'worldstar',
-    # 'yada'
+# map Treebank POS tags to subset of Universal Dependencies tags
+# accepted by lemminflect (NOUN, PROPN, VERB, ADJ, ADV, AUX)
+POS_MAPPING = {
+    'JJ': 'ADJ',
+    'JJR': 'ADJ',
+    'JJS': 'ADJ',
+    'MD': 'AUX',
+    'NN': 'NOUN',
+    'NNS': 'NOUN',
+    'NNP': 'PROPN',
+    'NNPS': 'PROPN',
+    'RB': 'ADV',
+    'RBR': 'ADV',
+    'RBS': 'ADV',
+    'VB': 'VERB',
+    'VBD': 'VERB',
+    'VBG': 'VERB',
+    'VBN': 'VERB',
+    'VBP': 'VERB',
+    'VBZ': 'VERB',
 }
+
+LEMMATIZER_EXCLUSIONS = {
+    'treebank_tags': frozenset({
+        '.', ',', "''", '``', ':', '(', ')',    # punctuation
+        'CC',   # coordinating conjunction, always stopwords
+        'CD',   # cardinal number, not lemmatizeable
+        'EX',   # "existential 'there'", always literal "there"
+        'FW',   # foreign word (really mis-tagged tokens)
+        'POS',  # possessive ending
+        'RP',   # particle
+        'TO',   # literal "to"
+        'UH'    # interjection
+    }),
+    # specific words to exclude from lemmatization
+    # (commented words are not always correctly lemmatized, but appear
+    # only in the recall transcripts so they don't affect the analyses)
+    'words': frozenset({
+        'adios',
+        'annoyed',
+        'atlanta',
+        'broke',
+        'cans',
+        # 'chobani',
+        'cortes',
+        # 'cred',
+        'dice',
+        'downstairs',
+        # 'fedora',
+        'glasses',
+        'houdini',
+        'hundred',
+        'interesting',
+        'manus',
+        'meaning',
+        'marks',
+        'nutella',
+        'outburst',
+        # 'paris',
+        'prior',
+        # 'refuse',
+        'sideways',
+        'something',
+        'striped',
+        # 'tiara',
+        'texas',
+        # 'thanksgiving',
+        'tired',
+        'unfinished',
+        'upstairs',
+        # 'yada'
+    })
+}
+
+
+########################################################################
+#                      TOPIC MODELING PARAMETERS                       #
+########################################################################
+EPISODE_WINDOW_SIZE = 25  # annotations
+RECALL_WINDOW_SIZE = 50   # words
+
+# timestamp of last video frame, used for interpolating timeseries
+ENDFRAME_TIMES = {
+    'atlep1': 1454.16,
+    'atlep2': 1302.6,
+    'arrdev': 1232.76
+}
+
+CV_PARAMS = {
+    'strip_accents': 'ascii',
+    'stop_words': None,  # stopword removal handled separately
+    'token_pattern': r'\b\w[_*\w]*\b',  # allow single-character tokens, don't treat * or _ as separators
+    'analyzer': 'word',
+}
+
+LDA_PARAMS = {
+    'n_components': 100,
+    'learning_method': 'batch',
+    'random_state': 0
+}
+
+########################################################################
+#                            FIGURE STYLING                            #
+########################################################################
+EVENTSEG_EDGECOLOR = '#FFF9AE'

@@ -34,6 +34,9 @@ exp/server.log
 # raw participant audio files
 data/raw/audio/
 
+# license-restricted font files
+data/fonts/
+
 # LaTeX/BibTeX intermediate/generated files
 paper/**/*.aux
 paper/**/*.bbl

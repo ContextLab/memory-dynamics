@@ -1,45 +1,37 @@
 from __future__ import annotations
 
 import inspect
-from collections.abc import Callable, Iterator, Mapping
-from functools import update_wrapper
-from typing import Self, TYPE_CHECKING
+from collections.abc import Callable, Iterator, MutableMapping
+from typing import TYPE_CHECKING
 from weakref import WeakKeyDictionary
 
+import numpy as np
+
 if TYPE_CHECKING:
+    from brainiak.eventseg.event import EventSegment
+
     from analysis_helpers.participant import Participant
 
 
-# noinspection PyPep8Naming
-class cached_classproperty[T, R]:
-    """
-    Decorator for creating cached/lazily loaded attributes defined on a
-    class. Similar to `functools.cached_property`, but for class
-    variables instead of instance attributes.
-    """
-    def __init__(self: Self, func: Callable[[type[T]], R]) -> None:
-        self.func = func
-        update_wrapper(self, func)
-
-    def __get__(self, instance: T | None, owner: type[T]) -> R:
-        value = self.func(owner)
-        setattr(owner, self.func.__name__, value)
-        return value
-
-
-class LazyDataDict(Mapping):
+class LazyDataDict(MutableMapping):
     """
     Helper class that enables dict-like access to various properties of
     the Participant class while retaining lazy loading/caching behavior
     on a per-item basis. Repr displays values for already-loaded
     properties and function objects for unloaded ones.
     """
-    def __init__(self, instance: Participant, mapping: Mapping[str, str]) -> None:
+    def __init__(self, instance: Participant, mapping: MutableMapping[str, str]) -> None:
         self._instance = instance
         self._mapping = dict(mapping)
 
     def __getitem__(self, key: str) -> str | Callable[[Participant], ...]:
         return getattr(self._instance, self._mapping[key])
+
+    def __setitem__(self, key: str, value: str | Callable[[Participant], ...]) -> None:
+        setattr(self._instance, self._mapping[key], value)
+
+    def __delitem__(self, key: str) -> None:
+        delattr(self._instance, self._mapping[key])
 
     def __iter__(self) -> Iterator[str]:
         return iter(self._mapping)
@@ -83,14 +75,35 @@ class Multiton(type):
             bound_args = init_sig.bind(None, *args, **kwargs)
             bound_args.apply_defaults()
             # exclude 'self' from key
-            # NOTE: this method of constructing keys requires all
-            # arguments to `cls.__init__` are hashable.
+            # Note: this method of constructing keys requires all
+            # arguments to `cls.__init__` to be hashable.
             key = tuple(bound_args.arguments.items())[1:]
 
         if key not in instances:
             instances[key] = super().__call__(*args, **kwargs)
 
         return instances[key]
+
+
+def _get_event_bounds(eventseg_model: EventSegment) -> np.ndarray:
+    """
+    Extract event boundaries given an EventSegment model.
+
+    Parameters
+    ----------
+    eventseg_model : brainiak.eventseg.event.EventSegment
+        Fit event segmentation model.
+
+    Returns
+    -------
+    np.ndarray
+        number-of-events x 2 matrix. Each row contains the index of the
+        first and last trajectory timepoint comprising the given event.
+
+    """
+    labels = eventseg_model.segments_[0].argmax(axis=1)
+    bounds_aug = np.flatnonzero(np.diff(labels, prepend=-1, append=-1))
+    return np.column_stack((bounds_aug[:-1], bounds_aug[1:] - 1))
 
 
 def _imported_from_notebook() -> bool:
