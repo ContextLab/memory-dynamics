@@ -97,7 +97,7 @@ TEXT_SUBSTITUTIONS = {
         r'\b(?:earnest|ernie|earnst|earl|(?:donald\s+)?glover|(?:childish\s+)?gambino)\b': 'Earn',
         r"\b(?:alfred paper boy|al(?:fred)?|alford|albert|playboy|(?<!')(?<!song |play )(?:paper|play)(?: boy(?: alfred)?| man)(?! song| on\b)|(?:paper|play) boy(?='s))\b": 'Alfred_Paper_Boy',
         r'\b(?:darr?i?en|darrell|daryle|dario|dominic)\b': 'Darius',
-        r'\b(?:vanessa|lan|venn?)\b': 'Van',
+        r'\b(?:vanessa|lan|fran|venn?)\b': 'Van',
         r'\bdavid\b': 'Dave',
         r'\b(?:jp|kc|tp|kyle(?:\s+p)?)\b': 'KP',
         r'\b(?:swift|smith)\b': 'Swiff',
@@ -108,7 +108,7 @@ TEXT_SUBSTITUTIONS = {
         r'\b(?:g\.o\.b\.?|joe|george oscar(?: bluth)?)\b': 'GOB',
         r'\bmae\b': 'Maeby',
         r'\b(?:lill?y|lucy)\b': 'Lindsay',
-        # TODO: should "robert" be allowed for "Tobias"? 
+        # TODO: should "robert" be allowed for "Tobias"?
         r'\bcecile\b': 'Lucille',
         r'\bboosh\b': 'Bluth',
         r'\bfünke\b': 'Funke',
