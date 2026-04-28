@@ -16,8 +16,12 @@
 # analysis-helpers package distribution egg
 code/analysis-helpers/analysis_helpers.egg-info/
 
+# environment variables for API keys
+.env
+
 # scratch files
 scratch/
+code/notebooks/trajectory-debugging/
 
 # emacs lockfiles
 *.#*
