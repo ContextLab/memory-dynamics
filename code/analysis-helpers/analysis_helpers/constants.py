@@ -94,7 +94,7 @@ TEXT_SUBSTITUTIONS = {
         # map alternate forms of characters' names, nicknames/pseudonyms,
         # actors' names, slight mispronunciations/inaccuracies/typos, etc.
         # to common form.
-        r'\b(?:earnest|ernie|earnst|earl|(?:donald\s+)?glover|(?:childish\s+)?gambino)\b': 'Earn',
+        r'\b(?:earnest|ernie|earnst|earl|irv|(?:donald\s+)?glover|(?:childish\s+)?gambino)\b': 'Earn',
         r"\b(?:alfred paper boy|al(?:fred)?|alford|albert|playboy|(?<!')(?<!song |play )(?:paper|play)(?: boy(?: alfred)?| man)(?! song| on\b)|(?:paper|play) boy(?='s))\b": 'Alfred_Paper_Boy',
         r'\b(?:darr?i?en|darrell|daryle|dario|dominic)\b': 'Darius',
         r'\b(?:vanessa|lan|fran|venn?)\b': 'Van',
