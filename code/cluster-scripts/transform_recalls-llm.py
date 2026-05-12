@@ -1,7 +1,7 @@
 if __name__ == '__main__':
-    print('Importing libraries (main process)...', flush=True, end='')
+    print('Importing libraries (main process)...', flush=True, end=' ')
 else:
-    print('Importing libraries (subprocess)...', flush=True, end='')
+    print('Importing libraries (subprocess)...', flush=True, end=' ')
 
 
 import json
@@ -20,7 +20,7 @@ print('Done.', flush=True)
 #                               PATHS
 # =======================================================================
 BASE_DIR = Path('/home/f0028ph/memory-dynamics')
-TRANSCRIPTIONS_DIR = BASE_DIR / 'data' / 'raw' / 'transcriptions'
+TRANSCRIPTIONS_DIR = BASE_DIR / 'data' / 'raw' / 'transcriptions-formatted'
 SUBID_MAPPING_PATH = BASE_DIR / 'data' / 'processed' / 'subid-mapping.csv'
 OUTPUT_DIR = BASE_DIR / 'data' / 'processed' / 'participants'
 STATUS_FILE = BASE_DIR / 'scripts' / '.transform_recalls_status.json'
@@ -30,7 +30,7 @@ STATUS_FILE = BASE_DIR / 'scripts' / '.transform_recalls_status.json'
 #                             CONSTANTS
 # =======================================================================
 EMBEDDING_MODEL_NAME = 'google/embeddinggemma-300m'
-RECALL_WINDOW_SIZE = 200
+RECALL_WINDOW_SIZE = 5  # sentences
 MAX_GPUS = 6  # leave headroom to prevent overheating
 
 TEXT_SUBSTITUTIONS = {
@@ -64,43 +64,38 @@ TEXT_SUBSTITUTIONS = {
         r'\blotta\b': 'lot of',
         r'\bgotta\b': 'got to',
         r'\bcause\b': 'because',    # note: manually checked and all uses of "cause" == "because"
-
     }.items()
 }
-
-# DISFLUENCIES = frozenset({
-#     'um', 'umm', 'hmm', 'ah', 'uh', 'uhh', 'huh'
-# })
-
-# _disfluency_pattern = re.compile(
-#     r'\b(?:' + '|'.join(DISFLUENCIES) + r')\b', flags=re.IGNORECASE
-# )
 
 
 # =======================================================================
 #                             FUNCTIONS
 # =======================================================================
 def preprocess_text(text: str) -> str:
-    """Apply text substitutions and remove disfluencies."""
+    """Apply text substitutions"""
     for pattern, replacement in TEXT_SUBSTITUTIONS.items():
         text = pattern.sub(replacement, text)
-    # text = _disfluency_pattern.sub('', text)
     return ' '.join(text.split())
 
 
+def split_sentences(text: str) -> list[str]:
+    """Split a text into sentences"""
+    # split on sentence-ending punctuation (.!?) outside of quotes;
+    # when sentence ends with a quote, include the closing quote
+    sentence_pattern = r'(?:[^."!?]|"[^"]*"(?<![.!?]"))*(?:[.!?]|"[^"]*[.!?]")'
+    return [s.strip() for s in re.findall(sentence_pattern, text)]
+
+
 def parse_windows(textlist: list[str], wsize: int) -> list[str]:
-    """Parse a list of tokens into overlapping sliding windows."""
+    """Parse a list of strings into overlapping sliding windows"""
     windows = []
-    for ix in range(wsize // 2, wsize):
-        windows.append(' '.join(textlist[0 : ix]))
-    for ix in range(len(textlist) - wsize // 2 + 1):
+    for ix in range(1, wsize):
+        windows.append(' '.join(textlist[:ix]))
+    for ix in range(len(textlist)):
         windows.append(' '.join(textlist[ix : ix + wsize]))
     return windows
 
 
-# =======================================================================
-#                               MAIN
-# =======================================================================
 def write_status(status: dict) -> None:
     """Atomically write status JSON (write to temp file, then rename)."""
     tmp = STATUS_FILE.with_suffix('.tmp')
@@ -108,6 +103,9 @@ def write_status(status: dict) -> None:
     tmp.rename(STATUS_FILE)
 
 
+# =======================================================================
+#                               MAIN
+# =======================================================================
 def main():
     # Load participant ID mapping
     id_mapping = pd.read_csv(
@@ -230,9 +228,11 @@ def main():
                 processed_transcript = preprocess_text(transcript)
 
                 # Parse into sliding windows and embed
+                sentence_list = split_sentences(processed_transcript)
                 p_windows = parse_windows(
-                    processed_transcript.split(), wsize=RECALL_WINDOW_SIZE
+                    sentence_list, wsize=RECALL_WINDOW_SIZE
                 )
+
                 write_status({
                     'state': 'running',
                     'start_time': start_time,
