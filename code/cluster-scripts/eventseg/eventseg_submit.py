@@ -1,33 +1,50 @@
 import subprocess
+import sys
 from pathlib import Path
 from string import Template
 
 import eventseg_config as config
 
+
+MODE = sys.argv[1]
+
 job_names = []
 job_args = []
 
-CRUNCHER_SCRIPT = Path(__file__).with_name('eventseg_cruncher.py')
+if MODE == 'episode':
+    CRUNCHER_SCRIPT = Path(__file__).with_name('eventseg_cruncher_episode.py')
+    EPISODE_DATA_DIR = config.DATA_DIR.joinpath('episodes', 'atlep1')
+    if not (
+        EPISODE_DATA_DIR.joinpath('eventseg_kvals.npy').is_file() and
+        EPISODE_DATA_DIR.joinpath('eventseg_model.p').is_file()
+    ):
+        job_names.append('eventseg_episode')
+        job_args.append((config.MIN_K, config.MAX_K, config.N_SPLIT_MERGE_PROPOSALS))
 
-########################################################################
-PARTICIPANTS_DIR = config.DATA_DIR.joinpath('participants')
-MIN_K = 2
-MAX_K = 50
-N_SPLIT_MERGE_PROPOSALS = 3
+elif MODE == 'participant':
+    CRUNCHER_SCRIPT = Path(__file__).with_name('eventseg_cruncher_participant.py')
+    PARTICIPANTS_DIR = config.DATA_DIR.joinpath('participants')
+    for participant_dir in PARTICIPANTS_DIR.glob('MD-*'):
+        for rectype in ('atlep1', 'delayed'):
+            if (
+                participant_dir.joinpath(f'{rectype}_recall_eventseg_kvals.npy').is_file() and
+                participant_dir.joinpath(f'{rectype}_recall_eventseg_model.p').is_file()
+            ):
+                continue
+            job_names.append(f'eventseg_{participant_dir.name}_{rectype}')
+            job_args.append((participant_dir.name, rectype, config.MIN_K, config.MAX_K, config.N_SPLIT_MERGE_PROPOSALS))
 
-for participant_dir in PARTICIPANTS_DIR.glob('MD-*'):
-    for rectype in ('atlep1', 'delayed'):
-        if (
-            participant_dir.joinpath(f'{rectype}_recall_eventseg_kvals.npy').is_file() and
-            participant_dir.joinpath(f'{rectype}_recall_eventseg_model.p').is_file()
-        ):
-            continue
-        job_names.append(f'eventseg_{participant_dir.name}_{rectype}')
-        job_args.append((participant_dir.name, rectype, MIN_K, MAX_K, N_SPLIT_MERGE_PROPOSALS))
-#######################################################################
+else:
+    raise ValueError(f'Invalid mode: "{MODE}", must be "episode" or "participant"')
 
 if len(job_args) != len(job_names):
     raise ValueError('job_commands and job_names must be the same length')
+elif len(job_args) == 0:
+    print('No jobs to submit')
+    sys.exit(0)
+else:
+    print(f'Submitting {len(job_args)} jobs')
+
 
 JOBSCRIPT_TEMPLATE = Template("""\
 #!/bin/bash -l
