@@ -80,10 +80,22 @@ def preprocess_text(text: str) -> str:
 
 def split_sentences(text: str) -> list[str]:
     """Split a text into sentences"""
-    # split on sentence-ending punctuation (.!?) outside of quotes;
-    # when sentence ends with a quote, include the closing quote
-    sentence_pattern = r'(?:[^."!?]|"[^"]*"(?<![.!?]"))*(?:[.!?]|"[^"]*[.!?]")'
-    return [s.strip() for s in re.findall(sentence_pattern, text)]
+    sentence_pattern = r"""
+        (?:                                                # body atoms (do not end a sentence):
+              Mr\.(?=\s)                                   #   "Mr." when followed by whitespace
+            | \.(?=[A-Za-z0-9])                            #   period directly followed by a letter/digit
+            | \.(?<=[A-Za-z]\.[A-Za-z]\.)(?=\s*\S)         #   final period of an abbreviation (e.g. last . in a.k.a.)
+            | "[^"]*"(?<![.!?]")(?<![.!?]'")               #   quote whose contents don't end in sentence punct
+            | "[^"]*[.!?]'?"(?![^A-Za-z]*(?:[A-Z]|$))      #   sentence-punct quote, but next letter is lowercase
+            | [^."!?]                                      #   any other non-special character
+        )*
+        (?:                                                # sentence-ending:
+              \.(?![A-Za-z0-9])                            #   period not followed by letter/digit
+            | [!?]                                         #   exclamation or question
+            | "[^"]*[.!?]'?"(?=[^A-Za-z]*(?:[A-Z]|$))      #   sentence-punct quote followed by uppercase or end-of-text
+        )
+    """
+    return [s.strip() for s in re.findall(sentence_pattern, text, re.VERBOSE)]
 
 
 def parse_windows(textlist: list[str], wsize: int) -> list[str]:
