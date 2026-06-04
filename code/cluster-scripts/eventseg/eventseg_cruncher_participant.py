@@ -7,13 +7,7 @@ import eventseg_config as config
 from eventseg_shared import search_segmentations
 
 
-PARTICIPANT_ID, RECTYPE, MIN_K, MAX_K, N_SPLIT_MERGE_PROPOSALS = (
-    sys.argv[1],
-    sys.argv[2],
-    int(sys.argv[3]),
-    int(sys.argv[4]),
-    int(sys.argv[5])
-)
+PARTICIPANT_ID, RECTYPE = sys.argv[1], sys.argv[2]
 
 PARTICIPANT_DATA_DIR = config.DATA_DIR.joinpath('participants', PARTICIPANT_ID)
 EPISODE_DATA_DIR = config.DATA_DIR.joinpath('episodes', 'atlep1')
@@ -28,7 +22,11 @@ recall_trajectory = full_recall_trajectory[:, active_topics]
 recall_trajectory /= recall_trajectory.sum(axis=1, keepdims=True)
 
 wasserstein_dists, best_eventseg = search_segmentations(
-    recall_trajectory, MIN_K, MAX_K, N_SPLIT_MERGE_PROPOSALS, print_progress=True
+    similarity_timeseries,
+    config.MIN_K,
+    MAX_K,
+    config.N_SPLIT_MERGE_PROPOSALS,
+    print_progress=True
 )
 np.save(PARTICIPANT_DATA_DIR.joinpath(f'{RECTYPE}_recall_eventseg_kvals.npy'),
         np.array(wasserstein_dists))

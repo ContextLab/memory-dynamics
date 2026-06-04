@@ -19,7 +19,7 @@ if MODE == 'episode':
         EPISODE_DATA_DIR.joinpath('eventseg_model.p').is_file()
     ):
         job_names.append('eventseg_episode')
-        job_args.append((config.MIN_K, config.MAX_K, config.N_SPLIT_MERGE_PROPOSALS))
+        job_args.append(())
 
 elif MODE == 'participant':
     CRUNCHER_SCRIPT = Path(__file__).with_name('eventseg_cruncher_participant.py')
@@ -31,19 +31,21 @@ elif MODE == 'participant':
                 participant_dir.joinpath(f'{rectype}_recall_eventseg_model.p').is_file()
             ):
                 continue
-            job_names.append(f'eventseg_{participant_dir.name}_{rectype}')
-            job_args.append((participant_dir.name, rectype, config.MIN_K, config.MAX_K, config.N_SPLIT_MERGE_PROPOSALS))
+
+            if not config.LOG_DIR.joinpath(f'eventseg_{participant_dir.name}_{rectype}.out').is_file():
+                job_names.append(f'eventseg_{participant_dir.name}_{rectype}')
+                job_args.append((participant_dir.name, rectype))
 
 else:
     raise ValueError(f'Invalid mode: "{MODE}", must be "episode" or "participant"')
 
 if len(job_args) != len(job_names):
     raise ValueError('job_commands and job_names must be the same length')
-elif len(job_args) == 0:
+elif len(job_names) == 0:
     print('No jobs to submit')
     sys.exit(0)
 else:
-    print(f'Submitting {len(job_args)} jobs')
+    print(f'Submitting {len(job_names)} jobs')
 
 
 JOBSCRIPT_TEMPLATE = Template("""\
@@ -73,7 +75,9 @@ class Job:
         self.args = args
         self.scriptfile = config.SCRIPT_DIR.joinpath(f'{name}.sh')
         self.lockfile = config.LOCK_DIR.joinpath(f'{name}.LOCK')
-        self.job_command = f'{CRUNCHER_SCRIPT} {" ".join(str(arg) for arg in self.args)}'
+        self.job_command = str(CRUNCHER_SCRIPT)
+        if args:
+            self.job_command = f'{self.job_command} {" ".join(str(arg) for arg in args)}'
 
     @property
     def is_submitted(self):
