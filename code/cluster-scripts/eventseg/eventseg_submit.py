@@ -27,8 +27,8 @@ elif MODE == 'participant':
     for participant_dir in PARTICIPANTS_DIR.glob('MD-*'):
         for rectype in ('atlep1', 'delayed'):
             if (
-                participant_dir.joinpath(f'{rectype}_recall_eventseg_kvals.npy').is_file() and
-                participant_dir.joinpath(f'{rectype}_recall_eventseg_model.p').is_file()
+                participant_dir.joinpath(f'{rectype}_eventseg_kvals.npy').is_file() and
+                participant_dir.joinpath(f'{rectype}_eventseg_model.p').is_file()
             ):
                 continue
 

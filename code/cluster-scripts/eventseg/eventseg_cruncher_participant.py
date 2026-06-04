@@ -29,8 +29,8 @@ wasserstein_dists, best_eventseg = search_segmentations(
     config.N_SPLIT_MERGE_PROPOSALS,
     print_progress=True
 )
-np.save(PARTICIPANT_DATA_DIR.joinpath(f'{RECTYPE}_recall_eventseg_kvals.npy'),
+np.save(PARTICIPANT_DATA_DIR.joinpath(f'{RECTYPE}_eventseg_kvals.npy'),
         np.array(wasserstein_dists))
-PARTICIPANT_DATA_DIR.joinpath(f'{RECTYPE}_recall_eventseg_model.p').write_bytes(
+PARTICIPANT_DATA_DIR.joinpath(f'{RECTYPE}_eventseg_model.p').write_bytes(
     pickle.dumps(best_eventseg)
 )
