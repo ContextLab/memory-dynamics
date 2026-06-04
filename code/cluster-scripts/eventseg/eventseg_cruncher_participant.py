@@ -2,6 +2,7 @@ import pickle
 import sys
 
 import numpy as np
+from scipy.spatial.distance import cdist
 
 import eventseg_config as config
 from eventseg_shared import search_segmentations
@@ -9,17 +10,17 @@ from eventseg_shared import search_segmentations
 
 PARTICIPANT_ID, RECTYPE = sys.argv[1], sys.argv[2]
 
-PARTICIPANT_DATA_DIR = config.DATA_DIR.joinpath('participants', PARTICIPANT_ID)
 EPISODE_DATA_DIR = config.DATA_DIR.joinpath('episodes', 'atlep1')
+PARTICIPANT_DATA_DIR = config.DATA_DIR.joinpath('participants', PARTICIPANT_ID)
 
-fit_lda = pickle.loads(EPISODE_DATA_DIR.joinpath('fit_lda.p').read_bytes())
-active_topics = fit_lda.components_.var(axis=1).nonzero()[0]
+episode_events = np.load(EPISODE_DATA_DIR.joinpath('events.npy'))
 
-full_recall_trajectory = np.load(
-        PARTICIPANT_DATA_DIR.joinpath(f'{RECTYPE}_full_recall_trajectory.npy')
-)
-recall_trajectory = full_recall_trajectory[:, active_topics]
-recall_trajectory /= recall_trajectory.sum(axis=1, keepdims=True)
+recall_trajectory = np.load(PARTICIPANT_DATA_DIR.joinpath(f'{RECTYPE}_recall_trajectory.npy'))
+recall_trajectory_centered = recall_trajectory - recall_trajectory.mean(axis=0)
+
+similarity_timeseries = 1 - cdist(recall_trajectory_centered, episode_events, metric='cosine')
+
+MAX_K = min(config.MAX_K, similarity_timeseries.shape[0])
 
 wasserstein_dists, best_eventseg = search_segmentations(
     similarity_timeseries,
