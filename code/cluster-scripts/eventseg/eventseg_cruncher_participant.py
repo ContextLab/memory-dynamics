@@ -14,6 +14,7 @@ EPISODE_DATA_DIR = config.DATA_DIR.joinpath('episodes', 'atlep1')
 PARTICIPANT_DATA_DIR = config.DATA_DIR.joinpath('participants', PARTICIPANT_ID)
 
 episode_events = np.load(EPISODE_DATA_DIR.joinpath('events.npy'))
+episode_events_centered = episode_events - episode_events.mean(axis=0)
 
 recall_trajectory = np.load(PARTICIPANT_DATA_DIR.joinpath(f'{RECTYPE}_recall_trajectory.npy'))
 recall_trajectory_centered = recall_trajectory - recall_trajectory.mean(axis=0)
