@@ -36,7 +36,7 @@ exp/.psiturk_history
 exp/server.log
 
 # raw participant audio files
-data/raw/audio/
+data/raw/recall-audio/
 
 # license-restricted font files
 data/fonts/
