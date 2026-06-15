@@ -1,6 +1,11 @@
+import pickle
+import sys
+
 import numpy as np
 from brainiak.eventseg.event import EventSegment
 from scipy.stats import wasserstein_distance
+
+import eventseg_config as config
 
 
 def proximal_diag_mask(event_mask):
@@ -51,3 +56,24 @@ def search_segmentations(
             print(f'{i}/{len(n_events_range)}', flush=True)
 
     return wasserstein_dists, best_eventseg
+
+
+EPISODE_DATA_DIR = config.DATA_DIR.joinpath('episodes', 'atlep1')
+
+min_k = int(sys.argv[1])
+max_k = int(sys.argv[2])
+
+episode_trajectory = np.load(EPISODE_DATA_DIR.joinpath('trajectory.npy'))
+
+wasserstein_dists, best_eventseg = search_segmentations(
+    episode_trajectory,
+    min_k,
+    max_k,
+    config.N_SPLIT_MERGE_PROPOSALS,
+    print_progress=True
+)
+
+np.save(EPISODE_DATA_DIR.joinpath(f'eventseg_kvals_{min_k}-{max_k}.npy'),
+        np.array(wasserstein_dists))
+EPISODE_DATA_DIR.joinpath(f'eventseg_model_{min_k}-{max_k}.p').write_bytes(
+    pickle.dumps(best_eventseg))

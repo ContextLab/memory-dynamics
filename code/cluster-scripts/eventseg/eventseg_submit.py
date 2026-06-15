@@ -6,46 +6,9 @@ from string import Template
 import eventseg_config as config
 
 
-MODE = sys.argv[1]
-
-job_names = []
-job_args = []
-
-if MODE == 'episode':
-    CRUNCHER_SCRIPT = Path(__file__).with_name('eventseg_cruncher_episode.py')
-    EPISODE_DATA_DIR = config.DATA_DIR.joinpath('episodes', 'atlep1')
-    if not (
-        EPISODE_DATA_DIR.joinpath('eventseg_kvals.npy').is_file() and
-        EPISODE_DATA_DIR.joinpath('eventseg_model.p').is_file()
-    ):
-        job_names.append('eventseg_episode')
-        job_args.append(())
-
-elif MODE == 'participant':
-    CRUNCHER_SCRIPT = Path(__file__).with_name('eventseg_cruncher_participant.py')
-    PARTICIPANTS_DIR = config.DATA_DIR.joinpath('participants')
-    for participant_dir in PARTICIPANTS_DIR.glob('MD-*'):
-        for rectype in ('atlep1', 'delayed'):
-            if (
-                participant_dir.joinpath(f'{rectype}_eventseg_kvals.npy').is_file() and
-                participant_dir.joinpath(f'{rectype}_eventseg_model.p').is_file()
-            ):
-                continue
-
-            if not config.LOG_DIR.joinpath(f'eventseg_{participant_dir.name}_{rectype}.out').is_file():
-                job_names.append(f'eventseg_{participant_dir.name}_{rectype}')
-                job_args.append((participant_dir.name, rectype))
-
-else:
-    raise ValueError(f'Invalid mode: "{MODE}", must be "episode" or "participant"')
-
-if len(job_args) != len(job_names):
-    raise ValueError('job_commands and job_names must be the same length')
-elif len(job_names) == 0:
-    print('No jobs to submit')
-    sys.exit(0)
-else:
-    print(f'Submitting {len(job_names)} jobs')
+CRUNCHER_SCRIPT = Path(__file__).with_name('eventseg_cruncher.py')
+COLLECTOR_SCRIPT = Path(__file__).with_name('eventseg_collector.py')
+EPISODE_DATA_DIR = config.DATA_DIR.joinpath('episodes', 'atlep1')
 
 
 JOBSCRIPT_TEMPLATE = Template("""\
@@ -70,12 +33,13 @@ python $JOB_COMMAND
 
 
 class Job:
-    def __init__(self, name, args):
+    def __init__(self, name, script, args=()):
         self.name = name
+        self.script = script
         self.args = args
         self.scriptfile = config.SCRIPT_DIR.joinpath(f'{name}.sh')
         self.lockfile = config.LOCK_DIR.joinpath(f'{name}.LOCK')
-        self.job_command = str(CRUNCHER_SCRIPT)
+        self.job_command = str(script)
         if args:
             self.job_command = f'{self.job_command} {" ".join(str(arg) for arg in args)}'
 
@@ -91,7 +55,7 @@ class Job:
         self.lockfile.touch()
 
     def release_lock(self):
-        self.lockfile.unlink()
+        self.lockfile.unlink(missing_ok=True)
 
     def write_scriptfile(self):
         if self.scriptfile.is_file():
@@ -99,26 +63,83 @@ class Job:
         stdout_fpath = config.LOG_DIR.joinpath(f'{self.name}.out')
         stderr_fpath = config.LOG_DIR.joinpath(f'{self.name}.err')
         script_contents = JOBSCRIPT_TEMPLATE.substitute(config.__dict__,
+                                                        JOB_BASENAME=self.name,
                                                         JOB_COMMAND=self.job_command,
                                                         STDOUT_FPATH=stdout_fpath,
                                                         STDERR_FPATH=stderr_fpath)
         self.scriptfile.write_text(script_contents)
 
 
+def partition_kval_ranges(min_k, max_k, n_ranges):
+    """
+    Partition the range [min_k, max_k] into `n_ranges` contiguous
+    sub-ranges that should take roughly equal runtime (equal sum(K**2)).
+    """
+    kvals = list(range(min_k, max_k + 1))
+    if len(kvals) < n_ranges:
+        raise ValueError(f'cannot split {len(kvals)} K-values into {n_ranges} ranges')
+
+    costs = [k * k for k in kvals]
+    total = sum(costs)
+
+    ranges = []
+    start = 0
+    cumulative = 0
+    for range_ix in range(1, n_ranges):
+        boundary = total * range_ix / n_ranges
+        max_end = len(kvals) - (n_ranges - range_ix) - 1
+        end = start
+        cumulative_at_end = cumulative + costs[end]
+        while (end < max_end and
+               abs(cumulative_at_end + costs[end + 1] - boundary)
+               < abs(cumulative_at_end - boundary)):
+            end += 1
+            cumulative_at_end += costs[end]
+        ranges.append((kvals[start], kvals[end]))
+        cumulative = cumulative_at_end
+        start = end + 1
+    ranges.append((kvals[start], kvals[-1]))
+    return ranges
+
+
+if (
+    EPISODE_DATA_DIR.joinpath('eventseg_kvals.npy').is_file() and
+    EPISODE_DATA_DIR.joinpath('eventseg_model.p').is_file()
+):
+    print('Collector script outputs already exist; no jobs to submit')
+    sys.exit(0)
+
+
 config.SCRIPT_DIR.mkdir(exist_ok=True)
 config.LOCK_DIR.mkdir(exist_ok=True)
 config.LOG_DIR.mkdir(exist_ok=True)
 
-jobs = []
 
-for job_n, job_a in zip(job_names, job_args):
-    job = Job(job_n, job_a)
+kval_ranges = partition_kval_ranges(config.MIN_K, config.MAX_K, config.N_KVAL_RANGES)
+
+jobs = []
+for min_k, max_k in kval_ranges:
+    job_name = f'eventseg_episode_{min_k}-{max_k}'
+    kvals_out = EPISODE_DATA_DIR.joinpath(f'eventseg_kvals_{min_k}-{max_k}.npy')
+    model_out = EPISODE_DATA_DIR.joinpath(f'eventseg_model_{min_k}-{max_k}.p')
+    if not (kvals_out.is_file() and model_out.is_file()):
+        job = Job(job_name, CRUNCHER_SCRIPT, (min_k, max_k))
+        jobs.append(job)
+
+collector_job = Job('eventseg_collector', COLLECTOR_SCRIPT)
+jobs.append(collector_job)
+
+print(f'Submitting {len(jobs)} jobs')
+
+for job in jobs:
     if not job.is_submitted:
         job.write_scriptfile()
         job.submit()
         job.lock()
-    jobs.append(job)
 
 for job in jobs:
     job.release_lock()
-config.LOCK_DIR.rmdir()
+try:
+    config.LOCK_DIR.rmdir()
+except OSError:
+    pass
