@@ -8,7 +8,7 @@ from weakref import WeakKeyDictionary
 import numpy as np
 
 if TYPE_CHECKING:
-    from brainiak.eventseg.event import EventSegment
+    from typing import Any
 
     from analysis_helpers.participant import Participant
 
@@ -56,9 +56,9 @@ class Multiton(type):
     unique set of constructor args).
     """
     # track instances and cache signatures by class in weak-key dict
-    _class_cache = WeakKeyDictionary()
+    _class_cache: WeakKeyDictionary[type, dict[str, Any]] = WeakKeyDictionary()
 
-    def __call__[T, **P](cls: type[T], *args: P.args, **kwargs: P.kwargs) -> T:
+    def __call__[T](cls: type[T], *args: Any, **kwargs: Any) -> T:
         if cls not in Multiton._class_cache:
             Multiton._class_cache[cls] = {
                 'init_signature': inspect.signature(cls.__init__),
@@ -85,25 +85,14 @@ class Multiton(type):
         return instances[key]
 
 
-def _get_event_bounds(eventseg_model: EventSegment) -> np.ndarray:
-    """
-    Extract event boundaries given an EventSegment model.
+class Singleton(type):
+    """Metaclass that enforces singleton behavior"""
+    _instances: dict[type, Any] = {}
 
-    Parameters
-    ----------
-    eventseg_model : brainiak.eventseg.event.EventSegment
-        Fit event segmentation model.
-
-    Returns
-    -------
-    np.ndarray
-        number-of-events x 2 matrix. Each row contains the index of the
-        first and last trajectory timepoint comprising the given event.
-
-    """
-    labels = eventseg_model.segments_[0].argmax(axis=1)
-    bounds_aug = np.flatnonzero(np.diff(labels, prepend=-1, append=-1))
-    return np.column_stack((bounds_aug[:-1], bounds_aug[1:] - 1))
+    def __call__[T](cls: type[T], *args: Any, **kwargs: Any) -> T:
+        if cls not in Singleton._instances:
+            Singleton._instances[cls] = super().__call__(*args, **kwargs)
+        return Singleton._instances[cls]
 
 
 def _imported_from_notebook() -> bool:
