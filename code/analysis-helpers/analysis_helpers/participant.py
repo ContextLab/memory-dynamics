@@ -13,7 +13,7 @@ from analysis_helpers.constants import (
     PROCESSED_DIR,
     TRANSCRIPTS_DIR
 )
-from analysis_helpers.internals import LazyDataDict, Multiton, _get_event_bounds
+from analysis_helpers.internals import LazyDataDict, Multiton
 
 
 def exclude_avg_participant(func):
@@ -145,6 +145,11 @@ class Participant(metaclass=Multiton):
             'delayed': '_delayed_recall_event_bounds'
         })
 
+        self.event_matches = LazyDataDict(self, {
+            'atlep1': '_atlep1_recall_event_matches',
+            'delayed': '_delayed_recall_event_matches'
+        })
+
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.subid!r})'
 
@@ -231,3 +236,12 @@ class Participant(metaclass=Multiton):
     @exclude_avg_participant
     def _delayed_recall_event_bounds(self) -> np.ndarray:
         return np.load(self.data_dir.joinpath('delayed_recall_event_bounds.npy'))
+
+    ########################## EVENT MATCHES ###########################
+    @cached_property
+    def _atlep1_recall_event_matches(self) -> np.ndarray:
+        return np.load(self.data_dir.joinpath('atlep1_recall_event_matches.npy'))
+
+    @cached_property
+    def _delayed_recall_event_matches(self) -> np.ndarray:
+        return np.load(self.data_dir.joinpath('delayed_recall_event_matches.npy'))
