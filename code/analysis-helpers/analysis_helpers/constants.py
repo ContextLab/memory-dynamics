@@ -11,6 +11,9 @@ service of accurately representing and analyzing the stimuli and participants' \
 responses, and its inclusion does not reflect an endorsement of its use by \
 the authors."""
 
+# timestamp of final frame of episode
+ENDFRAME_TIME = 1454.16
+
 
 ########################################################################
 #                                PATHS                                 #
@@ -24,7 +27,7 @@ PSITURK_DIR = RAW_DIR.joinpath('psiturk')
 TRANSCRIPTS_DIR = RAW_DIR.joinpath('recall-transcripts')
 
 PROCESSED_DIR = DATA_DIR.joinpath('processed')
-EPISODE_DATA_DIR = PROCESSED_DIR.joinpath('episodes')
+EPISODE_DATA_DIR = PROCESSED_DIR.joinpath('episode')
 PARTICIPANT_DATA_DIR = PROCESSED_DIR.joinpath('participants')
 
 FONTS_DIR = DATA_DIR.joinpath('fonts')
