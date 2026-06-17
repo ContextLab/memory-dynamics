@@ -38,4 +38,5 @@ FIG_DIR = Path('/mnt/paper/figures/source')
 ########################################################################
 #                            FIGURE STYLING                            #
 ########################################################################
+HEATMAP_CMAP = 'bone_r'
 EVENTSEG_EDGECOLOR = '#FFF9AE'
