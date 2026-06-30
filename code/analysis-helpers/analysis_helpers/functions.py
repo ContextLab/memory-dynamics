@@ -11,6 +11,70 @@ from analysis_helpers.constants import CONTENT_WARNING, FONTS_DIR
 from analysis_helpers.internals import _imported_from_notebook
 
 
+def format_stats(
+    stat,
+    p,
+    stat_name,
+    df=None,
+    n_decimals_stat=3,
+    n_decimals_p=3,
+    p_min=0.001,
+    sep='\n',
+    bold=False
+):
+    """
+    General function for formatting the test statistic and p-value from
+    a statistical test for display in a `matplotlib.pyplot` plot.
+
+    Parameters
+    ----------
+    stat, p : float
+        The test statistic and associated p-value.
+    stat_name : str
+        The string used to describe the test statistic in the plot
+        (e.g., 't', 'r', etc.).
+    df : int, optional
+        The degrees of freedom associated with the test statistic. If
+        not None (default), this is displayed in parentheses immediately
+        after the test statistic (e.g., "t(10) = ...").
+    n_decimals_stat, n_decimals_p : int, optional
+        The number of decimals (default: 3) to display for the test
+        statistic and p-value (if greater than `p_min`), respectively.
+    p_min : float, optional
+        The smallest p-value (default: 0.001) to display. Lower p-values
+        are displayed as "p < `p_min`".
+    sep : str, optional
+        The string separating the formatted test statistic and p-value
+        (e.g., "\n", ", "). Default: "\n".
+    bold : bool, optional
+        Whether to bold the formatted text (default: False).
+
+    Returns
+    -------
+    str
+        The formatted output to display in the plot.
+    """
+    tex_it_wrapper = '\mathbfit' if bold else '\mathit'
+
+    stat_name_fmt = f'{tex_it_wrapper}{{{stat_name}}}'
+
+    stat_text_fmt = f' = {stat:.{n_decimals_stat}f}'
+    if df is not None:
+        stat_text_fmt = f'({df}) {stat_text_fmt}'
+
+    p_fmt = f'{tex_it_wrapper}{{p}}'
+    if p < p_min:
+        p_text_fmt = f' < {p_min}'
+    else:
+        p_text_fmt = f' = {p:.{n_decimals_p}f}'
+
+    if bold:
+        stat_text_fmt = f'\\mathbf{{{stat_text_fmt}}}'
+        p_text_fmt = f'\\mathbf{{{p_text_fmt}}}'
+
+    return f'${stat_name_fmt}{stat_text_fmt}${sep}${p_fmt}{p_text_fmt}$'
+
+
 def mean_center(*to_center, equal_weight=True):
     """
     Mean-center one or more feature matrices by their shared centroid.
