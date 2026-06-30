@@ -1,8 +1,10 @@
 import re
+from inspect import getsource
 
 import matplotlib.pyplot as plt
 import numpy as np
-from IPython.display import display, Markdown
+from IPython.core.oinspect import pylight
+from IPython.display import display, HTML, Markdown
 from matplotlib import font_manager
 
 from analysis_helpers.constants import CONTENT_WARNING, FONTS_DIR
@@ -71,3 +73,14 @@ def show_content_warning() -> None:
                 r"\[\*?(.+?)\*?]\(.+\)", r"\1", CONTENT_WARNING
         ).replace('&mdash;', '—')
         print(plaintext_warning)
+
+
+def show_source(obj):
+    try:
+        src = getsource(obj)
+    except TypeError:
+        src = obj
+    try:
+        return HTML(pylight(src))
+    except AttributeError:
+        return src
