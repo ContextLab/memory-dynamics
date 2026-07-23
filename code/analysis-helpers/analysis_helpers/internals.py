@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import inspect
-from collections.abc import Callable, Iterator, MutableMapping
+from collections.abc import MutableMapping
 from typing import TYPE_CHECKING
 from weakref import WeakKeyDictionary
 
 import numpy as np
 
 if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
     from typing import Any
 
     from analysis_helpers.participant import Participant
