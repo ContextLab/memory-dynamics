@@ -1,26 +1,106 @@
+from __future__ import annotations
+
 import re
 from inspect import getsource
+from typing import TYPE_CHECKING
 
 import matplotlib.pyplot as plt
 import numpy as np
 from IPython.core.oinspect import pylight
 from IPython.display import display, HTML, Markdown
-from matplotlib import font_manager
+from matplotlib.font_manager import findSystemFonts, fontManager
+from scipy.spatial.distance import cdist
 
 from analysis_helpers.constants import CONTENT_WARNING, FONTS_DIR
 from analysis_helpers.internals import _imported_from_notebook
 
+if TYPE_CHECKING:
+    from typing import Callable
+    from numpy.typing import ArrayLike
+
+
+def dtw(
+        series_a: ArrayLike,
+        series_b: ArrayLike,
+        metric: str | Callable[[ArrayLike, ArrayLike], float] = 'cosine',
+        norm_cost: bool = True
+) -> tuple[float, list[tuple[int, int]]]:
+    """
+    Monotonic dynamic time warping.
+
+    Temporally aligns two feature time series and returns the alignment
+    cost along with the warp path that produced it.
+
+    Parameters
+    ----------
+    series_a, series_b : array-like of shape (n_samples, n_features)
+        The two feature sequences to align.
+    metric : str or callable, optional
+        The metric used to compute distances between feature vectors
+        (default: 'cosine'). May be any named metric accepted by
+        `scipy.spatial.distance.cdist` or a callable that takes two 1D
+        arrays and returns a scalar.
+    norm_cost : bool, optional
+        If True (default), return the average cost instead of summed
+        cost so that sequences of different lengths remain comparable.
+
+    Returns
+    -------
+    cost : float
+        The alignment cost (length-normalized by default).
+    path : list of (int, int)
+        The warp path as (series_a_index, series_b_index) pairs.
+    """
+    distmat = cdist(series_a, series_b, metric=metric)
+    len_a, len_b = distmat.shape
+
+    # build up full cost matrix
+    accum_cost = np.full((len_a + 1, len_b + 1), np.inf)
+    accum_cost[0, 0] = 0.0
+    for i in range(1, len_a + 1):
+        for j in range(1, len_b + 1):
+            cheapest_prev = min(
+                accum_cost[i - 1, j - 1],  # match:      advance both series
+                accum_cost[i - 1, j],      # insertion:  advance A only
+                accum_cost[i, j - 1],      # deletion:   advance B only
+            )
+            accum_cost[i, j] = distmat[i - 1, j - 1] + cheapest_prev
+
+    # Backtrack
+    row, col = len_a, len_b
+    path = []
+    while row > 0 and col > 0:
+        path.append((row - 1, col - 1))
+        cheapest_prev = min(
+            accum_cost[row - 1, col - 1],
+            accum_cost[row - 1, col],
+            accum_cost[row, col - 1],
+        )
+        if accum_cost[row - 1, col - 1] == cheapest_prev:
+            row -= 1
+            col -= 1
+        elif accum_cost[row - 1, col] == cheapest_prev:
+            row -= 1
+        else:
+            col -= 1
+
+    cost = accum_cost[len_a, len_b]
+    if norm_cost:
+        cost /= len(path)
+
+    return cost, path[::-1]
+
 
 def format_stats(
-    stat,
-    p,
-    stat_name,
-    df=None,
-    n_decimals_stat=3,
-    n_decimals_p=3,
-    p_min=0.001,
-    sep='\n',
-    bold=False
+    stat: float,
+    p: float,
+    stat_name: str,
+    df: int | None = None,
+    n_decimals_stat: int = 3,
+    n_decimals_p: int = 3,
+    p_min: float = 0.001,
+    sep: str = '\n',
+    bold: bool = False
 ):
     """
     General function for formatting the test statistic and p-value from
@@ -54,7 +134,7 @@ def format_stats(
     str
         The formatted output to display in the plot.
     """
-    tex_it_wrapper = '\mathbfit' if bold else '\mathit'
+    tex_it_wrapper = '\\mathbfit' if bold else '\\mathit'
 
     stat_name_fmt = f'{tex_it_wrapper}{{{stat_name}}}'
 
@@ -117,11 +197,11 @@ def set_figure_style():
         # TODO: this is imperfect and only loads all Myriad Pro styles
         #  from FONTS_DIR if *no* Myriad Pro font is already loaded
         myriad_pro_fonts = [
-            f for f in font_manager.fontManager.ttflist if f.name == 'Myriad Pro'
+            f for f in fontManager.ttflist if f.name == 'Myriad Pro'
         ]
         if len(myriad_pro_fonts) == 0:
-            for font_file in font_manager.findSystemFonts(fontpaths=[FONTS_DIR]):
-                font_manager.fontManager.addfont(font_file)
+            for font_file in findSystemFonts(fontpaths=[FONTS_DIR]):
+                fontManager.addfont(font_file)
 
         plt.rcParams['font.family'] = 'sans-serif'
         plt.rcParams['font.sans-serif'] = (
@@ -148,3 +228,26 @@ def show_source(obj):
         return HTML(pylight(src))
     except AttributeError:
         return src
+
+def split_sentences(text: str) -> list[str]:
+    """
+    Split recall transcript into sentences, excluding sentence breaks
+    inside multi-sentence quoted speech.
+    """
+    sentence_pattern = r"""
+        (?:                                              # non-sentence-ending:
+              Mr\.(?=\s)                                 #   "Mr." when followed by whitespace
+            | \.(?=[A-Za-z0-9])                          #   period directly followed by a letter/digit
+            | \.(?<=[A-Za-z]\.[A-Za-z]\.)(?=\s*\S)       #   final period of an abbreviation (i.e., a.k.a., etc.)
+            | "[^"]*"(?<![.!?]")(?<![.!?]'")             #   quote whose contents don't end in sentence punct
+            | "[^"]*[.!?]'?"(?![^A-Za-z]*(?:[A-Z]|$))    #   sentence-punct quote, but next letter is lowercase
+            | [^."!?]                                    #   any other non-special character
+        )*
+        (?:                                              # sentence-ending:
+              \.(?![A-Za-z0-9])                          #   period not followed by letter/digit
+            | [!?]                                       #   exclamation or question
+            | "[^"]*[.!?]'?"(?=[^A-Za-z]*(?:[A-Z]|$))    #   sentence-punct quote followed by uppercase or end-of-text
+        )
+    """
+    return [s.strip() for s in re.findall(sentence_pattern, text, re.VERBOSE)]
+
