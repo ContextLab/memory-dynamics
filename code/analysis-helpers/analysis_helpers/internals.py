@@ -5,8 +5,6 @@ from collections.abc import MutableMapping
 from typing import TYPE_CHECKING
 from weakref import WeakKeyDictionary
 
-import numpy as np
-
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
     from typing import Any
