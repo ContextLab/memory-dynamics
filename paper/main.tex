@@ -1,0 +1,116 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage[english]{babel}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{geometry}
+\usepackage[sort&compress]{natbib}
+\usepackage{pxfonts}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{lineno}
+\usepackage{xcolor}
+%\usepackage[nolists, nomarkers, fighead]{endfloat}
+%\renewcommand{\includegraphics}[2][]{}
+
+\setcitestyle{notesep={; }}
+
+
+\newcommand{\comment}[1]{}
+
+\NewCommandCopy{\oldnameref}{\nameref}
+\renewcommand{\nameref}[1]{\textit{\oldnameref{#1}}}
+
+\doublespacing
+\linenumbers
+
+\title{TITLE PLACEHOLDER}
+
+\author{Paxton C. Fitzpatrick\textsuperscript{1}, Alishba Tahir\textsuperscript{1, 2}, and Jeremy R. Manning\textsuperscript{1, *}\\
+\vspace{-0.5em}\small{\textsuperscript{1}Department of Psychological and Brain
+Sciences}\\
+\small{Dartmouth College, Hanover, NH 03755, USA}\\
+\vspace{-0.5em}\small{\textsuperscript{2}ALISHBA AFFILIATION PLACEHOLDER}\\
+\small{ALISHBA AFFILIATION PLACEHOLDER}\\
+\vspace{-0.5em}\small{\textsuperscript{*}Corresponding author:
+Jeremy.R.Manning@Dartmouth.edu}}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}\noindent ABSTRACT PLACEHOLDER
+\end{abstract}
+
+
+\section*{Introduction}
+
+
+\section*{Results}
+
+
+\section*{Discussion}
+
+
+\section*{Methods}
+
+\subsection*{Participants}
+
+
+
+\subsection*{Experiment}\label{subsec:experiment}
+
+\subsection*{Analysis}
+
+\subsubsection*{Statistics}
+
+Wilcoxon tests were one-sided because our alternative hypothesis was directional (delayed matches own immediate \textit{better than} the episode, others' immediates, etc.).
+
+\subsubsection*{Constructing episode and recall trajectories}\label{subsec:text-embedding}
+
+
+\subsubsection*{Event-segmentation}\label{subsec:eventseg}
+
+
+\subsubsection*{2D path embedding}\label{subsec:umap}
+
+
+\subsubsection*{}\label{subsec:smoothness}
+
+
+\subsubsection*{Creating knowledge and learning map visualizations}\label{subsec:knowledge-maps}
+
+
+\section*{Data availability}
+
+All of the data analyzed in this manuscript may be found at
+https://github.com/Con\-text\-Lab/memory-dynamics.
+
+\section*{Code availability}
+
+All of the code for running our experiment and carrying out the analyses may be
+found at https://github.com/Con\-text\-Lab/memory-dynamics.
+
+\bibliographystyle{apa}
+\bibliography{cdl}
+
+\section*{Acknowledgements}
+
+INDIVIDUAL ACKNOWLEDGEMENTS PLACEHOLDER. Our work was supported in part
+by NSF CAREER Award Number 2145172 to J.R.M. The content is solely the
+responsibility of the authors and does not necessarily represent the official
+views of our supporting organizations. The funders had no role in study design,
+data collection and analysis, decision to publish, or preparation of the
+manuscript.
+
+
+\section*{Author contributions}
+
+
+\section*{Competing interests}
+
+The authors declare no competing interests.
+
+
+\end{document}
