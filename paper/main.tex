@@ -15,6 +15,9 @@
 
 \setcitestyle{notesep={; }}
 
+% supplementary methods
+\newcommand{\suppMethods}{\textit{Supplementary methods}}
+
 
 \newcommand{\comment}[1]{}
 
@@ -99,6 +102,29 @@ After the immediate recall phase, participants were then given up to 5 minutes t
 Upon returning for session 2, all participants were again given up to one hour to recount the \textit{Atlanta} episode they had viewed the week prior.
 Following the delayed recall phase, participants in Group \textit{A} then viewed the second episode of \textit{Atlanta} (``Streets on Lock''; duration: 21 min 57 s) while participants in Group \textit{B} instead viewed the pilot episode of the FOX series \textit{Arrested Development} (``Pilot''; duration: 20 min 37 s).
 Both groups were then given up to one hour to recount the just-watched episode in the same manner and given the same instructions as in session 1. 
+We implemented the experiment using the psiTurk platform \citep{GureEtal16} and jsPsych library \citep{deLe15}, with a custom jsPsych plugin we developed in prior work for recording verbal recall audio \citep{ZimaEtal18}. 
+Here we analyze participants' immediate and delayed recalls of the \textit{Atlanta} episode viewed in session 1.
+
+
+\subsection*{Stimulus annotation and recall transcription}
+
+To capture the evolving semantic content of the \textit{Atlanta} episode, we created detailed text annotations of the on-screen content during each individual camera shot throughout the episode (mean annotation duration: 3.05 s; standard deviation: 1.80 s).
+Specifically, we used ANVIL \citep{Kipp01} to record, for each camera shot, a set of semantically relevant features. These included a brief description of physical occurrences and characters' explicit actions, a brief description of characters' internal states (e.g., emotions, motivations) and other implicit content, the names of all characters appearing on screen, a transcription of any dialogue, the name(s) of the character(s) speaking, the shot's setting, whether the shot took place indoors or outdoors, and whether or not there was music playing during the shot.
+This feature set was adapted from a similar annotation corpus created by \cite{ChenEtal17}, which we used in developing our trajectory-analysis framework in prior work \citep{HeusEtal21}.
+
+We then transcribed each participant's immediate and delayed verbal recall of the \textit{Atlanta} episode.
+Our transcription process consisted of three steps: an initial manual transcription, a two-pass prose-formatting conversion with a large language model, and a final manual cleanup and correction step. 
+First, we manually transcribed each recall audio file collected during the experiment.
+These initial transcripts reflected participants' spoken recalls verbatim, without any punctuation or additional formatting, and including disfluencies, stuttered repetitions, and other artifacts common to unrehearsed speech.
+However, since transformer models (such as we used to obtain text embeddings of participants' recalls) are trained almost exclusively on written text, structural conventions like sentence breaks, punctuation, and capitalization provide an important signal these models leverage to contextual other tokens (e.g., words) and construct a representation of the text's overall meaning.
+Meanwhile, speech-native phenomena such as stuttered repetitions and filler words (``like'', ``um'', etc.) that are comparatively rare in written text contribute out-of-distribution noise that can be expected to degrade embedding fidelity, and prior work has shown that automated removal of these phenomena improves performance on downstream tasks that assume clean, written-style input \citep{ChenEtal22,WangEtal10b}.
+We therefore used a large language model \citep[Qwen3.5 122b;][]{Qwen26} to convert participants' recall transcripts to a structure and style more typical of written text.
+We used the \texttt{langchain\_dartmouth} Python package \citep{SimoEtal25} to implement this conversion as two sequential passes over each transcript.
+In the first pass, we prompted the model to split the transcript into sentences at natural breaking points, add punctuation including quotes around reported speech, remove clear non-word disfluencies (``um,'' ``uh,'', ``hmm,'' etc.), collapse stuttered verbatim repetitions, and mark self-corrections and restarts with em-dashes.
+In the second pass, we prompted the model to remove all instances of ``like'' used as a filler word.
+We removed filler ``like'' instances in a separate pass because of their high frequency of occurrence in the transcripts and the additional effort to required to distinguish them from meaningful uses of ``like.''
+The full texts of our prompts for both passes can be found in \suppMethods.
+Finally, we manually reviewed all LLM-formatted transcripts to identify and correct any errors, ensure sentence breaks were appropriate and consistent across participants, confirm that no content was improperly added to or removed from the transcripts, and resolve any ambiguities using the prosody of participants' original recall audio.
 
 
 \subsection*{Analysis}
