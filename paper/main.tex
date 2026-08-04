@@ -29,7 +29,7 @@
 
 \title{TITLE PLACEHOLDER}
 
-\author{Paxton C. Fitzpatrick\textsuperscript{1}, Alishba Tahir\textsuperscript{1, 2}, and Jeremy R. Manning\textsuperscript{1, *}\\
+\author{Paxton C. Fitzpatrick\textsuperscript{1}, Alishba Tahir\textsuperscript{1, 2}, Jennifer Xu\textsuperscript{1}, and Jeremy R. Manning\textsuperscript{1, *}\\
 \vspace{-0.5em}\small{\textsuperscript{1}Department of Psychological and Brain
 Sciences}\\
 \small{Dartmouth College, Hanover, NH 03755, USA}\\
@@ -138,37 +138,61 @@ Wilcoxon tests were one-sided because our alternative hypothesis was directional
 We adapted a method we developed in prior work \citep{HeusEtal21} to transform the \textit{Atlanta} episode and participant's recalls of it into trajectories through a common representation space using a text embedding model.
 Briefly, text embedding models take in natural language text of an arbitrary length and output a fixed-length vector representation that captures the text's semantic meaning.
 Intuitively, an output vector of length $n$ can be viewed as a coordinate in an $n$-dimensional text embedding space.
-While specific model architectures and training paradigms vary, modern text embedding models are broadly trained to output similar coordinate vectors (in terms of cosine similarity, dot product, inverse Euclidean distance, or other geometric measures) for semantically similar input texts, even when those texts share few or no specific words in common.
+While specific model architectures and training paradigms vary, modern text embedding models are broadly trained to output similar coordinate vectors (in terms of cosine similarity, dot product, inverse Euclidean distance, or other geometric measures) for semantically similar input texts, even when those texts share few or no specific words.
 We obtained text embeddings for the episode and recalls using EmbeddingGemma \citep{VeraEtal25}, a pre-trained 308-million-parameter encoder-only transformer model that outputs coordinate vectors in a 768-dimensional embedding space.
 
-To construct the trajectory for the \textit{Atlanta} episode, we first converted our tabular annotations of the content during each camera shot to a plain-text format.
+To construct the trajectory for the \textit{Atlanta} episode, we first converted our tabular annotations of the content present during each camera shot to a plain-text format.
 Separately for each shot, we concatenated the annotation text describing explicit on-screen occurrences and characters' implicit internal states.
 We then appended ``Speech:~'' followed by the shot's dialogue, ``Character speaking:~'' followed by the name of the speaker, and ``Setting:~'' followed by the shot's setting.
 If any annotated fields were empty for a given shot (e.g., if no character was speaking at that time), we omitted them and their prefixes from the concatenated text.
 Next, we used EmbeddingGemma to transform the text snippet for each camera shot into a text embedding vector, resulting in a number-of-shots (478) by number-of-features (768) matrix.
 Since the camera shots varied in duration, we then resampled this series of embedding vectors to a consistent temporal resolution.
 We assigned each vector to the timepoint midway between the start and end of its corresponding camera shot (in seconds), and used linear interpolation to estimate a vector for each second of the episode.
-This yielded a number-of-seconds (1455) by number-of-features (768) matrix---i.e., a 768-dimensional \textit{trajectory}.
+This yielded a number-of-seconds (1,455) by number-of-features (768) matrix---i.e., a 768-dimensional \textit{trajectory}.
 
 We then created similar trajectories for each participant's immediate and delayed recall of the episode.
 We began by splitting each recall transcript into a list of sentences, with the constraint that splits could not occur within reported speech (i.e., if a participant recounted a multi-sentence quote by a character in the episode, we treated the full quote as a single sentence-unit).
 We then parsed these sentences into overlapping sliding windows that spanned up to 5 consecutive sentences each.
 These windows grew to and shrank from their full size at the beginning and end of a participant's recall sequence---in other words, the first window contained only the first sentence of the participant's recall, the second contained the first two sentences, and so on.
-This ensured that all sentences from a participant's recall appeared an equal number of times (5) in their sequence of sliding windows.
+This ensured that all sentences from a participant's recall transcript appeared an equal number of times (5) in their sequence of sliding windows.
 Finally, we used EmbeddingGemma to transform each sliding window into a text embedding vector.
-Repeated for all recall transcripts, this yielded a separate trajectory characterizing each participant's recall from each of the two experiment sessions. The number of samples in participants' recall trajectories (i.e., the number of sliding windows parsed from their recall transcripts) ranged from 61 to 308 with a mean of 136.68 and standard deviation of 49.70.
+Repeated for all recall transcripts, this yielded a separate trajectory characterizing each participant's recall from each of the two experiment sessions. The number of samples in participants' recall trajectories (i.e., the number of sliding windows parsed from their recall transcripts) ranged from 61 to 308 (mean: 136.68; standard deviation: 49.70).
+
+\subsubsection*{Relating episode and recall embedding vectors}
+
+In prior work using our trajectory-analysis framework \citep[e.g.,][]{HeusEtal21,Mann21a,MannEtal22,RaccEtal24,FitzEtal26}, embeddings of the stimulus and participants' responses were constructed using a topic model \citep[Latent Dirichlet Allocation;][]{BleiEtal03} trained solely on the stimulus content.
+Here we elected to instead use a pre-trained transformer-based text embedding model due to the richer and more nuanced textual information these models are able to capture. (For example, these context-sensitive models can disambiguate the texts ``Earn looked at Alfred'' and ``Alfred looked at Earn'' in their representations, whereas bag-of-words models like LDA would represent the two identically.)
+However, these richer representations also introduce certain geometric nuisances we needed to account for in order to effectively relate the contents of participants' recalls to that of the episode they viewed.
+First, because modern transformer models are pre-trained on large and diverse text corpora, the representational capacities of their embedding spaces span an enormous breadth of semantic content.
+Consequently, in preliminary analyses we found that the embeddings of our annotations and participants' recalls (which were all ``about'' the events, themes, and characters of a single \textit{Atlanta} episode) were strongly anisotropic---i.e., they all occupied the same relatively narrow angular region of the model's overall embedding space.
+Additionally, because transformer models are sensitive to the syntactic structure of text, their embedding representations carry latent information about the text's linguistic register in addition to its semantic content.
+Accordingly, we found there was a consistent angular offset between embeddings of the episode annotations and those of participants' recalls, reflecting the fact that the annotations comprise grammatically well-structured written text while the recalls comprise transcripts of casual unrehearsed speech.
+
+We corrected for these representational artifacts by mean-centering the episode and recall trajectories before performing analyses that involved measuring similarities between embedding vectors within or across trajectories.
+Conceptually, mean-centering a given set of embedding vectors (i.e., subtracting the across-vector average from each individual vector) serves to remove representations that are common across all vectors under consideration, and instead highlight representations that \textit{vary} between them.
+For example, consider the sequence of embedding vectors comprising the trajectory of the \textit{Atlanta} episode.
+Common across vectors within this sequence will be latent signals driven by how we chose to format the annotation text passed to the embedding model, the annotator's particular idiolect (i.e., idiosyncratic vocabulary and writing style), and any high-level overarching themes of the episode.
+\textit{Not} common across these vectors are the finer-grained semantic representations that distinguish different events, scenes, and actions throughout the episode from each other.
+We found that removing these non-discriminative signals (to the extent they behave as additive offsets) via mean-centering helped reduce the embeddings' anisotropy (i.e., increased the range of measured between-vector similarities) and improved our ability to segment the episode trajectory into meaningful events.
+Similarly, mean-centering both the episode and recalls before relating their embedding representations helped mitigate broad-scale representational differences driven by their diverging registers, and enabled us to better relate them based on event-specific, content-driven patterns.
+
+Our approach to mean-centering the recalls was guided by the particular latent representation we wanted to remove versus retain.
+In segmenting each participant's recall trajectory from each session into events (see \nameref{subsec:eventseg}), our goal was to discriminate between embedding vectors strictly within a single recall sequence in order to identify temporally transient content-related patterns.
+We therefore centered each recall trajectory (in addition to the episode) on its own centroid to remove non-discriminative representations (e.g., register, broad-scale thematic content) and maximize the contrast between vectors within that single sequence.
+However, the analyses shown in Figures \textbf{REF TO DTW FIG} and \textbf{REF TO RDP FIG} entailed comparing sequences of recall events not only to the episode, but also to each other, both within- and across-participants, to examine whether within-participant similarities tended to exceed across-participant similarities. 
+Here our goal was to remove representational artifacts that could work to bias our results towards significance.
+Specifically, participants' idiolects (i.e., particular speaking styles and sets of words with which they desecribe the episode) will influence the embedding representations of their recalls in ways that tend to be similar between their immediate and delayed recalls, but different across participants.
+To correct for this confound, we jointly centered each participant's set of immediate and delayed recall events on the two sequences' shared centroid (i.e., the average vector across all events from both sessions). 
+This served to reduce the recall embeddings' anisotropy (by removing signals driven by high-level themes of the episode they recalled) and mitigate the effects of the spoken-recall register and participant-specific idiolect (both of which are shared between a participant's recalls from the two sessions) while preserving any genuine drift in the high-level content of each participant's recall over the delay (which per-session mean-centering would instead discard).
 
 
 \subsubsection*{Event-segmentation}\label{subsec:eventseg}
 
 
+
+
 \subsubsection*{2D path embedding}\label{subsec:umap}
 
-
-\subsubsection*{}\label{subsec:smoothness}
-
-
-\subsubsection*{Creating knowledge and learning map visualizations}\label{subsec:knowledge-maps}
 
 
 \section*{Data availability}
