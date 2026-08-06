@@ -214,27 +214,14 @@ Finally, we decoded the most probable sequence of episode-event labels using the
 This procedure yielded, for each participant's recall from each session, a sequence of event-average embedding vectors and a set of labels denoting which episode event each recall event corresponded to.
 
 
+\subsubsection*{Comparing trajectory structures}
 
+We compared the geometric structures of the episode and recall event-sequences using dynamic time warping \citep[DTW;][]{Vint68,SakoChib78}.
+The DTW algorithm finds the optimal order-preserving alignment between two sequences of vectors with potentially different lengths or sampling rates by locally ``stretching'' and ``compressing'' them in time to maximize their overall similarity.
+This alignment yields a ``warp path'' that maps each vector in each sequence onto one or more consecutive vectors in the other sequence with the minimum total distance between matched vectors.
+The summed or average distance between matched vectors along the warp path (the ``warp cost'') is commonly taken as a measure of the two sequences' structural dissimilarity.
+We computed the warp cost as the average cosine distance between DTW-matched events so that the cost values would be comparable across comparisons involving event-sequences of different lengths (whereas summed distance necessarily grows with sequence length).
 
-
-%Specifically, rather than re-learning separate sets of state representations from each recall trajectory natively, we leveraged the state representations already learned from the episode to identify transitions between the episode events each participant was (most probably) describing at a given point during their recall.
-%First, we mean-centered the sequence of event-average embedding vectors for the episode, and each participant's sequence of per-window embedding vectors from each session, separately.
-%Then, for each given recall trajectory, we computed
-
-
-
-%To segment each participant's recall trajectory into a sequence of events, we developed a novel HMM-driven procedure that grounded the recalls directly against the content of the episode participants recounted.
-%First, we mean-centered the sequence of event-average embedding vectors for the episode, and each participant's recall trajectory from each session, separately.
-%
-%
-%For each participant's recall trajectory , we first computed the cosine similarity between the embedding vector for timepoint of their recall trajectory (i.e., the embedding vector derived from each sliding window of their transcript)
-
-
-%In other words, rather than learning a sequence of states (events) from each participant's recall natively, we instead identified transitions between the episode event they were (most probably) recalling.
-
-
-
-\subsubsection*{2D path embedding}\label{subsec:umap}
 
 
 
