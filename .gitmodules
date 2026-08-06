@@ -1,12 +1,3 @@
 [submodule "exp/static/lib/jsPsych"]
 	path = exp/static/lib/jsPsych
 	url = https://github.com/paxtonfitzpatrick/jsPsych.git
-[submodule "code/HuthSpeechModel"]
-	path = code/HuthSpeechModel
-	url = https://github.com/paxtonfitzpatrick/speechmodeltutorial.git
-[submodule "code/neurosynth"]
-	path = code/neurosynth
-	url = https://github.com/paxtonfitzpatrick/neurosynth.git
-[submodule "code/pycortex"]
-	path = code/pycortex
-	url = https://github.com/paxtonfitzpatrick/pycortex.git

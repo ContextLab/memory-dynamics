@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import pickle
 from functools import cached_property, wraps
 from typing import ClassVar, Self, Literal
 
@@ -150,6 +149,11 @@ class Participant(metaclass=Multiton):
             'delayed': '_delayed_recall_event_matches'
         })
 
+        self.paths_2d = LazyDataDict(self, {
+            'atlep1': '_atlep1_path_2d',
+            'delayed': '_delayed_path_2d'
+        })
+
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.subid!r})'
 
@@ -245,3 +249,12 @@ class Participant(metaclass=Multiton):
     @cached_property
     def _delayed_recall_event_matches(self) -> np.ndarray:
         return np.load(self.data_dir.joinpath('delayed_recall_event_matches.npy'))
+
+    ############################# 2D paths #############################
+    @cached_property
+    def _atlep1_path_2d(self) -> np.ndarray:
+        return np.load(self.data_dir.joinpath('atlep1_path_2d.npy'))
+
+    @cached_property
+    def _delayed_path_2d(self) -> np.ndarray:
+        return np.load(self.data_dir.joinpath('delayed_path_2d.npy'))

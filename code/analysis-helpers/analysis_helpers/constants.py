@@ -14,6 +14,9 @@ the authors."""
 # timestamp of final frame of episode
 ENDFRAME_TIME = 1454.16
 
+# (max) number of sentences per recall sliding widow
+RECALL_WINDOW_SIZE = 5
+
 
 ########################################################################
 #                                PATHS                                 #

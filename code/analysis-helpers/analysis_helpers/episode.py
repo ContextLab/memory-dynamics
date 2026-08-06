@@ -60,3 +60,7 @@ class Episode(metaclass=Singleton):
     @cached_property
     def windows(self) -> list[str]:
         return np.load(self.data_dir.joinpath('windows.npy'))
+
+    @cached_property
+    def path_2d(self) -> np.ndarray:
+        return np.load(self.data_dir.joinpath('path_2d.npy'))

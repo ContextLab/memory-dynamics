@@ -1,0 +1,187 @@
+\documentclass[10pt]{article}
+\usepackage[english]{babel}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{geometry}
+\usepackage[sort&compress]{natbib}
+%\usepackage[T1]{fontenc}
+\usepackage{pxfonts}
+\usepackage{graphicx}
+\usepackage{newfloat}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{placeins}
+\usepackage[breakable]{tcolorbox}
+\usepackage{enumitem}
+
+%\hypersetup{draft}
+
+\setcitestyle{notesep={; }}
+
+
+\title{\textit{Supplementary information for}: TITLE PLACEHOLDER}
+
+\author{Paxton C. Fitzpatrick\textsuperscript{1}, Alishba Tahir\textsuperscript{1, 2}, and Jeremy R. Manning\textsuperscript{1, *}\\
+\small{\textsuperscript{1}Department of Psychological and Brain Sciences}\\
+\small{Dartmouth College, Hanover, NH 03755, USA}\\
+\small{\textsuperscript{2}ALISHBA AFFILIATION PLACEHOLDER}\\
+\small{ALISHBA AFFILIATION PLACEHOLDER}\\
+\small{\textsuperscript{*}Corresponding author:
+Jeremy.R.Manning@Dartmouth.edu}}
+
+\date{}
+
+\begin{document}
+
+\renewcommand{\figurename}{Supplementary Figure}
+\renewcommand{\tablename}{Supplementary Table}
+
+
+\setcounter{equation}{0}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+%\setcounter{page}{0}
+\setcounter{section}{0}
+\makeatletter
+
+
+\begin{titlepage}
+\maketitle
+\thispagestyle{empty}
+\end{titlepage}
+
+
+\section*{Supplementary methods}
+
+\begin{tcolorbox}[
+  breakable,
+  colback=gray!5,
+  colframe=black!50,
+  arc=3mm,
+  title={Primary prompt},
+  fonttitle=\bfseries,
+  fontupper=\small
+]
+    \setlist[itemize]{nosep, leftmargin=1.5em}
+    You are preparing a transcript of spoken memory recall for embedding-based semantic analysis. A participant verbally recalled events from a TV episode (Atlanta, S1E1). You receive a raw transcript of their recall with little to no punctuation or capitalization. Your goal is to produce well-formed written sentences that faithfully preserve the participant's words. When the rules below conflict with each other, prioritize preserving the participant's actual word choices, grammar, and content over producing polished prose. This priority applies to what the participant said --- the words themselves --- not to how the text is structured. Apply the formatting rules (punctuation, capitalization, sentence breaks, stutter collapse) confidently; preserve the underlying word sequence faithfully.
+    \\
+    Rules:
+    \begin{itemize}
+    	\item Add proper punctuation (such as . , ? ! \texttt{"} \textquotesingle\ ---) and capitalization.
+    	\item Capitalize proper nouns including places, titles, and character names: Earn (Earnest), Alfred, Paper Boy, Darius, Van (Vanessa), Lottie, Dave, Kyle, KP, Prince, Uncle Riley, Loretta, and any other names should always be capitalized.
+    	\item Every sentence must end in a sentence-final punctuation mark (. ? or !). Do not use ellipses; complete trailing-off thoughts at the natural stopping point with a period.
+    	\item Split sentences at natural breaking points, but avoid excessively long run-ons. When many independent clauses are connected by "and", break after at most 2-3.
+    	\item Remove clear non-word disfluencies (``um'', ``uh'', ``ah'', ``huh'', ``hmm'', and similar). Examples:
+    	\begin{itemize}
+    		\item and then hmm I think van turned on the news → And then I think Van turned on the news.
+    		\item and earn's like uh I have no idea → And Earn's like, "I have no idea."
+    	\end{itemize}
+    	\item Collapse stuttered verbatim and near-verbatim repetitions. Examples:
+    	\begin{itemize}
+    		\item he opened the the door → He opened the door.
+    		\item I I I think that's right → I think that's right.
+    		\item then we see the guy who was the guy who was on the bus → Then we see the guy who was on the bus.
+    		\item and that in that dream in the dream he remembers like being in a pool → and that in the dream, he remembers like being in a pool
+    		\item and then paper boy earn and paper boy earn and darius were all looking at him like nodding like oh yeah like what a story like that's pathetic → And then Paper Boy, Earn, and Darius were all looking at him like nodding, like ``Oh yeah, like what a story, like that's pathetic.''
+    	\end{itemize}
+    	\item Add quotation marks around the reported speech. When the participant uses ``said'', ``went'', ``was like'', or similar to introduce a character's speech, keep the introducing word. Examples:
+    	\begin{itemize}
+    		\item Earn was like yeah of course → Earn was like, ``Yeah, of course.''
+    		\item and she goes I don't know → And she goes, ``I don't know.''
+    		\item he said get out of here → He said, ``Get out of here.''
+    	\end{itemize}
+    	\item Distinguish reported speech (the character's actual words) from narrator commentary that follows words like ``said.'' If what follows ``said'' is the participant describing the character's actions or self-correcting rather than the character's spoken words, do NOT use quotation marks. Examples:
+    	\begin{itemize}
+    		\item she said she had a date that night → She said she had a date that night.
+    		\item he said no I didn't and then he said but he actually did → He said, ``No, I didn't,'' and then he said--- but he actually did.
+    	\end{itemize}
+    	\item Preserve self-corrections and restarts verbatim, marking the break with an em-dash. Examples:
+    	\begin{itemize}
+    		\item the guy went to I mean the woman went to the store → The guy went to--- I mean the woman went to the store.
+    		\item and then earn was like or alfred paper boy says oh we're late → And then Earn was like--- or Alfred Paper Boy says, ``Oh, we're late.''
+    	\end{itemize}
+    	\item The input transcript reflects casual unrehearsed speech, so self-corrections are common and often occur without an explicit restart marker like ``I mean'' or ``or rather''. Watch for cases where the participant starts a clause, abandons it, and starts a different clause that occupies the same syntactic slot. Mark these with an em-dash. Examples:
+    	\begin{itemize}
+    		\item earn was there and earn's the woman that earn has a kid with her name is van → Earn was there, and Earn's--- the woman that Earn has a kid with, her name is Van.
+    		\item and then she said and then earn she said so you didn't make out with her → And then she said--- and then earn--- she said, ``So you didn't make out with her?''
+    		\item but then later they were chilling in the car listening to paper boy on his name is as an artist is as paper boy but the song's name is also paper boy → But then later they were chilling in the car listening to Paper Boy on--- his name is as an artist is as Paper Boy, but the song's name is also Paper Boy.
+    	\end{itemize}
+    	\item Do not silently fix other grammar errors: don't correct or improve tense, agreement, or aspect. Preserve non-standard grammatical constructions verbatim, using an em-dash for cadence breaks. Examples:
+    	\begin{itemize}
+    		\item they was working at the airport → They was working at the airport.
+    		\item it was him and his friend who on his name tag it said swiff → It was him and his friend who--- on his name tag it said Swiff.
+    	\end{itemize}
+    	\item Preserve malapropisms and ``wrong'' word choices verbatim. If the participant says a word that sounds like a mistake (e.g., ``irregardless'', ``for all intensive purposes'', etc.), keep it exactly as written. Do not silently substitute a more standard word.
+    	\item Preserve asides and self-directed speech, even if the content does not describe the episode. Examples:
+    	\begin{itemize}
+    		\item her name was oh man I really don't remember this is hard I think her name was Fran → Her name was--- oh man I really don't remember, this is hard. I think her name was Fran.
+    		\item there was we didn't know the characters at the time but there was earn there there was Alfred → There was--- we didn't know the characters at the time, but there was Earn, there was Alfred.
+    		\item okay and then the next scene let me think for a second just trying to put it in chronological order → Okay, and then the next scene--- let me think for a second, just trying to put it in chronological order.
+    	\end{itemize}
+    	\item Do not remove conjunctions (``and'', ``or'', etc.) when splitting long run-ons into multiple sentences; keep the conjunction as the first word of the next sentence.
+    	\item Do not paraphrase, summarize, reorder words, correct word choice, or add details not present in the input.
+    	\item Do not remove filler words: retain uses of ``like'', ``kind of'', ``sorta'', ``I think'', ``you know'', and similar.
+    	\item Do not add words to improve flow, smooth abrupt transitions, or fill in apparent omissions in the participant's speech.
+    	\item Do not add newlines or line breaks; do not split the text into paragraphs.
+    	\item Do NOT correct factual errors about the episode. If the participant misremembered something, keep their version of events.
+    	\item Output ONLY the cleaned transcript. No commentary, headers, or explanations.
+    	\item When in doubt about whether to substitute, add, or remove a word, default to preserving the input words verbatim. The formatting rules above (punctuation, capitalization, sentence segmentation, stutter collapse, restart-marking) should be applied confidently --- these don't change what the participant said, only how it's written.
+    \end{itemize}
+\end{tcolorbox}
+
+\clearpage
+
+\begin{tcolorbox}[
+  breakable,
+  colback=gray!5,
+  colframe=black!50,
+  arc=3mm,
+  title={Like-removal prompt},
+  fonttitle=\bfseries,
+  fontupper=\small
+]
+    \setlist[itemize]{nosep, leftmargin=1.5em}
+    You are removing filler uses of ``like'' from a cleaned transcript of spoken memory recall. The text has already been punctuated, capitalized, and structured. Your only job is to remove instances of ``like'' that function as filler, hedge, approximative, or discourse marker, while keeping instances that carry meaning.
+    
+    General test for removal: read the sentence with ``like'' removed. If the result is grammatical and the meaning is preserved, ``like'' was filler --- remove it. If removing ``like'' produces an ungrammatical or meaningless sentence, keep it.
+    
+    Remove ``like'' in these positions:
+    \begin{itemize}
+    	\item At the beginning of a sentence: ``Like they seemed to kind of know each other, but not really well.'' → ``They seemed to kind of know each other, but not really well.''
+		\item Between an article/possessive/preposition and a noun phrase: ``drinking out of like a paper bag'' → ``drinking out of a paper bag''
+    	\item Before or within a verb phrase: ``she was like making signs'' → ``she was making signs''
+    	\item At the start of a clause as a hedge: ``like maybe he had to swim above the hands'' → ``maybe he had to swim above the hands''
+    	\item Between a copula and an adjective/noun: ``he was like a rapper'' → ``he was a rapper''
+    	\item Repeated stutters of ``like like'': ``she's like like, `What'd she look like?''' → ``she's like, `What'd she look like?'''
+	\end{itemize}
+    
+    Keep ``like'' in these positions:
+    \begin{itemize}
+    	\item Introducing reported speech: ``she was like, `I don't know''' --- keep
+    	\item As a comparison word meaning ``similar to'': ``seaweed that looked like hands'' --- keep
+    	\item As a verb meaning ``to enjoy'': ``I like him'' / ``he likes Flo Rida'' --- keep
+	\end{itemize}
+    
+    Pay special attention to whether a use of ``like'' introduces reported speech versus serves as filler. Never remove ``like'' immediately preceding quote-enclosed speech UNLESS another word (``said'', ``went'', ``asked'', or similar) already functions to introduce the speech. Examples:
+    \begin{itemize}
+    	\item ``And then Earn was like, `Wait a scond.''' --- ``was like'' introduces speech. Keep it.
+    	\item ``So then he was like, `No, that's not true at all.''' --- ``was like'' introduces speech. Keep it.
+    	\item ``And she was laughing at him being sort of like, `What do you mean?''' --- ``being ... like'' introduces speech. Keep it.
+    	\item ``And Alfred said like, `Get over here.''' --- ``said'' introduces the speech; ``like'' is just filler. Remove it.
+    	\item ``He was asking like, `Are you sure?''' --- ``was asking'' introduces the speech; ``like'' is just filler. Remove it.
+	\end{itemize}
+    
+    When uncertain, default to removal. Do not change anything else about the text --- preserve all other words, punctuation, capitalization, and sentence breaks exactly as given. Do not paraphrase, reorder, or add words.
+    
+    Output ONLY the cleaned transcript. No commentary, headers, or explanations.\
+\end{tcolorbox}
+
+\clearpage
+
+\section*{Supplementary figures}
+
+
+\clearpage
+\bibliographystyle{apa}
+\renewcommand{\refname}{Supplementary references}
+\bibliography{CDL-bibliography/cdl}
+\end{document}
