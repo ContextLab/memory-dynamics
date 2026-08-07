@@ -49,9 +49,111 @@ Jeremy.R.Manning@Dartmouth.edu}}
 
 \section*{Introduction}
 
+Suppose that you attend a friend's wedding.
+That evening you describe it to your partner, recounting how the ceremony ran long, how the best man's toast was unexpectedly moving, and how a small child wandered onto the dance floor midway through the first song.
+A week later a coworker asks how the wedding was, and you tell the story again.
+What is that second telling a telling of?
+One appealing answer is that both tellings draw on a single underlying memory of the wedding, and that whatever differences arise between them reflect the ordinary imprecision of putting an experience into words.
+A second possibility, which motivates the work we report here, is that your first telling has itself become part of what you are remembering.
+
+What happens to an experience between living it and describing it later?
+Our brains do not maintain complete models of everything we encounter, and so the act of perceiving an experience already entails compressing and distorting it.
+We attend closely to some aspects of a scene while ignoring others, and we tend to interpret ambiguous moments in light of what we expect will happen next.
+Once the experience has ended, neither the experience itself nor our moment-to-moment perception of it remains available, to us or to anyone else.
+What remains is the product of a further distillation, in which our perception of the experience is reduced to something our memory systems can store and later reconstruct.
+Which aspects of an experience survive this second distillation may depend on what we attended to, what we anticipated would matter later, what interested us, and the thoughts, motivations, and biases we brought with us.
+Because remembering entails reconstructing an experience rather than replaying it, the resulting account often preserves the general shape of what happened while discarding many of its particulars~\citep{Bart32,SchaEtal11,Scha12}.
+The units over which these distillations operate appear to be events, in that people segment continuous experience into discrete episodes at moments of change, and those boundaries shape what is remembered afterwards~\citep{RadvZack17,BaldEtal17}.
+In prior work we characterized this transformation geometrically, by modeling an experience and a person's recounting of it as trajectories through a semantic space, and asking which properties of the experience's trajectory are preserved in the recounting~\citep{HeusEtal21}.
+
+A memory does not stay fixed once it has been encoded, and this introduces a dimension that a single recounting cannot reveal.
+Information may be lost over time; experiences we have after an event may color how we later remember it; similar experiences may interfere with one another; and we may simply re-evaluate what happened in light of what we have learned since.
+Retrieving a memory appears to be one of the forces that changes it, in that a memory can become labile when it is reactivated and must be stabilized again afterwards~\citep{NadeEtal00,HupbEtal07,HupbEtal09,SedeEtal11}.
+Retrieval also changes what will be accessible later, often substantially, relative to memories that go unretrieved~\citep{RoedKarp06a,KarpRoed07}.
+The particular way in which we recount an experience matters as well, since people who are asked to describe an event for one purpose later remember it in ways that are biased toward that description~\citep{TverMars00}.
+Memories also become more semantic and less perceptually detailed, both with the passage of time and with repeated remembering~\citep{LifaEtal21}.
+Repeated retrieval of naturalistic events over the course of a week has been found to stabilize each person's recall (for example, which details they include) without causing different people's recalls to converge~\citep{MeleEtal25}.
+Taken together, these observations suggest that each time we remember an experience, what we retrieve may differ from what we retrieved before.
+
+One intuition for how this might work comes from thinking about memory storage in terms of attractor dynamics~\citep{Hopf82}.
+Rather than supposing that we hold literal duplicate copies of a memory, we might imagine that laying down a memory carves out a basin in an energy landscape, and that remembering the experience deepens a basin near where we happen to land.
+Combined with the observation that remembering distorts, this implies that it may not be the original memory that gets re-encoded on each occasion, but rather a distorted version of it.
+Successive retrievals might then arrive at a basin corresponding to the original experience, or at one corresponding to any of our previous rememberings of it.
+A related point has been made from the perspective of context reinstatement, namely that each time we remember a prior experience, our memory of that experience becomes colored by the contextual thoughts we were having at the time of each remembering~\citep{Mann24}.
+We raise this picture to motivate the questions we ask below rather than as a model we test directly.
+
+How might we compare two rememberings of the same experience, when the experience and both rememberings take the form of unconstrained natural language?
+Recent work has begun to use language models to quantify the content of what people say when they recount what they remember~\citep{HeusEtal21,MannEtal22,FitzEtal26,FeneEtal25}.
+Our approach embeds the description of an experience, and each person's recountings of it, into a common high-dimensional space whose coordinates reflect the concepts under consideration, so that each unfolds over time as a trajectory through that space~\citep{HeusEtal21,FitzEtal23,FitzEtal26,VeraEtal25}.
+We then segment the experience and each recounting into events, and we identify which event of the experience each recalled event describes, which yields sequences of events that may be compared directly across people and across delays~\citep{ChenEtal17,BaldEtal17,HeusEtal21}.
+
+Because we collected two recountings of the same experience from each participant, one immediately afterwards and one a week later, we are able to ask what the delayed recounting most closely resembles.
+If retrieval recovered the original experience in an uncorrupted form, then both recountings should be about equally similar to the experience itself.
+We find instead that a participant's delayed recall is more similar to their own immediate recall than it is to the episode.
+It is also more similar to their own immediate recall than to other participants' immediate recalls.
+What governs retrieval after a delay therefore appears to be a person-specific distillation, rather than the episode as it was presented.
+We report three findings.
+First, participants recall the episode's events in a similar order before and after the delay.
+Second, the semantic structure of a participant's recall is preserved across the delay, and is specific enough that a delayed recall can be matched to its own immediate recall on the basis of that structure alone.
+Third, delayed recalls are well described as simplified versions of the same participant's immediate recalls, in that removing detail from an immediate recall trajectory brings it closer to the delayed recall trajectory that followed it.
 
 \section*{Results}
 
+\textbf{\textit{[OUTLINE --- placeholder structure, not final prose. Bracketed italic text marks content still to be written. No statistic below has been computed or verified; every ``report [STAT]'' is a hole to be filled from the cited notebook's output.]}}
+
+\textbf{\textit{[FIGURE BUDGET: 8 main-text figures maximum. The plan below uses 6, leaving 2 in reserve (one likely wanted for the RDP analysis if it needs a second panel set, one for contingency). Figure~1 (\texttt{paradigm.pdf}) is the only finished main-text figure; the other PDFs already in \texttt{paper/figures/source/} are analysis outputs that may feed panels rather than figures in their own right. Nothing else is made yet.]}}
+
+\subsection*{From episode and recalls to comparable event sequences}
+
+\textit{[Walk the reader through the pipeline, briefly and conceptually (details live in the Methods), up to the point where we have three things in hand: (a) the sequence of events comprising the episode, (b) each participant's sequences of immediate and delayed recall events, and (c) the mapping between each recall event and the episode event it describes. This is the setup that everything below depends on --- the point to land is that the episode and both recalls now live in a common space and are segmented into comparable units.]}
+
+\textit{[\textbf{Figure~1 --- paradigm.} \texttt{paradigm.pdf}, already in \texttt{paper/figures/source/}. Session-1 row: instructions, episode (24 min), immediate recall (10--60 min), prediction (5 min); one-week gap; session-2 row: instructions, delayed recall (10--60 min), session-2 episode (20/22 min), recall of that episode (10--60 min). Planned revision: reduce the opacity of the blocks for the phases we don't analyze --- the session-1 prediction block, and the session-2 episode-viewing and subsequent-recall blocks --- so the reader's eye lands on the immediate/delayed recall pair that the paper is actually about.]}
+
+\textit{[\textbf{Figure~2 --- methods overview.} To be made. Annotations and recall text $\rightarrow$ trajectories $\rightarrow$ event-segmentation procedure $\rightarrow$ event sequences. Loosely modeled on Fig.~2 of~\citet{HeusEtal21}, extended with the (new) event-segmentation step. Layout still open. Candidate source material already generated: \texttt{episode-corrmat.pdf} and \texttt{k-optimization-episode.pdf} (from \texttt{event-segmentation.ipynb}), and the per-recall similarity heatmaps and match matrices \texttt{atlep1-} and \texttt{delayed-recall-similarity-heatmaps.pdf} / \texttt{-matchmats.pdf}.]}
+
+\subsection*{Participants recall the episode's events in a similar order before and after the delay}
+
+\textit{[Motivation: we wanted to know whether participants remembered the episode similarly before and after the delay. The simplest way to ask this is whether they recalled the same events in the same order.]}
+
+\textit{[Result: recall-order similarity. Computed in \texttt{self-similarity-analyses.ipynb}, section ``Is delayed recall order more similar to own immediate recall order than to others' immediate recall orders?''. The measure compares pairwise precedence relations over the episode events shared between two recalls, then percentile-ranks each participant's delayed-vs-own-immediate similarity against their delayed-vs-others'-immediate similarities, tested against chance (0.5) with a Wilcoxon signed-rank test. Report [STAT].]}
+
+\textit{[\textbf{Figure~3 --- recall-order similarity.} To be made; multi-panel.]}
+
+\textit{[Panel~A: illustration of the method. For one example participant, show the matrix of pairwise recall-order-precedence values over pairs of episode events --- probably just the lower triangle --- for their delayed recall beside their own immediate recall. Grey out (or reduce the opacity of) cells for event pairs not recalled in both sessions, since the comparison is restricted to pairs present in both. Then show the same thing again for that participant's delayed recall against a \emph{different} participant's immediate recall, which is the contrast the analysis actually tests. This maps directly onto \texttt{pairwise\_precedence()} and the \texttt{shared\_events} argument to \texttt{order\_similarity()} in the notebook, so the panel and the code should be checked against each other.]}
+
+\textit{[Panels~B--D: de-slopified versions of panels B--D of the reference mock-up. Include the analogues of that mock-up's B and D so that the same panel types can reappear in the recall-structure figure (Figure~5), letting the reader compare order and structure on identical terms --- this parallelism is the reason for the pairing and should be preserved in the final layout.]}
+
+\textit{[Note on ordering: this is the least novel analysis of the three and the one least dependent on our framework --- order could be measured without any embedding model. It goes first precisely because it establishes the basic effect on the simplest possible terms, setting up the contrast with what follows.]}
+
+\subsection*{The semantic structure of participants' recalls is preserved across the delay}
+
+\textit{[Motivation: order is only the coarsest description of a recall. Because our approach embeds recalls in a continuous semantic space, we can ask a stronger question --- whether the \emph{structure} of how a participant moved through the episode's content is preserved, not merely the sequence in which they hit the events.]}
+
+\textit{[\textbf{Figure~4 (optional) --- 2D trajectories.} Decision deferred, and it depends on how this section's narrative settles. Argument for including it: it introduces the idea of geometric comparison and establishes the 2D paths \emph{before} they get used as examples in Figure~5, so the reader isn't meeting the representation and the result at the same time. Argument against: it spends one of 8 figure slots on setup. Middle option --- a compact version showing only the episode path plus immediate and delayed paths for a handful of participants, with the full version relegated to the supplement. Source: \texttt{2d-trajectories.ipynb} (\texttt{atlep1-paths2d.pdf} and \texttt{delayed-paths2d.pdf}, \texttt{imm-del-2d.pdf}); note those \texttt{savefig} calls are currently commented out in the notebook.]}
+
+\textit{[Result: trajectory/event-structure similarity. Computed in \texttt{self-similarity-analyses.ipynb}, sections ``Is delayed recall more similar to own immediate recall than to episode?'' and ``Is delayed recall more similar to own immediate recall than to \emph{others'} immediate recalls?''. Both use DTW warp cost (average cosine distance between matched events) over mean-centered event sequences; the second percentile-ranks self against others and tests against chance. Report [STAT] for each.]}
+
+\textit{[Framing: this result appears strong enough to present as a ``fingerprint'' --- i.e., that one can identify which immediate recall belongs to a given participant from the structure of their delayed recall alone. Frame it that way in both the text and the figure, but confirm the effect size supports the claim before committing to that language.]}
+
+\textit{[\textbf{Figure~5 --- recall-structure similarity.} To be made; the largest figure in the paper, covering both analysis~(A) ``delayed is more similar to immediate than to the episode'' and analysis~(B) ``delayed is more similar to own immediate than to others' immediates''. Layout still open.]}
+
+\textit{[Example trajectory panels (3, from the current draft): the left panel is common to both analyses, so it should sit centrally in the final arrangement; the right panel is the contrast for analysis~(A) and the middle panel is the contrast for analysis~(B). Planned refinements: thicker lines; faint connectors between DTW-matched events within each panel (already present in the draft); possibly PCHIP splines rather than straight segments between points, to make the paths read as curves. Under consideration --- a fourth panel showing pairwise mean point-by-point distances between trajectories, which would require upsampling each trajectory to a common number of points and comparing them in order (or substituting DTW cost, if that turns out to read better).]}
+
+\textit{[Analysis~(A) panel: per-participant connected dots showing each participant's delayed-to-immediate versus delayed-to-episode alignment cost. Probably without the KDEs from the draft version.]}
+
+\textit{[Analysis~(B) panels (3): de-slopified versions of the current draft. Two of them are the direct analogues of Figure~3's panels B and D and show stronger effects --- keeping the panel types visually identical across the two figures is what makes ``structure beats order'' legible without the reader doing arithmetic. The third gets at how person-specific the similarity is, and is the panel that carries the ``fingerprint'' claim.]}
+
+\textit{[Candidate supporting material: \texttt{atlep1-recall-corrmats.pdf} and \texttt{delayed-recall-corrmats.pdf} (from \texttt{event-segmentation.ipynb}).]}
+
+\subsection*{Delayed recalls are simplified versions of participants' immediate recalls}
+
+\textit{[Motivation: having established that a participant's delayed recall structure resembles their own immediate recall structure, the natural next question is how it \emph{changes} over the delay.]}
+
+\textit{[Result: trajectory simplification. Computed in \texttt{rdp-analyses.ipynb}. Each participant's immediate recall trajectory is simplified with the Ramer-Douglas-Peucker algorithm over a range of tolerances ($\epsilon$), and the $\epsilon$ minimizing DTW warp cost to their delayed recall trajectory is selected. Sub-results to report: (i) the relationship between how many events a participant dropped across the delay and how many RDP removes at the best-fitting $\epsilon$ (Kendall's $\tau$); (ii) the same against $\epsilon$ itself; (iii) whether RDP predicts \emph{which} events were forgotten, benchmarked against a hypergeometric null and compared to predictions derived from other participants' trajectories. Report [STAT] for each.]}
+
+\textit{[\textbf{Figure~6 --- RDP simplification.} To be made, and how best to \emph{illustrate} the simplification is genuinely unresolved --- flagged as an open design question rather than a layout still to be drawn. The regression plots for sub-results (i) and (ii) exist in \texttt{rdp-analyses.ipynb} but have no \texttt{savefig} calls, so nothing is exported to \texttt{paper/figures/source} yet. One thing worth trying: since Figure~5 will already have taught the reader to read 2D trajectories, showing one participant's immediate path beside its RDP-simplified version and their actual delayed path would make ``the delayed recall looks like a simplified version of the immediate one'' visible directly, with the quantitative panels as support. If the analysis needs a second panel set, one of the 2 reserve figure slots can absorb it.]}
+
+\textit{[\textbf{@paxton}: does the simplification story want a fourth subsection on what the dropped events have in common (e.g.\ are they lower-salience, more peripheral to the narrative), or is that a Discussion point?]}
 
 \section*{Discussion}
 
@@ -95,31 +197,31 @@ The experiment took place over two sessions lasting approximately one hour each,
 Prior to the start of the experiment, participants were assigned to one of two groups (\textit{A} or \textit{B}), alternating based on enrollment order.
 During session 1, all participants first viewed the pilot episode of the FX series \textit{Atlanta} (``The Big Bang''; duration: 24 min 15 s).
 Immediately after viewing, participants were given up to one hour to recount what happened in the episode to the best of their abilities.
-Following \cite{ChenEtal17}, participants were instructed to describe the episode in as much detail as possible and to try to speak for a minimum of 10 minutes.
+Following~\cite{ChenEtal17}, participants were instructed to describe the episode in as much detail as possible and to try to speak for a minimum of 10 minutes.
 They were told to try to recount the episode's events in their original order, but that they were free to go back and describe earlier events should they realize they had missed something.
 After the immediate recall phase, participants were then given up to 5 minutes to predict what they thought would happen in the show's next episode.
 
 Upon returning for session 2, all participants were again given up to one hour to recount the \textit{Atlanta} episode they had viewed the week prior.
 Following the delayed recall phase, participants in Group \textit{A} then viewed the second episode of \textit{Atlanta} (``Streets on Lock''; duration: 21 min 57 s) while participants in Group \textit{B} instead viewed the pilot episode of the FOX series \textit{Arrested Development} (``Pilot''; duration: 20 min 37 s).
 Both groups were then given up to one hour to recount the just-watched episode in the same manner and given the same instructions as in session 1. 
-We implemented the experiment using the psiTurk platform \citep{GureEtal16} and jsPsych library \citep{deLe15}, with a custom jsPsych plugin we developed in prior work for recording verbal recall audio \citep{ZimaEtal18}. 
+We implemented the experiment using the psiTurk platform~\citep{GureEtal16} and jsPsych library~\citep{deLe15}, with a custom jsPsych plugin we developed in prior work for recording verbal recall audio~\citep{ZimaEtal18}. 
 Here we analyze participants' immediate and delayed recalls of the \textit{Atlanta} episode viewed in session 1.
 
 
 \subsection*{Stimulus annotation and recall transcription}
 
 To capture the evolving semantic content of the \textit{Atlanta} episode, we created detailed text annotations of the on-screen content during each individual camera shot throughout the episode (mean annotation duration: 3.05 s; standard deviation: 1.80 s).
-Specifically, we used ANVIL \citep{Kipp01} to record, for each camera shot, a set of semantically relevant features. These included a brief description of physical occurrences and characters' explicit actions, a brief description of characters' internal states (e.g., emotions, motivations) and other implicit content, the names of all characters appearing on screen, a transcription of any dialogue, the name(s) of the character(s) speaking, the shot's setting, whether the shot took place indoors or outdoors, and whether or not there was music playing during the shot.
-This feature set was adapted from a similar annotation corpus created by \cite{ChenEtal17}, which we used in developing our trajectory-analysis framework in prior work \citep{HeusEtal21}.
+Specifically, we used ANVIL~\citep{Kipp01} to record, for each camera shot, a set of semantically relevant features. These included a brief description of physical occurrences and characters' explicit actions, a brief description of characters' internal states (e.g., emotions, motivations) and other implicit content, the names of all characters appearing on screen, a transcription of any dialogue, the name(s) of the character(s) speaking, the shot's setting, whether the shot took place indoors or outdoors, and whether or not there was music playing during the shot.
+This feature set was adapted from a similar annotation corpus created by~\cite{ChenEtal17}, which we used in developing our trajectory-analysis framework in prior work~\citep{HeusEtal21}.
 
 We then transcribed each participant's immediate and delayed verbal recall of the \textit{Atlanta} episode.
 Our transcription process consisted of three steps: an initial manual transcription, a two-pass prose-formatting conversion with a large language model, and a final manual cleanup and correction step. 
 First, we manually transcribed each recall audio file collected during the experiment.
 These initial transcripts reflected participants' spoken recalls verbatim, without any punctuation or additional formatting, and including disfluencies, stuttered repetitions, and other artifacts common to unrehearsed speech.
 However, since transformer models (such as we used to obtain text embeddings of participants' recalls) are trained almost exclusively on written text, structural conventions like sentence breaks, punctuation, and capitalization provide an important signal these models leverage to contextual other tokens (e.g., words) and construct a representation of the text's overall meaning.
-Meanwhile, speech-native phenomena such as stuttered repetitions and filler words (``like'', ``um'', etc.) that are comparatively rare in written text contribute out-of-distribution noise that can be expected to degrade embedding fidelity, and prior work has shown that automated removal of these phenomena improves performance on downstream tasks that assume clean, written-style input \citep{ChenEtal22,WangEtal10b}.
-We therefore used a large language model \citep[Qwen3.5 122b;][]{Qwen26} to convert participants' recall transcripts to a structure and style more typical of written text.
-We used the \texttt{langchain\_dartmouth} Python package \citep{SimoEtal25} to implement this conversion as two sequential passes over each transcript.
+Meanwhile, speech-native phenomena such as stuttered repetitions and filler words (``like'', ``um'', etc.) that are comparatively rare in written text contribute out-of-distribution noise that can be expected to degrade embedding fidelity, and prior work has shown that automated removal of these phenomena improves performance on downstream tasks that assume clean, written-style input~\citep{ChenEtal22,WangEtal10b}.
+We therefore used a large language model~\citep[Qwen3.5 122b;][]{Qwen26} to convert participants' recall transcripts to a structure and style more typical of written text.
+We used the \texttt{langchain\_dartmouth} Python package~\citep{StonEtal25} to implement this conversion as two sequential passes over each transcript.
 In the first pass, we prompted the model to split the transcript into sentences at natural breaking points, add punctuation including quotes around reported speech, remove clear non-word disfluencies (``um,'' ``uh,'', ``hmm,'' etc.), collapse stuttered verbatim repetitions, and mark self-corrections and restarts with em-dashes.
 In the second pass, we prompted the model to remove all instances of ``like'' used as a filler word.
 We removed filler ``like'' instances in a separate pass because of their high frequency of occurrence in the transcripts and the additional effort to required to distinguish them from meaningful uses of ``like.''
@@ -135,11 +237,11 @@ Wilcoxon tests were one-sided because our alternative hypothesis was directional
 
 \subsubsection*{Constructing episode and recall trajectories}\label{subsec:text-embedding}
 
-We adapted a method we developed in prior work \citep{HeusEtal21} to transform the \textit{Atlanta} episode and participant's recalls of it into trajectories through a common representation space using a text embedding model.
+We adapted a method we developed in prior work~\citep{HeusEtal21} to transform the \textit{Atlanta} episode and participant's recalls of it into trajectories through a common representation space using a text embedding model.
 Briefly, text embedding models take in natural language text of an arbitrary length and output a fixed-length vector representation that captures the text's semantic meaning.
 Intuitively, an output vector of length $n$ can be viewed as a coordinate in an $n$-dimensional text embedding space.
 While specific model architectures and training paradigms vary, modern text embedding models are broadly trained to output similar coordinate vectors (in terms of cosine similarity, dot product, inverse Euclidean distance, or other geometric measures) for semantically similar input texts, even when those texts share few or no specific words.
-We obtained text embeddings for the episode and recalls using EmbeddingGemma \citep{VeraEtal25}, a pre-trained 308-million-parameter encoder-only transformer model that outputs coordinate vectors in a 768-dimensional embedding space.
+We obtained text embeddings for the episode and recalls using EmbeddingGemma~\citep{VeraEtal25}, a pre-trained 308-million-parameter encoder-only transformer model that outputs coordinate vectors in a 768-dimensional embedding space.
 
 To construct the trajectory for the \textit{Atlanta} episode, we first converted our tabular annotations of the content present during each camera shot to a plain-text format.
 Separately for each shot, we concatenated the annotation text describing explicit on-screen occurrences and characters' implicit internal states.
@@ -160,7 +262,7 @@ Repeated for all recall transcripts, this yielded a separate trajectory characte
 
 \subsubsection*{Relating episode and recall embedding vectors}
 
-In prior work using our trajectory-analysis framework \citep[e.g.,][]{HeusEtal21,Mann21a,MannEtal22,RaccEtal24,FitzEtal26}, embeddings of the stimulus and participants' responses were constructed using a topic model \citep[Latent Dirichlet Allocation;][]{BleiEtal03} trained solely on the stimulus content.
+In prior work using our trajectory-analysis framework~\citep[e.g.,][]{HeusEtal21,Mann21a,MannEtal22,RaccEtal24,FitzEtal26}, embeddings of the stimulus and participants' responses were constructed using a topic model~\citep[Latent Dirichlet Allocation;][]{BleiEtal03} trained solely on the stimulus content.
 Here we elected to instead use a pre-trained transformer-based text embedding model due to the richer and more nuanced textual information these models are able to capture. (For example, these context-sensitive models can disambiguate the texts ``Earn looked at Alfred'' and ``Alfred looked at Earn'' in their representations, whereas bag-of-words models like LDA would represent the two identically.)
 However, these richer representations also introduce certain geometric nuisances we needed to account for in order to effectively relate the contents of participants' recalls to that of the episode they viewed.
 First, because modern transformer models are pre-trained on large and diverse text corpora, the representational capacities of their embedding spaces span an enormous breadth of semantic content.
@@ -188,12 +290,12 @@ This served to reduce the recall embeddings' anisotropy (by removing signals dri
 
 \subsubsection*{Event-segmentation}\label{subsec:eventseg}
 
-After constructing trajectories for the episode and each participant's immediate and delayed recall, we used hidden Markov models \citep[HMMs;][]{BaumPetr66,Rabi89} to segment each trajectory into a sequence of discrete events.
+After constructing trajectories for the episode and each participant's immediate and delayed recall, we used hidden Markov models~\citep[HMMs;][]{BaumPetr66,Rabi89} to segment each trajectory into a sequence of discrete events.
 Given a number of states $K$, an HMM models an observed time series as a progression through $K$ hidden states, each of which has a characteristic signature in the data (i.e., a pattern that timepoints belonging to that state tend to exhibit) and tends to persist across timepoints with occasional transitions rather than fluctuating freely.
 Because states persist, inferring the most probable state at each timepoint segments the observed time series into a sequence of events---i.e., spans of contiguous timepoints with the same most-probable state.
 
-We segmented the episode trajectory into events using the HMM implemented in the BrainIAK toolbox \citep{KumaEtal21}, which jointly learns a mean pattern for each of $K$ states and the set of transitions between them via the Baum-Welch algorithm \citep{BaumEtal70}, with the added constraint that each state is visited exactly once in a strict left-to-right order \citep{BaldEtal17}.
-To select an appropriate number of states (i.e., events) for the episode, we used an optimization procedure we developed in prior work \citep{HeusEtal21} that aims to identify the single timescale of event representations emphasized most heavily in the episode's narrative structure.
+We segmented the episode trajectory into events using the HMM implemented in the BrainIAK toolbox~\citep{KumaEtal21}, which jointly learns a mean pattern for each of $K$ states and the set of transitions between them via the Baum-Welch algorithm~\citep{BaumEtal70}, with the added constraint that each state is visited exactly once in a strict left-to-right order~\citep{BaldEtal17}.
+To select an appropriate number of states (i.e., events) for the episode, we used an optimization procedure we developed in prior work~\citep{HeusEtal21} that aims to identify the single timescale of event representations emphasized most heavily in the episode's narrative structure.
 We began by segmenting the (mean-centered) episode trajectory into $K$ events for each $K$ between 2 and 50, inclusive.
 For each candidate segmentation, we then computed the cosine similarity between each pair of timepoints assigned to the same event, and between each pair of timepoints assigned to different events.
 When constructing these distributions of within- and across-event similarities, we restricted comparisons to pairs of timepoints separated by no more than the duration of the longest event in the candidate segmentation, so that the within- and across-event distributions were computed over comparable temporal distances and the across-event distribution was not dominated by distant timepoint pairs that we would expect to be dissimilar regardless of event structure.
@@ -210,13 +312,13 @@ We then treated the episode events as the hidden states of a hidden Markov model
 We imposed an ergodic transition structure (i.e., we allowed transitions from any state to any other state, since participants may recall the episode events out of order, and allowed states to be re-entered multiple times, since participants may revisit earlier events in their recalls) governed by separate additive transition penalties for forward-one transitions and all other transitions.
 Specifically, we imposed no penalty for remaining in the current state, a small penalty (1.5 normalized emissions units) for transitioning from a given state to the next (i.e., transitioning from recalling episode event $n$ to recalling episode event $n + 1$), and a larger penalty (3.0 normalized emissions units) for all other transitions.
 %We $z$-scored each recall trajectory's distribution of episode event-similarity scores so that these transition penalties had a constant weight across recall trajectories with different lengths and overall similarities to the episode.
-Finally, we decoded the most probable sequence of episode-event labels using the Viterbi algorithm \citep{Vite67}, collapsed runs of consecutive identically labeled recall windows into events, and averaged the embedding vectors over windows within each event.
+Finally, we decoded the most probable sequence of episode-event labels using the Viterbi algorithm~\citep{Vite67}, collapsed runs of consecutive identically labeled recall windows into events, and averaged the embedding vectors over windows within each event.
 This procedure yielded, for each participant's recall from each session, a sequence of event-average embedding vectors and a set of labels denoting which episode event each recall event corresponded to.
 
 
 \subsubsection*{Comparing trajectory structures}
 
-We compared the geometric structures of the episode and recall event-sequences using dynamic time warping \citep[DTW;][]{Vint68,SakoChib78}.
+We compared the geometric structures of the episode and recall event-sequences using dynamic time warping~\citep[DTW;][]{Vint68,SakoChib78}.
 The DTW algorithm finds the optimal order-preserving alignment between two sequences of vectors with potentially different lengths or sampling rates by locally ``stretching'' and ``compressing'' them in time to maximize their overall similarity.
 This alignment yields a ``warp path'' that maps each vector in each sequence onto one or more consecutive vectors in the other sequence with the minimum total distance between matched vectors.
 The summed or average distance between matched vectors along the warp path (the ``warp cost'') is commonly taken as a measure of the two sequences' structural dissimilarity.
@@ -236,7 +338,7 @@ All of the code for running our experiment and carrying out the analyses may be
 found at https://github.com/Con\-text\-Lab/memory-dynamics.
 
 \bibliographystyle{apa}
-\bibliography{cdl}
+\bibliography{CDL-bibliography/cdl}
 
 \section*{Acknowledgements}
 
