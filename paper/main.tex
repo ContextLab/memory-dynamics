@@ -84,13 +84,6 @@ Memories also become more semantic and less perceptually detailed, both with the
 Repeated retrieval of naturalistic events over the course of a week has been found to stabilize each person's recall (for example, which details they include) without causing different people's recalls to converge~\citep{MeleEtal25}.
 Taken together, these observations suggest that each time we remember an experience, the substance of the underlying memory we are retrieving may differ from what we retrieved before.
 
-%One intuition for how this might work comes from thinking about memory storage in terms of attractor dynamics~\citep{Hopf82}.
-%Rather than supposing that we hold literal duplicate copies of a memory, we might imagine that laying down a memory carves out a basin in an energy landscape, and that remembering the experience deepens a basin near where we happen to land.
-%Combined with the observation that remembering distorts, this implies that it may not be the original memory that gets re-encoded on each occasion, but rather a distorted version of it.
-%Successive retrievals might then arrive at a basin corresponding to the original experience, or at one corresponding to any of our previous rememberings of it.
-%A related point has been made from the perspective of context reinstatement, namely that each time we remember a prior experience, our memory of that experience becomes colored by the contextual thoughts we were having at the time of each remembering~\citep{Mann24}.
-%We raise this picture to motivate the questions we ask below rather than as a model we test directly.
-
 How might we compare two recountings of the same experience when the experience and both recountings take the form of unconstrained natural language?
 Recent work has begun to use language models to quantify the content of what individuals say when they recount what they remember~\citep{HeusEtal21,MannEtal22,FitzEtal26,FeneEtal25}.
 The approach developed in our prior work embeds the description of an experience, and each individual's recounting of it, into a common high-dimensional space whose coordinates reflect the concepts under consideration, and through which the experience and recountings each unfold over time as a geometric trajectory~\citep{HeusEtal21,FitzEtal26,VeraEtal25}.
@@ -228,7 +221,14 @@ Third, control-point status is defined with respect to one particular simplifica
 Fourth, our procedure matches every recall event to an event in the episode, so content that a participant introduced but that does not appear in the episode falls outside what we are able to measure.
 Fifth, our measure of what connects one event to another is built from semantic similarity, and so it cannot on its own distinguish events that are close in meaning from events that are causally linked~\citep{LeeChen22,AntoEtal24,XuEtal24b}.
 
-Speculatively, this account suggests what might become of a memory that is recounted many times.
+Speculatively, one way to think about how this might work is in terms of attractor dynamics~\citep{Hopf82}.
+Rather than supposing that we hold literal duplicate copies of a memory, we might imagine that laying down a memory carves out a basin in an energy landscape, and that remembering the experience deepens a basin near wherever we happen to land.
+Combined with the observation that remembering distorts, this implies that what gets re-encoded on each occasion may not be the original memory, but a distorted version of it.
+Successive retrievals might then arrive at a basin corresponding to the original experience, or at one corresponding to any of our previous rememberings of it.
+A related point has been made from the perspective of context reinstatement, namely that each time we remember a prior experience, our memory of that experience becomes colored by the contextual thoughts we were having at the time of each remembering~\citep{Mann24}.
+We did not test this picture, and our data cannot distinguish it from other mechanisms that would leave the same trace in a transcript, but it offers a natural reading of why a delayed recounting should resemble an earlier recounting more closely than the experience that both describe.
+
+Whatever the underlying mechanism, our account suggests what might become of a memory that is recounted many times.
 If each retelling preserves control points and sheds waypoints, and if each retelling then becomes the trajectory that the next one simplifies, a memory might converge over many retellings toward a skeleton of control points, with the intervening detail increasingly implied rather than stated.
 Whether that convergence has a floor, and whether the surviving skeleton continues to resemble the original experience or drifts steadily away from it, are questions our data cannot answer.
 The possibility seems worth taking seriously outside the laboratory, since the settings in which people are asked to recount an experience repeatedly are often the settings in which accuracy matters most.
