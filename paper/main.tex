@@ -96,25 +96,62 @@ What governs retrieval after a delay therefore appears to be a person-specific d
 
 Capturing the semantic geometry of individuals' recalls at different points in time also offers the opportunity to characterize the transformations undergone by our memories beyond an initial recounting.
 For example, if individuals' recountings tend to retain their idiosyncratic structures after a delay, how \textit{do} the structures of our memories tend to change with time?
-There is a particular qualitative change our memories undergo as we naturally forget aspects of experience, implied by common descriptors such as ``fading'', ``blurring'', becoming ``fuzzy'', or ``decaying'' \citep{Thor13}.
+There is a particular qualitative change our memories undergo as we naturally forget aspects of experience, implied by common descriptors such as ``fading'', ``blurring'', becoming ``fuzzy'', or ``decaying''~\citep{Thor13}.
 But the nature of this change can be difficult to characterize more concretely.
 Here we show that this transformation is well described as geometrically simplifying the path through semantic space an individual follows as they recount an experience, in that applying an existing method for removing detail from a geometric curve to participants' immediate recalls preferentially removes events those individuals will forget following the delay.
 
 
 \section*{Results}
 
-We ran an experiment in which we asked participants to view and verbally recount episodes of television shows across two experimental sessions (Fig.~\ref{fig:paradigm}).
-In the first session, participants viewed the pilot episode of \textit{Atlanta}.
-At the end of 
-
+We ran an experiment in which we asked participants to view and verbally recount episodes of television shows across two experiment sessions, separated by approximately one week (Fig.~\ref{fig:paradigm}).
+In the first session, participants viewed the pilot episode of the TV series \textit{Atlanta}.
+They were then given up to one hour (and a minimum of 10 minutes) to recount what had happened in the episode to the best of their abilities (i.e., immediate recall).
+After they finished recounting the episode, we then asked participants to verbally predict what they thought would happen in the show's next episode.
+Participants then returned for a second session between 6 and 8 days later, in which they began by again verbally recounting the \textit{Atlanta} episode they had viewed the week prior (i.e., delayed recall).
+Following the delayed recall phase, participants then viewed and recounted either the second episode of \textit{Atlanta} or the pilot episode of a different TV series, \textit{Arrested Development}.
+We designed our experiment to support exploring of a range of behavioral memory phenomena, including differences between immediate and delayed recall, influences of contextually congruent versus incongruent prior experience, effects of self-cuing via context reinstatement, and relationships between
+successful prediction and subsequent memory.
+In the present study, we focus on characterizing how participants' \_\_\_\_\_\_.
 
 \begin{figure}[tp]
     \centering
     \includegraphics[width=\textwidth]{figures/source/paradigm}
 
-    \caption{\textbf{Experimental paradigm.} CAPTION}
+    \caption{\textbf{Experimental paradigm.} Visual timeline of the two study sessions, taking place approximately one week apart. 
+    In session 1, participants viewed the pilot episode of \textit{Atlanta}, immediately verbally recounted its content, and then verbally predicted what would happen in the next episode. 
+    In session 2, participants again recounted the \textit{Atlanta} episode viewed the week prior before viewing and verbally recounting either the second episode of \textit{Atlanta} or the pilot episode of \textit{Arrested Development}.
+    Here we analyze participants' immediate and delayed recalls of the first \textit{Atlanta} episode.}
 
     \label{fig:paradigm}
+\end{figure}
+
+To characterize how participants preserved and distorted the content of the \textit{Atlanta} episode in their immediate and delayed recountings, we adapted an approach we developed in prior work that casts experiences and memories as trajectories unfolding in a common high-dimensional representation space~\citep{HeusEtal21}.
+We construct these trajectories using a text embedding model.
+Briefly, text embedding models take in natural language text of an arbitrary length and output a fixed-length vector representation that captures the text's semantic meaning.
+Intuitively, an output vector of length $n$ can be viewed as a coordinate in an $n$-dimensional text embedding space, wherein texts with similar semantic meanings are assigned to nearby coordinates while those with divergent meanings reside farther apart.
+In this way, the distance between the embedding coordinates assigned to two texts provides a measure of how semantically similar their underlying contents are.
+
+We began by creating detailed text annotations describing the content present during each individual camera shot from the episode (Fig.~\ref{fig:pipeline}A; see \nameref{subsec:annotations-transcripts}).
+We then projected each camera shot's text description onto a coordinate in a 768-dimensional text embedding space using EmbeddingGemma~\citep{VeraEtal25}.
+The sequence of embedding space coordinates across successive camera shots thus forms trajectory that characterizes how the \textit{Atlanta} episode's latent semantic content unfolded over time (Fig.~\ref{fig:pipeline}B).
+Since the durations of camera shots varied over the course of the episode, we then resampled the episode's trajectory to a constant temporal resolution of one vector per second.
+
+We then transcribed each participant's immediate and delayed verbal recounting of the episode content (Fig.~\ref{fig:pipeline}E,I).
+In constructing trajectories from participants' recountings, we reasoned that casual, unrehearsed speech tends to be information-sparse compared to written text (e.g., it might take multiple spoken sentences to describe the same content or occurrence that could be more concisely described in a single written sentence).
+We therefore parsed each participant's recall transcript from each session into overlapping sliding windows spanning (up to) 5 consecutive sentences each, and transformed the text comprising each of these sliding windows into a text embedding vector.
+This resulted in a trajectory characterizing the dynamic semantic content of each participant's immediate and delayed recounting (Fig.~\ref{fig:pipeline}F,J).
+
+
+
+
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/source/pipeline-overview}
+
+    \caption{\textbf{Modeling the geometry of experiences and memories.} CAPTION}
+
+    \label{fig:pipeline}
 \end{figure}
 
 
@@ -249,12 +286,15 @@ After the immediate recall phase, participants were then given up to 5 minutes t
 
 Upon returning for session 2, all participants were again given up to one hour to recount the \textit{Atlanta} episode they had viewed the week prior.
 Following the delayed recall phase, participants in Group \textit{A} then viewed the second episode of \textit{Atlanta} (``Streets on Lock''; duration: 21 min 57 s) while participants in Group \textit{B} instead viewed the pilot episode of the FOX series \textit{Arrested Development} (``Pilot''; duration: 20 min 37 s).
-Both groups were then given up to one hour to recount the just-watched episode in the same manner and given the same instructions as in session 1. 
+Both groups were then given up to one hour to recount the just-watched episode in the same manner and given the same instructions as in session 1.
+The experiment was conducted in a light- and sound-attenuated testing room, with videos displayed using a 27-inch iMac desktop computer (resolution: 5120 $\times$ 2880) and sound presented using the computer's built-in speakers.
+Participants were given the ability to end each recall phase at any point after the first 10 minutes by pressing a button on the keyboard when they felt they had recalled everything they could.
+No participants' recalls were truncated by the 1-hour time limit (i.e., all participants chose to end each recall phase within 60 minutes). 
 We implemented the experiment using the psiTurk platform~\citep{GureEtal16} and jsPsych library~\citep{deLe15}, with a custom jsPsych plugin we developed in prior work for recording verbal recall audio~\citep{ZimaEtal18}. 
 Here we analyze participants' immediate and delayed recalls of the \textit{Atlanta} episode viewed in session 1.
 
 
-\subsection*{Stimulus annotation and recall transcription}
+\subsection*{Stimulus annotation and recall transcription}\label{subsec:annotations-transcripts}
 
 To capture the evolving semantic content of the \textit{Atlanta} episode, we created detailed text annotations of the on-screen content during each individual camera shot throughout the episode (mean annotation duration: 3.05 s; standard deviation: 1.80 s).
 Specifically, we used ANVIL~\citep{Kipp01} to record, for each camera shot, a set of semantically relevant features. These included a brief description of physical occurrences and characters' explicit actions, a brief description of characters' internal states (e.g., emotions, motivations) and other implicit content, the names of all characters appearing on screen, a transcription of any dialogue, the name(s) of the character(s) speaking, the shot's setting, whether the shot took place indoors or outdoors, and whether or not there was music playing during the shot.
@@ -366,7 +406,7 @@ This procedure yielded, for each participant's recall from each session, a seque
 
 We compared the geometric structures of the episode and recall event-sequences using dynamic time warping~\citep[DTW;][]{Vint68,SakoChib78}.
 The DTW algorithm finds the optimal order-preserving alignment between two sequences of vectors with potentially different lengths or sampling rates by locally ``stretching'' and ``compressing'' them in time to maximize their overall similarity.
-This alignment yields a ``warp path'' that maps each vector in each sequence onto one or more consecutive vectors in the other sequence with the minimum total distance between matched vectors.
+This alignment yields a ``warp path'' that maps each vector in each sequence onto one or more consecutive vectors in the other sequence, minimizing the total distance between matched vectors.
 The summed or average distance between matched vectors along the warp path (the ``warp cost'') is commonly taken as a measure of the two sequences' structural dissimilarity.
 We computed the warp cost as the average cosine distance between DTW-matched events so that the cost values would be comparable across comparisons involving event-sequences of different lengths (whereas summed distance necessarily grows with sequence length).
 
