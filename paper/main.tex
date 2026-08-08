@@ -96,9 +96,9 @@ What governs retrieval after a delay therefore appears to be a person-specific d
 
 Quantifying the semantic geometry of individuals' recalls at different points in time offers the opportunity to characterize the transformations undergone by our memories beyond an initial recounting.
 For example, if individuals' recountings tend to retain their idiosyncratic structures after a delay, how \textit{do} the structures of our memories tend to change with time?
-There is a particular qualitative change our memories undergo as we naturally forget aspects of experience, implied by common descriptors such as ``fading'', ``blurring'', becoming ``fuzzy'', or ``decaying'' \citep{Thor13}.
+There is a particular qualitative change our memories undergo as we naturally forget aspects of experience, implied by common descriptors such as ``fading'', ``blurring'', becoming ``fuzzy'', or ``decaying''~\citep{Thor13}.
 But the nature of this change can be difficult to characterize more concretely.
-Here we show that this transformation is well described as geometrically simplifying the path through semantic space an individual follows as they recount an experience, in that applying existing for removing detail from a geometric curve to participants' immediate recalls identifies the details they are likely to forget following the delay.
+Here we show that this transformation is well described as geometrically simplifying the path through semantic space an individual follows as they recount an experience, in that applying existing algorithms for removing detail from a geometric curve to participants' immediate recalls identifies the details they are likely to forget following the delay.
 
 
 \section*{Results}
@@ -161,6 +161,75 @@ Here we show that this transformation is well described as geometrically simplif
 
 \section*{Discussion}
 
+We asked participants to watch an episode of a television show, to recount what they remembered immediately afterwards, and to recount the episode again following a week-long delay.
+Embedding the episode's annotations and each recounting into a common semantic space allowed us to represent all three as trajectories, to segment each trajectory into events, and to compare them on common terms.
+Participants recalled the episode's events in a similar order before and after the delay.
+The semantic structure of a participant's delayed recall was more similar to the structure of their own immediate recall than to that of the episode, and it was more similar to their own immediate recall than to other participants' immediate recalls.
+Delayed recalls were also well described as simplified versions of immediate recalls, in that removing detail from a participant's immediate recall trajectory brought it closer to the delayed recall trajectory that followed it.
+
+Taken together, these results suggest a way of thinking about what recounting an experience does to it.
+If experiences and memories may be described as trajectories through a semantic space, then a recounting is a traversal of one of those trajectories~\citep{HeusEtal21}.
+Semantic space differs from physical space in that nothing prevents a narrator from jumping between distant locations, and yet participants' recountings turn out to be strongly autocorrelated in practice, which is the regularity that our event-segmentation approach relies on.
+Because movement through the space is relatively continuous, describing how one arrives at a later event from an earlier one implies that the intervening region was traversed in some sense, whether it was articulated explicitly or left for the listener to fill in.
+Some events therefore behave like control points, in that removing one substantively changes the shape of the path.
+Others behave like waypoints, which fall close to the line between their neighbors and may be removed with little consequence, since travelling between the surrounding control points already implies passing near them.
+Trajectory simplification provides a way of telling the two apart, and this distinction appears to hold at both of the transitions we can examine.
+The events that simplification removes from the episode's own trajectory are the events that the fewest participants recounted immediately afterwards (\textbf{[VERIFY THIS]}), and the events that simplification removes from a participant's immediate recall trajectory are the ones that participant tended to drop across the delay.
+
+That not all events are equally memorable is well established.
+Gist and central details, for example, survive delays that perceptual and peripheral details do not~\citep{SekeEtal16,SekeEtal18,GilbMosc21}, and autobiographical narratives shed some classes of content faster than others~\citep{DiamLevi20,SuEtal26}.
+Memories also become more semantic and less perceptually detailed with the passage of time and with repeated remembering~\citep{LifaEtal21}, and events with stronger connections to the events around them are better remembered than more isolated ones~\citep{LeeChen22,AntoEtal24}.
+What our results add is a change in where that asymmetry comes from.
+Centrality is ordinarily established from the outside, by asking raters which details matter to the plot, or by sorting content into categories fixed in advance.
+Here it follows from the geometry of an individual's own trajectory, and it is computable from that trajectory alone.
+An event is central because of where it sits relative to the rest of the path, and not because a rater judged it to be important.
+This turns the observation that some events are more memorable than others into a candidate explanation of why.
+
+Why should waypoints be the events that go?
+One possibility is that they are redundant, in the sense that a listener, or the rememberer's own future self, can recover them from the events on either side.
+Another is that they are simply weaker in themselves, for example less distinctive, less emotionally charged, or less causally connected to the rest of the narrative~\citep{AntoEtal24}.
+These accounts make similar predictions about which events will be forgotten, but they differ in what those predictions should depend on.
+If events are dropped because they are intrinsically weak, then a simplification derived from any participant's trajectory should predict forgetting about as well as one derived from the participant's own, since weak events would be weak for everyone.
+If they are dropped because they are recoverable from their neighbors, then a participant's own trajectory should do better, since control-point status is defined relative to the rest of that person's path.
+Our results favor the latter account.
+Read this way, dropping a waypoint is an economy rather than a loss, and it is worth noting that events which go unreported are not always unavailable, since a shift in perspective at retrieval can recover details that an earlier recounting left out~\citep{AndePich78,OedeEtal17}.
+
+The same argument implies that what counts as a control point should be idiosyncratic.
+An event's status depends on the path it sits within, and different people who watched the same episode construct different paths through it, so the events whose removal would deform one person's trajectory need not be the events that matter for another's.
+This is what we take the specificity of the delayed recalls to mean.
+That a delayed recall can be matched to the immediate recall which preceded it, on the basis of structure alone, is a fingerprint in the sense that the term is used for functional connectivity and for other individual signatures measured during naturalistic experience~\citep{FinnEtal15,FinnEtal20,AndeEtal20}.
+People differ, for example, in where they place event boundaries in a continuous experience~\citep{SavaEtal23}, in how much of their recall structure they share with others~\citep{ChenEtal17,NguyEtal19}, and in the character of their autobiographical remembering more generally~\citep{PaloEtal18}.
+Repeated retrieval of naturalistic events has been found to stabilize each person's recall without causing different people's recalls to converge~\citep{MeleEtal25}, which is what one would expect if each person is stabilizing their own set of control points.
+
+Everything we measured came from a verbal recounting, and so a reasonable objection is that control points and waypoints are properties of storytelling rather than of memory.
+We think that dichotomy is less clean than it first appears.
+Recounting is the only observable available in a study of this kind, so the two are confounded by construction, and no analysis of transcripts alone can fully separate them.
+More to the point, the way a person tells a story is not merely a window onto what they remember, but also an input to what they will remember next.
+Retelling an event for a particular audience or purpose, for example, biases how it is recalled later~\citep{TverMars00,Mars07}, and reproducing a narrative repeatedly reshapes it in ways that persist~\citep{BergRoed99,StJaScha13}.
+If the function of recounting is to let a listener, or one's own future self, re-traverse the trajectory of the original experience, then communicative efficiency and mnemonic efficiency are not competing explanations so much as the same pressure seen from two sides.
+
+We acknowledge several limitations in the current study.
+First, every participant recalled the episode immediately, and so we cannot separate two accounts of what we observed.
+A delayed recall may resemble the immediate recall because the immediate recall was itself re-encoded and then retrieved a week later, or because a single stable memory was sampled twice and each sampling was shaped by the same person-specific distillation.
+Our measures are symmetric and cannot establish direction, and the design lacks an arm in which the immediate recall is withheld.
+Designs that do include such a control, in which retrieved information is later found nearer to what was retrieved than to what was originally presented, offer the strongest evidence that retrieval writes its own output back into the trace~\citep{BridPall12,NadeEtal00,NadeHard09}.
+Second, we used one episode, one delay, and one intervening recounting, and it remains to be seen how the picture changes across stimuli, across longer intervals, or across many successive retellings~\citep{ChanEtal09b,LifaEtal21}.
+Third, control-point status is defined with respect to one particular simplification algorithm, and a different algorithm might well partition the same events differently.
+Fourth, our procedure matches every recall event to an event in the episode, so content that a participant introduced but that does not appear in the episode falls outside what we are able to measure.
+
+Speculatively, this account suggests what might become of a memory that is recounted many times.
+If each retelling preserves control points and sheds waypoints, and if each retelling then becomes the trajectory that the next one simplifies, a memory might converge over many retellings toward a skeleton of control points, with the intervening detail increasingly implied rather than stated.
+Whether that convergence has a floor, and whether the surviving skeleton continues to resemble the original experience or drifts steadily away from it, are questions our data cannot answer.
+The possibility seems worth taking seriously outside the laboratory, since the settings in which people are asked to recount an experience repeatedly are often the settings in which accuracy matters most.
+An eyewitness who has already described what they saw, for example, is describing a description the next time they are asked~\citep{ChanEtal09b}.
+A patient recounting a formative episode across successive sessions may be reshaping it in the process, and a teacher who explains an idea the same way each term may be simplifying it past the point where it still carries what made it worth explaining.
+
+Ultimately, our work points toward a set of questions about how the geometry of a recounting relates to the experience that it describes.
+Do the events that behave like control points in a recounting correspond to the boundaries at which neural activity shifts during the experience itself~\citep{ChenEtal17,BaldEtal17}?
+Can they be predicted in advance from the stimulus, or are they recoverable only after the fact, from a particular person's path?
+Does a listener who hears a recounting actually re-traverse the speaker's trajectory, filling in the waypoints that the speaker left out?
+And because our measure of what connects one event to another is built from semantic similarity, it cannot on its own distinguish events that are close in meaning from events that are causally linked~\citep{LeeChen22,AntoEtal24,XuEtal24b}.
+Collecting causal and importance judgments for this episode would separate geometric control-point status from causal centrality, and would tell us whether these two notions of what makes an event matter are one notion arrived at by different routes.
 
 \section*{Methods}
 
