@@ -3,4 +3,4 @@
 	url = https://github.com/paxtonfitzpatrick/jsPsych.git
 [submodule "paper/CDL-bibliography"]
 	path = paper/CDL-bibliography
-	url = https://github.com/ContextLab/CDL-bibliography.git
+	url = https://github.com/paxtonfitzpatrick/CDL-bibliography.git
