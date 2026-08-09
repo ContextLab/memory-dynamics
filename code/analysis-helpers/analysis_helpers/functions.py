@@ -9,14 +9,35 @@ import numpy as np
 from IPython.core.oinspect import pylight
 from IPython.display import display, HTML, Markdown
 from matplotlib.font_manager import findSystemFonts, fontManager
+from matplotlib.patches import Rectangle
 from scipy.spatial.distance import cdist
 
-from analysis_helpers.constants import CONTENT_WARNING, FONTS_DIR
+from analysis_helpers.constants import CONTENT_WARNING, EVENTSEG_EDGECOLOR, FONTS_DIR
 from analysis_helpers.internals import _imported_from_notebook
 
 if TYPE_CHECKING:
-    from typing import Callable
+    from typing import Any,Callable
     from numpy.typing import ArrayLike
+
+
+def draw_event_bounds(
+        ax: plt.Axes,
+        event_bounds: list[tuple[int, int]],
+        **rect_kwargs: dict[str, Any]
+) -> list[Rectangle]:
+    facecolor = rect_kwargs.pop('facecolor', rect_kwargs.pop('fc', 'none'))
+    patches = []
+    for onset, offset in event_bounds:
+        size = offset - onset + 1
+        rect = Rectangle((onset - 0.5, onset - 0.5),
+                         width=size,
+                         height=size,
+                         edgecolor=EVENTSEG_EDGECOLOR,
+                         facecolor=facecolor,
+                         **rect_kwargs)
+        ax.add_patch(rect)
+        patches.append(rect)
+    return patches
 
 
 def dtw(
