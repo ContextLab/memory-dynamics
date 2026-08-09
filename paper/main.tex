@@ -113,7 +113,7 @@ Participants then returned for a second session between 6 and 8 days later, in w
 Following the delayed recall phase, participants then viewed and recounted either the second episode of \textit{Atlanta} or the pilot episode of a different TV series, \textit{Arrested Development}.
 We designed our experiment to support exploring of a range of behavioral memory phenomena, including differences between immediate and delayed recall, influences of contextually congruent versus incongruent prior experience, effects of self-cuing via context reinstatement, and relationships between
 successful prediction and subsequent memory.
-In the present study, we focus on characterizing how participants' \_\_\_\_\_\_.
+In the present study, we focus on characterizing how the content and structure of participants' recountings of the first \textit{Atlanta} episode changed between their immediate and delayed recalls.
 
 \begin{figure}[tp]
     \centering
@@ -143,6 +143,20 @@ In constructing trajectories from participants' recountings, we reasoned that ca
 We therefore parsed each participant's recall transcript from each session into overlapping sliding windows spanning (up to) 5 consecutive sentences each, and transformed the text comprising each of these sliding windows into a text embedding vector.
 This resulted in a trajectory characterizing the dynamic semantic content of each participant's immediate and delayed recounting (Fig.~\ref{fig:pipeline}F,J).
 
+Neither the episode's trajectory nor participants' recall trajectories moved through the embedding space at a constant rate.
+Both tended to linger within a region for a period before shifting relatively abruptly to another, and we treated these periods of relative stability as \textit{events} (Fig.~\ref{fig:pipeline}C,G,K; see \nameref{subsec:eventseg}).
+We segmented the episode's trajectory using a hidden Markov model~\citep{BaumPetr66,BaldEtal17,KumaEtal21}, selecting the number of events by finding the segmentation whose within-event timepoint similarities were most distinct from its across-event similarities.
+This yielded 20 events, each summarized by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}D).
+
+Segmenting participants' recountings posed a different problem.
+Rather than discovering a separate set of events within each recall, we wanted to know which of the episode's events a participant was describing at each moment.
+We therefore treated the episode's 20 events as fixed states of a hidden Markov model, scored each recall window by its similarity to each of them, and decoded the most probable sequence of episode events being described~\citep{Vite67}.
+Because participants may recount events out of order, and may return to an event they have already described, we allowed transitions between any pair of states and allowed states to be re-entered.
+Collapsing runs of consecutive windows assigned to the same episode event yields, for each recounting, a sequence of recall events together with a label indicating which episode event each one describes (Fig.~\ref{fig:pipeline}H,L).
+
+This leaves three things in hand: the sequence of events comprising the episode, each participant's sequences of immediate and delayed recall events, and a mapping from every recall event onto the episode event it describes.
+Because all three are expressed in the same units, they may be compared directly, both across participants and across the delay.
+
 
 
 
@@ -167,78 +181,68 @@ This resulted in a trajectory characterizing the dynamic semantic content of eac
     \label{fig:recall-order}
 \end{figure}
 
+We first asked how much of the episode each participant recounted.
+Immediate recountings described 16.98 of the episode's 20 events on average, and delayed recountings described 16.26 ($T = 581.0$, $p = 3.4 \times 10^{-3}$; \textbf{[CHECK THIS]}).
+Participants therefore covered slightly less of the episode after a week than they had immediately after viewing it.
+A count of this kind establishes how much was left out, but nothing about \textit{what}.
+The same decline would follow whether every participant shed whichever events were easiest to shed, or whether each shed a different handful.
 
-.
+We next asked whether the events participants left out were an arbitrary subset.
+For each of the episode's 20 events, we computed the proportion of participants who described it at least once, counting a participant who returned to the same event more than once within a session only once.
+Had every event been equally likely to be recounted, these proportions would differ only by chance.
+Instead, we found that the proportion of participants describing a given event ranged from 0.64 to 0.96 in immediate recall (Cochran's $Q = 75.07$, $\textrm{df} = 19$, $p = 1.3 \times 10^{-8}$) and from 0.58 to 0.98 after the delay ($Q = 73.82$, $\textrm{df} = 19$, $p = 2.1 \times 10^{-8}$; \textbf{[CHECK THIS]}).
+Some of the episode's events were substantially more likely to be recounted than others.
 
-.
+That profile was, moreover, largely fixed by the immediate recounting.
+The proportion of participants describing a given event immediately was strongly related to the proportion describing it a week later (Spearman's $\rho = 0.795$, $p = 2.8 \times 10^{-5}$; \textbf{[CHECK THIS]}).
+The events most participants omitted after the delay were largely the ones they had omitted to begin with.
+These are statements about events, averaged over participants, and they say nothing about whether any of the structure is specific to the individual.
+Two participants could produce identical profiles while recounting the same events in quite different orders, and in quite different terms.
 
-.
+We therefore turned to what each participant did with the events they recounted, beginning with the order in which they recounted them.
+For every pair of episode events described in both of a participant's recountings, we asked whether the two were described in the same relative order, and summarized the agreement between sessions as a single measure of order similarity.
+Establishing that a participant's two recountings agree is not by itself informative, since the episode imposes an order that every participant partly follows.
+The question is whether they agree more closely than that shared constraint already implies.
+We therefore compared each participant's delayed recounting to their own immediate recounting and to every other participant's immediate recounting, ranked the former within the distribution of the latter, and tested those ranks against chance.
+Every comparison we report below uses this same logic.
+Participants' delayed recountings did resemble their own immediate recountings in order more than they resembled other participants' ($T_w = 1076.5$, $p = 7.0 \times 10^{-4}$; \textbf{[CHECK THIS]}; Fig.~\ref{fig:recall-order}).
 
-.
+Order, however, provides only a coarse description of a recounting.
+It treats events as interchangeable labels and discards everything about how their contents relate to one another, including whether two events were described in similar terms or in quite different ones.
+Because our approach places the episode and both recountings in a common embedding space, we can ask a stronger question: whether the \textit{structure} of a participant's path through the episode's content is preserved, and not merely the sequence in which they visited it.
+We compared event sequences using dynamic time warping, which aligns two sequences of differing length by matching each event in one to the most similar event in the other~\citep{Vint68,SakoChib78}.
+The average distance between matched events then measures how similar the two sequences' structures are.
 
-.
+If retrieval after a delay recovered the episode as it was originally experienced, a participant's delayed recounting should resemble the episode at least as closely as it resembles their own earlier recounting of it.
+Instead, we found that delayed recountings aligned more closely with the participant's own immediate recounting than with the episode itself (mean alignment costs of 0.53 and 0.65, respectively; $T = 1430.0$, $p = 1.3 \times 10^{-10}$; \textbf{[CHECK THIS]}).
+We next asked whether this resemblance was specific to the participant who produced it.
+Each participant's delayed recounting was structurally closer to their own immediate recounting than to those of other participants ($T = 1431.0$, $p = 2.2 \times 10^{-11}$; \textbf{[CHECK THIS]}).
+The effect was strong enough that a delayed recounting could be matched to the immediate recounting that preceded it on the basis of that structure alone.
+In other words, what a participant retrieved after a week reflected something specific to how they had described the episode before.
 
-.
+Establishing that this structure is preserved is not the same as establishing that it is unchanged.
+Every measure to this point is a comparison, in that it reports whether two things are more or less alike, and none of them describes what the change between them consists of.
+To characterize the transformation itself we needed to do something stronger than compare.
+If a delayed recounting is a simplified version of an earlier one, then removing detail from the earlier one should bring the two closer together.
+We therefore simplified each participant's immediate recall trajectory using the Ramer-Douglas-Peucker algorithm~\citep{Rame72}, which discards events lying close to the line between their neighbors while retaining those whose removal would change the path's shape.
+We swept its tolerance $\epsilon$ across a range of values, selecting for each participant the value that best aligned their simplified immediate trajectory with their delayed one.
+Simplification was performed on the full 768-dimensional trajectories; the two-dimensional projections in Fig.~\ref{fig:pipeline} serve only to visualize them.
 
-.
+Participants who left out more events across the delay were the participants for whom more aggressive simplification fit best.
+The number of events removed at the best-fitting tolerance tracked the decline in the number of events a participant recounted (Kendall's $\tau = 0.518$, $p = 3.5 \times 10^{-6}$), as did the tolerance itself ($\tau = 0.457$, $p = 1.9 \times 10^{-5}$; \textbf{[CHECK THIS]}).
+Simplification also predicted \textit{which} events would go.
+The events it removed from a participant's immediate recall trajectory coincided with the events that participant stopped recounting more often than chance would predict (22 correctly identified against 12.9 expected under a hypergeometric null; $p = 8.0 \times 10^{-4}$).
+That prediction was person-specific: simplifying a participant's own trajectory predicted their forgetting better than simplifying other participants' trajectories did ($T = 272.0$, $p = 7.1 \times 10^{-3}$, $n = 26$; \textbf{[CHECK THIS]}).
+The same logic may be applied to the episode's own trajectory rather than to a participant's recounting, relating the events that simplification removes from the episode to the proportion of participants who recounted them at all (\textbf{[SUPPLEMENTARY FIGURE]}; \textbf{[VERIFY THIS]}).
 
-.
+We note that two features of this analysis follow from the resolution at which we measured, rather than from the memories themselves.
+The comparison against other participants' trajectories could be made only for the 26 participants who both stopped recounting at least one event and were predicted to stop recounting at least one.
+And for at least half of participants, the tolerance that best aligned the two recountings was zero, meaning that no simplification improved the alignment (median $\epsilon = 0.00$, range 0.00--0.82; median 0 events removed, mean 1.00).
+Segmenting a trajectory into events is itself a form of simplification, in that it replaces a continuous path with a small number of representative coordinates and discards whatever varied within an event.
+Any pruning a participant performed below that scale is therefore invisible to us, absorbed into our own rounding before the trajectory is simplified further.
+The relationships reported above hold across participants at a fixed common resolution, and they do not imply that every delayed recounting is a visibly pruned copy of its predecessor.
 
-\textbf{\textit{[OUTLINE --- placeholder structure, not final prose. Bracketed italic text marks content still to be written. No statistic below has been computed or verified; every ``report [STAT]'' is a hole to be filled from the cited notebook's output.]}}
-
-\textbf{\textit{[FIGURE BUDGET: 8 main-text figures maximum. The plan below uses 6, leaving 2 in reserve (one likely wanted for the RDP analysis if it needs a second panel set, one for contingency). Figure~1 (\texttt{paradigm.pdf}) is the only finished main-text figure; the other PDFs already in \texttt{paper/figures/source/} are analysis outputs that may feed panels rather than figures in their own right. Nothing else is made yet.]}}
-
-\subsection*{From episode and recalls to comparable event sequences}
-
-\textit{[Walk the reader through the pipeline, briefly and conceptually (details live in the Methods), up to the point where we have three things in hand: (a) the sequence of events comprising the episode, (b) each participant's sequences of immediate and delayed recall events, and (c) the mapping between each recall event and the episode event it describes. This is the setup that everything below depends on --- the point to land is that the episode and both recalls now live in a common space and are segmented into comparable units.]}
-
-\textit{[\textbf{Figure~1 --- paradigm.} \texttt{paradigm.pdf}, already in \texttt{paper/figures/source/}. Session-1 row: instructions, episode (24 min), immediate recall (10--60 min), prediction (5 min); one-week gap; session-2 row: instructions, delayed recall (10--60 min), session-2 episode (20/22 min), recall of that episode (10--60 min). Planned revision: reduce the opacity of the blocks for the phases we don't analyze --- the session-1 prediction block, and the session-2 episode-viewing and subsequent-recall blocks --- so the reader's eye lands on the immediate/delayed recall pair that the paper is actually about.]}
-
-\textit{[\textbf{Figure~2 --- methods overview.} To be made. Annotations and recall text $\rightarrow$ trajectories $\rightarrow$ event-segmentation procedure $\rightarrow$ event sequences. Loosely modeled on Fig.~2 of~\citet{HeusEtal21}, extended with the (new) event-segmentation step. Layout still open. Candidate source material already generated: \texttt{episode-corrmat.pdf} and \texttt{k-optimization-episode.pdf} (from \texttt{event-segmentation.ipynb}), and the per-recall similarity heatmaps and match matrices \texttt{atlep1-} and \texttt{delayed-recall-similarity-heatmaps.pdf} / \texttt{-matchmats.pdf}.]}
-
-\subsection*{Participants recall the episode's events in a similar order before and after the delay}
-
-\textit{[Motivation: we wanted to know whether participants remembered the episode similarly before and after the delay. The simplest way to ask this is whether they recalled the same events in the same order.]}
-
-\textit{[Result: recall-order similarity. Computed in \texttt{self-similarity-analyses.ipynb}, section ``Is delayed recall order more similar to own immediate recall order than to others' immediate recall orders?''. The measure compares pairwise precedence relations over the episode events shared between two recalls, then percentile-ranks each participant's delayed-vs-own-immediate similarity against their delayed-vs-others'-immediate similarities, tested against chance (0.5) with a Wilcoxon signed-rank test. Report [STAT].]}
-
-\textit{[\textbf{Figure~3 --- recall-order similarity.} To be made; multi-panel.]}
-
-\textit{[Panel~A: illustration of the method. For one example participant, show the matrix of pairwise recall-order-precedence values over pairs of episode events --- probably just the lower triangle --- for their delayed recall beside their own immediate recall. Grey out (or reduce the opacity of) cells for event pairs not recalled in both sessions, since the comparison is restricted to pairs present in both. Then show the same thing again for that participant's delayed recall against a \emph{different} participant's immediate recall, which is the contrast the analysis actually tests. This maps directly onto \texttt{pairwise\_precedence()} and the \texttt{shared\_events} argument to \texttt{order\_similarity()} in the notebook, so the panel and the code should be checked against each other.]}
-
-\textit{[Panels~B--D: de-slopified versions of panels B--D of the reference mock-up. Include the analogues of that mock-up's B and D so that the same panel types can reappear in the recall-structure figure (Figure~5), letting the reader compare order and structure on identical terms --- this parallelism is the reason for the pairing and should be preserved in the final layout.]}
-
-\textit{[Note on ordering: this is the least novel analysis of the three and the one least dependent on our framework --- order could be measured without any embedding model. It goes first precisely because it establishes the basic effect on the simplest possible terms, setting up the contrast with what follows.]}
-
-\subsection*{The semantic structure of participants' recalls is preserved across the delay}
-
-\textit{[Motivation: order is only the coarsest description of a recall. Because our approach embeds recalls in a continuous semantic space, we can ask a stronger question --- whether the \emph{structure} of how a participant moved through the episode's content is preserved, not merely the sequence in which they hit the events.]}
-
-\textit{[\textbf{Figure~4 (optional) --- 2D trajectories.} Decision deferred, and it depends on how this section's narrative settles. Argument for including it: it introduces the idea of geometric comparison and establishes the 2D paths \emph{before} they get used as examples in Figure~5, so the reader isn't meeting the representation and the result at the same time. Argument against: it spends one of 8 figure slots on setup. Middle option --- a compact version showing only the episode path plus immediate and delayed paths for a handful of participants, with the full version relegated to the supplement. Source: \texttt{2d-trajectories.ipynb} (\texttt{atlep1-paths2d.pdf} and \texttt{delayed-paths2d.pdf}, \texttt{imm-del-2d.pdf}); note those \texttt{savefig} calls are currently commented out in the notebook.]}
-
-\textit{[Result: trajectory/event-structure similarity. Computed in \texttt{self-similarity-analyses.ipynb}, sections ``Is delayed recall more similar to own immediate recall than to episode?'' and ``Is delayed recall more similar to own immediate recall than to \emph{others'} immediate recalls?''. Both use DTW warp cost (average cosine distance between matched events) over mean-centered event sequences; the second percentile-ranks self against others and tests against chance. Report [STAT] for each.]}
-
-\textit{[Framing: this result appears strong enough to present as a ``fingerprint'' --- i.e., that one can identify which immediate recall belongs to a given participant from the structure of their delayed recall alone. Frame it that way in both the text and the figure, but confirm the effect size supports the claim before committing to that language.]}
-
-\textit{[\textbf{Figure~5 --- recall-structure similarity.} To be made; the largest figure in the paper, covering both analysis~(A) ``delayed is more similar to immediate than to the episode'' and analysis~(B) ``delayed is more similar to own immediate than to others' immediates''. Layout still open.]}
-
-\textit{[Example trajectory panels (3, from the current draft): the left panel is common to both analyses, so it should sit centrally in the final arrangement; the right panel is the contrast for analysis~(A) and the middle panel is the contrast for analysis~(B). Planned refinements: thicker lines; faint connectors between DTW-matched events within each panel (already present in the draft); possibly PCHIP splines rather than straight segments between points, to make the paths read as curves. Under consideration --- a fourth panel showing pairwise mean point-by-point distances between trajectories, which would require upsampling each trajectory to a common number of points and comparing them in order (or substituting DTW cost, if that turns out to read better).]}
-
-\textit{[Analysis~(A) panel: per-participant connected dots showing each participant's delayed-to-immediate versus delayed-to-episode alignment cost. Probably without the KDEs from the draft version.]}
-
-\textit{[Analysis~(B) panels (3): de-slopified versions of the current draft. Two of them are the direct analogues of Figure~3's panels B and D and show stronger effects --- keeping the panel types visually identical across the two figures is what makes ``structure beats order'' legible without the reader doing arithmetic. The third gets at how person-specific the similarity is, and is the panel that carries the ``fingerprint'' claim.]}
-
-\textit{[Candidate supporting material: \texttt{atlep1-recall-corrmats.pdf} and \texttt{delayed-recall-corrmats.pdf} (from \texttt{event-segmentation.ipynb}).]}
-
-\subsection*{Delayed recalls are simplified versions of participants' immediate recalls}
-
-\textit{[Motivation: having established that a participant's delayed recall structure resembles their own immediate recall structure, the natural next question is how it \emph{changes} over the delay.]}
-
-\textit{[Result: trajectory simplification. Computed in \texttt{rdp-analyses.ipynb}. Each participant's immediate recall trajectory is simplified with the Ramer-Douglas-Peucker algorithm over a range of tolerances ($\epsilon$), and the $\epsilon$ minimizing DTW warp cost to their delayed recall trajectory is selected. Sub-results to report: (i) the relationship between how many events a participant dropped across the delay and how many RDP removes at the best-fitting $\epsilon$ (Kendall's $\tau$); (ii) the same against $\epsilon$ itself; (iii) whether RDP predicts \emph{which} events were forgotten, benchmarked against a hypergeometric null and compared to predictions derived from other participants' trajectories. Report [STAT] for each.]}
-
-\textit{[\textbf{Figure~6 --- RDP simplification.} To be made, and how best to \emph{illustrate} the simplification is genuinely unresolved --- flagged as an open design question rather than a layout still to be drawn. The regression plots for sub-results (i) and (ii) exist in \texttt{rdp-analyses.ipynb} but have no \texttt{savefig} calls, so nothing is exported to \texttt{paper/figures/source} yet. One thing worth trying: since Figure~5 will already have taught the reader to read 2D trajectories, showing one participant's immediate path beside its RDP-simplified version and their actual delayed path would make ``the delayed recall looks like a simplified version of the immediate one'' visible directly, with the quantitative panels as support. If the analysis needs a second panel set, one of the 2 reserve figure slots can absorb it.]}
-
-\textit{[\textbf{@paxton}: does the simplification story want a fourth subsection on what the dropped events have in common (e.g.\ are they lower-salience, more peripheral to the narrative), or is that a Discussion point?]}
+\textit{[\textbf{@paxton}: three things here need your eye. (1) Panel letters for the event-segmentation steps are guesses (C,D for the episode; G,H and K,L for the recalls), following the A,B / E,F / I,J pattern already in your draft --- adjust once the pipeline figure is final. (2) The recall-structure and RDP results have no figures yet, so nothing is referenced for them; add cross-references once those exist. (3) \texttt{Rame72} (Ramer 1972) is in the bibliography but Douglas \& Peucker (1973) is not, and the algorithm is conventionally credited to both --- worth adding.]}
 
 \section*{Discussion}
 
@@ -299,6 +303,13 @@ Second, we used one episode, one delay, and one intervening recounting, and it r
 Third, control-point status is defined with respect to one particular simplification algorithm, and a different algorithm might well partition the same events differently.
 Fourth, our procedure matches every recall event to an event in the episode, so content that a participant introduced but that does not appear in the episode falls outside what we are able to measure.
 Fifth, our measure of what connects one event to another is built from semantic similarity, and so it cannot on its own distinguish events that are close in meaning from events that are causally linked~\citep{LeeChen22,AntoEtal24,XuEtal24b}.
+Sixth, segmenting a trajectory into events is itself a form of simplification, performed by our analysis rather than by the participant, and it sets the resolution at which everything else is measured.
+Replacing a continuous path with a sequence of event-average coordinates discards whatever varied within an event.
+Any detail a participant lost below that scale is therefore absorbed into our own rounding before we look for it.
+Our choice of how finely to segment, together with the length of the episode and of the recall period, therefore places a floor on the forgetting we are able to detect.
+A participant whose recounting appears unchanged may simply have changed it in ways too fine for us to resolve.
+We take some reassurance from the fact that the same segmentation is fit and applied to the episode and to both recountings alike.
+It therefore provides a common basis for comparison, rather than a transformation applied selectively to the sequences being compared.
 
 Speculatively, one way to think about how this might work is in terms of attractor dynamics~\citep{Hopf82}.
 Rather than supposing that we hold literal duplicate copies of a memory, we might imagine that laying down a memory carves out a basin in an energy landscape, and that remembering the experience deepens a basin near wherever we happen to land.
