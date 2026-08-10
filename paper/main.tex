@@ -212,7 +212,7 @@ To assess this, we compared event sequences using dynamic time warping (DTW), wh
 The average distance (here, cosine distance) across matched pairs provides a measure of how similar the two sequences' structures are.
 
 If retrieval after a delay recovered the episode as it was originally experienced, a participant's delayed recounting should resemble the episode at least as closely as it resembles their own earlier recounting of it.
-Instead, we found that delayed recountings aligned more closely with the participant's own immediate recounting than with the episode itself (mean alignment costs 0.53, s.d.~0.10, and 0.65, s.d.~0.06, respectively; Wilcoxon signed-rank $T = 1430.0,~p = 1.3 \times 10^{-10},~r = 1.00$, mean difference 0.12, $95\%~\mathrm{CI} = [0.10, 0.14]$, $n = 53$; \textbf{[CHECK THIS]}).
+Instead, we found that delayed recountings aligned more closely with the participant's own immediate recounting than with the episode itself (mean alignment costs 0.53, s.d.~0.10, and 0.65, s.d.~0.06, respectively; two-sided Wilcoxon signed-rank $T_w = 1.0,~p = 2.5 \times 10^{-10},~r = 1.00$, mean difference 0.12, $95\%~\mathrm{CI} = [0.10, 0.14]$, $n = 53$; \textbf{[CHECK THIS]}).
 We next asked whether this resemblance was specific to the participant who produced it, and found that each participant's delayed recounting was structurally closer to their own immediate recounting than to those of other participants ($T = 1431.0,~p = 2.2 \times 10^{-11},~r = 1.00$, median percentile rank 1.00, $n = 53$; \textbf{[CHECK THIS]}).
 Unlike recall order, this effect was strong enough to identify individual participants: for 36 of the 53 participants, the delayed recounting aligned more closely with their own immediate recounting than with any of the other 52 (68\%, $95\%~\mathrm{CI} = [55, 79]\%$, against 1.9\% expected by chance; one-sided binomial $p = 3.9 \times 10^{-49}$; \textbf{[CHECK THIS]}).
 In other words, what a participant retrieved after a week reflected something specific to how they had described the episode before.
@@ -239,8 +239,6 @@ A further limit follows from the resolution at which we measured rather than fro
 Segmenting a trajectory into events is itself a form of simplification, in that it replaces a continuous path with a small number of representative coordinates (one per event) and discards whatever varied within an event.
 Any pruning a participant performed below that scale is invisible to us, absorbed into our own rounding before the trajectory is simplified further.
 Overall, the relationships reported above describe a tendency across the sample at a fixed common resolution, and they do not imply that every delayed recounting is a visibly pruned copy of its predecessor.
-
-\textit{[\textbf{@paxton}: open items. (1) Panel letters for the event-segmentation steps are guesses (C,D for the episode; G,H and K,L for the recalls), following the A,B / E,F / I,J pattern already in your draft --- adjust once the pipeline figure is final. (2) The recall-structure and RDP results have no figures yet, so nothing is referenced for them; add cross-references once those exist. (3) The \textit{Statistics} subsection needs to grow to satisfy the Nature reporting checklist: it should state that all measures are repeated within participant, that the Wilcoxon tests are one-sided but the Spearman and Kendall tests are two-sided (they are run at scipy's defaults), and that no correction for multiple comparisons was applied across the 11 tests reported here --- or else apply one. (4) The violin figure in \texttt{self-similarity-analyses.ipynb} labels its statistic $T_w$ from a \textit{two-sided} Wilcoxon, whose value is 1, while the text reports 1430.0 from the one-sided test; same symbol, different number. (5) I could not compute confidence intervals for the two Kendall correlations without re-running the full $\epsilon$ sweep --- worth adding when you next run it. (6) Reassuring result: I re-ran the own-vs-others DTW test with the published per-participant centering, with a single global centroid, and with no centering at all; $T = 1431.0$ and a median percentile rank of 1.00 in all three, so the shared-centroid step is not driving the effect. A one-line robustness note in the Methods would preempt the obvious reviewer question.]}
 
 \section*{Discussion}
 
@@ -410,7 +408,10 @@ Finally, we manually reviewed all LLM-formatted transcripts to identify and corr
 
 \subsubsection*{Statistics}
 
-Wilcoxon tests were one-sided because our alternative hypothesis was directional (delayed matches own immediate \textit{better than} the episode, others' immediates, etc.).
+All comparisons were made within participant, across the two recall sessions.
+Wilcoxon signed-rank tests were one-sided where our alternative hypothesis was directional (that participants recount fewer of the episode's events after the delay, and that a participant's delayed recounting matches their own immediate recounting \textit{better than} it matches other participants' immediate recountings).
+The comparison between how closely a delayed recounting aligned with the episode and with the participant's own immediate recounting was two-sided.
+Spearman and Kendall correlations were two-sided throughout.
 
 \subsubsection*{Constructing episode and recall trajectories}\label{subsec:text-embedding}
 
