@@ -145,11 +145,11 @@ This resulted in a trajectory characterizing the dynamic semantic content of eac
 
 Neither the episode's trajectory nor participants' recall trajectories moved through the embedding space at a constant rate.
 Both tended to linger within a region for a period before shifting relatively abruptly to another, and we treated these periods of relative stability as \textit{events} (Fig.~\ref{fig:pipeline}C,G,K; see \nameref{subsec:eventseg}).
-Given this observation, we used a hidden Markov model (HMM)~\citep{BaumPetr66,BaldEtal17,KumaEtal21} to segment the episode's trajectory, selecting the number of events by finding the segmentation whose within-event timepoint similarities were most distinct from its across-event similarities.
-This yielded 20 events, each summarized by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}D).
+Given this observation, we used a hidden Markov model (HMM)~\citep{BaumPetr66,BaldEtal17,KumaEtal21} to segment the episode's trajectory, selecting the number of events by finding the segmentation whose within-event timepoint correlations were most distinct from its across-event correlations (as quantified by the Wasserstein distance between the two distributions).
+This yielded 20 events, each summarized (as a single 768-dimensional coordinate) by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}D).
 
-Whereas the episode's events had to be discovered, segmenting participants' recountings called for a different approach: rather than finding a separate set of events within each recall, we sought to determine which of the episode's events a participant was describing at each moment.
-Specifically, we treated the episode's 20 events as fixed states of an HMM, scored each recall window by its similarity to each of them, and decoded the most probable sequence of episode events being described~\citep{Vite67}.
+Whereas the episode's events had to be discovered, segmenting participants' recountings called for a different approach: rather than finding a separate set of events within each recall (as we had for the episode), we sought to determine which of the episode's events a participant was describing at each moment.
+Specifically, we treated the episode's 20 events as fixed (already estimated) states of an HMM, scored each recall window by its similarity to each of them, and decoded the most probable sequence of episode events being described~\citep{Vite67}.
 Because participants may recount events out of order, and may return to an event they have already described (e.g., to add a detail they had left out the first time), we allowed transitions between any pair of states and allowed states to be re-entered.
 Collapsing runs of consecutive windows assigned to the same episode event yields, for each recounting, a sequence of recall events together with a label indicating which episode event each one describes (Fig.~\ref{fig:pipeline}H,L).
 
@@ -180,14 +180,14 @@ Because all three are expressed in a common set of units, they may be compared d
     \label{fig:recall-order}
 \end{figure}
 
-We first sought to characterize how much of the episode each participant recounted.
+We first sought to characterize how much of the episode each participant recounted (i.e., how many of its 20 events they described at least once).
 Immediate recountings described 16.98 of the episode's 20 events on average, whereas delayed recountings described 16.26 ($T = 581.0$, $p = 3.4 \times 10^{-3}$; \textbf{[CHECK THIS]}).
 Participants covered slightly less of the episode after a week than they had immediately after viewing it.
 A count of this kind establishes how much was left out, but says nothing about \textit{what} was left out.
 The same decline in the number of events recounted would follow whether every participant shed whichever events were easiest to shed, or whether each participant shed a different handful.
 
 We next asked whether the events participants left out were an arbitrary subset.
-For each of the episode's 20 events, we computed the proportion of participants who described that event at least once, counting a participant who returned to the same event more than once within a session only once.
+For each of the episode's 20 events, we computed the proportion of participants who described that event at least once (counting a participant who returned to the same event more than once within a session only once).
 Had every event been equally likely to be recounted, these proportions would be expected to differ only by chance.
 Instead, we found that the proportion of participants describing a given event ranged from 0.64 to 0.96 in immediate recall (Cochran's $Q = 75.07$, $\textrm{df} = 19$, $p = 1.3 \times 10^{-8}$) and from 0.58 to 0.98 after the delay ($Q = 73.82$, $\textrm{df} = 19$, $p = 2.1 \times 10^{-8}$; \textbf{[CHECK THIS]}).
 In other words, some of the episode's events were substantially more likely to be recounted than others.
@@ -198,15 +198,15 @@ We note that these are statements about events, averaged over participants, and 
 For example, two participants could produce identical profiles while recounting the same events in quite different orders, and in quite different terms.
 
 Given that participants' omissions were systematic across the group, we wondered whether the recountings themselves carried any person-specific signature, beginning with the order in which participants described the episode's events.
-For every pair of episode events described in both of a participant's recountings, we asked whether the two were described in the same relative order, and summarized the agreement between sessions as a single measure of order similarity.
+For every pair of episode events described in both of a participant's recountings, we asked whether the two were described in the same relative order (a graded quantity, since a participant may describe the same event more than once), and summarized the agreement between sessions as a single measure of order similarity.
 Establishing that a participant's two recountings agree is not by itself informative, since the episode imposes an order that every participant partly follows; the question is whether they agree more closely than that shared constraint already implies.
-We therefore compared each participant's delayed recounting to their own immediate recounting and to every other participant's immediate recounting, ranked the former within the distribution of the latter, and tested those ranks against chance (a logic we apply to every comparison we report below).
+We therefore compared each participant's delayed recounting to their own immediate recounting and to every other participant's immediate recounting, ranked the former within the distribution of the latter (i.e., computed a percentile rank), and tested those ranks against chance (a logic we apply to every comparison we report below).
 Participants' delayed recountings did resemble their own immediate recountings in order more than they resembled other participants' ($T_w = 1076.5$, $p = 7.0 \times 10^{-4}$; \textbf{[CHECK THIS]}; Fig.~\ref{fig:recall-order}).
 
 Order, however, provides only a coarse description of a recounting, in that it treats events as interchangeable labels and discards everything about how their contents relate to one another (e.g., whether two events were described in similar terms or in quite different ones).
 An important feature of our approach is that it places the episode and both recountings in a common embedding space, which allows us to ask a stronger question: whether the \textit{structure} of a participant's path through the episode's content is preserved, and not merely the sequence in which they visited it.
-To assess this, we compared event sequences using dynamic time warping, which aligns two sequences of differing length by matching each event in one to the most similar event in the other~\citep{Vint68,SakoChib78}.
-The average distance between matched events provides a measure of how similar the two sequences' structures are.
+To assess this, we compared event sequences using dynamic time warping (DTW), which aligns two sequences of differing length by matching each event in one to the most similar event in the other~\citep{Vint68,SakoChib78}.
+The average distance (here, cosine distance) between matched events provides a measure of how similar the two sequences' structures are.
 
 If retrieval after a delay recovered the episode as it was originally experienced, a participant's delayed recounting should resemble the episode at least as closely as it resembles their own earlier recounting of it.
 Instead, we found that delayed recountings aligned more closely with the participant's own immediate recounting than with the episode itself (mean alignment costs of 0.53 and 0.65, respectively; $T = 1430.0$, $p = 1.3 \times 10^{-10}$; \textbf{[CHECK THIS]}).
@@ -217,20 +217,20 @@ In other words, what a participant retrieved after a week reflected something sp
 Establishing that this structure is preserved is not the same as establishing that it is unchanged.
 Every measure to this point is a comparison, in that it reports whether two things are more or less alike, and none of them describes what the change between them consists of.
 To characterize the transformation itself, we hypothesized that if a delayed recounting is a simplified version of an earlier one, removing detail from the earlier one should bring the two closer together.
-We used the Ramer-Douglas-Peucker algorithm~\citep{Rame72} to simplify each participant's immediate recall trajectory, discarding events that lay close to the line between their neighbors while retaining those whose removal would change the path's shape.
-We swept the algorithm's tolerance ($\epsilon$) across a range of values, selecting for each participant the value that best aligned their simplified immediate trajectory with their delayed one.
+We used the Ramer-Douglas-Peucker algorithm~\citep{Rame72} (a standard method for simplifying polylines) to simplify each participant's immediate recall trajectory, discarding events that lay close to the line between their neighbors while retaining those whose removal would change the path's shape.
+We swept the algorithm's tolerance ($\epsilon$, expressed as a cosine distance) across a range of values, selecting for each participant the value that best aligned their simplified immediate trajectory with their delayed one.
 We note that this simplification was performed on the full 768-dimensional trajectories, and that the two-dimensional projections in Fig.~\ref{fig:pipeline} serve only to visualize the result.
 
-Participants who left out more events across the delay were the participants for whom more aggressive simplification fit best.
+Participants who left out more events across the delay were the participants for whom more aggressive simplification (i.e., a larger $\epsilon$) fit best.
 The number of events removed at the best-fitting tolerance tracked the decline in the number of events a participant recounted (Kendall's $\tau = 0.518$, $p = 3.5 \times 10^{-6}$), as did the tolerance itself ($\tau = 0.457$, $p = 1.9 \times 10^{-5}$; \textbf{[CHECK THIS]}).
 Simplification also predicted \textit{which} events would go: the events it removed from a participant's immediate recall trajectory coincided with the events that participant stopped recounting more often than chance would predict (22 correctly identified against 12.9 expected under a hypergeometric null; $p = 8.0 \times 10^{-4}$).
 Further, this prediction was person-specific, in that simplifying a participant's own trajectory predicted their forgetting better than simplifying other participants' trajectories did ($T = 272.0$, $p = 7.1 \times 10^{-3}$, $n = 26$; \textbf{[CHECK THIS]}).
 The same logic may be applied to the episode's own trajectory rather than to a participant's recounting, relating the events that simplification removes from the episode to the proportion of participants who recounted them at all (\textbf{[SUPPLEMENTARY FIGURE]}; \textbf{[VERIFY THIS]}).
 
 Two features of this analysis follow from the resolution at which we measured, rather than from the memories themselves.
-First, the comparison against other participants' trajectories could be made only for the 26 participants who both stopped recounting at least one event and were predicted to stop recounting at least one.
+First, the comparison against other participants' trajectories could be made only for the 26 participants (of 53) who both stopped recounting at least one event and were predicted to stop recounting at least one.
 Second, for at least half of participants, the tolerance that best aligned the two recountings was zero, meaning that no simplification improved the alignment (median $\epsilon = 0.00$, range 0.00--0.82; median 0 events removed, mean 1.00).
-Segmenting a trajectory into events is itself a form of simplification, in that it replaces a continuous path with a small number of representative coordinates and discards whatever varied within an event.
+Segmenting a trajectory into events is itself a form of simplification, in that it replaces a continuous path with a small number of representative coordinates (one per event) and discards whatever varied within an event.
 Any pruning a participant performed below that scale is invisible to us, absorbed into our own rounding before the trajectory is simplified further.
 Overall, the relationships reported above hold across participants at a fixed common resolution, and they do not imply that every delayed recounting is a visibly pruned copy of its predecessor.
 
