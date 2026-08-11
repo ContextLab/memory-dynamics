@@ -21,6 +21,39 @@ if TYPE_CHECKING:
     from numpy.typing import ArrayLike
 
 
+def auc(
+        positive: ArrayLike,
+        negative: ArrayLike,
+        smaller_is_positive: bool = False
+) -> float:
+    """
+    Area under the ROC curve, computed directly from the two score
+    distributions rather than by integrating a curve.
+
+    Equals the probability that a randomly chosen positive case is ranked ahead
+    of a randomly chosen negative one, with ties counting as half. Chance is
+    0.5, and the measure is unaffected by how imbalanced the two groups are,
+    which matters when each participant contributes a different number of each.
+
+    Parameters
+    ----------
+    positive, negative : array-like
+        Scores for the two groups of cases.
+    smaller_is_positive : bool, optional
+        True when a lower score is the evidence for a positive case, False
+        (default) when a higher one is.
+
+    Returns
+    -------
+    float
+        The area under the curve.
+    """
+    positive = np.asarray(positive, dtype=float)[:, np.newaxis]
+    negative = np.asarray(negative, dtype=float)[np.newaxis, :]
+    ahead = (positive < negative) if smaller_is_positive else (positive > negative)
+    return (ahead.sum() + 0.5 * (positive == negative).sum()) / ahead.size
+
+
 def best_rdp_alignment(
         trajectory: ArrayLike,
         target: ArrayLike,
@@ -31,10 +64,13 @@ def best_rdp_alignment(
     The Ramer-Douglas-Peucker simplification of `trajectory` that best aligns
     to `target`.
 
-    Sweeps `epsilons` in the order given, simplifies `trajectory` at each one,
-    and keeps the simplification whose DTW alignment cost against `target` is
-    lowest. Successive tolerances that leave the same number of points also
-    leave the same simplification, so those are skipped rather than realigned.
+    Simplifies `trajectory` at each tolerance in turn and keeps the
+    simplification whose DTW alignment cost against `target` is lowest.
+
+    Note that `target` is used to choose among the simplifications, so any test
+    that then compares the chosen simplification against `target` is not
+    independent of it. `rdp_sweep` returns the candidates themselves, which is
+    what a matched null for that choice needs.
 
     Parameters
     ----------
@@ -57,27 +93,13 @@ def best_rdp_alignment(
     cost : float
         The DTW alignment cost at that tolerance.
     """
-    best_epsilon = None
-    best_kept = None
-    best_cost = np.inf
-    n_kept_prev = None
-
-    for epsilon in epsilons:
-        simplified, kept = rdp(
-            trajectory, epsilon=epsilon, metric=metric, return_indices=True
-        )
-        # a tolerance that removes no additional points reproduces the
-        # previous simplification exactly, so there is nothing to realign
-        if len(kept) != n_kept_prev:
-            n_kept_prev = len(kept)
-            cost = dtw(simplified, target, metric=metric, norm_cost=True)[0]
-            if cost < best_cost:
-                best_epsilon, best_kept, best_cost = epsilon, kept, cost
-        # only the endpoints are left; no further tolerance can change that
-        if len(kept) == 2:
-            break
-
-    return best_epsilon, best_kept, best_cost
+    candidates = rdp_sweep(trajectory, epsilons, metric=metric)
+    costs = [
+        dtw(simplified, target, metric=metric, norm_cost=True)[0]
+        for _, simplified, _ in candidates
+    ]
+    best = int(np.argmin(costs))
+    return candidates[best][0], candidates[best][2], costs[best]
 
 
 def bootstrap_ci(
@@ -688,6 +710,93 @@ def rdp(
 
     simplified = trajectory[kept]
     return (simplified, kept) if return_indices else simplified
+
+
+def rdp_sweep(
+        trajectory: ArrayLike,
+        epsilons: ArrayLike,
+        metric: str | Callable[[ArrayLike, ArrayLike], float] = 'cosine'
+) -> list[tuple[float, np.ndarray, np.ndarray]]:
+    """
+    The distinct simplifications of `trajectory` produced by a tolerance sweep.
+
+    Successive tolerances that leave the same number of points leave the same
+    points, so each distinct simplification is returned once, at the smallest
+    tolerance that produces it. The simplifications are nested: raising the
+    tolerance only ever removes further points.
+
+    Which points a given simplification retains is a property of the
+    trajectory's own shape. Choosing among these candidates is therefore the
+    only step at which anything outside the trajectory can enter, which is what
+    makes the candidates the right thing to hold fixed when building a null for
+    that choice.
+
+    Parameters
+    ----------
+    trajectory : array-like of shape (n_points, n_features)
+        The trajectory to simplify.
+    epsilons : array-like of shape (n_tolerances,)
+        The RDP tolerances to try, in increasing order.
+    metric : str or callable, optional
+        The distance metric used for the simplification (default: 'cosine').
+
+    Returns
+    -------
+    list of (float, numpy.ndarray, numpy.ndarray)
+        One (epsilon, simplified_trajectory, kept_indices) triple per distinct
+        simplification, in increasing order of tolerance.
+    """
+    candidates = []
+    n_kept_prev = None
+    for epsilon in epsilons:
+        simplified, kept = rdp(
+            trajectory, epsilon=epsilon, metric=metric, return_indices=True
+        )
+        if len(kept) != n_kept_prev:
+            n_kept_prev = len(kept)
+            candidates.append((epsilon, simplified, kept))
+        # only the endpoints are left; no further tolerance can change that
+        if len(kept) == 2:
+            break
+    return candidates
+
+
+def removal_thresholds(
+        trajectory: ArrayLike,
+        epsilons: ArrayLike,
+        metric: str | Callable[[ArrayLike, ArrayLike], float] = 'cosine'
+) -> np.ndarray:
+    """
+    The tolerance at which simplification first removes each point.
+
+    This grades how expendable each point is: one that survives a large
+    tolerance is a point whose removal would substantially change the path's
+    shape, while one removed at a small tolerance falls close to the line
+    between its neighbors. Nothing outside `trajectory` is involved.
+
+    The first and last points are never removed, so they come back as NaN.
+
+    Parameters
+    ----------
+    trajectory : array-like of shape (n_points, n_features)
+        The trajectory to simplify.
+    epsilons : array-like of shape (n_tolerances,)
+        The RDP tolerances to try, in increasing order.
+    metric : str or callable, optional
+        The distance metric used for the simplification (default: 'cosine').
+
+    Returns
+    -------
+    numpy.ndarray of shape (n_points,)
+        The tolerance at which each point is first removed, NaN where it never
+        is.
+    """
+    trajectory = np.asarray(trajectory)
+    thresholds = np.full(len(trajectory), np.nan)
+    for epsilon, _, kept in rdp_sweep(trajectory, epsilons, metric=metric):
+        removed = np.setdiff1d(np.arange(len(trajectory)), kept)
+        thresholds[removed[np.isnan(thresholds[removed])]] = epsilon
+    return thresholds
 
 
 def set_figure_style():

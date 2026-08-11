@@ -49,7 +49,7 @@ We model an experience and each recounting of it as trajectories through a seman
 We applied our approach to data collected as participants watched a television episode, verbally recounted it immediately, and recounted it again one week later.
 Participants' delayed recountings resembled their own immediate recountings more closely than they resembled the episode itself.
 Their structure was specific enough to identify the immediate recounting that preceded them.
-Delayed recountings were also well described as geometrically simplified versions of immediate recountings, in that the events whose removal least distorts a trajectory's shape were those most likely to be dropped.
+Delayed recountings were also well described as geometrically simplified versions of immediate recountings, in that removing the detail that a trajectory's shape already implies brought an immediate recounting closer to the delayed one that followed it, and identified which of its events would go.
 What we retrieve after a delay therefore appears to be a person-specific distillation, rather than the experience as it was first encountered.
 \end{abstract}
 
@@ -237,17 +237,26 @@ We note that this simplification was performed on the full 768-dimensional traje
 
 Participants who left out more events across the delay were the participants for whom more aggressive simplification (i.e., a larger $\epsilon$) fit best.
 The number of events removed at the best-fitting tolerance tracked the decline in the number of events a participant recounted (Kendall's $\tau = 0.518,~p = 3.5 \times 10^{-6}$, $95\%~\mathrm{CI} = [0.36, 0.66]$, $n = 53$), as did the tolerance itself ($\tau = 0.457,~p = 1.9 \times 10^{-5}$, $95\%~\mathrm{CI} = [0.29, 0.61]$, $n = 53$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cells \texttt{In [13]} and \texttt{In [14]}]}).
-Simplification also predicted \textit{which} events would go: the events it removed from a participant's immediate recall trajectory coincided with the events that participant stopped recounting more often than chance would predict (22 events identified correctly in total, against 12.9 expected; $p = 8.0 \times 10^{-4}$, Monte Carlo test over 10,000 hypergeometric draws, $n = 53$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [17]}]}).
+Simplification also predicted \textit{which} events would go: the events it removed from a participant's immediate recall trajectory coincided with the events that participant stopped recounting more often than chance would predict (22 events identified correctly in total, against the 12.9 expected of a comparably sized set drawn at random).
 Because simplification can never remove the first or last event of a trajectory, both were excluded from this comparison.
-Further, this prediction was person-specific, in that simplifying a participant's own trajectory predicted their forgetting better than simplifying other participants' trajectories did (Wilcoxon signed-rank $T = 272.0,~p = 0.007,~r = 0.55$, median percentile rank 0.71, $95\%~\mathrm{CI} = [0.52, 0.84]$, $n = 26$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [18]}]}).
-The same logic applies one step earlier in the chain, to the episode's own trajectory: simplifying the episode at the tolerance that best aligned it to a given participant's immediate recounting removed events that participant had left out of that recounting more often than chance would predict (22 events identified correctly in total, against 12.1 expected; $p = 1.0 \times 10^{-4}$, the smallest value 10,000 hypergeometric draws can resolve, $n = 53$; \textbf{[SUPPLEMENTARY FIGURE]}; \textbf{[CHECK THIS: \texttt{episode-simplification-analyses.ipynb}, cell \texttt{In [7]}]}).
-This last result rests on a minority of the sample, in that no simplification of the episode aligned better than the full episode trajectory did for 38 of the 53 participants, leaving 15 who make any prediction at all (among those 15, mean excess over chance 0.66 events, $95\%~\mathrm{CI} = [0.26, 1.03]$).
-The corresponding statement about the episode as a whole, that the events simplification removes are the ones fewest participants described, does not hold (Spearman's $\rho = -0.32,~p = 0.20$, $n = 18$ events; \textbf{[CHECK THIS: \texttt{episode-simplification-analyses.ipynb}, cell \texttt{In [9]}]}).
+Chance is not the right comparison here, however, because $\epsilon$ is selected by aligning against the same delayed recounting whose omissions are then predicted, and a set drawn at random has had no such advantage.
+We therefore built a null matched on that selection (see \nameref{subsec:stats}).
+Which events simplification removes follows from the shape of a participant's own path, so we held each trajectory fixed, along with every candidate simplification of it, and chose $\epsilon$ against a different participant's delayed recounting instead.
+Simplification identified 1.70 times as many of a participant's omitted events as chance would, against 1.27 times when the tolerance was chosen from someone else's delayed recounting (s.d.~0.17, range 1.00--1.63 across the 53 surrogates; $p = 0.019$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [20]}]}).
+Further, this prediction was person-specific, in that simplifying a participant's own trajectory predicted their forgetting better than simplifying other participants' trajectories did (Wilcoxon signed-rank $T = 272.0,~p = 0.007,~r = 0.55$, median percentile rank 0.71, $95\%~\mathrm{CI} = [0.52, 0.84]$, $n = 26$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [22]}]}).
+What simplification does not do is rank events by how expendable they are.
+The tolerance an event survives to is a graded measure of that, and it is computed from the immediate recall trajectory alone, without reference to the delayed recounting or to any choice of $\epsilon$.
+Events a participant went on to drop were removed at slightly lower tolerances than events they kept, but not reliably so (AUC $= 0.545$, $95\%~\mathrm{CI} = [0.49, 0.60]$, two-sided Wilcoxon signed-rank $T = 374.0,~p = 0.16,~r = 0.24$, $n = 47$ participants with at least one event of each kind; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [23]}]}).
+Simplification therefore picks out a set of events rather than ordering them.
+The same logic may be applied one step earlier in the chain, to the episode's own trajectory, asking whether simplifying the episode removes the events a given participant left out of their immediate recounting.
+That version does not survive the matched null: simplification identified 1.82 times as many of a participant's omitted events as chance would, but choosing the tolerance from a different participant's recounting achieved 1.70 times as many (s.d.~1.02; $p = 0.38$; \textbf{[CHECK THIS: \texttt{episode-simplification-analyses.ipynb}, cell \texttt{In [11]}]}).
+The corresponding statement about the episode as a whole, that the events simplification removes are the ones fewest participants described, does not hold either (Spearman's $\rho = -0.32,~p = 0.20$, $n = 18$ events; \textbf{[CHECK THIS: \texttt{episode-simplification-analyses.ipynb}, cell \texttt{In [12]}]}).
+Watching an episode and recounting it is evidently not the same kind of transformation as recounting it twice, at least as our measures resolve it.
 
 Three features of this analysis qualify what it can show.
 First, the comparison against other participants' trajectories could be made only for the 26 participants (of 53) who both stopped recounting at least one event and were predicted to stop recounting at least one; because that subset is defined partly by the outcome being predicted, it is not a neutral sample.
 Second, for 27 of the 53 participants the tolerance that best aligned the two recountings was zero, meaning that no simplification improved the alignment (median $\epsilon = 0.00$, range 0.00--0.82; median 0 events removed, mean 1.00; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [11]}]}), and ties were resolved in favor of the smallest tolerance, so some of those zeros record the absence of an improvement rather than a positive fit at $\epsilon = 0$.
-Third, $\epsilon$ is selected for each participant by aligning against the same delayed recounting whose omissions are then predicted, so the fit and the test draw on the same data; the comparison against other participants' trajectories is what guards against this.
+Third, an effect of 1.27 in the matched null means that a tolerance chosen from the wrong delayed recounting still beats chance, so a comparison against chance alone would overstate what simplification contributes.
 A further limit follows from the resolution at which we measured rather than from the memories themselves.
 Segmenting a trajectory into events is itself a form of simplification, in that it replaces a continuous path with a small number of representative coordinates (one per event) and discards whatever varied within an event.
 Any pruning a participant performed below that scale is invisible to us, absorbed into our own rounding before the trajectory is simplified further.
@@ -267,8 +276,10 @@ Semantic space differs from physical space in that nothing prevents a narrator f
 Because movement through the space is relatively continuous, describing how one arrives at a later event from an earlier one implies that the intervening region was traversed in some sense, whether it was articulated explicitly or left for the listener to fill in.
 Some events therefore behave like control points, in that removing one substantively changes the shape of the path.
 Others behave like waypoints, which fall close to the line between their neighbors and may be removed with little consequence, since travelling between the surrounding control points already implies passing near them.
-Trajectory simplification provides a way of telling the two apart, and this distinction appears to hold at both of the transitions we can examine.
-The events that simplification removes from the episode's own trajectory are events the participant it was simplified to fit had left out of their immediate recounting, and the events that simplification removes from a participant's immediate recall trajectory are the ones that participant tended to drop across the delay.
+Trajectory simplification offers a way of telling the two apart, though a partial one.
+The events it removes from a participant's immediate recall trajectory are the ones that participant tended to drop across the delay, and that holds up when the choice of how much to simplify is controlled for.
+What it does not do is grade events: the tolerance an event survives to does not predict whether it will be dropped, so the distinction our results support is between a set of events and its complement at one level of simplification, rather than a continuum running from waypoint to control point.
+Nor does the same account carry back a step, to what participants left out of their immediate recountings of the episode itself; that transformation is evidently of a different kind, or our measures are too coarse to see it.
 
 That not all events are equally memorable is well established.
 Gist and central details, for example, survive delays that perceptual and peripheral details do not~\citep{HeusEtal21,SekeEtal16,SekeEtal18,GilbMosc21}, and autobiographical narratives shed some classes of content faster than others~\citep{DiamLevi20,SuEtal26}.
@@ -310,6 +321,7 @@ Our measures are symmetric and cannot establish direction, and the design lacks 
 Designs that do include such a control, in which retrieved information is later found nearer to what was retrieved than to what was originally presented, offer the strongest evidence that retrieval writes its own output back into the trace~\citep{BridPall12,NadeEtal00,NadeHard09}.
 Second, we used one episode, one delay, and one intervening recounting, and it remains to be seen how the picture changes across stimuli, across longer intervals, or across many successive retellings~\citep{ChanEtal09b,LifaEtal21}.
 Third, control-point status is defined with respect to one particular simplification algorithm, and a different algorithm might well partition the same events differently.
+It is also defined only at a chosen level of simplification, and that level has to be chosen by reference to the recounting whose omissions are being predicted, which is why the effect must be measured against a null matched on that choice rather than against chance.
 Fourth, our procedure matches every recall event to an event in the episode, so content that a participant introduced but that does not appear in the episode falls outside what we are able to measure.
 Fifth, our measure of what connects one event to another is built from semantic similarity, and so it cannot on its own distinguish events that are close in meaning from events that are causally linked~\citep{LeeChen22,AntoEtal24,XuEtal24b}.
 Sixth, segmenting a trajectory into events is itself a form of simplification, performed by our analysis rather than by the participant, and it sets the resolution at which everything else is measured.
@@ -419,12 +431,21 @@ Finally, we manually reviewed all LLM-formatted transcripts to identify and corr
 
 \subsection*{Analysis}
 
-\subsubsection*{Statistics}
+\subsubsection*{Statistics}\label{subsec:stats}
 
 All comparisons were made within participant, across the two recall sessions.
 Wilcoxon signed-rank tests were one-sided where our alternative hypothesis was directional (that participants recount fewer of the episode's events after the delay, and that a participant's delayed recounting matches their own immediate recounting \textit{better than} it matches other participants' immediate recountings).
 The comparison between how closely a delayed recounting aligned with the episode and with the participant's own immediate recounting was two-sided.
 Spearman and Kendall correlations were two-sided throughout.
+
+Testing whether trajectory simplification predicts which events a participant drops requires a null that accounts for how the tolerance was chosen.
+We select $\epsilon$ for each participant by aligning their simplified immediate recall against their delayed recall, and then ask whether the events removed at that tolerance are the ones the delayed recall omits, so the selection has already seen the outcome that the test evaluates.
+A hypergeometric null, which holds the number of removed events fixed and treats their identity as a random draw, cannot account for this, and so is anticonservative here.
+We therefore constructed a null matched on the selection itself.
+Which events simplification removes at a given tolerance follows from the shape of a participant's own trajectory, and the tolerance only determines how far down that fixed ordering the removals extend, so the candidate simplifications may be held constant while the step that chooses among them is redirected.
+For each participant we therefore repeated the analysis 52 times, once per surrogate, selecting $\epsilon$ by aligning their simplifications against a different participant's delayed recall and scoring the result against their own omissions.
+Because a tolerance chosen from the wrong delayed recall also changes how many events are removed, raw counts are not comparable between the two conditions; we therefore expressed each as the ratio of correctly identified events to the hypergeometric expectation for a set of that size, which equals 1.0 when simplification carries no information about forgetting.
+The reported $p$-value is the proportion of surrogates whose ratio matched or exceeded the ratio obtained when a participant's own delayed recall selected the tolerance.
 
 \subsubsection*{Constructing episode and recall trajectories}\label{subsec:text-embedding}
 
