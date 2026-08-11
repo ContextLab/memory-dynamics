@@ -11,7 +11,7 @@ from IPython.display import display, HTML, Markdown
 from matplotlib.font_manager import findSystemFonts, fontManager
 from matplotlib.patches import Rectangle
 from scipy.spatial.distance import cdist
-from scipy.stats import chi2, rankdata
+from scipy.stats import binomtest, chi2, norm, rankdata
 
 from analysis_helpers.constants import CONTENT_WARNING, EVENTSEG_EDGECOLOR, FONTS_DIR
 from analysis_helpers.internals import _imported_from_notebook
@@ -432,6 +432,78 @@ def identification_accuracy(
     # of the (ties + 1) tied candidates, how many fit below the cutoff
     room = np.clip(ks[:, np.newaxis] - better, 0, ties + 1)
     return (room / (ties + 1)).mean(axis=1)
+
+
+def identification_test(
+        own: ArrayLike,
+        others: ArrayLike,
+        smaller_is_closer: bool = True
+) -> tuple[float, int, float, float, tuple[float, float]]:
+    """
+    Rank-1 identification accuracy and its test against chance.
+
+    Ties are the reason this needs care. `identification_accuracy` breaks them
+    fractionally, so its rank-1 value is the *expected* proportion of
+    participants whose own comparison comes out on top once tied comparisons
+    are ordered at random. That expectation is generally not a whole number of
+    participants, and it can be much larger than the number who are the
+    unique top match, so both are returned.
+
+    Under the null that a participant's own comparison is exchangeable with the
+    others, its rank is uniform over every candidate available to them --- their
+    own plus the `n - 1` others, so `n` in total. Chance is therefore 1/n, not
+    1/(n - 1). The p-value is the right tail of Binomial(n, 1/n) at the expected
+    count, which for a fractional count means rounding it up: the null count is
+    whole-numbered, so P(K >= 2.77) and P(K >= 3) are the same quantity.
+
+    Parameters
+    ----------
+    own : array-like of shape (n_participants,)
+        Each participant's own-session comparison value.
+    others : array-like of shape (n_participants, n_participants - 1)
+        The same participant's comparison values against everyone else.
+    smaller_is_closer : bool, optional
+        True when the values are distances or costs (default), False when they
+        are similarities.
+
+    Returns
+    -------
+    accuracy : float
+        Tie-aware rank-1 accuracy.
+    n_unique : int
+        Number of participants whose own comparison is the unique top match,
+        with nothing tied alongside it.
+    chance : float
+        The accuracy expected by chance, 1/n.
+    p : float
+        One-sided binomial p-value against that chance level.
+    ci : tuple of float
+        Wilson score interval on the proportion of unique top matches. Wilson
+        rather than Wald, since the proportion sits near 0 when identification
+        fails and Wald intervals misbehave there.
+    """
+    own = np.asarray(own, dtype=float)[:, np.newaxis]
+    others = np.asarray(others, dtype=float)
+    n = len(own)
+
+    beaten = (others < own) if smaller_is_closer else (others > own)
+    ties = (others == own).sum(axis=1)
+    n_unique = int(((beaten.sum(axis=1) == 0) & (ties == 0)).sum())
+
+    accuracy = identification_accuracy(
+        own.ravel(), others, smaller_is_closer=smaller_is_closer
+    )[0].item()
+    chance = 1 / n
+    p = binomtest(
+        int(np.ceil(accuracy * n)), n, chance, alternative='greater'
+    ).pvalue
+
+    z = norm.ppf(0.975)
+    prop = n_unique / n
+    scale = 1 / (1 + z ** 2 / n)
+    center = scale * (prop + z ** 2 / (2 * n))
+    halfwidth = scale * z * np.sqrt(prop * (1 - prop) / n + z ** 2 / (4 * n ** 2))
+    return accuracy, n_unique, chance, p, (center - halfwidth, center + halfwidth)
 
 
 def mean_center(*to_center, equal_weight=True):
