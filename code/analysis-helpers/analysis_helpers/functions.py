@@ -21,6 +21,65 @@ if TYPE_CHECKING:
     from numpy.typing import ArrayLike
 
 
+def best_rdp_alignment(
+        trajectory: ArrayLike,
+        target: ArrayLike,
+        epsilons: ArrayLike,
+        metric: str | Callable[[ArrayLike, ArrayLike], float] = 'cosine'
+) -> tuple[float, np.ndarray, float]:
+    """
+    The Ramer-Douglas-Peucker simplification of `trajectory` that best aligns
+    to `target`.
+
+    Sweeps `epsilons` in the order given, simplifies `trajectory` at each one,
+    and keeps the simplification whose DTW alignment cost against `target` is
+    lowest. Successive tolerances that leave the same number of points also
+    leave the same simplification, so those are skipped rather than realigned.
+
+    Parameters
+    ----------
+    trajectory : array-like of shape (n_points, n_features)
+        The trajectory to simplify.
+    target : array-like of shape (n_target_points, n_features)
+        The trajectory to align the simplifications to.
+    epsilons : array-like of shape (n_tolerances,)
+        The RDP tolerances to try, in increasing order.
+    metric : str or callable, optional
+        The distance metric used for both the simplification and the alignment
+        (default: 'cosine').
+
+    Returns
+    -------
+    epsilon : float
+        The tolerance that produced the best-aligning simplification.
+    kept : numpy.ndarray of shape (n_kept,)
+        Indices into `trajectory` of the points that simplification retained.
+    cost : float
+        The DTW alignment cost at that tolerance.
+    """
+    best_epsilon = None
+    best_kept = None
+    best_cost = np.inf
+    n_kept_prev = None
+
+    for epsilon in epsilons:
+        simplified, kept = rdp(
+            trajectory, epsilon=epsilon, metric=metric, return_indices=True
+        )
+        # a tolerance that removes no additional points reproduces the
+        # previous simplification exactly, so there is nothing to realign
+        if len(kept) != n_kept_prev:
+            n_kept_prev = len(kept)
+            cost = dtw(simplified, target, metric=metric, norm_cost=True)[0]
+            if cost < best_cost:
+                best_epsilon, best_kept, best_cost = epsilon, kept, cost
+        # only the endpoints are left; no further tolerance can change that
+        if len(kept) == 2:
+            break
+
+    return best_epsilon, best_kept, best_cost
+
+
 def bootstrap_ci(
         x: ArrayLike,
         statistic: Callable[[ArrayLike], float] = np.median,
@@ -33,10 +92,14 @@ def bootstrap_ci(
 
     Parameters
     ----------
-    x : array-like of shape (n_samples,)
-        The sample to resample from (e.g., one value per participant).
+    x : array-like of shape (n_samples,) or (n_samples, n_variables)
+        The sample to resample from (e.g., one value per participant). A 2D
+        array is resampled by rows, which is what an interval on a correlation
+        needs: both members of a pair are kept together in every resample.
     statistic : callable, optional
-        Function mapping a 1D array to a scalar (default: `numpy.median`).
+        Function mapping one resample to a scalar (default: `numpy.median`).
+        Receives a 1D array when `x` is 1D, and an (n_samples, n_variables)
+        array when `x` is 2D.
     confidence : float, optional
         Width of the interval (default: 0.95).
     n_boot : int, optional
@@ -51,8 +114,12 @@ def bootstrap_ci(
     """
     x = np.asarray(x, dtype=float)
     rng = np.random.default_rng(seed)
-    resamples = rng.choice(x, size=(n_boot, len(x)), replace=True)
-    boot_stats = np.apply_along_axis(statistic, 1, resamples)
+    if x.ndim == 1:
+        resamples = rng.choice(x, size=(n_boot, len(x)), replace=True)
+        boot_stats = np.apply_along_axis(statistic, 1, resamples)
+    else:
+        rows = rng.integers(0, len(x), size=(n_boot, len(x)))
+        boot_stats = np.array([statistic(x[r]) for r in rows])
     tail = (1 - confidence) / 2 * 100
     lower, upper = np.percentile(boot_stats, [tail, 100 - tail])
     return lower.item(), upper.item()
@@ -266,6 +333,60 @@ def format_stats(
     return f'${stat_name_fmt}{stat_text_fmt}${sep}${p_fmt}{p_text_fmt}$'
 
 
+def hypergeom_mc_test(
+        n_good: ArrayLike,
+        n_bad: ArrayLike,
+        n_draws: ArrayLike,
+        n_hits: ArrayLike,
+        n_perms: int = 10_000,
+        seed: int = 0
+) -> tuple[int, float, float, np.ndarray]:
+    """
+    Monte Carlo test of a summed hit count against a hypergeometric null.
+
+    Each participant contributes an independent draw without replacement, with
+    their own pool size and number of draws, so the null distribution of the
+    total is built by simulation rather than solved analytically. Participants
+    who made no draws contribute zero to both the observed total and every
+    null total, and so are inert.
+
+    Parameters
+    ----------
+    n_good : array-like of shape (n_participants,)
+        Number of "success" items in each participant's pool.
+    n_bad : array-like of shape (n_participants,)
+        Number of remaining items in each participant's pool.
+    n_draws : array-like of shape (n_participants,)
+        Number of items drawn from each participant's pool.
+    n_hits : array-like of shape (n_participants,)
+        Number of successes each participant actually drew.
+    n_perms : int, optional
+        Number of null totals to simulate (default: 10,000).
+    seed : int, optional
+        Seed for the random number generator, so the test is reproducible.
+
+    Returns
+    -------
+    observed : int
+        The observed total number of successes.
+    expected : float
+        The mean of the null distribution of that total.
+    p : float
+        One-sided p-value: the proportion of null totals at least as large as
+        the observed total, with the observation itself added to both counts.
+    null_totals : numpy.ndarray of shape (n_perms,)
+        The simulated null distribution, for plotting.
+    """
+    rng = np.random.default_rng(seed)
+    draws = rng.hypergeometric(
+        n_good, n_bad, n_draws, size=(n_perms, len(np.asarray(n_good)))
+    )
+    null_totals = draws.sum(axis=1)
+    observed = int(np.sum(n_hits))
+    p = ((null_totals >= observed).sum() + 1) / (n_perms + 1)
+    return observed, null_totals.mean().item(), p.item(), null_totals
+
+
 def identification_accuracy(
         own: ArrayLike,
         others: ArrayLike,
@@ -399,6 +520,102 @@ def rank_biserial(differences: ArrayLike) -> float:
     ranks = rankdata(np.abs(differences))
     total = ranks.sum()
     return ((ranks[differences > 0].sum() - ranks[differences < 0].sum()) / total).item()
+
+
+def rdp(
+        trajectory: ArrayLike,
+        epsilon: float,
+        metric: str | Callable[[ArrayLike, ArrayLike], float] = 'euclidean',
+        return_indices: bool = False
+) -> np.ndarray | tuple[np.ndarray, np.ndarray]:
+    """
+    Simplify an n-dimensional trajectory using the Ramer-Douglas-Peucker
+    algorithm.
+
+    Parameters
+    ----------
+    trajectory : numpy.ndarray
+        A (timepoints x features) matrix representing the curve to simplify.
+    epsilon : float
+        Maximum allowed distance from a point to the simplified curve. Points
+        farther than epsilon from the line segment connecting their neighbors
+        are retained.
+    metric : str or callable
+        Distance metric used when computing point-to-segment distances.
+        Accepts any distance name supported by scipy.spatial.distance.cdist
+        (e.g. 'euclidean', 'cosine', 'correlation') or a callable with
+        signature f(u, v) -> float.
+    return_indices : bool, default False
+        If True, return a tuple (simplified_trajectory, indices) where
+        indices is a 1D array of the retained point indices into the original
+        trajectory. If False, return only the simplified trajectory.
+
+    Returns
+    -------
+    numpy.ndarray or tuple
+        The simplified trajectory, or (simplified_trajectory, indices) when
+        return_indices is True.
+    """
+    def _dist(points, start, end):
+        """
+        Compute the distance from each point in `points` to the line segment
+        defined by `start` and `end`.
+
+        The perpendicular foot is clamped to the segment so that points past
+        either endpoint are measured to the nearest endpoint instead.
+        """
+        segment = end - start
+        seg_len_sq = np.dot(segment, segment)
+
+        if seg_len_sq == 0:
+            # Degenerate segment: start == end; distance is point-to-point.
+            if callable(metric):
+                return np.array([metric(p, start) for p in points])
+            return cdist(points, start[np.newaxis], metric=metric).ravel()
+
+        # Scalar projection of each point onto the segment, clamped to [0, 1].
+        t = np.clip(
+            np.dot(points - start, segment) / seg_len_sq,
+            0.0, 1.0
+        )                                           # shape (n,)
+        projections = start + t[:, np.newaxis] * segment   # shape (n, d)
+
+        if callable(metric):
+            return np.array([metric(p, proj) for p, proj in zip(points, projections)])
+        # cdist expects 2-D arrays.
+        return cdist(points, projections, metric=metric).diagonal()
+
+    def _rdp_indices(indices):
+        """
+        Recursively collect the indices of points to keep.
+        Works on a view into the global `trajectory` array.
+        """
+        if len(indices) <= 2:
+            return list(indices)
+
+        start = trajectory[indices[0]]
+        end   = trajectory[indices[-1]]
+        inner = indices[1:-1]
+
+        dists = _dist(trajectory[inner], start, end)
+        max_idx = np.argmax(dists)
+        max_dist = dists[max_idx]
+
+        if max_dist > epsilon:
+            pivot = max_idx + 1   # position within `indices`
+            left  = _rdp_indices(indices[:pivot + 1])
+            right = _rdp_indices(indices[pivot:])
+            # Merge, avoiding the duplicate at the pivot.
+            return left[:-1] + right
+        else:
+            return [indices[0], indices[-1]]
+
+    trajectory = np.asarray(trajectory)
+    kept = _rdp_indices(list(range(len(trajectory))))
+    kept = np.array(kept)
+
+    simplified = trajectory[kept]
+    return (simplified, kept) if return_indices else simplified
 
 
 def set_figure_style():
