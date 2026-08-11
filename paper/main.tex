@@ -206,13 +206,22 @@ We therefore compared each participant's delayed recounting to their own immedia
 Participants' delayed recountings did resemble their own immediate recountings in order more than they resembled other participants' (Wilcoxon signed-rank $T = 1076.5,~p = 7.0 \times 10^{-4},~r = 0.51$, median percentile rank 0.76, $95\%~\mathrm{CI} = [0.60, 0.81]$, $n = 53$; \textbf{[CHECK THIS]}; Fig.~\ref{fig:recall-order}).
 This group-level agreement did not, however, extend to identifying individual participants: for only 2 of the 53 participants was the delayed recounting closer in order to their own immediate recounting than to all 52 others (one-sided binomial $p = 0.27$; \textbf{[CHECK THIS]}).
 
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/source/dtw-figure}
+
+    \caption{\textbf{Participants' delayed recalls resemble their own immediate recalls.} CAPTION}
+
+    \label{fig:recall-structure}
+\end{figure}
+
 Order, however, provides only a coarse description of a recounting, in that it treats events as interchangeable labels and discards everything about how their contents relate to one another (e.g., whether two events were described in similar terms or in quite different ones).
 An important feature of our approach is that it places the episode and both recountings in a common embedding space, which allows us to ask a stronger question: whether the \textit{structure} of a participant's path through the episode's content is preserved, and not merely the sequence in which they visited it.
 To assess this, we compared event sequences using dynamic time warping (DTW), which aligns two sequences of differing length by finding the order-preserving correspondence between their events that minimizes the total distance between matched pairs~\citep{Vint68,SakoChib78}.
 The average distance (here, cosine distance) across matched pairs provides a measure of how similar the two sequences' structures are.
 
 If retrieval after a delay recovered the episode as it was originally experienced, a participant's delayed recounting should resemble the episode at least as closely as it resembles their own earlier recounting of it.
-Instead, we found that delayed recountings aligned more closely with the participant's own immediate recounting than with the episode itself (mean alignment costs 0.53, s.d.~0.10, and 0.65, s.d.~0.06, respectively; two-sided Wilcoxon signed-rank $T_w = 1.0,~p = 2.5 \times 10^{-10},~r = 1.00$, mean difference 0.12, $95\%~\mathrm{CI} = [0.10, 0.14]$, $n = 53$; \textbf{[CHECK THIS]}).
+Instead, we found that delayed recountings aligned more closely with the participant's own immediate recounting than with the episode itself (mean alignment costs 0.53, s.d.~0.10, and 0.65, s.d.~0.06, respectively; two-sided Wilcoxon signed-rank $T_w = 1.0,~p = 2.5 \times 10^{-10},~r = 1.00$, mean difference 0.12, $95\%~\mathrm{CI} = [0.10, 0.14]$, $n = 53$; \textbf{[CHECK THIS]}; Fig.~\ref{fig:recall-structure}).
 We next asked whether this resemblance was specific to the participant who produced it, and found that each participant's delayed recounting was structurally closer to their own immediate recounting than to those of other participants ($T = 1431.0,~p = 2.2 \times 10^{-11},~r = 1.00$, median percentile rank 1.00, $n = 53$; \textbf{[CHECK THIS]}).
 Unlike recall order, this effect was strong enough to identify individual participants: for 36 of the 53 participants, the delayed recounting aligned more closely with their own immediate recounting than with any of the other 52 (68\%, $95\%~\mathrm{CI} = [55, 79]\%$, against 1.9\% expected by chance; one-sided binomial $p = 3.9 \times 10^{-49}$; \textbf{[CHECK THIS]}).
 In other words, what a participant retrieved after a week reflected something specific to how they had described the episode before.
