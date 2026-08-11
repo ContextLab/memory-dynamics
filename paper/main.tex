@@ -133,26 +133,26 @@ Briefly, text embedding models take in natural language text of an arbitrary len
 Intuitively, an output vector of length $n$ can be viewed as a coordinate in an $n$-dimensional text embedding space, wherein texts with similar semantic meanings are assigned to nearby coordinates while those with divergent meanings reside farther apart.
 In this way, the distance between the embedding coordinates assigned to two texts provides a measure of how semantically similar their underlying contents are.
 
-We began by creating detailed text annotations describing the content present during each individual camera shot from the episode (Fig.~\ref{fig:pipeline}A; see \nameref{subsec:annotations-transcripts}).
+We began by creating detailed text annotations describing the content present during each individual camera shot from the episode (Fig.~\ref{fig:pipeline}, \textit{Text}; see \nameref{subsec:annotations-transcripts}).
 We then projected each camera shot's text description onto a coordinate in a 768-dimensional text embedding space using EmbeddingGemma~\citep{VeraEtal25}.
-The sequence of embedding space coordinates across successive camera shots thus forms a trajectory that characterizes how the \textit{Atlanta} episode's latent semantic content unfolded over time (Fig.~\ref{fig:pipeline}B).
+The sequence of embedding space coordinates across successive camera shots thus forms a trajectory that characterizes how the \textit{Atlanta} episode's latent semantic content unfolded over time (Fig.~\ref{fig:pipeline}, \textit{Trajectories}).
 Since the durations of camera shots varied over the course of the episode, we resampled the episode's trajectory to a constant temporal resolution of one vector per second.
 
-Next, we transcribed each participant's immediate and delayed verbal recounting of the episode content (Fig.~\ref{fig:pipeline}E,I).
+Next, we transcribed each participant's immediate and delayed verbal recounting of the episode content (Fig.~\ref{fig:pipeline}, \textit{Text}).
 In constructing trajectories from participants' recountings, we reasoned that casual, unrehearsed speech tends to be information-sparse compared to written text (e.g., it might take multiple spoken sentences to describe the same content or occurrence that could be more concisely described in a single written sentence).
 We therefore parsed each participant's recall transcript from each session into overlapping sliding windows spanning (up to) 5 consecutive sentences each, and transformed the text comprising each of these sliding windows into a text embedding vector.
-This resulted in a trajectory characterizing the dynamic semantic content of each participant's immediate and delayed recounting (Fig.~\ref{fig:pipeline}F,J).
+This resulted in a trajectory characterizing the dynamic semantic content of each participant's immediate and delayed recounting (Fig.~\ref{fig:pipeline}, \textit{Trajectories}).
 
 Neither the episode's trajectory nor participants' recall trajectories moved through the embedding space at a constant rate.
-Both tended to linger within a region for a period before shifting relatively abruptly to another, and we treated these periods of relative stability as \textit{events} (Fig.~\ref{fig:pipeline}C,G,K; see \nameref{subsec:eventseg}).
+Both tended to linger within a region for a period before shifting relatively abruptly to another, and we treated these periods of relative stability as \textit{events} (Fig.~\ref{fig:pipeline}, \textit{Event-segmentation}; see \nameref{subsec:eventseg}).
 Given this observation, we used a hidden Markov model (HMM)~\citep{BaumPetr66,BaldEtal17,KumaEtal21} to segment the episode's trajectory, selecting the number of events by finding the segmentation whose within-event timepoint correlations were most distinct from its across-event correlations, as quantified by the Wasserstein distance between the two distributions (computed over pairs of timepoints separated by no more than the longest event, so that the two distributions are drawn from comparable temporal lags).
-This yielded 20 events, each summarized (as a single 768-dimensional coordinate) by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}D).
+This yielded 20 events, each summarized (as a single 768-dimensional coordinate) by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}, \textit{Events}).
 
 Whereas the episode's events had to be discovered, segmenting participants' recountings called for a different approach: rather than finding a separate set of events within each recall (as we had for the episode), we sought to determine which of the episode's events a participant was describing at each moment.
 Specifically, we treated the episode's 20 events as a fixed set of states, scored each recall window by its similarity to each of them, and decoded the most probable sequence of episode events being described~\citep{Vite67}.
 Because participants may recount events out of order, and may return to an event they have already described (e.g., to add a detail they had left out the first time), we permitted transitions between any pair of states, including re-entry into a state already visited.
 Transitions were penalized according to their type: no penalty for remaining within an event, a modest penalty for advancing to the next, and a larger penalty for any other jump (see \nameref{subsec:eventseg}).
-Collapsing runs of consecutive windows assigned to the same episode event yields, for each recounting, a sequence of recall events together with a label indicating which episode event each one describes (Fig.~\ref{fig:pipeline}H,L).
+Collapsing runs of consecutive windows assigned to the same episode event yields, for each recounting, a sequence of recall events together with a label indicating which episode event each one describes (Fig.~\ref{fig:pipeline}, \textit{Events}).
 
 Together, these steps yielded three descriptions of the same episode: the sequence of events comprising the episode itself, each participant's sequences of immediate and delayed recall events, and a mapping from every recall event onto the episode event it describes.
 Because all three are expressed in a common set of units, they may be compared directly, both across participants and across the delay.
@@ -182,7 +182,7 @@ Because all three are expressed in a common set of units, they may be compared d
 \end{figure}
 
 The most basic of these comparisons concerns how much of the episode each participant recounted (i.e., how many of its 20 events they described at least once).
-Immediate recountings described 16.98 of the episode's 20 events on average (s.d.~2.22), whereas delayed recountings described 16.26 (s.d.~2.51), a mean decline of 0.72 events (Wilcoxon signed-rank $T = 581.0,~p = 0.003,~r = 0.49,~95\%~\mathrm{CI} = [0.25, 1.21]$ events, $n = 53$; \textbf{[CHECK THIS]}).
+Immediate recountings described 16.98 of the episode's 20 events on average (s.d.~2.22), whereas delayed recountings described 16.26 (s.d.~2.51), a mean decline of 0.72 events (Wilcoxon signed-rank $T = 581.0,~p = 0.003,~r = 0.49,~95\%~\mathrm{CI} = [0.23, 1.19]$ events, $n = 53$; \textbf{[CHECK THIS]}).
 Participants covered slightly less of the episode after a week than they had immediately after viewing it.
 A count of this kind establishes how much was left out, but says nothing about \textit{what} was left out.
 The same decline in the number of events recounted would follow whether every participant shed whichever events were easiest to shed, or whether each participant shed a different handful.
@@ -204,7 +204,7 @@ For every pair of episode events described in both of a participant's recounting
 Establishing that a participant's two recountings agree is not by itself informative, since the episode imposes an order that every participant partly follows; the question is whether they agree more closely than that shared constraint already implies.
 We therefore compared each participant's delayed recounting to their own immediate recounting and to every other participant's immediate recounting, ranked the former within the distribution of the latter (i.e., computed a percentile rank), and tested those ranks against chance (a logic we apply to every comparison we report below).
 Participants' delayed recountings did resemble their own immediate recountings in order more than they resembled other participants' (Wilcoxon signed-rank $T = 1076.5,~p = 7.0 \times 10^{-4},~r = 0.51$, median percentile rank 0.76, $95\%~\mathrm{CI} = [0.60, 0.81]$, $n = 53$; \textbf{[CHECK THIS]}; Fig.~\ref{fig:recall-order}).
-This group-level agreement did not, however, extend to identifying individual participants: for only 2 of the 53 participants was the delayed recounting closer in order to their own immediate recounting than to all 52 others (one-sided binomial $p = 0.27$; \textbf{[CHECK THIS]}).
+This group-level agreement did not, however, extend to identifying individual participants: a participant's own immediate recounting was the closest of all 53 in order only 5\% of the time, which is not reliably above the 1.9\% expected by chance (one-sided binomial $p = 0.08$; \textbf{[CHECK THIS]}).
 
 \begin{figure}[tp]
     \centering
@@ -221,9 +221,9 @@ To assess this, we compared event sequences using dynamic time warping (DTW), wh
 The average distance (here, cosine distance) across matched pairs provides a measure of how similar the two sequences' structures are.
 
 If retrieval after a delay recovered the episode as it was originally experienced, a participant's delayed recounting should resemble the episode at least as closely as it resembles their own earlier recounting of it.
-Instead, we found that delayed recountings aligned more closely with the participant's own immediate recounting than with the episode itself (mean alignment costs 0.53, s.d.~0.10, and 0.65, s.d.~0.06, respectively; two-sided Wilcoxon signed-rank $T_w = 1.0,~p = 2.5 \times 10^{-10},~r = 1.00$, mean difference 0.12, $95\%~\mathrm{CI} = [0.10, 0.14]$, $n = 53$; \textbf{[CHECK THIS]}; Fig.~\ref{fig:recall-structure}).
-We next asked whether this resemblance was specific to the participant who produced it, and found that each participant's delayed recounting was structurally closer to their own immediate recounting than to those of other participants ($T = 1431.0,~p = 2.2 \times 10^{-11},~r = 1.00$, median percentile rank 1.00, $n = 53$; \textbf{[CHECK THIS]}).
-Unlike recall order, this effect was strong enough to identify individual participants: for 36 of the 53 participants, the delayed recounting aligned more closely with their own immediate recounting than with any of the other 52 (68\%, $95\%~\mathrm{CI} = [55, 79]\%$, against 1.9\% expected by chance; one-sided binomial $p = 3.9 \times 10^{-49}$; \textbf{[CHECK THIS]}).
+Instead, we found that delayed recountings aligned more closely with the participant's own immediate recounting than with the episode itself (mean alignment costs 0.53, s.d.~0.10, and 0.65, s.d.~0.06, respectively; two-sided Wilcoxon signed-rank $T_w = 1.0,~p = 2.5 \times 10^{-10},~r = 1.00$, mean difference 0.12, $95\%~\mathrm{CI} = [0.10, 0.14]$, $n = 53$; \textbf{[CHECK THIS]}; Fig.~\ref{fig:recall-structure}A,C,E).
+We next asked whether this resemblance was specific to the participant who produced it, and found that each participant's delayed recounting was structurally closer to their own immediate recounting than to those of other participants ($T = 1431.0,~p = 2.2 \times 10^{-11},~r = 1.00$, median percentile rank 1.00, $n = 53$; \textbf{[CHECK THIS]}; Fig.~\ref{fig:recall-structure}A,B,F).
+Unlike recall order, this effect was strong enough to identify individual participants: for 36 of the 53 participants, the delayed recounting aligned more closely with their own immediate recounting than with any of the other 52 (68\%, $95\%~\mathrm{CI} = [55, 79]\%$, against 1.9\% expected by chance; one-sided binomial $p = 3.9 \times 10^{-49}$), and for 91\% it ranked among the five closest (\textbf{[CHECK THIS]}; Fig.~\ref{fig:recall-structure}D,G).
 In other words, what a participant retrieved after a week reflected something specific to how they had described the episode before.
 
 Establishing that this structure is preserved is not the same as establishing that it is unchanged.

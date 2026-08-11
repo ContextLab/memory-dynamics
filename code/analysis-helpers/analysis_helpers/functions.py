@@ -11,6 +11,7 @@ from IPython.display import display, HTML, Markdown
 from matplotlib.font_manager import findSystemFonts, fontManager
 from matplotlib.patches import Rectangle
 from scipy.spatial.distance import cdist
+from scipy.stats import chi2, rankdata
 
 from analysis_helpers.constants import CONTENT_WARNING, EVENTSEG_EDGECOLOR, FONTS_DIR
 from analysis_helpers.internals import _imported_from_notebook
@@ -18,6 +19,72 @@ from analysis_helpers.internals import _imported_from_notebook
 if TYPE_CHECKING:
     from typing import Any,Callable
     from numpy.typing import ArrayLike
+
+
+def bootstrap_ci(
+        x: ArrayLike,
+        statistic: Callable[[ArrayLike], float] = np.median,
+        confidence: float = 0.95,
+        n_boot: int = 10_000,
+        seed: int = 0
+) -> tuple[float, float]:
+    """
+    Percentile bootstrap confidence interval for a statistic of `x`.
+
+    Parameters
+    ----------
+    x : array-like of shape (n_samples,)
+        The sample to resample from (e.g., one value per participant).
+    statistic : callable, optional
+        Function mapping a 1D array to a scalar (default: `numpy.median`).
+    confidence : float, optional
+        Width of the interval (default: 0.95).
+    n_boot : int, optional
+        Number of bootstrap resamples (default: 10,000).
+    seed : int, optional
+        Seed for the random number generator, so intervals are reproducible.
+
+    Returns
+    -------
+    tuple of float
+        The (lower, upper) bounds of the interval.
+    """
+    x = np.asarray(x, dtype=float)
+    rng = np.random.default_rng(seed)
+    resamples = rng.choice(x, size=(n_boot, len(x)), replace=True)
+    boot_stats = np.apply_along_axis(statistic, 1, resamples)
+    tail = (1 - confidence) / 2 * 100
+    lower, upper = np.percentile(boot_stats, [tail, 100 - tail])
+    return lower.item(), upper.item()
+
+
+def cochrans_q(recounted: ArrayLike) -> tuple[float, int, float]:
+    """
+    Cochran's Q test for a (participants x episode events) binary matrix, under
+    the null hypothesis that every episode event was equally likely to be
+    recounted. Q is distributed as chi-squared with (n_events - 1) degrees of
+    freedom.
+
+    Unlike a goodness-of-fit test on the per-event totals, Q conditions on the
+    number of events each participant described. That matters here: a
+    participant can describe a given episode event at most once, and describes
+    most of them, so treating each description as an independent draw would
+    badly overestimate how much the per-event totals should vary by chance.
+
+    Returns
+    -------
+    tuple
+        The test statistic Q, its degrees of freedom, and the p-value.
+    """
+    recounted = np.asarray(recounted)
+    n_events = recounted.shape[1]
+    event_counts = recounted.sum(axis=0)
+    participant_counts = recounted.sum(axis=1)
+    numerator = n_events * (n_events - 1) * ((event_counts - event_counts.mean()) ** 2).sum()
+    denominator = n_events * participant_counts.sum() - (participant_counts ** 2).sum()
+    q = numerator / denominator
+    df = n_events - 1
+    return q.item(), df, chi2.sf(q, df).item()
 
 
 def draw_event_bounds(
@@ -112,6 +179,29 @@ def dtw(
     return cost, path[::-1]
 
 
+def events_recounted(event_matches: ArrayLike, n_events: int) -> np.ndarray:
+    """
+    Binary vector indicating which episode events a participant described in a
+    given session. A participant who returned to the same episode event more
+    than once within a session is counted only once.
+
+    Parameters
+    ----------
+    event_matches : array-like of shape (n_recall_events,)
+        The episode event each of a participant's recall events describes.
+    n_events : int
+        The number of events in the episode.
+
+    Returns
+    -------
+    numpy.ndarray of shape (n_events,)
+        1 where the episode event was described at least once, else 0.
+    """
+    recounted = np.zeros(n_events, dtype=int)
+    recounted[np.unique(event_matches)] = 1
+    return recounted
+
+
 def format_stats(
     stat: float,
     p: float,
@@ -176,6 +266,53 @@ def format_stats(
     return f'${stat_name_fmt}{stat_text_fmt}${sep}${p_fmt}{p_text_fmt}$'
 
 
+def identification_accuracy(
+        own: ArrayLike,
+        others: ArrayLike,
+        smaller_is_closer: bool = True
+) -> np.ndarray:
+    """
+    Tie-aware identification ("fingerprinting") accuracy as a function of the
+    rank cutoff k.
+
+    For each participant, asks whether the comparison against their own other
+    session ranks among the k closest of all the comparisons available to them.
+    Element k - 1 of the returned array is the proportion of participants for
+    whom it does, so element 0 is the rank-1 (top match) accuracy and the array
+    rises monotonically to 1.
+
+    Ties are resolved fractionally rather than optimistically: a participant
+    whose own comparison ties with `t` others contributes the probability that
+    a random ordering of the tied group would place it within the cutoff.
+
+    Parameters
+    ----------
+    own : array-like of shape (n_participants,)
+        Each participant's own-session comparison value.
+    others : array-like of shape (n_participants, n_participants - 1)
+        The same participant's comparison values against everyone else.
+    smaller_is_closer : bool, optional
+        True when the values are distances or costs (default), False when they
+        are similarities.
+
+    Returns
+    -------
+    numpy.ndarray of shape (n_participants,)
+        Accuracy at each rank cutoff k = 1 ... n_participants.
+    """
+    own = np.asarray(own, dtype=float)[:, np.newaxis]
+    others = np.asarray(others, dtype=float)
+    if smaller_is_closer:
+        better = (others < own).sum(axis=1)
+    else:
+        better = (others > own).sum(axis=1)
+    ties = (others == own).sum(axis=1)
+    ks = np.arange(1, others.shape[1] + 2)
+    # of the (ties + 1) tied candidates, how many fit below the cutoff
+    room = np.clip(ks[:, np.newaxis] - better, 0, ties + 1)
+    return (room / (ties + 1)).mean(axis=1)
+
+
 def mean_center(*to_center, equal_weight=True):
     """
     Mean-center one or more feature matrices by their shared centroid.
@@ -197,6 +334,71 @@ def mean_center(*to_center, equal_weight=True):
         centered = np.vsplit(stacked, split_inds)
 
     return tuple(c[0] if was_1d else c for c, was_1d in zip(centered, input_was_1d))
+
+
+def percentile_ranks(
+        own: ArrayLike,
+        others: ArrayLike,
+        smaller_is_closer: bool = True
+) -> np.ndarray:
+    """
+    Rank each participant's own-session comparison within the distribution of
+    their comparisons against everyone else, as a proportion.
+
+    A value of 1 means the own-session comparison was closer than every other
+    comparison available to that participant; 0.5 is chance. Ties count as
+    half, matching the convention used throughout these analyses.
+
+    Parameters
+    ----------
+    own : array-like of shape (n_participants,)
+        Each participant's own-session comparison value.
+    others : array-like of shape (n_participants, n_participants - 1)
+        The same participant's comparison values against everyone else.
+    smaller_is_closer : bool, optional
+        True when the values are distances or costs (default), False when they
+        are similarities.
+
+    Returns
+    -------
+    numpy.ndarray of shape (n_participants,)
+        The percentile rank for each participant.
+    """
+    own = np.asarray(own, dtype=float)[:, np.newaxis]
+    others = np.asarray(others, dtype=float)
+    if smaller_is_closer:
+        beaten = (own < others).sum(axis=1)
+    else:
+        beaten = (own > others).sum(axis=1)
+    ties = (own == others).sum(axis=1)
+    return (beaten + 0.5 * ties) / others.shape[1]
+
+
+def rank_biserial(differences: ArrayLike) -> float:
+    """
+    Matched-pairs rank-biserial correlation, the effect size accompanying a
+    Wilcoxon signed-rank test.
+
+    Computed as the difference between the proportion of the total signed rank
+    mass falling on positive and on negative differences, so it ranges from -1
+    (every pair decreased) to +1 (every pair increased). Zero differences are
+    dropped before ranking, as they are by the test itself.
+
+    Parameters
+    ----------
+    differences : array-like of shape (n_pairs,)
+        The paired differences submitted to the test.
+
+    Returns
+    -------
+    float
+        The rank-biserial correlation.
+    """
+    differences = np.asarray(differences, dtype=float)
+    differences = differences[differences != 0]
+    ranks = rankdata(np.abs(differences))
+    total = ranks.sum()
+    return ((ranks[differences > 0].sum() - ranks[differences < 0].sum()) / total).item()
 
 
 def set_figure_style():
