@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from collections import Counter
 from inspect import getsource
 from typing import TYPE_CHECKING
 
@@ -268,6 +269,60 @@ def dtw(
     return cost, path[::-1]
 
 
+def event_prominence(
+        trajectory: ArrayLike,
+        event_matches: ArrayLike,
+        epsilons: ArrayLike,
+        metric: str | Callable[[ArrayLike, ArrayLike], float] = 'cosine'
+) -> dict[int, float]:
+    """
+    How structurally prominent each described episode event is within a recall
+    trajectory.
+
+    An event's prominence is the tolerance at which simplification first removes
+    it: removed early (low tolerance) means it falls close to the line between
+    its neighbors and is geometrically disposable, while surviving to a high
+    tolerance means its removal would change the path's shape. Because the
+    measure is read off the whole sweep, no tolerance is ever selected, and
+    nothing outside `trajectory` is involved.
+
+    Recall trajectories may return to the same episode event more than once. An
+    event described several times takes the prominence of its *first-removed*
+    occurrence, so an event counts as disposable when any one of its
+    descriptions is. The first and last recall events are excluded, since
+    simplification never removes the endpoints of a trajectory.
+
+    Parameters
+    ----------
+    trajectory : array-like of shape (n_recall_events, n_features)
+        A participant's recall event sequence.
+    event_matches : array-like of shape (n_recall_events,)
+        The episode event each recall event describes.
+    epsilons : array-like of shape (n_tolerances,)
+        The RDP tolerances to sweep, in increasing order.
+    metric : str or callable, optional
+        The distance metric used for the simplification (default: 'cosine').
+
+    Returns
+    -------
+    dict
+        Prominence for each episode event described by an interior recall event.
+    """
+    thresholds = removal_thresholds(trajectory, epsilons, metric=metric)
+    # an interior point that no tolerance in the sweep removes is maximally
+    # prominent, so it takes the largest tolerance tried
+    thresholds = np.where(np.isnan(thresholds), np.max(epsilons), thresholds)
+
+    event_matches = np.asarray(event_matches)
+    prominence = {}
+    for recall_event in range(1, len(event_matches) - 1):
+        episode_event = int(event_matches[recall_event])
+        prominence[episode_event] = min(
+            prominence.get(episode_event, np.inf), thresholds[recall_event]
+        )
+    return prominence
+
+
 def events_recounted(event_matches: ArrayLike, n_events: int) -> np.ndarray:
     """
     Binary vector indicating which episode events a participant described in a
@@ -289,6 +344,57 @@ def events_recounted(event_matches: ArrayLike, n_events: int) -> np.ndarray:
     recounted = np.zeros(n_events, dtype=int)
     recounted[np.unique(event_matches)] = 1
     return recounted
+
+
+def forgotten_events(
+        imm_event_matches: ArrayLike,
+        del_event_matches: ArrayLike
+) -> tuple[set[int], set[int]]:
+    """
+    Which episode events a participant described immediately and then dropped.
+
+    Prominence is defined only for events described by an *interior* recall
+    event, since simplification never removes a trajectory's endpoints, so the
+    pool is the set of episode events an interior immediate recall event
+    describes. The delayed counts are offset by the same exclusion: one delayed
+    occurrence is discounted per endpoint occurrence of that episode event, so
+    that the two sessions are compared on equal footing. Without that offset an
+    event described at an endpoint immediately, and once again after the delay,
+    would look retained on the delayed side while being invisible on the
+    immediate side.
+
+    An event counts as forgotten when it was described more times among the
+    interior immediate recall events than among the offset delayed ones, which
+    captures a participant returning to an event less often as well as dropping
+    it altogether.
+
+    Parameters
+    ----------
+    imm_event_matches, del_event_matches : array-like
+        The episode event each recall event describes, in each session.
+
+    Returns
+    -------
+    pool : set of int
+        Episode events described by an interior immediate recall event.
+    forgotten : set of int
+        Those of them the participant went on to describe less often.
+    """
+    imm_event_matches = np.asarray(imm_event_matches)
+    del_event_matches = np.asarray(del_event_matches)
+
+    interior_counts = Counter(imm_event_matches[1:-1].tolist())
+    delayed_counts = Counter(del_event_matches.tolist())
+    endpoint_counts = Counter(
+        [int(imm_event_matches[0]), int(imm_event_matches[-1])]
+    )
+
+    pool = set(interior_counts)
+    forgotten = {
+        event for event, count in interior_counts.items()
+        if count > max(0, delayed_counts.get(event, 0) - endpoint_counts.get(event, 0))
+    }
+    return pool, forgotten
 
 
 def format_stats(
