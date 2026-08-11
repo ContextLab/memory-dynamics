@@ -18,7 +18,7 @@ from analysis_helpers.constants import CONTENT_WARNING, EVENTSEG_EDGECOLOR, FONT
 from analysis_helpers.internals import _imported_from_notebook
 
 if TYPE_CHECKING:
-    from typing import Any,Callable
+    from typing import Any, Callable, Container, Iterable
     from numpy.typing import ArrayLike
 
 
@@ -182,6 +182,10 @@ def draw_event_bounds(
         event_bounds: list[tuple[int, int]],
         **rect_kwargs: dict[str, Any]
 ) -> list[Rectangle]:
+    """
+    Outline each event on a timepoint-by-timepoint heatmap, drawing one square
+    per event along the diagonal.
+    """
     facecolor = rect_kwargs.pop('facecolor', rect_kwargs.pop('fc', 'none'))
     patches = []
     for onset, offset in event_bounds:
@@ -273,7 +277,8 @@ def event_prominence(
         trajectory: ArrayLike,
         event_matches: ArrayLike,
         epsilons: ArrayLike,
-        metric: str | Callable[[ArrayLike, ArrayLike], float] = 'cosine'
+        metric: str | Callable[[ArrayLike, ArrayLike], float] = 'cosine',
+        dedup: str = 'first'
 ) -> dict[int, float]:
     """
     How structurally prominent each described episode event is within a recall
@@ -286,11 +291,13 @@ def event_prominence(
     measure is read off the whole sweep, no tolerance is ever selected, and
     nothing outside `trajectory` is involved.
 
-    Recall trajectories may return to the same episode event more than once. An
-    event described several times takes the prominence of its *first-removed*
-    occurrence, so an event counts as disposable when any one of its
-    descriptions is. The first and last recall events are excluded, since
-    simplification never removes the endpoints of a trajectory.
+    Recall trajectories may return to the same episode event more than once, and
+    how those repeats are resolved is a consequential choice. Under `'first'`
+    (the default) an event takes the prominence of its first-removed occurrence,
+    so it counts as disposable when any one of its descriptions is; under
+    `'mean'` it takes the average across its occurrences. The first and last
+    recall events are excluded, since simplification never removes the endpoints
+    of a trajectory.
 
     Parameters
     ----------
@@ -302,25 +309,29 @@ def event_prominence(
         The RDP tolerances to sweep, in increasing order.
     metric : str or callable, optional
         The distance metric used for the simplification (default: 'cosine').
+    dedup : {'first', 'mean'}, optional
+        How to score an episode event described by more than one recall event.
 
     Returns
     -------
     dict
         Prominence for each episode event described by an interior recall event.
     """
+    if dedup not in ('first', 'mean'):
+        raise ValueError(f"dedup must be 'first' or 'mean', not {dedup!r}")
     thresholds = removal_thresholds(trajectory, epsilons, metric=metric)
     # an interior point that no tolerance in the sweep removes is maximally
     # prominent, so it takes the largest tolerance tried
     thresholds = np.where(np.isnan(thresholds), np.max(epsilons), thresholds)
 
     event_matches = np.asarray(event_matches)
-    prominence = {}
+    occurrences = {}
     for recall_event in range(1, len(event_matches) - 1):
         episode_event = int(event_matches[recall_event])
-        prominence[episode_event] = min(
-            prominence.get(episode_event, np.inf), thresholds[recall_event]
-        )
-    return prominence
+        occurrences.setdefault(episode_event, []).append(thresholds[recall_event])
+
+    resolve = min if dedup == 'first' else np.mean
+    return {event: float(resolve(values)) for event, values in occurrences.items()}
 
 
 def events_recounted(event_matches: ArrayLike, n_events: int) -> np.ndarray:
@@ -348,7 +359,8 @@ def events_recounted(event_matches: ArrayLike, n_events: int) -> np.ndarray:
 
 def forgotten_events(
         imm_event_matches: ArrayLike,
-        del_event_matches: ArrayLike
+        del_event_matches: ArrayLike,
+        endpoint_offset: bool = True
 ) -> tuple[set[int], set[int]]:
     """
     Which episode events a participant described immediately and then dropped.
@@ -372,6 +384,10 @@ def forgotten_events(
     ----------
     imm_event_matches, del_event_matches : array-like
         The episode event each recall event describes, in each session.
+    endpoint_offset : bool, optional
+        Whether to apply the offset described above (default: True). Setting
+        this to False drops it, which is the asymmetric comparison, and is
+        provided so that the consequence of the choice can be measured.
 
     Returns
     -------
@@ -388,6 +404,9 @@ def forgotten_events(
     endpoint_counts = Counter(
         [int(imm_event_matches[0]), int(imm_event_matches[-1])]
     )
+
+    if not endpoint_offset:
+        endpoint_counts = Counter()
 
     pool = set(interior_counts)
     forgotten = {
@@ -695,6 +714,93 @@ def percentile_ranks(
     return (beaten + 0.5 * ties) / others.shape[1]
 
 
+def prominence_auc(
+        prominence: dict[int, float],
+        events: Iterable[int],
+        forgotten: Container[int]
+) -> float | None:
+    """
+    How well a prominence ranking separates forgotten from retained events.
+
+    Lower prominence is the evidence for forgetting, in that an event removed at
+    a low tolerance is one the path can most afford to lose, so 0.5 is chance
+    and 1.0 would mean every forgotten event was less prominent than every
+    retained one.
+
+    Parameters
+    ----------
+    prominence : dict
+        Prominence for each episode event, as returned by `event_prominence`.
+    events : iterable of int
+        The episode events to score over. Restricting this to the events two
+        participants share is what makes an own-versus-other comparison fair.
+    forgotten : container of int
+        Which of those events the participant went on to drop.
+
+    Returns
+    -------
+    float or None
+        The area under the curve, or None when `events` contains no forgotten
+        or no retained event, leaving nothing to separate.
+    """
+    was_forgotten = [prominence[event] for event in events if event in forgotten]
+    was_kept = [prominence[event] for event in events if event not in forgotten]
+    if not was_forgotten or not was_kept:
+        return None
+    return auc(was_forgotten, was_kept, smaller_is_positive=True)
+
+
+def prominence_win_rates(
+        rankings: list[tuple[dict[int, float], Container[int], Container[int]]],
+        min_shared: int = 3,
+        min_sources: int = 5
+) -> np.ndarray:
+    """
+    How often each participant's own prominence ranking predicts their
+    forgetting better than another participant's ranking does.
+
+    Every comparison is made over the episode events both participants
+    described, so a ranking gains no advantage from covering more of the
+    episode, and each participant contributes their win rate over the
+    comparisons available to them. Chance is 0.5.
+
+    Parameters
+    ----------
+    rankings : list of (dict, container, container)
+        One (prominence, pool, forgotten) triple per participant, as returned by
+        `event_prominence` and `forgotten_events`.
+    min_shared : int, optional
+        Fewest shared events for a pairwise comparison to be scored (default: 3).
+    min_sources : int, optional
+        Fewest comparable other participants for a target to be included
+        (default: 5).
+
+    Returns
+    -------
+    numpy.ndarray
+        One win rate per included participant.
+    """
+    win_rates = []
+    for i, (own_prominence, pool, forgotten) in enumerate(rankings):
+        if not forgotten or len(pool) < 2:
+            continue
+        beats = []
+        for j, (other_prominence, _, _) in enumerate(rankings):
+            if j == i:
+                continue
+            shared = [event for event in pool if event in other_prominence]
+            if len(shared) < min_shared:
+                continue
+            own = prominence_auc(own_prominence, shared, forgotten)
+            other = prominence_auc(other_prominence, shared, forgotten)
+            if own is None or other is None:
+                continue
+            beats.append(1.0 if own > other else (0.5 if own == other else 0.0))
+        if len(beats) >= min_sources:
+            win_rates.append(np.mean(beats))
+    return np.array(win_rates)
+
+
 def rank_biserial(differences: ArrayLike) -> float:
     """
     Matched-pairs rank-biserial correlation, the effect size accompanying a
@@ -937,6 +1043,10 @@ def set_figure_style():
 
 
 def show_content_warning() -> None:
+    """
+    Render the standard content warning for the stimulus and recall
+    transcripts, as Markdown in a notebook and as plain text otherwise.
+    """
     if _imported_from_notebook():
         display(Markdown(CONTENT_WARNING))
     else:
@@ -947,6 +1057,10 @@ def show_content_warning() -> None:
 
 
 def show_source(obj):
+    """
+    Display an object's source with syntax highlighting, so that a notebook can
+    show the implementation of a helper it imports rather than restating it.
+    """
     try:
         src = getsource(obj)
     except TypeError:

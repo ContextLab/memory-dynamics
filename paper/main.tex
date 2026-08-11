@@ -238,9 +238,9 @@ An event removed at a low tolerance is one the path can afford to lose, and an e
 Prominence is read off a participant's immediate recounting alone, so the delayed recounting contributes only the labels.
 We note that this simplification was performed on the full 768-dimensional trajectories, and that the two-dimensional projections in Fig.~\ref{fig:pipeline} serve only to visualize the result.
 
-Prominence separated the episode events a participant went on to drop from the events they kept (mean AUC 0.576, $95\%~\mathrm{CI} = [0.52, 0.63]$, one-sided Wilcoxon signed-rank $T = 755.5,~p = 0.004,~r = 0.46$, $n = 48$ participants with at least one event of each kind; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [24]}]}).
+Prominence separated the episode events a participant went on to drop from the events they kept (mean AUC 0.576, $95\%~\mathrm{CI} = [0.52, 0.63]$, one-sided Wilcoxon signed-rank $T = 755.5,~p = 0.004,~r = 0.46$, $n = 48$ participants with at least one event of each kind; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [28]}]}).
 The events a participant shed were the events their own path could most afford to lose.
-This separation was specific to the person who produced it, in that a participant's own ranking predicted their forgetting better than other participants' rankings did (mean win rate 0.606, $95\%~\mathrm{CI} = [0.54, 0.68]$, $T = 848.0,~p = 0.004,~r = 0.44$, $n = 48$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [25]}]}).
+This separation was specific to the person who produced it, in that a participant's own ranking predicted their forgetting better than other participants' rankings did (mean win rate 0.606, $95\%~\mathrm{CI} = [0.54, 0.68]$, $T = 848.0,~p = 0.004,~r = 0.44$, $n = 48$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [29]}]}).
 We scored each of those comparisons over the episode events both participants described, so no ranking gained an advantage from covering more of the episode.
 
 We applied the same logic one step earlier in the chain, to the episode's own trajectory, and asked whether the events it can most afford to lose are the ones fewest participants described.
@@ -249,9 +249,9 @@ Watching an episode and recounting it appears not to be the same kind of transfo
 
 Three features of this analysis qualify what it can show.
 First, the effect is a modest one, in that prominence orders a pair of events correctly about 58\% of the time against the 50\% expected by chance.
-Second, five of the 53 participants either dropped every event they had described or dropped none, leaving no contrast for prominence to separate and no AUC to compute.
+Second, five of the 53 participants either dropped every event they had described or dropped none, leaving no contrast for prominence to separate and no AUC to compute (\textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [28]}]}).
 Third, two conventions in constructing the measure are consequential: scoring a repeatedly described event by its first removal rather than by its average, and offsetting the delayed counts for endpoint occurrences.
-Both strengthen the result, and while dropping either one on its own leaves the separation reliable, dropping both leaves it at the edge of conventional significance.
+Both strengthen the result, and while dropping either one on its own leaves the separation reliable, dropping both leaves it at the edge of conventional significance (\textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [31]}]}).
 A further limit follows from the resolution at which we measured rather than from the memories themselves.
 Segmenting a trajectory into events is itself a form of simplification, in that it replaces a continuous path with a small number of representative coordinates (one per event) and discards whatever varied within an event.
 Any pruning a participant performed below that scale is invisible to us, absorbed into our own rounding before the trajectory is simplified further.
