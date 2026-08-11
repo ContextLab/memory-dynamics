@@ -274,7 +274,7 @@ Others behave like waypoints, which fall close to the line between their neighbo
 Trajectory simplification provides a way of telling the two apart.
 How far a path can be simplified before a given event is removed grades that event from waypoint to control point, and the events at the waypoint end are the ones a participant tended to drop across the delay.
 That grading is specific to the person who produced it: a participant's own path orders their forgetting better than anyone else's path does.
-The same account does not carry back a step, to what participants left out of their immediate recountings of the episode itself.
+The same account does not, however, carry back a step, to what participants left out of their immediate recountings of the episode itself.
 That transformation may be of a different kind, or our measures may be too coarse to resolve it.
 
 That not all events are equally memorable is well established.
@@ -300,7 +300,7 @@ The same argument implies that what counts as a control point should be idiosync
 An event's status depends on the path it sits within, and different people who watched the same episode construct different paths through it, so the events whose removal would deform one person's trajectory need not be the events that matter for another's.
 This is what we take the specificity of the delayed recalls to mean.
 That a delayed recall can be matched to the immediate recall which preceded it, on the basis of structure alone, is a fingerprint in the sense that the term is used for the neural signatures by which individuals may be identified from functional connectivity or from their responses to naturalistic stimuli~\citep{FinnEtal15,FinnEtal20,AndeEtal20}.
-The parallel lies in the identification logic rather than in the measurement, since ours is a behavioral signature, recovered from what a participant said rather than from how their brain responded.
+The parallel lies in the identification logic rather than in the measurement: ours is a behavioral signature, recovered from what a participant said and not from how their brain responded.
 People differ, for example, in where they place event boundaries in a continuous experience~\citep{SavaEtal23}, in how much of their recall structure they share with others~\citep{ChenEtal17,NguyEtal19}, and in the character of their autobiographical remembering more generally~\citep{PaloEtal18}.
 Repeated retrieval of naturalistic events has been found to stabilize each person's recall without causing different people's recalls to converge~\citep{MeleEtal25}, which is what one would expect if each person is stabilizing their own set of control points.
 
@@ -475,7 +475,8 @@ We then parsed these sentences into overlapping sliding windows that spanned up 
 These windows grew to and shrank from their full size at the beginning and end of a participant's recall sequence---in other words, the first window contained only the first sentence of the participant's recall, the second contained the first two sentences, and so on.
 This ensured that all sentences from a participant's recall transcript appeared an equal number of times (5) in their sequence of sliding windows.
 Finally, we used EmbeddingGemma to transform each sliding window into a text embedding vector.
-Repeated for all recall transcripts, this yielded a separate trajectory characterizing each participant's recall from each of the two experiment sessions. The number of samples in participants' recall trajectories (i.e., the number of sliding windows parsed from their recall transcripts) ranged from 61 to 308 (mean: 136.68; standard deviation: 49.70).
+Repeated for all recall transcripts, this yielded a separate trajectory characterizing each participant's recall from each of the two experiment sessions. The number of samples in participants' recall trajectories (i.e., the number of sliding windows parsed from their recall transcripts) ranged from 61 to 308 (mean: 136.68; standard deviation: 49.93).
+\textbf{[@paxton: this s.d. was 49.70, which is the population form ($\mathrm{ddof} = 0$); 49.93 is the sample form ($\mathrm{ddof} = 1$), which is what the ages, sleep, and coffee figures above all use. Changed for consistency---revert if you meant the population form here.]}
 
 \subsubsection*{Relating episode and recall embedding vectors}
 
