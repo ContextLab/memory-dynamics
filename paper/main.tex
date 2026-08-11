@@ -148,7 +148,7 @@ Given this observation, we used a hidden Markov model (HMM)~\citep{BaumPetr66,Ba
 This yielded 20 events, each summarized (as a single 768-dimensional coordinate) by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}, \textit{Events}).
 
 Whereas the episode's events had to be discovered, segmenting participants' recountings called for a different approach: rather than finding a separate set of events within each recall (as we had for the episode), we sought to determine which of the episode's events a participant was describing at each moment.
-Specifically, we treated the episode's 20 events as a fixed set of states, scored each recall window by its similarity to each of them, and decoded the most probable sequence of episode events being described~\citep{Vite67}.
+Specifically, we treated the episode's 20 events as a fixed set of states, scored each recall window by its similarity to each of them, and decoded the highest-scoring sequence of episode events being described~\citep{Vite67}.
 Because participants may recount events out of order, and may return to an event they have already described (e.g., to add a detail they had left out the first time), we permitted transitions between any pair of states, including re-entry into a state already visited.
 Transitions were penalized according to their type: no penalty for remaining within an event, a modest penalty for advancing to the next, and a larger penalty for any other jump (see \nameref{subsec:eventseg}).
 Collapsing runs of consecutive windows assigned to the same episode event yields, for each recounting, a sequence of recall events together with a label indicating which episode event each one describes (Fig.~\ref{fig:pipeline}, \textit{Events}).
@@ -480,11 +480,13 @@ This served to reduce the recall embeddings' anisotropy (by removing signals dri
 
 \subsubsection*{Event-segmentation}\label{subsec:eventseg}
 
-After constructing trajectories for the episode and each participant's immediate and delayed recall, we used hidden Markov models~\citep[HMMs;][]{BaumPetr66,Rabi89} to segment each trajectory into a sequence of discrete events.
+After constructing trajectories for the episode and each participant's immediate and delayed recall, we segmented each trajectory into a sequence of discrete events using a hidden Markov model~\citep[HMM;][]{BaumPetr66,Rabi89} for the episode, and an HMM-structured decoding procedure, described below, for the recalls.
 Given a number of states $K$, an HMM models an observed time series as a progression through $K$ hidden states, each of which has a characteristic signature in the data (i.e., a pattern that timepoints belonging to that state tend to exhibit) and tends to persist across timepoints with occasional transitions rather than fluctuating freely.
 Because states persist, inferring the most probable state at each timepoint segments the observed time series into a sequence of events---i.e., spans of contiguous timepoints with the same most-probable state.
 
-We segmented the episode trajectory into events using the HMM implemented in the BrainIAK toolbox~\citep{KumaEtal21}, which jointly learns a mean pattern for each of $K$ states and the set of transitions between them via the Baum-Welch algorithm~\citep{BaumEtal70}, with the added constraint that each state is visited exactly once in a strict left-to-right order~\citep{BaldEtal17}.
+We segmented the episode trajectory into events using the HMM implemented in the BrainIAK toolbox~\citep{KumaEtal21}, which alternates between estimating a mean pattern for each of $K$ states and re-inferring the segmentation from those patterns by forward-backward inference~\citep{BaumEtal70}, with the added constraint that each state is visited exactly once in a strict left-to-right order~\citep{BaldEtal17}.
+Only the states' mean patterns are learned; the transition probabilities are fixed in closed form by $K$ and the number of timepoints, giving every state the same expected duration.
+We enabled the toolbox's split-merge option (five proposals per fitting iteration), which allows the fit to redistribute event boundaries and yields better fits when events differ substantially in length~\citep{KumaEtal21}.
 To select an appropriate number of states (i.e., events) for the episode, we used an optimization procedure we developed in prior work~\citep{HeusEtal21} that aims to identify the single timescale of event representations emphasized most heavily in the episode's narrative structure.
 We began by segmenting the (mean-centered) episode trajectory into $K$ events for each $K$ between 2 and 50, inclusive.
 For each candidate segmentation, we then computed the cosine similarity between each pair of timepoints assigned to the same event, and between each pair of timepoints assigned to different events.
@@ -498,11 +500,12 @@ Essentially, rather than re-learning separate sets of state representations from
 First, we mean-centered the sequence of event-average embedding vectors for the episode, and each participant's sequence of per-window embedding vectors from each session, separately.
 For each given recall trajectory, we then computed the cosine similarity between the embedding vector for each recall window and the event-average embedding vector for each of the 20 episode events.
 This yielded a number-of-windows by number-of-episode-events (20) similarity matrix.
-We then treated the episode events as the hidden states of a hidden Markov model with fixed parameters, and treated each recall window's profile of similarities to the episode events, $z$-scored across all window-event pairs, as its distribution of emission scores over states.
+We then treated the episode events as the hidden states of a hidden Markov model with fixed parameters, and treated each recall window's profile of similarities to the episode events, $z$-scored across all window-event pairs, as its vector of emission scores over states.
 We imposed an ergodic transition structure (i.e., we allowed transitions from any state to any other state, since participants may recall the episode events out of order, and allowed states to be re-entered multiple times, since participants may revisit earlier events in their recalls) governed by separate additive transition penalties for forward-one transitions and all other transitions.
 Specifically, we imposed no penalty for remaining in the current state, a small penalty (1.5 normalized emissions units) for transitioning from a given state to the next (i.e., transitioning from recalling episode event $n$ to recalling episode event $n + 1$), and a larger penalty (3.0 normalized emissions units) for all other transitions.
 %We $z$-scored each recall trajectory's distribution of episode event-similarity scores so that these transition penalties had a constant weight across recall trajectories with different lengths and overall similarities to the episode.
-Finally, we decoded the most probable sequence of episode-event labels using the Viterbi algorithm~\citep{Vite67}, collapsed runs of consecutive identically labeled recall windows into events, and averaged the embedding vectors over windows within each event.
+Because neither the emission scores nor the transition penalties are log-probabilities, this model has the structure of an HMM without being a probabilistic one, and the sequence it selects is the highest-scoring sequence rather than the most probable one.
+Finally, we decoded that sequence of episode-event labels using the Viterbi algorithm~\citep{Vite67}, collapsed runs of consecutive identically labeled recall windows into events, and averaged the embedding vectors over windows within each event.
 This procedure yielded, for each participant's recall from each session, a sequence of event-average embedding vectors and a set of labels denoting which episode event each recall event corresponded to.
 
 
