@@ -69,7 +69,7 @@ We attend closely to some aspects of a scene while ignoring others, and we tend 
 But once an experience has ended, neither the experience itself nor our moment-to-moment perception of it remains available, to us or to anyone else.
 What remains is instead the product of a further distillation, through which our perception of the experience is reduced to something our memory systems can store and later reconstruct.
 Which aspects of an experience survive this second distillation may depend on what we attended to, what we anticipated would matter later, what we found interesting, and the thoughts, motivations, and biases we brought with us.
-Because remembering entails reconstructing an experience instead of replaying it, the resulting account often preserves the general ``shape'' of what happened while discarding many of its particulars~\citep{Bart32,SchaEtal11,Scha12}.
+Because remembering is reconstructive, the resulting account often preserves the general ``shape'' of what happened while discarding many of its particulars~\citep{Bart32,SchaEtal11,Scha12}.
 The units over which these distillations operate appear to be events. People segment continuous experience into discrete episodes at moments of change, and those boundaries shape what is remembered afterwards~\citep{RadvZack17,BaldEtal17}.
 In prior work we characterized this transformation geometrically by modeling an experience and a person's recounting of it as trajectories through a semantic space, and asking which properties of the experience's trajectory are preserved in the recounting~\citep{HeusEtal21}.
 
@@ -234,7 +234,7 @@ Every measure to this point reports only whether two things are more or less ali
 To characterize the transformation itself, we hypothesized that if a delayed recounting is a simplified version of an earlier one, the events the earlier one could most afford to lose should be the events that go missing.
 We used the Ramer-Douglas-Peucker algorithm~\citep{Rame72,DougPeuc73} (a standard method for simplifying polylines) to simplify each participant's immediate recall trajectory, discarding events that lay close to the line between their neighbors while retaining those whose removal would change the path's shape.
 How much detail the algorithm removes depends on a tolerance ($\epsilon$, expressed as a cosine distance), and a tolerance chosen by reference to the delayed recounting would fit the prediction to the outcome it is meant to predict.
-We therefore swept $\epsilon$ across its full range in steps of 0.01 instead of selecting a value, and scored each event by its \textit{prominence}: the tolerance at which simplification first removes it (see \nameref{subsec:stats}).
+We therefore swept $\epsilon$ across its full range in steps of 0.01 without selecting a value, and scored each event by its \textit{prominence}: the tolerance at which simplification first removes it (see \nameref{subsec:stats}).
 An event removed at a low tolerance is one the path can afford to lose, and an event surviving to a high tolerance is one it cannot.
 Prominence is read off a participant's immediate recounting alone, so the delayed recounting contributes only the labels.
 We note that this simplification was performed on the full 768-dimensional trajectories, and that the two-dimensional projections in Fig.~\ref{fig:pipeline} serve only to visualize the result.
@@ -245,12 +245,14 @@ This separation was specific to the person who produced it: a participant's own 
 We scored each of those comparisons over the episode events both participants described, so no ranking gained an advantage from covering more of the episode.
 
 Prominence is not the only feature of a recounting's shape that predicts what a participant will forget.
-The turning angle at an event registers how abruptly a recounting changes direction there, however far the path travels either side of it, and it separated the events a participant dropped from the events they kept about as well as prominence did (mean AUC 0.580, $95\%~\mathrm{CI} = [0.52, 0.64]$, one-sided Wilcoxon signed-rank $T = 795.5,~p = 0.007,~r = 0.41$, $n = 48$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [32]}]}).
-The direction of that effect is the surprising part: sharper corners were dropped more often, which is the reverse of what calling them control points would lead one to expect.
-Splitting each participant's events at their median prominence, and scoring both measures within each half, locates where each one carries its information.
+The turning angle at an event registers how abruptly a recounting changes direction there, however far the path travels either side of it.
+It separated the events a participant dropped from the events they kept about as well as prominence did (mean AUC 0.580, $95\%~\mathrm{CI} = [0.52, 0.64]$, one-sided Wilcoxon signed-rank $T = 795.5,~p = 0.007,~r = 0.41$, $n = 48$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [32]}]}).
+Sharper corners were dropped more often, which is the reverse of what calling them control points would lead one to expect.
+To locate where each measure carries its information, we split each participant's events at their median prominence and scored both measures within each half.
 Prominence separated dropped from kept events only in the more prominent half (AUC 0.629, $p = 0.007$, $n = 35$), and the turning angle only in the less prominent half (AUC 0.614, $p = 0.003$, $n = 44$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [33]}]}).
 We chose that split after seeing the data, and report it as a description of where each measure applies and not as a further result.
-The two measures therefore divide the work between them: prominence discriminates only among the events whose removal would cost the path its coarse shape, and within the rest it is the sharpness of the turn that separates what goes from what stays.
+The two measures therefore divide the work between them.
+Prominence discriminates only among the events whose removal would cost the path its coarse shape, and within the rest it is the sharpness of the turn that separates what goes from what stays.
 What a recounting keeps is better described as what its coarse shape still needs than as the moments that stand out in it.
 
 We applied the same logic one step earlier in the chain, to the episode's own trajectory, and asked whether the events it can most afford to lose are the ones fewest participants described.
@@ -260,7 +262,7 @@ Watching an episode and recounting it appears not to be the same kind of transfo
 Three features of the simplification analysis qualify what it can show.
 First, the effect is a modest one---prominence orders a pair of events correctly about 58\% of the time, against the 50\% expected by chance.
 Second, the analysis covers the 48 participants who dropped at least one event, since the remaining five dropped none and so leave no contrast for prominence to separate (\textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [28]}]}).
-Third, two conventions in constructing the measure are consequential: scoring a repeatedly described event by its first removal instead of its average, and offsetting the delayed counts for endpoint occurrences.
+Third, two conventions in constructing the measure are consequential: scoring a repeatedly described event by its first removal rather than its average, and offsetting the delayed counts for endpoint occurrences.
 Both strengthen the result, and while dropping either one on its own leaves the separation reliable, dropping both leaves it at the edge of conventional significance (\textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [31]}]}).
 A further limit follows from the resolution at which we measured: segmenting a trajectory into events discards whatever varied within an event, so any pruning a participant performed below that scale is invisible to us.
 Overall, the relationships reported above describe a tendency across the sample at a fixed common resolution, and they do not imply that every delayed recounting is a visibly pruned copy of its predecessor.
@@ -291,7 +293,7 @@ Memories are already known to shed perceptual detail as they age and as they are
 Our results add a change in where that asymmetry comes from.
 Centrality is ordinarily established from the outside, by asking raters which details matter to the plot, or by sorting content into categories fixed in advance.
 Here it follows from the geometry of an individual's own trajectory, and it is computable from that trajectory alone.
-An event is central because of where it sits relative to the rest of the path, and not because a rater judged it to be important.
+An event is central because of where it sits relative to the rest of the path rather than because a rater judged it to be important.
 This turns the observation that some events are more memorable than others into a candidate explanation of why.
 
 Why should waypoints be the events that go?
@@ -344,7 +346,7 @@ A related point has been made from the perspective of context reinstatement, nam
 We did not test this picture, and our data cannot distinguish it from other mechanisms that would leave the same trace in a transcript, but it offers a natural reading of why a delayed recounting should resemble an earlier recounting more closely than the experience that both describe.
 
 Whatever the underlying mechanism, our account suggests what might become of a memory that is recounted many times.
-If each retelling preserves control points and sheds waypoints, and if each retelling then becomes the trajectory that the next one simplifies, a memory might converge over many retellings toward a skeleton of control points, with the intervening detail increasingly implied instead of stated.
+If each retelling preserves control points and sheds waypoints, and if each retelling then becomes the trajectory that the next one simplifies, a memory might converge over many retellings toward a skeleton of control points, with the intervening detail increasingly implied and left unstated.
 Whether that convergence has a floor, and whether the surviving skeleton continues to resemble the original experience or drifts steadily away from it, are questions our data cannot answer.
 The possibility seems worth taking seriously outside the laboratory, since the settings in which people are asked to recount an experience repeatedly are often the settings in which accuracy matters most.
 An eyewitness who has already described what they saw, for example, is describing a description the next time they are asked~\citep{ChanEtal09b}.
@@ -355,7 +357,7 @@ Do the events that behave like control points in a recounting correspond to the 
 Can they be predicted in advance from the stimulus, or are they recoverable only after the fact, from a particular person's path?
 Does a listener who hears a recounting actually re-traverse the speaker's trajectory, filling in the waypoints that the speaker left out?
 Would causal and importance judgments, collected for this same episode, show that geometric control points and causally pivotal events are one notion arrived at by different routes?
-Questions of this kind become tractable once what a person retains from an experience is treated as a shape that can be measured, not as a quantity that can only be counted.
+Questions of this kind become tractable once what a person retains from an experience is treated as a shape that can be measured rather than as a quantity that can only be counted.
 That shape may be recovered from what someone says, and control points are identifiable from a single recounting.
 It may eventually be possible to ask what a student will still carry from a lecture, or what a patient will still carry from a conversation with their physician, before the delay that would reveal it has passed.
 We hope that this offers a way of thinking about forgetting as something other than loss: what falls away between one telling and the next is largely what the remaining structure already implies, and what survives is the shape in which an experience can be carried forward and handed on.
@@ -448,7 +450,7 @@ The comparison between how closely a delayed recounting aligned with the episode
 Spearman and Kendall correlations were two-sided throughout.
 
 Simplifying a trajectory requires deciding how much detail to remove, and a tolerance chosen by reference to the delayed recall would fit the predictor to the outcome it is meant to predict.
-We avoided the choice by sweeping the tolerance instead of selecting one.
+We avoided the choice by sweeping the tolerance and never selecting one.
 Each recall event then has a \textit{prominence}, the tolerance at which simplification first removes it, and prominence follows from the immediate recall trajectory alone.
 Events removed at a low tolerance lie close to the line between their neighbors, whereas events that survive to a high tolerance are those whose removal would change the path's shape.
 The delayed recall never enters the construction of this measure, and supplies only the labels against which it is scored.
