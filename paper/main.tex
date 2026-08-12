@@ -250,6 +250,8 @@ The direction of that effect is the surprising part: sharper corners were droppe
 Splitting each participant's events at their median prominence, and scoring both measures within each half, locates where each one carries its information.
 Prominence separated dropped from kept events only in the more prominent half (AUC 0.629, $p = 0.007$, $n = 35$), and the turning angle only in the less prominent half (AUC 0.614, $p = 0.003$, $n = 44$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [33]}]}).
 We chose that split after seeing the data, and report it as a description of where each measure applies and not as a further result.
+The two measures therefore divide the work between them: prominence discriminates only among the events whose removal would cost the path its coarse shape, and within the rest it is the sharpness of the turn that separates what goes from what stays.
+What a recounting keeps is better described as what its coarse shape still needs than as the moments that stand out in it.
 
 We applied the same logic one step earlier in the chain, to the episode's own trajectory, and asked whether the events it can most afford to lose are the ones fewest participants described.
 They are not (Spearman's $\rho = 0.22,~p = 0.39$, $95\%~\mathrm{CI} = [-0.32, 0.69]$, $n = 18$ events; \textbf{[CHECK THIS: \texttt{episode-simplification-analyses.ipynb}, cell \texttt{In [5]}]}).
@@ -282,12 +284,6 @@ How far a path can be simplified before a given event is removed grades that eve
 That grading is specific to the person who produced it: a participant's own path orders their forgetting better than anyone else's path does.
 The same account does not, however, carry back a step, to what participants left out of their immediate recountings of the episode itself.
 That transformation may be of a different kind, or our measures may be too coarse to resolve it.
-
-The two geometric measures we examined divide the work between them, and the division bears on what simplification is capturing.
-Prominence depends jointly on how sharply a path turns at an event and on how far it travels either side of that turn, and it discriminates most finely among the events whose removal would cost the path its coarse shape.
-Among the events it treats as disposable it is close to flat, and there the turning angle takes over, so that within that set the sharper the corner the more likely the event was to go.
-An abrupt turn is the kind of moment an intuitive reading would call distinctive, so the two results together caution against equating control-point status with distinctiveness.
-What a recounting keeps is better described as what its coarse shape still needs, and what it sheds includes the sharp, slight excursions that the surrounding path already implies.
 
 That not all events are equally memorable is well established.
 Gist and central details, for example, survive delays that perceptual and peripheral details do not~\citep{HeusEtal21,SekeEtal16,SekeEtal18,GilbMosc21}, and autobiographical narratives shed some classes of content faster than others~\citep{DiamLevi20,SuEtal26}.
