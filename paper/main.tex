@@ -197,7 +197,7 @@ In other words, some of the episode's events were consistently more likely to be
 
 This profile also changed little across the delay: the proportion of participants describing a given event immediately was strongly related to the proportion describing it a week later (Spearman's $\rho = 0.795,~p = 2.8 \times 10^{-5}$, $n = 20$ events; \textbf{[CHECK THIS: \texttt{event-recall-analyses.ipynb}, cell \texttt{In [10]}]}).
 The events most participants omitted after the delay were largely the ones they had omitted to begin with.
-This relationship is symmetric, so it shows that the two profiles agree, not that the earlier one produced the later one.
+This relationship is symmetric, so it shows only that the two profiles agree; it cannot show that the earlier one produced the later one.
 We note that these are statements about events, averaged over participants, and that they say nothing about whether any of this structure is specific to a given individual.
 For example, two participants could produce identical profiles while recounting the same events in quite different orders, and in quite different terms.
 
@@ -218,7 +218,7 @@ Ties were common enough at the top of these rankings that only 2 of the 53 parti
     \label{fig:recall-structure}
 \end{figure}
 
-Order, however, provides only a coarse description of a recounting, in that it treats events as interchangeable labels and discards everything about how their contents relate to one another (e.g., whether two events were described in similar terms or in quite different ones).
+Order, however, provides only a coarse description of a recounting, since it treats events as interchangeable labels and discards everything about how their contents relate to one another (e.g., whether two events were described in similar terms or in quite different ones).
 An important feature of our approach is that it places the episode and both recountings in a common embedding space, which allows us to ask a stronger question: whether the \textit{structure} of a participant's path through the episode's content is preserved, and not merely the sequence in which they visited it.
 To assess this, we compared event sequences using dynamic time warping (DTW), which aligns two sequences of differing length by finding the order-preserving correspondence between their events that minimizes the total distance between matched pairs~\citep{Vint68,SakoChib78}.
 The average distance (here, cosine distance) across matched pairs provides a measure of how similar the two sequences' structures are.
@@ -310,7 +310,7 @@ The same argument implies that what counts as a control point should be idiosync
 An event's status depends on the path it sits within, and different people who watched the same episode construct different paths through it, so the events whose removal would deform one person's trajectory need not be the events that matter for another's.
 This is what we take the specificity of the delayed recalls to mean.
 That a delayed recall can be matched to the immediate recall which preceded it, on the basis of structure alone, is a fingerprint in the sense that the term is used for the neural signatures by which individuals may be identified from functional connectivity or from their responses to naturalistic stimuli~\citep{FinnEtal15,FinnEtal20,AndeEtal20}.
-The parallel lies in the identification logic, not in the measurement: ours is a behavioral signature recovered from what a participant said, where theirs are recovered from how the brain responded.
+The parallel lies in the identification logic alone: ours is a behavioral signature recovered from what a participant said, where theirs are recovered from how the brain responded.
 People differ, for example, in where they place event boundaries in a continuous experience~\citep{SavaEtal23}, in how much of their recall structure they share with others~\citep{ChenEtal17,NguyEtal19}, and in the character of their autobiographical remembering more generally~\citep{PaloEtal18}.
 Retelling has been found to entrench what each person includes without drawing different people toward a common account~\citep{MeleEtal25}, which is what one would expect if each person is stabilizing their own set of control points.
 
