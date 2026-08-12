@@ -92,13 +92,14 @@ We collected two recountings of the same experience from each participant, which
 If retrieval recovered the original experience in an uncorrupted form, then both recountings should be about equally similar to the experience itself.
 We find instead that the structure of a participant's delayed recounting is more similar to that of their own immediate recounting than to that of the original episode.
 It is also more similar to their own immediate recounting than to other participants' immediate recountings, to the degree that an individual's immediate recall can be identified from their delayed recall on the basis of this structure alone.
-Retrieval after a delay therefore appears to be governed by a person-specific distillation, not by the episode as it was first experienced.
+Retrieval after a delay therefore appears to draw on a person-specific distillation of the episode more than on the episode as it was first experienced.
 
 Capturing the semantic geometry of individuals' recalls at different points in time also offers the opportunity to characterize the transformations undergone by our memories beyond an initial recounting.
 For example, if individuals' recountings tend to retain their idiosyncratic structures after a delay, how \textit{do} the structures of our memories tend to change with time?
 There is a particular qualitative change our memories undergo as we naturally forget aspects of experience, implied by common descriptors such as ``fading'', ``blurring'', becoming ``fuzzy'', or ``decaying''~\citep{Thor13}.
 But the nature of this change can be difficult to characterize more concretely.
-Here we show that this transformation is well described as geometrically simplifying the path through semantic space an individual follows as they recount an experience, in that an existing method for removing detail from a geometric curve ranks the events in a participant's immediate recall by how much of the path's shape their removal would cost, and that ranking predicts which events the individual will forget following the delay.
+Here we show that this transformation is well described as geometrically simplifying the path through semantic space an individual follows as they recount an experience.
+An existing method for removing detail from a geometric curve ranks the events in a participant's immediate recall by how much of the path's shape their removal would cost, and that ranking predicts which events the individual will forget following the delay.
 
 
 \section*{Results}
@@ -252,9 +253,7 @@ First, the effect is a modest one---prominence orders a pair of events correctly
 Second, the analysis covers the 48 participants who dropped at least one event, since the remaining five dropped none and so leave no contrast for prominence to separate (\textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [28]}]}).
 Third, two conventions in constructing the measure are consequential: scoring a repeatedly described event by its first removal instead of its average, and offsetting the delayed counts for endpoint occurrences.
 Both strengthen the result, and while dropping either one on its own leaves the separation reliable, dropping both leaves it at the edge of conventional significance (\textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [31]}]}).
-A further limit follows from the resolution at which we measured, not from the memories themselves.
-Segmenting a trajectory into events is itself a form of simplification, replacing a continuous path with a small number of representative coordinates (one per event) and discarding whatever varied within an event.
-Any pruning a participant performed below that scale is invisible to us, absorbed into our own rounding before the trajectory is simplified further.
+A further limit follows from the resolution at which we measured: segmenting a trajectory into events discards whatever varied within an event, so any pruning a participant performed below that scale is invisible to us.
 Overall, the relationships reported above describe a tendency across the sample at a fixed common resolution, and they do not imply that every delayed recounting is a visibly pruned copy of its predecessor.
 
 \section*{Discussion}
@@ -279,7 +278,7 @@ That transformation may be of a different kind, or our measures may be too coars
 
 That not all events are equally memorable is well established.
 Gist and central details, for example, survive delays that perceptual and peripheral details do not~\citep{HeusEtal21,SekeEtal16,SekeEtal18,GilbMosc21}, and autobiographical narratives shed some classes of content faster than others~\citep{DiamLevi20,SuEtal26}.
-Memories also become more semantic and less perceptually detailed with the passage of time and with repeated remembering~\citep{LifaEtal21}, and events with stronger connections to the events around them are better remembered than more isolated ones~\citep{LeeChen22,AntoEtal24}.
+Memories are already known to shed perceptual detail as they age and as they are retold~\citep{LifaEtal21}, and events bound tightly to those around them survive better than isolated ones~\citep{LeeChen22,AntoEtal24}.
 Our results add a change in where that asymmetry comes from.
 Centrality is ordinarily established from the outside, by asking raters which details matter to the plot, or by sorting content into categories fixed in advance.
 Here it follows from the geometry of an individual's own trajectory, and it is computable from that trajectory alone.
@@ -300,9 +299,9 @@ The same argument implies that what counts as a control point should be idiosync
 An event's status depends on the path it sits within, and different people who watched the same episode construct different paths through it, so the events whose removal would deform one person's trajectory need not be the events that matter for another's.
 This is what we take the specificity of the delayed recalls to mean.
 That a delayed recall can be matched to the immediate recall which preceded it, on the basis of structure alone, is a fingerprint in the sense that the term is used for the neural signatures by which individuals may be identified from functional connectivity or from their responses to naturalistic stimuli~\citep{FinnEtal15,FinnEtal20,AndeEtal20}.
-The parallel lies in the identification logic, not in the measurement: ours is a behavioral signature, recovered from what a participant said and not from how their brain responded.
+The parallel lies in the identification logic, not in the measurement: ours is a behavioral signature recovered from what a participant said, where theirs are recovered from how the brain responded.
 People differ, for example, in where they place event boundaries in a continuous experience~\citep{SavaEtal23}, in how much of their recall structure they share with others~\citep{ChenEtal17,NguyEtal19}, and in the character of their autobiographical remembering more generally~\citep{PaloEtal18}.
-Repeated retrieval of naturalistic events has been found to stabilize each person's recall without causing different people's recalls to converge~\citep{MeleEtal25}, which is what one would expect if each person is stabilizing their own set of control points.
+Retelling has been found to entrench what each person includes without drawing different people toward a common account~\citep{MeleEtal25}, which is what one would expect if each person is stabilizing their own set of control points.
 
 Everything we measured came from a verbal recounting, and so a reasonable objection is that control points and waypoints are properties of storytelling and not of memory.
 We think that dichotomy is less clean than it first appears.
@@ -318,11 +317,11 @@ Our measures are symmetric and cannot establish direction, and the design lacks 
 Designs that do include such a control, in which retrieved information is later found nearer to what was retrieved than to what was originally presented, offer the strongest evidence that retrieval writes its own output back into the trace~\citep{BridPall12,NadeEtal00,NadeHard09}.
 Second, we used one episode, one delay, and one intervening recounting, and it remains to be seen how the picture changes across stimuli, across longer intervals, or across many successive retellings~\citep{ChanEtal09b,LifaEtal21}.
 Third, control-point status is defined with respect to one particular simplification algorithm, and a different algorithm might well order the same events differently.
-A measure this one sets aside makes the point.
 The turning angle at an event, which registers how abruptly a recounting changes direction there however far it travels, separated the events a participant dropped from the events they kept about as well as prominence did (mean AUC 0.580, $95\%~\mathrm{CI} = [0.52, 0.64]$, one-sided Wilcoxon signed-rank $T = 795.5,~p = 0.007,~r = 0.41$, $n = 48$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [32]}]}).
 Sharper corners were dropped more often, which inverts what the control-point reading would lead one to expect of them.
-Splitting each participant's events at their median prominence suggests that the two measures are complementary: prominence separated dropped from kept events only among the events it ranked as structural (AUC 0.629, $p = 0.007$), and the turning angle only among the events it ranked as disposable (AUC 0.614, $p = 0.003$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [33]}]}).
-That split was chosen after seeing the data, so we treat it as a description of where each measure carries information and not as a further result, but it does mark the boundary of what simplification alone can say: it grades the events whose removal would cost the path its coarse shape, and leaves the remainder undifferentiated, where abruptness still tracks what goes.
+Splitting each participant's events at their median prominence, and scoring both measures within each half, suggests that the two are complementary: prominence separated dropped from kept events only in the more prominent half (AUC 0.629, $p = 0.007$, $n = 35$), and the turning angle only in the less prominent half (AUC 0.614, $p = 0.003$, $n = 44$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [33]}]}).
+That split was chosen after seeing the data, so we report it as a description of where each measure carries information and not as a further result.
+It does mark the boundary of what simplification alone can say: it grades the events whose removal would cost the path its coarse shape, and leaves the rest undifferentiated.
 Fourth, our procedure matches every recall event to an event in the episode, so content that a participant introduced but that does not appear in the episode falls outside what we are able to measure.
 Fifth, our measure of what connects one event to another is built from semantic similarity, and so it cannot on its own distinguish events that are close in meaning from events that are causally linked~\citep{LeeChen22,AntoEtal24,XuEtal24b}.
 Sixth, segmenting a trajectory into events is itself a form of simplification, one performed by our analysis and not by the participant, and it sets the resolution at which everything else is measured.
@@ -331,7 +330,7 @@ Any detail a participant lost below that scale is therefore absorbed into our ow
 Our choice of how finely to segment, together with the length of the episode and of the recall period, therefore places a floor on the forgetting we are able to detect.
 A participant whose recounting appears unchanged may simply have changed it in ways too fine for us to resolve.
 We take some reassurance from the fact that the same segmentation is fit and applied to the episode and to both recountings alike.
-It therefore provides a common basis for comparison, and not a transformation applied selectively to the sequences being compared.
+It therefore provides a common basis for comparison; it is not a transformation applied selectively to the sequences being compared.
 
 Speculatively, one way to think about how this might work is in terms of attractor dynamics~\citep{Hopf82}.
 Rather than supposing that we hold literal duplicate copies of a memory, we might imagine that laying down a memory carves out a basin in an energy landscape, and that remembering the experience deepens a basin near wherever we happen to land.
@@ -438,7 +437,9 @@ Finally, we manually reviewed all LLM-formatted transcripts to identify and corr
 \subsubsection*{Statistics}\label{subsec:stats}
 
 All comparisons were made within participant, across the two recall sessions.
-Wilcoxon signed-rank tests were one-sided where our alternative hypothesis was directional (that participants recount fewer of the episode's events after the delay, and that a participant's delayed recounting matches their own immediate recounting \textit{better than} it matches other participants' immediate recountings).
+Wilcoxon signed-rank tests were one-sided where our alternative hypothesis was directional: that participants recount fewer of the episode's events after the delay, that a participant's delayed recounting matches their own immediate recounting \textit{better than} it matches other participants' immediate recountings, and that a geometric ranking of a participant's events separates the events they dropped from the events they kept \textit{better than} chance, whether the ranking is their own or another participant's.
+Effect sizes accompanying these tests are matched-pairs rank-biserial correlations.
+Confidence intervals are percentile bootstrap intervals over participants, except for intervals on a proportion, which are Wilson score intervals.
 The comparison between how closely a delayed recounting aligned with the episode and with the participant's own immediate recounting was two-sided.
 Spearman and Kendall correlations were two-sided throughout.
 
@@ -457,6 +458,9 @@ We treated an event as forgotten when the interior immediate recall described it
 We summarized how well prominence separates the events a participant dropped from the events they kept as an area under the ROC curve, for which 0.5 is chance, and tested those values against 0.5 across participants.
 We then repeated the comparison against other participants' rankings, scoring each pair over the episode events both participants described so that no ranking gained an advantage from covering more of the episode.
 A participant enters that second test once at least five other rankings are comparable to theirs on at least three shared events.
+
+The turning angle reported among the limitations is scored the same way, with two differences.
+An episode event described more than once takes the average of its occurrences, since no occurrence of an angle is privileged the way a first removal is, and the split by median prominence is restricted to participants with at least six scored events and to halves containing both a dropped and a retained event, which is why it covers 35 and 44 participants where the tests above cover 48.
 
 \subsubsection*{Constructing episode and recall trajectories}\label{subsec:text-embedding}
 
