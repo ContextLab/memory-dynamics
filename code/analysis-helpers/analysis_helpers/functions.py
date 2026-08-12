@@ -1092,3 +1092,59 @@ def split_sentences(text: str) -> list[str]:
     """
     return [s.strip() for s in re.findall(sentence_pattern, text, re.VERBOSE)]
 
+
+def turning_angles(
+        trajectory: ArrayLike,
+        event_matches: ArrayLike,
+        dedup: str = 'mean'
+) -> dict[int, float]:
+    """
+    How sharply a recall trajectory changes direction at each described episode
+    event.
+
+    The turning angle at a recall event is the angle between the segment
+    arriving at it and the segment leaving it, so 0 means the path continues
+    straight on and larger values mean an increasingly abrupt change of
+    direction. This is a purely local measure, and unlike `event_prominence` it
+    ignores how far the path travels: a brief digression and a long excursion
+    turning through the same angle score identically.
+
+    The first and last recall events are excluded, since a turning angle needs a
+    neighbor on either side. Episode events described by more than one recall
+    event are resolved by averaging their occurrences under `'mean'` (the
+    default) or by taking the sharpest under `'max'`.
+
+    Parameters
+    ----------
+    trajectory : array-like of shape (n_recall_events, n_features)
+        A participant's recall event sequence.
+    event_matches : array-like of shape (n_recall_events,)
+        The episode event each recall event describes.
+    dedup : {'mean', 'max'}, optional
+        How to score an episode event described by more than one recall event.
+
+    Returns
+    -------
+    dict
+        Turning angle, in radians, for each episode event described by an
+        interior recall event.
+    """
+    if dedup not in ('mean', 'max'):
+        raise ValueError(f"dedup must be 'mean' or 'max', not {dedup!r}")
+    trajectory = np.asarray(trajectory)
+    event_matches = np.asarray(event_matches)
+
+    occurrences = {}
+    for recall_event in range(1, len(trajectory) - 1):
+        arriving = trajectory[recall_event] - trajectory[recall_event - 1]
+        leaving = trajectory[recall_event + 1] - trajectory[recall_event]
+        lengths = np.linalg.norm(arriving) * np.linalg.norm(leaving)
+        # a repeated coordinate leaves the direction undefined; treat it as straight
+        angle = 0.0 if lengths == 0 else float(
+            np.arccos(np.clip(np.dot(arriving, leaving) / lengths, -1.0, 1.0))
+        )
+        occurrences.setdefault(int(event_matches[recall_event]), []).append(angle)
+
+    resolve = np.mean if dedup == 'mean' else max
+    return {event: float(resolve(values)) for event, values in occurrences.items()}
+
