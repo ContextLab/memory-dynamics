@@ -176,9 +176,19 @@ This resulted in a trajectory characterizing the dynamic semantic content of eac
 
     \caption{\textbf{Participants' delayed recalls resemble their own immediate recalls.} CAPTION}
 
-    \label{fig:recall-order}
+    \label{fig:dtw}
 \end{figure}
 
+
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/source/rdp-figure}
+
+    \caption{\textbf{Geometrically simplifying immediate recall predicts forgetting in delayed recall.} CAPTION}
+
+    \label{fig:rdp}
+\end{figure}
 
 .
 
@@ -398,7 +408,7 @@ We then transcribed each participant's immediate and delayed verbal recall of th
 Our transcription process consisted of three steps: an initial manual transcription, a two-pass prose-formatting conversion with a large language model, and a final manual cleanup and correction step. 
 First, we manually transcribed each recall audio file collected during the experiment.
 These initial transcripts reflected participants' spoken recalls verbatim, without any punctuation or additional formatting, and including disfluencies, stuttered repetitions, and other artifacts common to unrehearsed speech.
-However, since transformer models (such as we used to obtain text embeddings of participants' recalls) are trained almost exclusively on written text, structural conventions like sentence breaks, punctuation, and capitalization provide an important signal these models leverage to contextual other tokens (e.g., words) and construct a representation of the text's overall meaning.
+However, since transformer models (such as we used to obtain text embeddings of participants' recalls) are trained almost exclusively on written text, structural conventions like sentence breaks, punctuation, and capitalization provide an important signal these models leverage to contextualize other tokens (e.g., words) and construct a representation of the text's overall meaning.
 Meanwhile, speech-native phenomena such as stuttered repetitions and filler words (``like'', ``um'', etc.) that are comparatively rare in written text contribute out-of-distribution noise that can be expected to degrade embedding fidelity, and prior work has shown that automated removal of these phenomena improves performance on downstream tasks that assume clean, written-style input~\citep{ChenEtal22,WangEtal10b}.
 We therefore used a large language model~\citep[Qwen3.5 122b;][]{Qwen26} to convert participants' recall transcripts to a structure and style more typical of written text.
 We used the \texttt{langchain\_dartmouth} Python package~\citep{StonEtal25} to implement this conversion as two sequential passes over each transcript.
@@ -406,7 +416,7 @@ In the first pass, we prompted the model to split the transcript into sentences 
 In the second pass, we prompted the model to remove all instances of ``like'' used as a filler word.
 We removed filler ``like'' instances in a separate pass because of their high frequency of occurrence in the transcripts and the additional effort to required to distinguish them from meaningful uses of ``like.''
 The full texts of our prompts for both passes can be found in \suppMethods.
-Finally, we manually reviewed all LLM-formatted transcripts to identify and correct any errors, ensure sentence breaks were appropriate and consistent across participants, confirm that no content was improperly added to or removed from the transcripts, and resolve any ambiguities based on the prosody of participants' original recall audio.
+Finally, we manually reviewed all LLM-formatted transcripts to identify and correct any errors, ensure sentence breaks were appropriate and consistent across participants and sessions, confirm that no content was improperly added to or removed from the transcripts, and resolve any ambiguities based on the prosody of participants' original recall audio.
 
 
 \subsection*{Analysis}
@@ -461,10 +471,10 @@ Similarly, mean-centering both the episode and recalls before relating their emb
 Our approach to mean-centering the recalls was guided by the particular latent representation we wanted to remove versus retain.
 In segmenting each participant's recall trajectory from each session into events (see \nameref{subsec:eventseg}), our goal was to discriminate between embedding vectors strictly within a single recall sequence in order to identify temporally transient content-related patterns.
 We therefore centered each recall trajectory (in addition to the episode) on its own centroid to remove non-discriminative representations (e.g., register, broad-scale thematic content) and maximize the contrast between vectors within that single sequence.
-However, the analyses shown in Figures \textbf{REF TO DTW FIG} and \textbf{REF TO RDP FIG} entailed comparing sequences of recall events not only to the episode, but also to each other, both within- and across-participants, to examine whether within-participant similarities tended to exceed across-participant similarities. 
+However, the analyses shown in Figures~\ref{fig:dtw} and \ref{fig:rdp} entailed comparing sequences of recall events not only to the episode, but also to each other, both within- and across-participants, to examine whether within-participant similarities tended to exceed across-participant similarities. 
 Here our goal was to remove representational artifacts that could work to bias our results towards significance.
-Specifically, participants' idiolects (i.e., particular speaking styles and sets of words with which they desecribe the episode) will influence the embedding representations of their recalls in ways that tend to be similar between their immediate and delayed recalls, but different across participants.
-To correct for this confound, we jointly centered each participant's set of immediate and delayed recall events on the two sequences' shared centroid (i.e., the average vector across all events from both sessions). 
+Specifically, participants' idiolects (i.e., particular speaking styles and sets of words with which they desecribe the episode) will influence the embedding representations of their recalls in ways that tend to be similar between their immediate and delayed recalls, but differ across participants.
+To correct for this confound, we jointly centered each participant's set of immediate and delayed recall events on the two sequences' shared centroid (i.e., the average vector across all recall events from both sessions). 
 This served to reduce the recall embeddings' anisotropy (by removing signals driven by high-level themes of the episode they recalled) and mitigate the effects of the spoken-recall register and participant-specific idiolect (both of which are shared between a participant's recalls from the two sessions) while preserving any genuine drift in the high-level content of each participant's recall over the delay (which per-session mean-centering would instead discard).
 
 
@@ -484,7 +494,7 @@ We found that the maximally distinctive and internally self-similar segmentation
 Finally, we averaged the embedding vectors over timepoints between each pair of adjacent event boundaries to obtain a sequence of stable event-average representations for the episode.
 
 To segment participants' recall trajectories into sequences of events, we developed a novel HMM-driven procedure that grounded the recalls directly against the content of the episode participants viewed and recounted.
-Essentially, rather than re-learning separate sets of state representations from each participant's recalls (which tend to be shorter, noisier approximations of the episode content), we leveraged the state representations already learned from the episode to identify transitions between the episode events a given participant was (most probably) describing at a given point in time.
+Essentially, rather than re-learning separate sets of state representations from each participant's recalls (which tend to be shorter, noisier approximations of the episode content), we leveraged the state representations already learned from the episode to identify transitions between the episode events a given participant was (most probably) describing at each point during their recounting.
 First, we mean-centered the sequence of event-average embedding vectors for the episode, and each participant's sequence of per-window embedding vectors from each session, separately.
 For each given recall trajectory, we then computed the cosine similarity between the embedding vector for each recall window and the event-average embedding vector for each of the 20 episode events.
 This yielded a number-of-windows by number-of-episode-events (20) similarity matrix.
@@ -493,16 +503,28 @@ We imposed an ergodic transition structure (i.e., we allowed transitions from an
 Specifically, we imposed no penalty for remaining in the current state, a small penalty (1.5 normalized emissions units) for transitioning from a given state to the next (i.e., transitioning from recalling episode event $n$ to recalling episode event $n + 1$), and a larger penalty (3.0 normalized emissions units) for all other transitions.
 %We $z$-scored each recall trajectory's distribution of episode event-similarity scores so that these transition penalties had a constant weight across recall trajectories with different lengths and overall similarities to the episode.
 Finally, we decoded the most probable sequence of episode-event labels using the Viterbi algorithm~\citep{Vite67}, collapsed runs of consecutive identically labeled recall windows into events, and averaged the embedding vectors over windows within each event.
-This procedure yielded, for each participant's recall from each session, a sequence of event-average embedding vectors and a set of labels denoting which episode event each recall event corresponded to.
+This procedure yielded, for each participant's recall from each session, a sequence of event-average embedding vectors and a sequence of labels denoting the episode event to which each recall event corresponded.
+
+\subsubsection*{Comparing the orders in which participants recounted the episode}\label{subsec:precedence}
+
+In the analyses shown in Figure~\ref{fig:recall-order}, we asked whether idiosyncratic patterns in the order in which participants recounted the episode's events immediately after viewing were preserved following the week-long delay.
+To quantify these patterns and compare them between recountings, we developed a measure based on the ordinal ``precedence'' of different episode events within a given participant's recounting.
+Specifically, for each pair of episode events $X$ and $Y$ that a given participant recounted, and where event $X$ preceded event $Y$ in the original episode, we computed $\mathrm{precedence}(X, Y)$ as the fraction of times a recall event matching episode event $X$ appeared before a recall event matching episode event $Y$.
+For example, if a given participant recalled event $X$ before event $Y$, $\mathrm{precedence}(X, Y)$ would be $1$. If they transposed events $X$ and $Y$ in their memory (i.e., recalled $Y$ before $X$), $\mathrm{precedence}(X, Y)$ would be $0$. If they inserted the content of event $Y$ partway through their recounting of event $X$, or revisited event $X$ later on to describe additional details they realized they had missed, this would appear in their recall sequence as $\left[..., X, Y, ..., X, ...\right]$ and $\mathrm{precedence}(X, Y)$ would be $0.5$.
+We computed the order-similarity between two different recountings of the episode as the mean absolute difference between precedence scores across pairs events that appeared in both recall sequences. 
+
+To assess whether participants' delayed recountings tended to preserved the idiosyncratic ordering patterns of their immediate recountings, we performed a surrogate analysis that tested whether the order of a participant's delayed recounting tended to be more similar to that of their own immediate recounting than to that of other participants' immediate recountings. 
+First, we computed the order-similarity between each participant's delayed recounting and every participant's immediate recounting.
+We then computed the percentile rank of the similarity of each participant's own immediate recounting relative to the similarities of others' immediate recountings, and performed a Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5.
 
 
-\subsubsection*{Comparing trajectory structures}
+\subsubsection*{Comparing the geometric structures of the episode and recalls}
 
 We compared the geometric structures of the episode and recall event-sequences using dynamic time warping~\citep[DTW;][]{Vint68,SakoChib78}.
 The DTW algorithm finds the optimal order-preserving alignment between two sequences of vectors with potentially different lengths or sampling rates by locally ``stretching'' and ``compressing'' them in time to maximize their overall similarity.
 This alignment yields a ``warp path'' that maps each vector in each sequence onto one or more consecutive vectors in the other sequence, minimizing the total distance between matched vectors.
-The summed or average distance between matched vectors along the warp path (the ``warp cost'') is commonly taken as a measure of the two sequences' structural dissimilarity.
-We computed the warp cost as the average cosine distance between DTW-matched events so that the cost values would be comparable across comparisons involving event-sequences of different lengths (whereas summed distance necessarily grows with sequence length).
+The summed or average distance between matched vectors along the optimal warp path (the ``warp cost'') is commonly taken as a measure of the two sequences' structural dissimilarity.
+We computed the warp cost for a given pair of event sequences as the average cosine distance between DTW-matched events to ensure that these costs were comparable across comparisons involving event-sequences of different lengths (whereas summed distance necessarily grows with sequence length).
 
 
 
