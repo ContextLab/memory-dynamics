@@ -234,30 +234,33 @@ Every measure to this point reports only whether two things are more or less ali
 To characterize the transformation itself, we hypothesized that if a delayed recounting is a simplified version of an earlier one, the events the earlier one could most afford to lose should be the events that go missing.
 We used the Ramer-Douglas-Peucker algorithm~\citep{Rame72,DougPeuc73} (a standard method for simplifying polylines) to simplify each participant's immediate recall trajectory, discarding events that lay close to the line between their neighbors while retaining those whose removal would change the path's shape.
 How much detail the algorithm removes depends on a tolerance ($\epsilon$, expressed as a cosine distance), and a tolerance chosen by reference to the delayed recounting would fit the prediction to the outcome it is meant to predict.
-We therefore swept $\epsilon$ across its full range in steps of 0.01 without selecting a value, and scored each event by its \textit{prominence}: the tolerance at which simplification first removes it (see \nameref{subsec:stats}).
+We therefore swept $\epsilon$ across its full range in steps of 0.1 without selecting a value, and scored each event by its \textit{prominence}: the tolerance at which simplification first removes it (see \nameref{subsec:stats}).
 An event removed at a low tolerance is one the path can afford to lose, and an event surviving to a high tolerance is one it cannot.
 Prominence is read off a participant's immediate recounting alone, so the delayed recounting contributes only the labels.
 We note that this simplification was performed on the full 768-dimensional trajectories, and that the two-dimensional projections in Fig.~\ref{fig:pipeline} serve only to visualize the result.
 
-Prominence separated the episode events a participant went on to drop from the events they kept (mean AUC 0.576, $95\%~\mathrm{CI} = [0.52, 0.63]$, one-sided Wilcoxon signed-rank $T = 755.5,~p = 0.004,~r = 0.46$, $n = 48$ participants with at least one event of each kind; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [28]}]}).
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/source/rdp-figure}
+
+    \caption{\small \textbf{Delayed recalls drop the events an immediate recall could most afford to lose.} \textbf{A.} Simplifying a trajectory. At each successively larger tolerance (blue band), an event falling within the band around the line joining its retained neighbors is removed (red) and an event falling outside it is retained (green), leaving the simplified path in blue. \textbf{B.} One participant's immediate and delayed recall event sequences, with the events they described immediately and not after the delay faded. \textbf{C.} For each participant, the probability that an event they dropped was removed at a lower tolerance than an event they kept. Chance is 0.5 (dashed) and the black bar denotes the mean. \textbf{D.} Coefficients of a logistic regression predicting whether an event was dropped from its removal tolerance in the episode's trajectory and in the participant's own immediate recall. Dots are the fitted coefficients, vertical bars are cluster-bootstrap $95\%$ confidence intervals obtained by resampling participants, and the histograms are null distributions from 10,000 permutations of the dropped and retained labels within participant. \textbf{E.} The proportion of the other participants' rankings that each participant's own ranking beats at predicting their own forgetting, against the $0.5$ expected by chance (dashed). \textbf{F.} The proportion of participants whose own ranking falls among the $k$ best at predicting their forgetting, as a function of $k$, against the proportion expected by chance (grey, dashed).
+    \textbf{[@paxton: panels A, B, E, and F are described from the rendered figure, since your message covered panel D only. Please check them, particularly what the faded events in B denote and what F is ranking.]}}
+
+    \label{fig:simplification}
+\end{figure}
+
+Prominence separated the episode events a participant went on to drop from the events they kept (mean probability of superiority 0.576, $95\%~\mathrm{CI} = [0.52, 0.63]$, one-sided Wilcoxon signed-rank $T = 846.0,~p = 0.004,~r = 0.44$, $n = 48$ participants with at least one event of each kind; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [28]}]}).
 The events a participant shed were the events their own path could most afford to lose.
-This separation was specific to the person who produced it: a participant's own ranking predicted their forgetting better than other participants' rankings did (mean win rate 0.606, $95\%~\mathrm{CI} = [0.54, 0.68]$, $T = 848.0,~p = 0.004,~r = 0.44$, $n = 48$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [29]}]}).
+This separation was specific to the person who produced it: a participant's own ranking predicted their forgetting better than other participants' rankings did (mean win rate 0.614, $95\%~\mathrm{CI} = [0.54, 0.69]$, $T = 864.5,~p = 0.002,~r = 0.47$, $n = 48$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [29]}]}).
 We scored each of those comparisons over the episode events both participants described, so no ranking gained an advantage from covering more of the episode.
 
-Prominence is not the only feature of a recounting's shape that predicts what a participant will forget.
-The turning angle at an event registers how abruptly a recounting changes direction there, however far the path travels either side of it.
-It separated the events a participant dropped from the events they kept about as well as prominence did (mean AUC 0.580, $95\%~\mathrm{CI} = [0.52, 0.64]$, one-sided Wilcoxon signed-rank $T = 795.5,~p = 0.007,~r = 0.41$, $n = 48$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [32]}]}).
-Sharper corners were dropped more often, which is the reverse of what calling them control points would lead one to expect.
-To locate where each measure carries its information, we split each participant's events at their median prominence and scored both measures within each half.
-Prominence separated dropped from kept events only in the more prominent half (AUC 0.629, $p = 0.007$, $n = 35$), and the turning angle only in the less prominent half (AUC 0.614, $p = 0.003$, $n = 44$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [33]}]}).
-We chose that split after seeing the data, and report it as a description of where each measure applies and not as a further result.
-The two measures therefore divide the work between them.
-Prominence discriminates only among the events whose removal would cost the path its coarse shape, and within the rest it is the sharpness of the turn that separates what goes from what stays.
-What a recounting keeps is better described as what its coarse shape still needs than as the moments that stand out in it.
 
-We applied the same logic one step earlier in the chain, to the episode's own trajectory, and asked whether the events it can most afford to lose are the ones fewest participants described.
-They are not (Spearman's $\rho = 0.22,~p = 0.39$, $95\%~\mathrm{CI} = [-0.32, 0.69]$, $n = 18$ events; \textbf{[CHECK THIS: \texttt{episode-simplification-analyses.ipynb}, cell \texttt{In [5]}]}).
-Watching an episode and recounting it appears not to be the same kind of transformation as recounting it twice, at least at the resolution we can measure.
+A participant's own recounting is not the only path an event's removal order could be read from, since the episode itself supplies an alternative.
+We therefore scored each episode event a participant had described twice over: once by the tolerance at which simplification removes it from the episode's trajectory, and once by the tolerance at which it is removed from that participant's immediate recall.
+Entering both scores into a single logistic regression predicting whether the event was later dropped separates what each one contributes (711 events, 47 participants, 18 episode events; \textbf{[CHECK THIS: \texttt{rdp-analyses-and-fig.ipynb}, cell \texttt{In [210]}]}).
+Only the participant's own recounting carried the effect ($\beta = 0.242$ in log-odds per within-participant standard deviation, $p = 0.004$ by participant-blocked permutation), and the episode's removal order contributed nothing ($\beta = 0.012$, two-sided $p = 0.90$).
+The difference between the two coefficients was itself reliable ($\beta_{\text{difference}} = 0.230,~p = 0.048$).
+What predicts forgetting is the shape of a participant's own earlier telling rather than the shape of the episode that telling described.
 
 Three features of the simplification analysis qualify what it can show.
 First, the effect is a modest one---prominence orders a pair of events correctly about 58\% of the time, against the 50\% expected by chance.
@@ -284,8 +287,8 @@ Others behave like waypoints, which fall close to the line between their neighbo
 Trajectory simplification provides a way of telling the two apart.
 How far a path can be simplified before a given event is removed grades that event from waypoint to control point, and the events at the waypoint end are the ones a participant tended to drop across the delay.
 That grading is specific to the person who produced it: a participant's own path orders their forgetting better than anyone else's path does.
-The same account does not, however, carry back a step, to what participants left out of their immediate recountings of the episode itself.
-That transformation may be of a different kind, or our measures may be too coarse to resolve it.
+The episode's own shape, however, grades nothing: how disposable an event is within the episode's trajectory predicts none of what a participant goes on to forget, even though the two paths describe the same events.
+What a recounting keeps is therefore a property of that recounting rather than of the material it describes.
 
 That not all events are equally memorable is well established.
 Gist and central details, for example, survive delays that perceptual and peripheral details do not~\citep{HeusEtal21,SekeEtal16,SekeEtal18,GilbMosc21}, and autobiographical narratives shed some classes of content faster than others~\citep{DiamLevi20,SuEtal26}.
@@ -461,12 +464,9 @@ Endpoints are excluded symmetrically: simplification never removes the first or 
 Without that offset, an event described at an endpoint immediately and again after the delay would count as retained on one side of the comparison while being invisible on the other.
 We treated an event as forgotten when the interior immediate recall described it more often than the offset delayed recall did, which counts a participant returning to an event less often as well as dropping it altogether.
 
-We summarized how well prominence separates the events a participant dropped from the events they kept as an area under the ROC curve, for which 0.5 is chance, and tested those values against 0.5 across participants.
+We summarized how well prominence separates the events a participant dropped from the events they kept as a probability of superiority: the probability that a dropped event was removed at a lower tolerance than a retained one, with ties counting as half, for which 0.5 is chance. This is the quantity an area under the ROC curve measures, and we name it directly because we use it as a score to be tested against a null and not as a measure of a classifier's usefulness. We tested those values against 0.5 across participants.
 We then repeated the comparison against other participants' rankings, scoring each pair over the episode events both participants described so that no ranking gained an advantage from covering more of the episode.
 A participant enters that second test once at least five other rankings are comparable to theirs on at least three shared events.
-
-The turning angle reported among the limitations is scored the same way, with two differences.
-An episode event described more than once takes the average of its occurrences, since no occurrence of an angle is privileged the way a first removal is, and the split by median prominence is restricted to participants with at least six scored events and to halves containing both a dropped and a retained event, which is why it covers 35 and 44 participants where the tests above cover 48.
 
 \subsubsection*{Constructing episode and recall trajectories}\label{subsec:text-embedding}
 
@@ -515,7 +515,7 @@ Similarly, mean-centering both the episode and recalls before relating their emb
 Our approach to mean-centering the recalls was guided by the particular latent representation we wanted to remove versus retain.
 In segmenting each participant's recall trajectory from each session into events (see \nameref{subsec:eventseg}), our goal was to discriminate between embedding vectors strictly within a single recall sequence in order to identify temporally transient content-related patterns.
 We therefore centered each recall trajectory (in addition to the episode) on its own centroid to remove non-discriminative representations (e.g., register, broad-scale thematic content) and maximize the contrast between vectors within that single sequence.
-However, the analyses shown in Figures \textbf{REF TO DTW FIG} and \textbf{REF TO RDP FIG} entailed comparing sequences of recall events not only to the episode, but also to each other, both within- and across-participants, to examine whether within-participant similarities tended to exceed across-participant similarities. 
+However, the analyses shown in Figs.~\ref{fig:recall-structure} and~\ref{fig:simplification} entailed comparing sequences of recall events not only to the episode, but also to each other, both within- and across-participants, to examine whether within-participant similarities tended to exceed across-participant similarities. 
 Here our goal was to remove representational artifacts that could work to bias our results towards significance.
 Specifically, participants' idiolects (i.e., particular speaking styles and sets of words with which they describe the episode) will influence the embedding representations of their recalls in ways that tend to be similar between their immediate and delayed recalls, but different across participants.
 To correct for this confound, we jointly centered each participant's set of immediate and delayed recall events on the two sequences' shared centroid (i.e., the average of the two sessions' event centroids, weighting the sessions equally).
