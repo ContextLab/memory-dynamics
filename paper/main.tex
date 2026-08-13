@@ -515,7 +515,7 @@ We computed the order-similarity between two different recountings of the episod
 
 To assess whether participants' delayed recountings tended to preserved the idiosyncratic ordering patterns of their immediate recountings, we performed a surrogate analysis that tested whether the order of a participant's delayed recounting tended to be more similar to that of their own immediate recounting than to that of other participants' immediate recountings. 
 First, we computed the order-similarity between each participant's delayed recounting and every participant's immediate recounting.
-We then computed the percentile rank of the similarity of each participant's own immediate recounting relative to the similarities of others' immediate recountings, and performed a Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5.
+We then computed the percentile rank of the similarity of each participant's own immediate recounting relative to the similarities of others' immediate recountings, and performed a one-sample Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5.
 
 
 \subsubsection*{Comparing the geometric structures of the episode and recalls}
@@ -524,9 +524,19 @@ We compared the geometric structures of the episode and recall event-sequences u
 The DTW algorithm finds the optimal order-preserving alignment between two sequences of vectors with potentially different lengths or sampling rates by locally ``stretching'' and ``compressing'' them in time to maximize their overall similarity.
 This alignment yields a ``warp path'' that maps each vector in each sequence onto one or more consecutive vectors in the other sequence, minimizing the total distance between matched vectors.
 The summed or average distance between matched vectors along the optimal warp path (the ``warp cost'') is commonly taken as a measure of the two sequences' structural dissimilarity.
-We computed the warp cost for a given pair of event sequences as the average cosine distance between DTW-matched events to ensure that these costs were comparable across comparisons involving event-sequences of different lengths (whereas summed distance necessarily grows with sequence length).
+We computed the warp cost for a given pair of event-sequences as the average cosine distance between DTW-matched events to ensure that these costs were comparable across comparisons involving event-sequences of different lengths (whereas summed distance necessarily grows with sequence length).
 
+In the analyses shown in Figure~\ref{fig:dtw}, we asked whether participants' delayed recountings tended to preserve the idiosyncratic geometric structures of their immediate recountings.
+We tested this hypothesis two different ways.
+First, we analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than to the episode's event-sequence.
+We began by mean-centering the episode event sequence, and centering each participant's immediate and delayed recall event sequences by their shared centroid.
+For each participant, we then computed the warp cost to align their delayed recall event-sequence to their immediate recall event-sequence, and the warp cost to align their delayed recall event-sequence to the episode's event sequence.
+We then performed a Wilcoxon signed-rank test comparing the resulting paired distributions of immediate-alignment costs and episode-alignment costs to test whether the immediate-alignment costs were systematically lower.
 
+We then analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than they were to \textit{other} participants' immediate recall event-sequences.
+Here we used a surrogate-driven analysis analogous to our approach for comparing recall orderings.
+For each participant, we computed the warp cost to align their delayed recall event-sequence to their own immediate recall event-sequence, and to every other participant's immediate recall event-sequence.
+We then computed the percentile rank of each participant's alignment cost for their own immediate recall event-sequence against their distribution of alignment costs for other other participants' immediate recall event-sequences, and performed a one-sample Wilcoxon test comparing these percentile ranks against a null rank of 0.5 (with the alternative hypothesis that own-alignment cost should be \textit{lower}).
 
 
 \section*{Data availability}
