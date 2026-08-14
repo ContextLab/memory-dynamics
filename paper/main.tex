@@ -508,14 +508,14 @@ This procedure yielded, for each participant's recall from each session, a seque
 \subsubsection*{Comparing the orders in which participants recounted the episode}\label{subsec:precedence}
 
 In the analyses shown in Figure~\ref{fig:recall-order}, we asked whether idiosyncratic patterns in the order in which participants recounted the episode's events immediately after viewing were preserved following the week-long delay.
-To quantify these patterns and compare them between recountings, we developed a measure based on the ordinal ``precedence'' of different episode events within a given participant's recounting.
-Specifically, for each pair of episode events $X$ and $Y$ that a given participant recounted, and where event $X$ preceded event $Y$ in the original episode, we computed $\mathrm{precedence}(X, Y)$ as the fraction of times a recall event matching episode event $X$ appeared before a recall event matching episode event $Y$.
-For example, if a given participant recalled event $X$ before event $Y$, $\mathrm{precedence}(X, Y)$ would be $1$. If they transposed events $X$ and $Y$ in their memory (i.e., recalled $Y$ before $X$), $\mathrm{precedence}(X, Y)$ would be $0$. If they inserted the content of event $Y$ partway through their recounting of event $X$, or revisited event $X$ later on to describe additional details they realized they had missed, this would appear in their recall sequence as $\left[..., X, Y, ..., X, ...\right]$ and $\mathrm{precedence}(X, Y)$ would be $0.5$.
-We computed the order-similarity between two different recountings of the episode as the mean absolute difference between precedence scores across pairs events that appeared in both recall sequences. 
+To quantify these patterns and compare them between recountings, we developed a measure based on the ordinal ``precedence'' of different episode events within a given recounting.
+Specifically, for each pair of episode events $X$ and $Y$ that a given participant recalled, and where event $X$ preceded event $Y$ in the original episode, we computed $\mathrm{precedence}(X, Y)$ as the proportion of times a recall event matching episode event $X$ appeared before a recall event matching episode event $Y$.
+For example, if a given participant recalled event $X$ before event $Y$, $\mathrm{precedence}(X, Y)$ would be $1$. If they transposed events $X$ and $Y$ in their memory (i.e., recalled $Y$ before $X$), $\mathrm{precedence}(X, Y)$ would be $0$. If they inserted the content of event $Y$ partway through their recounting of event $X$, or revisited event $X$ later on after recalling event $Y$, $\mathrm{precedence}(X, Y)$ would be $0.5$.
+We computed the order-similarity between two different recountings of the episode as the mean absolute difference between precedence scores for all pairs of events that appeared in both recall sequences. 
 
-To assess whether participants' delayed recountings tended to preserved the idiosyncratic ordering patterns of their immediate recountings, we performed a surrogate analysis that tested whether the order of a participant's delayed recounting tended to be more similar to that of their own immediate recounting than to that of other participants' immediate recountings. 
-First, we computed the order-similarity between each participant's delayed recounting and every participant's immediate recounting.
-We then computed the percentile rank of the similarity of each participant's own immediate recounting relative to the similarities of others' immediate recountings, and performed a one-sample Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5.
+We performed a surrogate-based analysis that tested whether the ordering structure of a participant's delayed recounting tended to reflect their own immediate recounting to a greater degree than it did \textit{other} participants' immediate recountings.
+We computed the order-similarity between each participant's delayed recounting and their own immediate recounting, and between their delayed recounting and each other participant's immediate recounting.
+We then computed the percentile rank of each within-participant order-similarity against its distribution of across-participant order-similarities, and performed a one-sample Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5.
 
 
 \subsubsection*{Comparing the geometric structures of the episode and recalls}
@@ -526,17 +526,90 @@ This alignment yields a ``warp path'' that maps each vector in each sequence ont
 The summed or average distance between matched vectors along the optimal warp path (the ``warp cost'') is commonly taken as a measure of the two sequences' structural dissimilarity.
 We computed the warp cost for a given pair of event-sequences as the average cosine distance between DTW-matched events to ensure that these costs were comparable across comparisons involving event-sequences of different lengths (whereas summed distance necessarily grows with sequence length).
 
-In the analyses shown in Figure~\ref{fig:dtw}, we asked whether participants' delayed recountings tended to preserve the idiosyncratic geometric structures of their immediate recountings.
-We tested this hypothesis two different ways.
+We hypothesized that the idiosyncratic geometric structures of participants' delayed recalls tended to reflect the structures of their immediate recalls.
+In the analyses shown in Figure~\ref{fig:dtw}, we tested this hypothesis two different ways.
 First, we analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than to the episode's event-sequence.
 We began by mean-centering the episode event sequence, and centering each participant's immediate and delayed recall event sequences by their shared centroid.
 For each participant, we then computed the warp cost to align their delayed recall event-sequence to their immediate recall event-sequence, and the warp cost to align their delayed recall event-sequence to the episode's event sequence.
-We then performed a Wilcoxon signed-rank test comparing the resulting paired distributions of immediate-alignment costs and episode-alignment costs to test whether the immediate-alignment costs were systematically lower.
+We then performed a Wilcoxon signed-rank test comparing the resulting paired distributions of immediate-alignment costs and episode-alignment costs to test whether participants' immediate-alignment costs were systematically lower.
 
 We then analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than they were to \textit{other} participants' immediate recall event-sequences.
-Here we used a surrogate-driven analysis analogous to our approach for comparing recall orderings.
+Here we used a surrogate-driven approach analogous to the approach we used to compare recall orderings.
 For each participant, we computed the warp cost to align their delayed recall event-sequence to their own immediate recall event-sequence, and to every other participant's immediate recall event-sequence.
-We then computed the percentile rank of each participant's alignment cost for their own immediate recall event-sequence against their distribution of alignment costs for other other participants' immediate recall event-sequences, and performed a one-sample Wilcoxon test comparing these percentile ranks against a null rank of 0.5 (with the alternative hypothesis that own-alignment cost should be \textit{lower}).
+We then computed the percentile rank of within-participant warp cost against its distribution of across-participant warp costs, and performed a one-sample Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5 (with the alternative hypothesis that the own-alignment costs' ranks should be \textit{lower}).
+
+
+\subsubsection*{Predicting forgetting through geometric simplification}
+
+In the analyses shown in Figure~\ref{fig:rdp}, we asked whether the particular episode content a participant tended to forget following the week-long delay could be explained by geometrically simplifying the path through semantic space traversed by their immediate recounting.
+We formalized this geometric simplification using the Ramer-Douglas-Peucker (RDP) algorithm~\citep{Rame72,DougPeuc73}.
+Originally developed for use in cartographic generalization, the RDP algorithm iteratively simplifies a piecewise curve composed of line segments (e.g., a high-resolution map of a coastline) to a similar curve defined by fewer points (e.g., a lower-resolution map of the same coastline).
+Briefly, given a curve and a tolerance distance $\varepsilon$, the RDP algorithm works by drawing a chord connecting the first and last points along the curve, and identifying the interior point along the curve farthest from the chord.
+If the distance from the chord to that target point is less than $\varepsilon$, then all points along the curve between the ends of the chord are discarded, and that section of the curve (which, in the initial step, comprises the full curve) is approximated by the chord in the simplified result.
+Alternatively, if the target point is farther than $\varepsilon$ from the chord, it is retained in the simplified result and the algorithm is recursively applied to the sections of the curve on either side of the retained point.
+The end result is a simplified curve that preserves the high-level shape of the original, but with all spatial details smaller than $\varepsilon$ removed.
+Intuitively, the $\varepsilon$ parameter determines the ``amount'' of simplification applied to the original curve: smaller values of $\varepsilon$ result in discarding only fine-grained details, while larger values lead to discarding more coarse structure.
+In this way, points along a path that the RDP algorithm discards at lower values of $\varepsilon$ may be thought of as ``waypoints'' that contribute relatively little to defining to the paths's overall shape, while points discarded only at higher $\varepsilon$ values may be thought of as ``control points'' that play a more significant role.
+
+We hypothesized that the differences between the semantic paths traversed by a participant's immediate and delayed recall event sequences might reflect a similar shape-preserving simplification.
+To test this idea, we first asked whether the $\varepsilon$ value at which the RDP algorithm discards a participant's recall of a given episode event predicted whether they would omit that event from their delayed recounting.
+We applied the RDP algorithm to each participant's sequence of immediate recall events over a sweep of $\varepsilon$ values spanning the range of possible cosine distances between the events' embedding vectors (i.e., from 0 to 2; increasing $\varepsilon$ by 0.1 each iteration).
+For each episode event a given participant recalled, we identified the minimum $\varepsilon$ at which its matched recall event was discarded from their event sequence.
+We then computed the proportion of times an event the participant omitted from their delayed recounting was removed at a lower $\varepsilon$ value than an event they did not (i.e., the probability of superiority, or AUC).
+We repeated this process for all participants, and performed a one-sample Wilcoxon test comparing the resulting distribution of proportions against a null of 0.5. Because the RDP algorithm cannot remove the endpoints of a curve, we excluded the first and last episode event each participant recalled from their data for this analysis. 
+When a given episode event matched more than one event in a participant's immediate recall, we used the lowest $\varepsilon$ value at which a matching recall event was discarded, and counted the event as omitted if it was not matched by multiple events in the participant's delayed recall (this removed a total of 38 duplicate matches out of 861 non-endpoint recall events, across all participant).
+
+We then examined whether this simplification was specific to the geometry of each individual's immediate recounting, rather than driven by general patterns in forgetting.
+We again used a surrogate-driven procedure, here to test whether simplifying an individual's own immediate recall event sequence predicted omissions from their delayed recounting better than simplifying 
+
+%We then tested whether the relationship between an event's $\varepsilon$-at-removal and its likelihood of being omitted from delayed recall was specific to the geometric structure of each individual's immediate recall, rather than potentially driven by 
+%
+%specific to how an individual structured their recounting. 
+
+
+
+
+
+%
+%We hypothesized that the differences between the semantic paths traversed by a participant's immediate and delayed recountings of the episode might reflect a similar shape-preserving simplification.
+%To test this idea, we first asked whether the $\varepsilon$ value at which the RDP algorithm discarded a participant's recall of a given episode event predicted whether they would 
+%
+%
+%To test this idea, we first asked whether the $\varepsilon$ value at which the RDP algorithm discarded an event from a participant's immediate recounting predicted whether that event would be omitted from their delayed recounting.
+%We applied the RDP algorithm to each participant's (mean-centered) immediate recall event-sequence
+%
+%When more than one of a participant's recall events matched a given episode event, we used the lowest epsilon at which a matching recall event was removed, and considered the events ``forgotten'' if it was matched by fewer 
+%
+%Since the shape of a participant's immediate recall event-sequence sequence might be defined by multiple recall events matched to the same episode event, we used the first epsilon at which 
+%
+%
+%
+%We used the RDP algorithm to simplify the each participant's sequence of (mean-centered) immediate recall events with increasing epsilon values 
+
+
+%Since our recall-to-episode event mapping can be many-to-one (i.e., a given episode event may be matched by multiple immediate or delayed recall events), we used the lowest epsilon at which an event matching each episode event was discarded, and considered events 
+
+
+
+
+%To test this idea, we first asked whether the $\varepsilon$ values at which the RDP algorithm discarded descriptions of different episode events from a participant's immediate recounting predicted whether those descriptions would be omitted in their delayed recounting.
+
+
+
+
+
+
+%To test this idea, we first asked whether the $\varepsilon$ value at which the RDP algorithm discarded a participant's description of a given episode event from their immediate recounting predicted whether the participant would omit a description of that event from their delayed recounting.
+%We applied the RDP algorithm to the path traversed by each participant's (mean-centered) immediate recall event-sequence with increasing $\varepsilon$ values, ranging from 0 to 2 (tiling the range of possible cosine distances) and increasing by 0.1 each iteration.
+
+
+
+
+%of the path through semantic space traversed by their immediate recounting.
+%Specifically, we asked whether the $\varepsilon$ value at which the RDP algorithm discarded an event from a participant's immediate recall event-sequence predicted whether the participant would omit the corresponding episode event in their delayed recall.
+
+
+
 
 
 \section*{Data availability}
