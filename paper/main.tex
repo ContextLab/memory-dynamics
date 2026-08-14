@@ -320,7 +320,7 @@ Ties were common enough at the top of these rankings that only 2 of the 53 parti
 
     \caption{\small \textbf{Participants' delayed recalls resemble their own immediate recalls.} \textbf{A}--\textbf{C.} One participant's delayed recall event sequence (navy), aligned by dynamic time warping to their own immediate recall (\textbf{A}), to a different participant's immediate recall (\textbf{B}), and to the episode (\textbf{C}). Grey lines connect matched events, the mean warp cost of each alignment is inset, and the sequences are drawn with a small spatial offset so that overlapping events remain visible. \textbf{D.} For each participant, the warp cost between their delayed recall and their own immediate recall (pink), and the median cost between that same delayed recall and the other 52 participants' immediate recalls (grey). Each joined pair of dots is one participant. \textbf{E.} For each participant, the warp cost between their delayed recall and their own immediate recall, against the cost between that same delayed recall and the episode; black bars denote means, and the inset shows the distribution of paired differences. \textbf{F.} The proportion of participants whose own immediate recall falls among the $k$ closest of all 53, as a function of $k$ (pink), against the proportion expected by chance (grey, dashed). \textbf{G.} Warp cost between every delayed recall (rows) and every immediate recall (columns). A marker denotes the closest match to each delayed recall: pink where that match is the participant's own immediate recall, which places it on the diagonal, and white where it is another participant's.}
 
-    \label{fig:recall-structure}
+    \label{fig:dtw}
 \end{figure}
 
 Order, however, provides only a coarse description of a recounting, since it treats events as interchangeable labels and discards everything about how their contents relate to one another (e.g., whether two events were described in similar terms or in quite different ones).
@@ -329,9 +329,9 @@ To assess this, we compared event sequences using dynamic time warping (DTW), wh
 The average distance (here, cosine distance) across matched pairs provides a measure of how similar the two sequences' structures are.
 
 If retrieval after a delay recovered the episode as it was originally experienced, a participant's delayed recounting should resemble the episode at least as closely as it resembles their own earlier recounting of it.
-Instead, we found that delayed recountings aligned more closely with the participant's own immediate recounting than with the episode itself (mean alignment costs 0.53, s.d.~0.10, and 0.65, s.d.~0.06, respectively; two-sided Wilcoxon signed-rank $T_w = 1.0,~p = 2.5 \times 10^{-10},~r = 1.00$, mean difference 0.12, $95\%~\mathrm{CI} = [0.10, 0.14]$, $n = 53$; \textbf{[CHECK THIS: \texttt{dtw-analyses-and-fig.ipynb}, cell \texttt{In [11]}]}; Fig.~\ref{fig:recall-structure}A,C,E).
-We next asked whether this resemblance was specific to the participant who produced it, and found that each participant's delayed recounting was structurally closer to their own immediate recounting than to those of other participants ($T = 1431.0,~p = 2.2 \times 10^{-11},~r = 1.00$, median percentile rank 1.00, $n = 53$; \textbf{[CHECK THIS: \texttt{dtw-analyses-and-fig.ipynb}, cell \texttt{In [12]}]}; Fig.~\ref{fig:recall-structure}A,B,D).
-Unlike recall order, this effect was strong enough to identify individual participants: for 36 of the 53 participants, the delayed recounting aligned more closely with their own immediate recounting than with any of the other 52 (68\%, $95\%~\mathrm{CI} = [55, 79]\%$, against 1.9\% expected by chance; one-sided binomial $p = 2.0 \times 10^{-49}$), and for 91\% it ranked among the five closest (\textbf{[CHECK THIS: \texttt{identification-analyses.ipynb}, cell \texttt{In [10]}]}; Fig.~\ref{fig:recall-structure}F,G).
+Instead, we found that delayed recountings aligned more closely with the participant's own immediate recounting than with the episode itself (mean alignment costs 0.53, s.d.~0.10, and 0.65, s.d.~0.06, respectively; two-sided Wilcoxon signed-rank $T_w = 1.0,~p = 2.5 \times 10^{-10},~r = 1.00$, mean difference 0.12, $95\%~\mathrm{CI} = [0.10, 0.14]$, $n = 53$; \textbf{[CHECK THIS: \texttt{dtw-analyses-and-fig.ipynb}, cell \texttt{In [11]}]}; Fig.~\ref{fig:dtw}A,C,E).
+We next asked whether this resemblance was specific to the participant who produced it, and found that each participant's delayed recounting was structurally closer to their own immediate recounting than to those of other participants ($T = 1431.0,~p = 2.2 \times 10^{-11},~r = 1.00$, median percentile rank 1.00, $n = 53$; \textbf{[CHECK THIS: \texttt{dtw-analyses-and-fig.ipynb}, cell \texttt{In [12]}]}; Fig.~\ref{fig:dtw}A,B,D).
+Unlike recall order, this effect was strong enough to identify individual participants: for 36 of the 53 participants, the delayed recounting aligned more closely with their own immediate recounting than with any of the other 52 (68\%, $95\%~\mathrm{CI} = [55, 79]\%$, against 1.9\% expected by chance; one-sided binomial $p = 2.0 \times 10^{-49}$), and for 91\% it ranked among the five closest (\textbf{[CHECK THIS: \texttt{identification-analyses.ipynb}, cell \texttt{In [10]}]}; Fig.~\ref{fig:dtw}F,G).
 In other words, what a participant retrieved after a week reflected something specific to how they had described the episode before.
 
 Establishing that this structure is preserved is not the same as establishing that it is unchanged.
@@ -351,7 +351,7 @@ We note that this simplification was performed on the full 768-dimensional traje
     \caption{\small \textbf{Delayed recalls drop the events an immediate recall could most afford to lose.} \textbf{A.} Simplifying a trajectory. At each successively larger tolerance (blue band), an event falling within the band around the line joining its retained neighbors is removed (red) and an event falling outside it is retained (green), leaving the simplified path in blue. \textbf{B.} One participant's immediate and delayed recall event sequences, with the events they described immediately and not after the delay faded. \textbf{C.} For each participant, the probability that an event they dropped was removed at a lower tolerance than an event they kept. Chance is 0.5 (dashed) and the black bar denotes the mean. \textbf{D.} Coefficients of a logistic regression predicting whether an event was dropped from its removal tolerance in the episode's trajectory and in the participant's own immediate recall. Dots are the fitted coefficients, vertical bars are cluster-bootstrap $95\%$ confidence intervals obtained by resampling participants, and the histograms are null distributions from 10,000 permutations of the dropped and retained labels within participant. \textbf{E.} The proportion of the other participants' rankings that each participant's own ranking beats at predicting their own forgetting, against the $0.5$ expected by chance (dashed). \textbf{F.} The proportion of participants whose own ranking falls among the $k$ best at predicting their forgetting, as a function of $k$, against the proportion expected by chance (grey, dashed).
     \textbf{[@paxton: panels A, B, E, and F are described from the rendered figure, since your message covered panel D only. Please check them, particularly what the faded events in B denote and what F is ranking.]}}
 
-    \label{fig:simplification}
+    \label{fig:rdp}
 \end{figure}
 
 Prominence separated the episode events a participant went on to drop from the events they kept (mean probability of superiority 0.576, $95\%~\mathrm{CI} = [0.52, 0.63]$, one-sided Wilcoxon signed-rank $T = 846.0,~p = 0.004,~r = 0.44$, $n = 48$ participants with at least one event of each kind; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [28]}]}).
@@ -545,7 +545,7 @@ In the first pass, we prompted the model to split the transcript into sentences 
 In the second pass, we prompted the model to remove all instances of ``like'' used as a filler word.
 We removed filler ``like'' instances in a separate pass because of their high frequency of occurrence in the transcripts and the additional effort required to distinguish them from meaningful uses of ``like.''
 The full texts of our prompts for both passes can be found in \suppMethods.
-Finally, we manually reviewed all LLM-formatted transcripts to identify and correct any errors, ensure sentence breaks were appropriate and consistent across participants, confirm that no content was improperly added to or removed from the transcripts, and resolve any ambiguities based on the prosody of participants' original recall audio.
+Finally, we manually reviewed all LLM-formatted transcripts to identify and correct any errors, ensure sentence breaks were appropriate and consistent across participants and sessions, confirm that no content was improperly added to or removed from the transcripts, and resolve any ambiguities based on the prosody of participants' original recall audio.
 
 
 \subsection*{Analysis}
@@ -579,7 +579,7 @@ We treated an event as forgotten when the interior immediate recall described it
 We summarized how well prominence separates the events a participant dropped from the events they kept as a probability of superiority: the probability that a dropped event was removed at a lower tolerance than a retained one, with ties counting as half, for which 0.5 is chance. This is the quantity an area under the ROC curve measures, and we name it directly because we use it as a score to be tested against a null and not as a measure of a classifier's usefulness. We tested those values against 0.5 across participants.
 We then repeated the comparison against other participants' rankings, scoring each pair over the episode events both participants described so that no ranking gained an advantage from covering more of the episode.
 A participant enters that second test once at least five other rankings are comparable to theirs on at least three shared events.
-\textbf{[@paxton: two analyses reported in the Results have no description here yet. The first is the joint logistic regression of the own and episode removal orders (\texttt{rdp-analyses-and-fig.ipynb}, cell \texttt{In [210]}), which needs the within-participant $z$-scoring of the two predictors, the participant-blocked label permutation behind its $p$-values, and the cluster bootstrap behind the intervals drawn in Figure~\ref{fig:simplification}D. The second is the Cochran's $Q$ and Kendall's $W$ test of whether the episode's events were equally likely to be recounted. I left both for you rather than guessing at how you want them framed.]}
+\textbf{[@paxton: your new \nameref{subsec:rdp} subsection now covers the logistic regression, so I dropped that half of this flag. Two things still need you. (1) The Cochran's $Q$ and Kendall's $W$ test of whether the episode's events were equally likely to be recounted (Results, para.~2) is still undescribed anywhere in the Methods. (2) The four paragraphs immediately above overlap your new subsection, and in one place they disagree: they describe the prominence sweep as implemented in \texttt{rdp-analyses.ipynb} (via \texttt{functions.py}), which admits a surrogate once at least five other rankings share at least three events with the target, whereas your subsection describes \texttt{rdp-analyses-and-fig.ipynb}, which admits any surrogate sharing at least one event and reports the 175/2,496 exclusion. Both are accurate about their own notebook, but the Results currently cite cells from both. Whichever implementation you want to be canonical, the other description should go---I did not want to delete either one for you.]}
 
 \subsubsection*{Constructing episode and recall trajectories}\label{subsec:text-embedding}
 
@@ -629,9 +629,9 @@ Similarly, mean-centering both the episode and recalls before relating their emb
 Our approach to mean-centering the recalls was guided by the particular latent representation we wanted to remove versus retain.
 In segmenting each participant's recall trajectory from each session into events (see \nameref{subsec:eventseg}), our goal was to discriminate between embedding vectors strictly within a single recall sequence in order to identify temporally transient content-related patterns.
 We therefore centered each recall trajectory (in addition to the episode) on its own centroid to remove non-discriminative representations (e.g., register, broad-scale thematic content) and maximize the contrast between vectors within that single sequence.
-However, the analyses shown in Figures~\ref{fig:recall-structure} and~\ref{fig:simplification} entailed comparing sequences of recall events not only to the episode, but also to each other, both within- and across-participants, to examine whether within-participant similarities tended to exceed across-participant similarities. 
+However, the analyses shown in Figures~\ref{fig:dtw} and~\ref{fig:rdp} entailed comparing sequences of recall events not only to the episode, but also to each other, both within- and across-participants, to examine whether within-participant similarities tended to exceed across-participant similarities.
 Here our goal was to remove representational artifacts that could work to bias our results towards significance.
-Specifically, participants' idiolects (i.e., particular speaking styles and sets of words with which they describe the episode) will influence the embedding representations of their recalls in ways that tend to be similar between their immediate and delayed recalls, but different across participants.
+Specifically, participants' idiolects (i.e., particular speaking styles and sets of words with which they describe the episode) will influence the embedding representations of their recalls in ways that tend to be similar between their immediate and delayed recalls, but differ across participants.
 To correct for this confound, we jointly centered each participant's set of immediate and delayed recall events on the two sequences' shared centroid (i.e., the average of the two sessions' event centroids, weighting the sessions equally).
 This served to reduce the recall embeddings' anisotropy (by removing signals driven by high-level themes of the episode they recalled) and mitigate the effects of the spoken-recall register and participant-specific idiolect (both of which are shared between a participant's recalls from the two sessions) while preserving any genuine drift in the high-level content of each participant's recall over the delay (which per-session mean-centering would instead discard).
 
@@ -654,7 +654,7 @@ We found that the maximally distinctive and internally self-similar segmentation
 Finally, we averaged the embedding vectors over timepoints between each pair of adjacent event boundaries to obtain a sequence of stable event-average representations for the episode.
 
 To segment participants' recall trajectories into sequences of events, we developed a novel HMM-driven procedure that grounded the recalls directly against the content of the episode participants viewed and recounted.
-Essentially, rather than re-learning separate sets of state representations from each participant's recalls (which tend to be shorter, noisier approximations of the episode content), we leveraged the state representations already learned from the episode to identify transitions between the episode events a given participant was (most probably) describing at a given point in time.
+Essentially, rather than re-learning separate sets of state representations from each participant's recalls (which tend to be shorter, noisier approximations of the episode content), we leveraged the state representations already learned from the episode to identify transitions between the episode events a given participant was (most probably) describing at each point during their recounting.
 First, we mean-centered the sequence of event-average embedding vectors for the episode, and each participant's sequence of per-window embedding vectors from each session, separately.
 For each given recall trajectory, we then computed the cosine similarity between the embedding vector for each recall window and the event-average embedding vector for each of the 20 episode events.
 This yielded a number-of-windows by number-of-episode-events (20) similarity matrix.
@@ -664,19 +664,92 @@ Specifically, we imposed no penalty for remaining in the current state, a small 
 %We $z$-scored each recall trajectory's distribution of episode event-similarity scores so that these transition penalties had a constant weight across recall trajectories with different lengths and overall similarities to the episode.
 Neither the emission scores nor the transition penalties are log-probabilities, so this model has the structure of an HMM without being a probabilistic one, and Viterbi returns the highest-scoring label sequence rather than the most probable one.
 Finally, we decoded that sequence of episode-event labels using the Viterbi algorithm~\citep{Vite67}, collapsed runs of consecutive identically labeled recall windows into events, and averaged the embedding vectors over windows within each event.
-This procedure yielded, for each participant's recall from each session, a sequence of event-average embedding vectors and a set of labels denoting which episode event each recall event corresponded to.
+This procedure yielded, for each participant's recall from each session, a sequence of event-average embedding vectors and a sequence of labels denoting the episode event to which each recall event corresponded.
+
+\subsubsection*{Comparing the orders in which participants recounted the episode}\label{subsec:precedence}
+
+In the analyses shown in Figure~\ref{fig:recall-order}, we asked whether idiosyncratic patterns in the order in which participants recounted the episode's events immediately after viewing were preserved following the week-long delay.
+To quantify these patterns and compare them between recountings, we developed a measure based on the ordinal ``precedence'' of different episode events within a given recounting.
+Specifically, for each pair of episode events $X$ and $Y$ that a given participant recalled, and where event $X$ preceded event $Y$ in the original episode, we computed $\mathrm{precedence}(X, Y)$ as the proportion of times a recall event matching episode event $X$ appeared before a recall event matching episode event $Y$.
+For example, if a given participant recalled event $X$ before event $Y$, $\mathrm{precedence}(X, Y)$ would be $1$. If they transposed events $X$ and $Y$ in their memory (i.e., recalled $Y$ before $X$), $\mathrm{precedence}(X, Y)$ would be $0$. If they inserted the content of event $Y$ partway through their recounting of event $X$, or revisited event $X$ later on after recalling event $Y$, $\mathrm{precedence}(X, Y)$ would be $0.5$.
+We computed the order-similarity between two different recountings of the episode as the mean absolute difference between precedence scores for all pairs of events that appeared in both recall sequences. 
+
+We performed a surrogate-based analysis that tested whether the ordering structure of a participant's delayed recounting tended to reflect their own immediate recounting to a greater degree than it did \textit{other} participants' immediate recountings.
+We computed the order-similarity between each participant's delayed recounting and their own immediate recounting, and between their delayed recounting and each other participant's immediate recounting.
+We then computed the percentile rank of each within-participant order-similarity against its distribution of across-participant order-similarities, and performed a one-sample Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5.
 
 
-\subsubsection*{Comparing trajectory structures}
+\subsubsection*{Comparing the geometric structures of the episode and recalls}
 
 We compared the geometric structures of the episode and recall event-sequences using dynamic time warping~\citep[DTW;][]{Vint68,SakoChib78}.
 The DTW algorithm finds the optimal order-preserving alignment between two sequences of vectors with potentially different lengths or sampling rates by locally ``stretching'' and ``compressing'' them in time to maximize their overall similarity.
 This alignment yields a ``warp path'' that maps each vector in each sequence onto one or more consecutive vectors in the other sequence, minimizing the total distance between matched vectors.
-The summed or average distance between matched vectors along the warp path (the ``warp cost'') is commonly taken as a measure of the two sequences' structural dissimilarity.
-We computed the warp cost as the average cosine distance between DTW-matched events so that the cost values would be comparable across comparisons involving event-sequences of different lengths (whereas summed distance necessarily grows with sequence length).
+The summed or average distance between matched vectors along the optimal warp path (the ``warp cost'') is commonly taken as a measure of the two sequences' structural dissimilarity.
+We computed the warp cost for a given pair of event-sequences as the average cosine distance between DTW-matched events to ensure that these costs were comparable across comparisons involving event-sequences of different lengths (whereas summed distance necessarily grows with sequence length).
+
+We hypothesized that the idiosyncratic geometric structures of participants' delayed recalls tended to reflect the structures of their immediate recalls.
+In the analyses shown in Figure~\ref{fig:dtw}, we tested this hypothesis two different ways.
+First, we analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than to the episode's event-sequence.
+We began by mean-centering the episode event sequence, and centering each participant's immediate and delayed recall event sequences by their shared centroid.
+For each participant, we then computed the warp cost to align their delayed recall event-sequence to their immediate recall event-sequence, and the warp cost to align their delayed recall event-sequence to the episode's event sequence.
+We then performed a Wilcoxon signed-rank test comparing the resulting paired distributions of immediate-alignment costs and episode-alignment costs to test whether participants' immediate-alignment costs were systematically lower.
+
+We then analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than they were to \textit{other} participants' immediate recall event-sequences.
+Here we used a surrogate-driven approach analogous to the approach we used to compare recall orderings.
+For each participant, we computed the warp cost to align their delayed recall event-sequence to their own immediate recall event-sequence, and to every other participant's immediate recall event-sequence.
+We then computed the percentile rank of within-participant warp cost against its distribution of across-participant warp costs, and performed a one-sample Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5 (with the alternative hypothesis that the own-alignment costs' ranks should be \textit{lower}).
 
 
+\subsubsection*{Predicting forgetting through geometric simplification}\label{subsec:rdp}
 
+In the analyses shown in Figure~\ref{fig:rdp}, we asked whether the particular episode content a participant tended to forget following the week-long delay could be explained by geometrically simplifying the path through semantic space traversed by their immediate recounting.
+We formalized this geometric simplification using the Ramer-Douglas-Peucker (RDP) algorithm~\citep{Rame72,DougPeuc73}.
+Originally developed for use in cartographic generalization, the RDP algorithm iteratively simplifies a piecewise curve composed of line segments (e.g., a high-resolution map of a coastline) to a similar curve defined by fewer points (e.g., a lower-resolution map of the same coastline).
+Briefly, given a curve and a tolerance distance $\varepsilon$, the RDP algorithm works by drawing a chord connecting the first and last points along the curve, and identifying the interior point along the curve farthest from the chord.
+If the distance from the chord to that target point is less than $\varepsilon$, then all points along the curve between the ends of the chord are discarded, and that section of the curve (which, in the initial step, comprises the full curve) is approximated by the chord in the simplified result.
+Alternatively, if the target point is farther than $\varepsilon$ from the chord, it is retained in the simplified result and the algorithm is recursively applied to the sections of the curve on either side of the retained point.
+The end result is a simplified curve that preserves the high-level shape of the original, but with all spatial details smaller than $\varepsilon$ removed.
+Intuitively, the $\varepsilon$ parameter determines the ``amount'' of simplification applied to the original curve: smaller values of $\varepsilon$ result in discarding only fine-grained details, while larger values lead to discarding more coarse structure.
+In this way, points along a path that the RDP algorithm discards at lower values of $\varepsilon$ may be thought of as ``waypoints'' that contribute relatively little to defining to the paths's overall shape, while points discarded only at higher $\varepsilon$ values may be thought of as ``control points'' that play a more significant role.
+
+We hypothesized that the differences between the semantic paths traversed by a participant's immediate and delayed recall event sequences might reflect a similar shape-preserving simplification.
+To test this idea, we first asked whether the $\varepsilon$ value at which the RDP algorithm discards a participant's recall of a given episode event predicted whether they would omit that event from their delayed recounting.
+We applied the RDP algorithm to each participant's sequence of immediate recall events over a sweep of $\varepsilon$ values spanning the range of possible cosine distances between the events' embedding vectors (i.e., from 0 to 2; increasing $\varepsilon$ by 0.1 each iteration).
+For each episode event a given participant recalled, we identified the minimum $\varepsilon$ at which its matched recall event was discarded from their event sequence.
+We then computed the proportion of times an event the participant omitted from their delayed recounting was removed at a lower $\varepsilon$ value than an event they did not (i.e., the probability of superiority, or equivalently, AUC).
+We repeated this process for all participants who omitted at least one immediately recalled event from their delayed recounting (48 out of 53) and performed a one-sample Wilcoxon test comparing the resulting distribution of proportions against a null of 0.5. Because the RDP algorithm cannot remove the endpoints of a curve, we excluded the first and last episode event each participant recalled from their data for this analysis. 
+When a given episode event matched more than one event in a participant's immediate recall, we used the lowest $\varepsilon$ value at which a matching recall event was discarded, and counted the event as omitted if it was not matched by multiple events in the participant's delayed recall (this removed a total of 38 duplicate matches out of 861 non-endpoint recall events, across all participants).
+
+We then examined whether this simplification was specific to the geometry of each individual's immediate recounting, rather than driven by general patterns in forgetting.
+We again used a surrogate-driven procedure, here to test whether the events an individual omitted in their delayed recounting were better predicted by the simplified geometry of their own immediate recounting than by that of other participants' immediate recountings.
+For a given target participant $A$ and a given surrogate participant $B$, we computed the probability of superiority for the events participant $A$ omitted post-delay using the $\varepsilon$ values at which each event was removed from $A$'s immediate recounting and $B$'s immediate recounting, separately, and considering only the events that both participants recalled in the immediate session.
+We repeated this across all surrogates for the target participant, and computed the proportion of target-surrogate comparisons in which the probability of superiority derived from the target participant's own recall geometry was greater than that derived from the surrogate participant's recall geometry.
+Repeated for all target participants, this yielded a set of per-participant ``win rates'', which we compared via a one-sample Wilcoxon test against a null rate of 0.5. 
+We restricted the pool of surrogate participants for each target participant to those participants who recalled at least one event in the immediate session that the target participant omitted in the delayed session (in order to calculate probabilities of superiority; this excluded 175 total surrogates across 2,496 target-surrogate pairs).
+
+Finally, we asked whether participants' delayed recall omissions were predicted specifically a simplification of their own immediate recall geometry rather than by a simplification of the original episode's geometry.
+We performed a regression analysis that tested the effect of an event's RDP-removability from a participant's immediate recall geometry on its probability of being omitted post-delay, while controlling for the analogous effect of its RDP-removability from the \textit{episode's} geometry.
+For each participant, we computed two ``$\varepsilon$ at removal'' scores for each episode event they recalled in the immediate session: the $\varepsilon$ at which it was discarded from their immediate recall event-sequence, and the $\varepsilon$ at which it was discarded from the episode's event-sequence.
+As above, since the RDP algorithm cannot remove the endpoints of a curve, we excluded the first and last episode event and, if they differed, the episode events matched by the participant's first and last immediate recall events.
+We then multiplied these ``$\varepsilon$ at removal'' scores for each episode event by $-1$ so that they represented ``removability'' (i.e., higher scores $\Rightarrow$ more RDP-removable), and $z$-scored the events' removability scores from each source, separately, so their scales were comparable both with each other and across participants.
+We then used these two $z$-scored removability scores across all episode events recalled by all participants in the immediate session to fit a logistic regression:
+
+\begin{equation}
+  \operatorname{logit}\!\big(\Pr(\text{omitted}_{pe}=1)\big)
+    = \beta_0 + \beta_{\text{imm}}\, z^{\text{imm}}_{pe} + \beta_{\text{epi}}\, z^{\text{epi}}_{pe}
+\end{equation}
+
+where $\operatorname{logit}(q) = \log\!\big(q/(1-q)\big)$, $\text{omitted}_{pe}$ indicates whether episode event $e$ recalled in the immediate session by participant $p$ was omitted ($1$) or retained ($0$) in their delayed recall, and $z^{\text{imm}}_{pe}$ and $z^{\text{epi}}_{pe}$ are the within-participant $z$-scored removability scores of that event computed from participant $p$'s own immediate recall event-sequence and from the episode's event-sequence, respectively.
+The coefficients $\beta_{\text{imm}}$ and $\beta_{\text{epi}}$ thus express the change in the log-odds of omission per within-participant standard-deviation increase in removability, with intercept $\beta_0$.
+We note that because the within-participant $z$-scoring removes each participant's baseline and scale in removability scores, the estimated coefficients reflect purely within-participant variation and cannot be driven by between-participant differences in removability.
+
+To estimate $p$-values for these coefficients, we used a participant-blocked permutation procedure.
+For each of 10,000 permutations, we randomly shuffled the ``omitted'' labels within each participant's set of immediately recalled episode events, independently, and preserving the numbers of episode events they omitted versus retained in following the delay.
+We then re-fit the above model using each set of permuted labels to construct a null distribution of coefficients, and computed a $p$-value as $\frac{r+1}{n+1}$, where $r$ is the number of permutations that yielded a coefficient greater than or equal to the observed coefficient, and $n$ is the number of permutations we performed (10,000).
+
+To construct the 95\% confidence intervals displayed in Figure~\ref{fig:rdp}D, we used a cluster bootstrap procedure.
+For each of 10,000 bootstraps, we subsampled participants (with replacement) from the full pool and re-fit the above model using each subsample's data. 
+This yielded bootstrap distributions of 10,000 $\beta_{\text{imm}}$ and $\beta_{\text{epi}}$ coefficients, from which we computed the 2.5\textsuperscript{th} and 97.5\textsuperscript{th} percentiles.
 
 \section*{Data availability}
 
