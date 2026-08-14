@@ -556,7 +556,7 @@ To test this idea, we first asked whether the $\varepsilon$ value at which the R
 We applied the RDP algorithm to each participant's sequence of immediate recall events over a sweep of $\varepsilon$ values spanning the range of possible cosine distances between the events' embedding vectors (i.e., from 0 to 2; increasing $\varepsilon$ by 0.1 each iteration).
 For each episode event a given participant recalled, we identified the minimum $\varepsilon$ at which its matched recall event was discarded from their event sequence.
 We then computed the proportion of times an event the participant omitted from their delayed recounting was removed at a lower $\varepsilon$ value than an event they did not (i.e., the probability of superiority, or equivalently, AUC).
-We repeated this process for all participants who omitted at least immediately recalled event from their delayed recounting (48 out of 53) and performed a one-sample Wilcoxon test comparing the resulting distribution of proportions against a null of 0.5. Because the RDP algorithm cannot remove the endpoints of a curve, we excluded the first and last episode event each participant recalled from their data for this analysis. 
+We repeated this process for all participants who omitted at least one immediately recalled event from their delayed recounting (48 out of 53) and performed a one-sample Wilcoxon test comparing the resulting distribution of proportions against a null of 0.5. Because the RDP algorithm cannot remove the endpoints of a curve, we excluded the first and last episode event each participant recalled from their data for this analysis. 
 When a given episode event matched more than one event in a participant's immediate recall, we used the lowest $\varepsilon$ value at which a matching recall event was discarded, and counted the event as omitted if it was not matched by multiple events in the participant's delayed recall (this removed a total of 38 duplicate matches out of 861 non-endpoint recall events, across all participants).
 
 We then examined whether this simplification was specific to the geometry of each individual's immediate recounting, rather than driven by general patterns in forgetting.
@@ -566,8 +566,29 @@ We repeated this across all surrogates for the target participant, and computed 
 Repeated for all target participants, this yielded a set of per-participant ``win rates'', which we compared via a one-sample Wilcoxon test against a null rate of 0.5. 
 We restricted the pool of surrogate participants for each target participant to those participants who recalled at least one event in the immediate session that the target participant omitted in the delayed session (in order to calculate probabilities of superiority; this excluded 175 total surrogates across 2,496 target-surrogate pairs).
 
+Finally, we asked whether participants' delayed recall omissions were predicted specifically a simplification of their own immediate recall geometry rather than by a simplification of the original episode's geometry.
+We performed a regression analysis that tested the effect of an event's RDP-removability from a participant's immediate recall geometry on its probability of being omitted post-delay, while controlling for the analogous effect of its RDP-removability from the \textit{episode's} geometry.
+For each participant, we computed two ``$\varepsilon$ at removal'' scores for each episode event they recalled in the immediate session: the $\varepsilon$ at which it was discarded from their immediate recall event-sequence, and the $\varepsilon$ at which it was discarded from the episode's event-sequence.
+As above, since the RDP algorithm cannot remove the endpoints of a curve, we excluded the first and last episode event and, if they differed, the episode events matched by the participant's first and last immediate recall events.
+We then multiplied these ``$\varepsilon$ at removal'' scores for each episode event by $-1$ so that they represented ``removability'' (i.e., higher scores $\Rightarrow$ more RDP-removable), and $z$-scored the events' removability scores from each source, separately, so their scales were comparable both with each other and across participants.
+We then used these two $z$-scored removability scores across all episode events recalled by all participants in the immediate session to fit a logistic regression:
 
+\begin{equation}
+  \operatorname{logit}\!\big(\Pr(\text{omitted}_{pe}=1)\big)
+    = \beta_0 + \beta_{\text{imm}}\, z^{\text{imm}}_{pe} + \beta_{\text{epi}}\, z^{\text{epi}}_{pe}
+\end{equation}
 
+where $\operatorname{logit}(q) = \log\!\big(q/(1-q)\big)$, $\text{omitted}_{pe}$ indicates whether episode event $e$ recalled in the immediate session by participant $p$ was omitted ($1$) or retained ($0$) in their delayed recall, and $z^{\text{imm}}_{pe}$ and $z^{\text{epi}}_{pe}$ are the within-participant $z$-scored removability scores of that event computed from participant $p$'s own immediate recall event-sequence and from the episode's event-sequence, respectively.
+The coefficients $\beta_{\text{imm}}$ and $\beta_{\text{epi}}$ thus express the change in the log-odds of omission per within-participant standard-deviation increase in removability, with intercept $\beta_0$.
+We note that because the within-participant $z$-scoring removes each participant's baseline and scale in removability scores, the estimated coefficients reflect purely within-participant variation and cannot be driven by between-participant differences in removability.
+
+To estimate $p$-values for these coefficients, we used a participant-blocked permutation procedure.
+For each of 10,000 permutations, we randomly shuffled the ``omitted'' labels within each participant's set of immediately recalled episode events, independently, and preserving the numbers of episode events they omitted versus retained in following the delay.
+We then re-fit the above model using each set of permuted labels to construct a null distribution of coefficients, and computed a $p$-value as $\frac{r+1}{n+1}$, where $r$ is the number of permutations that yielded a coefficient greater than or equal to the observed coefficient, and $n$ is the number of permutations we performed (10,000).
+
+To construct the 95\% confidence intervals displayed in Figure~\ref{fig:rdp}D, we used a cluster bootstrap procedure.
+For each of 10,000 bootstraps, we subsampled participants (with replacement) from the full pool and re-fit the above model using each subsample's data. 
+This yielded bootstrap distributions of 10,000 $\beta_{\text{imm}}$ and $\beta_{\text{epi}}$ coefficients, from which we computed the 2.5\textsuperscript{th} and 97.5\textsuperscript{th} percentiles.
 
 \section*{Data availability}
 
