@@ -555,59 +555,16 @@ We hypothesized that the differences between the semantic paths traversed by a p
 To test this idea, we first asked whether the $\varepsilon$ value at which the RDP algorithm discards a participant's recall of a given episode event predicted whether they would omit that event from their delayed recounting.
 We applied the RDP algorithm to each participant's sequence of immediate recall events over a sweep of $\varepsilon$ values spanning the range of possible cosine distances between the events' embedding vectors (i.e., from 0 to 2; increasing $\varepsilon$ by 0.1 each iteration).
 For each episode event a given participant recalled, we identified the minimum $\varepsilon$ at which its matched recall event was discarded from their event sequence.
-We then computed the proportion of times an event the participant omitted from their delayed recounting was removed at a lower $\varepsilon$ value than an event they did not (i.e., the probability of superiority, or AUC).
-We repeated this process for all participants, and performed a one-sample Wilcoxon test comparing the resulting distribution of proportions against a null of 0.5. Because the RDP algorithm cannot remove the endpoints of a curve, we excluded the first and last episode event each participant recalled from their data for this analysis. 
-When a given episode event matched more than one event in a participant's immediate recall, we used the lowest $\varepsilon$ value at which a matching recall event was discarded, and counted the event as omitted if it was not matched by multiple events in the participant's delayed recall (this removed a total of 38 duplicate matches out of 861 non-endpoint recall events, across all participant).
+We then computed the proportion of times an event the participant omitted from their delayed recounting was removed at a lower $\varepsilon$ value than an event they did not (i.e., the probability of superiority, or equivalently, AUC).
+We repeated this process for all participants who omitted at least immediately recalled event from their delayed recounting (48 out of 53) and performed a one-sample Wilcoxon test comparing the resulting distribution of proportions against a null of 0.5. Because the RDP algorithm cannot remove the endpoints of a curve, we excluded the first and last episode event each participant recalled from their data for this analysis. 
+When a given episode event matched more than one event in a participant's immediate recall, we used the lowest $\varepsilon$ value at which a matching recall event was discarded, and counted the event as omitted if it was not matched by multiple events in the participant's delayed recall (this removed a total of 38 duplicate matches out of 861 non-endpoint recall events, across all participants).
 
 We then examined whether this simplification was specific to the geometry of each individual's immediate recounting, rather than driven by general patterns in forgetting.
-We again used a surrogate-driven procedure, here to test whether simplifying an individual's own immediate recall event sequence predicted omissions from their delayed recounting better than simplifying 
-
-%We then tested whether the relationship between an event's $\varepsilon$-at-removal and its likelihood of being omitted from delayed recall was specific to the geometric structure of each individual's immediate recall, rather than potentially driven by 
-%
-%specific to how an individual structured their recounting. 
-
-
-
-
-
-%
-%We hypothesized that the differences between the semantic paths traversed by a participant's immediate and delayed recountings of the episode might reflect a similar shape-preserving simplification.
-%To test this idea, we first asked whether the $\varepsilon$ value at which the RDP algorithm discarded a participant's recall of a given episode event predicted whether they would 
-%
-%
-%To test this idea, we first asked whether the $\varepsilon$ value at which the RDP algorithm discarded an event from a participant's immediate recounting predicted whether that event would be omitted from their delayed recounting.
-%We applied the RDP algorithm to each participant's (mean-centered) immediate recall event-sequence
-%
-%When more than one of a participant's recall events matched a given episode event, we used the lowest epsilon at which a matching recall event was removed, and considered the events ``forgotten'' if it was matched by fewer 
-%
-%Since the shape of a participant's immediate recall event-sequence sequence might be defined by multiple recall events matched to the same episode event, we used the first epsilon at which 
-%
-%
-%
-%We used the RDP algorithm to simplify the each participant's sequence of (mean-centered) immediate recall events with increasing epsilon values 
-
-
-%Since our recall-to-episode event mapping can be many-to-one (i.e., a given episode event may be matched by multiple immediate or delayed recall events), we used the lowest epsilon at which an event matching each episode event was discarded, and considered events 
-
-
-
-
-%To test this idea, we first asked whether the $\varepsilon$ values at which the RDP algorithm discarded descriptions of different episode events from a participant's immediate recounting predicted whether those descriptions would be omitted in their delayed recounting.
-
-
-
-
-
-
-%To test this idea, we first asked whether the $\varepsilon$ value at which the RDP algorithm discarded a participant's description of a given episode event from their immediate recounting predicted whether the participant would omit a description of that event from their delayed recounting.
-%We applied the RDP algorithm to the path traversed by each participant's (mean-centered) immediate recall event-sequence with increasing $\varepsilon$ values, ranging from 0 to 2 (tiling the range of possible cosine distances) and increasing by 0.1 each iteration.
-
-
-
-
-%of the path through semantic space traversed by their immediate recounting.
-%Specifically, we asked whether the $\varepsilon$ value at which the RDP algorithm discarded an event from a participant's immediate recall event-sequence predicted whether the participant would omit the corresponding episode event in their delayed recall.
-
+We again used a surrogate-driven procedure, here to test whether the events an individual omitted in their delayed recounting were better predicted by the simplified geometry of their own immediate recounting than by that of other participants' immediate recountings.
+For a given target participant $A$ and a given surrogate participant $B$, we computed the probability of superiority for the events participant $A$ omitted post-delay using the $\varepsilon$ values at which each event was removed from $A$'s immediate recounting and $B$'s immediate recounting, separately, and considering only the events that both participants recalled in the immediate session.
+We repeated this across all surrogates for the target participant, and computed the proportion of target-surrogate comparisons in which the probability of superiority derived from the target participant's own recall geometry was greater than that derived from the surrogate participant's recall geometry.
+Repeated for all target participants, this yielded a set of per-participant ``win rates'', which we compared via a one-sample Wilcoxon test against a null rate of 0.5. 
+We restricted the pool of surrogate participants for each target participant to those participants who recalled at least one event in the immediate session that the target participant omitted in the delayed session (in order to calculate probabilities of superiority; this excluded 175 total surrogates across 2,496 target-surrogate pairs).
 
 
 
