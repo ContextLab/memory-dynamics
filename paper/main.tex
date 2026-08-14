@@ -176,38 +176,67 @@ much the path's shape would change if it were removed. We find that this
 ranking predicts which events participants will forget following a week-long
 delay.
 
-%% JRM NOTE: STOPPED HERE IN LATEST PASS
 \section*{Results}
 
-We ran an experiment in which we asked participants to view and verbally recount episodes of television shows across two experiment sessions, separated by approximately one week (Fig.~\ref{fig:paradigm}).
-In the first session, participants viewed the pilot episode of the TV series \textit{Atlanta}.
-They were then given up to one hour (and a minimum of 10 minutes) to recount what had happened in the episode to the best of their abilities (i.e., immediate recall).
-After they finished recounting the episode, we asked participants to verbally predict what they thought would happen in the show's next episode.
-Participants then returned for a second session between 6 and 8 days later, in which they began by again verbally recounting the \textit{Atlanta} episode they had viewed the week prior (i.e., delayed recall).
-Following the delayed recall phase, participants viewed and recounted either the second episode of \textit{Atlanta} or the pilot episode of a different TV series, \textit{Arrested Development}.
-We designed our experiment to support exploring a range of behavioral memory phenomena, including differences between immediate and delayed recall, influences of contextually congruent versus incongruent prior experience, effects of self-cuing via context reinstatement, and relationships between
-successful prediction and subsequent memory.
-In the present study, we focus on characterizing how the content and structure of participants' recountings of the first \textit{Atlanta} episode changed between their immediate and delayed recalls.
+We ran an experiment in which we asked participants to view and verbally
+recount episodes of television shows across two experiment sessions, separated
+by approximately one week (Fig.~\ref{fig:paradigm}). In the first session,
+participants viewed the pilot episode of the TV series \textit{Atlanta}. They
+were then given up to one hour (and a minimum of 10 minutes) to recount what
+had happened in the episode to the best of their abilities (i.e.,
+\textit{immediate recall}). After they finished recounting the episode, we
+asked participants to verbally predict what they thought would happen in the
+show's \textit{next} episode. Participants then returned for a second session
+between 6 and 8 days later, in which they began by again verbally recounting
+the \textit{Atlanta} episode they had viewed the week prior (i.e.,
+\textit{delayed recall}). Following the delayed recall phase, participants
+viewed and recounted either the second episode of \textit{Atlanta} or the pilot
+episode of a different TV series, \textit{Arrested Development}. We designed
+our experiment to support exploring a range of behavioral memory phenomena,
+including differences between immediate and delayed recall, influences of
+contextually congruent versus incongruent prior experience, effects of
+self-cuing via context reinstatement, and relationships between successful
+prediction and subsequent memory. In the present study, we focus on
+characterizing how the content and structure of participants' recountings of
+the first \textit{Atlanta} episode changed between their immediate and delayed
+recalls.
 
 \begin{figure}[tp]
     \centering
     \includegraphics[width=\textwidth]{figures/source/paradigm}
 
-    \caption{\textbf{Experimental paradigm.} Visual timeline of the two study sessions, taking place approximately one week apart. 
-    In session 1, participants viewed the pilot episode of \textit{Atlanta}, immediately verbally recounted its content, and then verbally predicted what would happen in the next episode. 
-    In session 2, participants again recounted the \textit{Atlanta} episode viewed the week prior before viewing and verbally recounting either the second episode of \textit{Atlanta} or the pilot episode of \textit{Arrested Development}.
-    Here we analyze participants' immediate and delayed recalls of the first \textit{Atlanta} episode.
-    Faded elements denote phases of the experiment that are not analyzed in the present study: the prediction phase at the end of session 1, and the second episode and the recall of it that followed in session 2.}
+    \caption{\textbf{Experimental paradigm.} Visual timeline of the two study
+    sessions, spanning approximately one week. In session 1, participants
+    view the pilot episode of \textit{Atlanta}, immediately verbally
+    recount its content, and then verbally predict what will happen in the
+    next episode. In session 2, participants again recount the
+    \textit{Atlanta} episode (viewed the week prior), and then view and verbally
+    recount either the second episode of \textit{Atlanta} or the pilot
+    episode of \textit{Arrested Development}. Here we analyze participants'
+    immediate and delayed recalls of the first \textit{Atlanta} episode. Faded
+    elements denote phases of the experiment that are not analyzed in the
+    present study: the prediction phase at the end of session 1, and the second
+    episode (and its recall) in session 2.}
 
     \label{fig:paradigm}
 \end{figure}
 
-To characterize how participants preserved and distorted the content of the \textit{Atlanta} episode in their immediate and delayed recountings, we adapted an approach we developed in prior work that casts experiences and memories as trajectories unfolding in a common high-dimensional representation space~\citep{HeusEtal21}.
-We construct these trajectories using a text embedding model.
-Briefly, text embedding models take in natural language text of an arbitrary length and output a fixed-length vector representation that captures the text's semantic meaning.
-Intuitively, an output vector of length $n$ can be viewed as a coordinate in an $n$-dimensional text embedding space, wherein texts with similar semantic meanings are assigned to nearby coordinates while those with divergent meanings reside farther apart.
-In this way, the distance between the embedding coordinates assigned to two texts provides a measure of how semantically similar their underlying contents are.
+To characterize how participants preserve and/or distort the content of the
+\textit{Atlanta} episode in their immediate and delayed recountings, we adapt
+an approach, developed in our prior work, that casts experiences and memories
+as \textit{trajectories} unfolding in a common high-dimensional representation
+space~\citep{HeusEtal21}. We construct these trajectories using a text
+embedding model applied to annotations of the episode and participants' recall
+transcripts. Briefly, text embedding models take in natural language text (of
+arbitrary length) and output a single fixed-length numerical vector that
+captures the text's semantic meaning. Intuitively, an output vector of length
+$n$ can be viewed as a coordinate in an $n$-dimensional text embedding space,
+where texts with similar semantic meanings are assigned to nearby coordinates
+while those with different semantic meanings are farther apart. In this way, the
+distance between the embedding coordinates assigned to two texts provides a
+measure of how semantically related their underlying contents are.
 
+% JRM STOPPED HERE...
 We began by creating detailed text annotations describing the content present during each individual camera shot from the episode (Fig.~\ref{fig:pipeline}, \textit{Text}; see \nameref{subsec:annotations-transcripts}).
 We then projected each camera shot's text description onto a coordinate in a 768-dimensional text embedding space using EmbeddingGemma~\citep{VeraEtal25}.
 The sequence of embedding space coordinates across successive camera shots thus forms a trajectory that characterizes how the \textit{Atlanta} episode's latent semantic content unfolded over time (Fig.~\ref{fig:pipeline}, \textit{Trajectories}).
