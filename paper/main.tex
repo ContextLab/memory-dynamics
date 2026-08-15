@@ -29,12 +29,9 @@
 
 \title{Geometric models reveal that delayed memories are simplified versions of our own earlier recountings}
 
-\author{Paxton C. Fitzpatrick\textsuperscript{1}, Alishba Tahir\textsuperscript{1, 2}, Jennifer Xu\textsuperscript{1}, and Jeremy R. Manning\textsuperscript{1, *}\\
-\vspace{-0.5em}\small{\textsuperscript{1}Department of Psychological and Brain
-Sciences}\\
+\author{Paxton C. Fitzpatrick, Alishba Tahir, Jennifer Xu, and Jeremy R. Manning\textsuperscript{*}\\
+\vspace{-0.5em}\small{Department of Psychological and Brain Sciences}\\
 \small{Dartmouth College, Hanover, NH 03755, USA}\\
-\vspace{-0.5em}\small{\textsuperscript{2}ALISHBA AFFILIATION PLACEHOLDER}\\
-\small{ALISHBA AFFILIATION PLACEHOLDER}\\
 \vspace{-0.5em}\small{\textsuperscript{*}Corresponding author:
 Jeremy.R.Manning@Dartmouth.edu}}
 
@@ -44,45 +41,50 @@ Jeremy.R.Manning@Dartmouth.edu}}
 \maketitle
 
 \begin{abstract}\noindent
-What is a second telling of an experience a telling of?
+What is a second recounting of an experience a recounting \textit{of}?
 Memories change with time and with retrieval, so each recounting may be shaped less by the experience itself than by how we last recounted it.
 Here we use a geometric framework to compare two recountings of the same experience.
-We model an experience and each recounting of it as trajectories through a semantic embedding space, then segment each trajectory into events.
-We applied our approach to data collected as participants watched a television episode, verbally recounted it immediately, and recounted it again one week later.
-Participants' delayed recountings resembled their own immediate recountings more closely than they resembled the episode itself.
-Their structure was specific enough to identify the immediate recounting that preceded them.
-Delayed recountings were also well described as geometrically simplified versions of immediate recountings, in that the events whose removal least distorts a trajectory's shape were those most likely to be dropped.
-What we retrieve after a delay therefore appears to be a person-specific distillation, rather than the experience as it was first encountered.
+We model experiences and recountings as trajectories through a semantic embedding space, then segment each trajectory into discrete events.
+We apply our approach to data collected as participants watched a television episode, verbally recounted it immediately afterward, then recounted it again one week later.
+We find that the trajectories of participants' delayed recountings resemble their own immediate recountings more closely than they resemble the episode itself.
+We also find that this resemblance is person-specific enough to identify one of an individual's recounting of the experience from the geometry of their other recounting.
+The delayed recountings' trajectories were also well described as geometrically simplified versions of immediate recountings' trajectories, in that the immediately recounted events that least affected its trajectory's shape were the events most likely to be omitted from the delayed recounting.
+These findings suggest that the act of retrieving a memory after a delay draws on a person-specific distillation of the experience, rather than the experience itself as it was first encountered.
+Further, the distillation itself appears to proceed in a way that best preserves the shape of the original recounting's trajectory.
 \end{abstract}
 
 
 \section*{Introduction}
 
-Suppose that you attend a friend's wedding.
-That evening you describe it to your partner, recounting how the ceremony ran long, how the best man's toast was unexpectedly moving, and how a small child wandered onto the dance floor midway through the first song.
-A week later a coworker asks how the wedding was, and you tell the story again.
-What is that second telling a telling of?
-One appealing answer is that both tellings draw on the same underlying memory of the wedding, and that whatever differences arise between them reflect the ordinary imprecision of putting an experience into words.
-A second possibility, which motivates the work we report here, is that your first telling has itself become part of what you are remembering.
+Suppose you attend a friend's wedding.
+That evening, you describe it to your partner, recounting how the ceremony ran long, how the best man's toast was unexpectedly moving, and how a small child wandered onto the dance floor midway through the first song.
+A week later your coworker asks how the wedding was, and you tell the story again.
+What specifically are you recounting to your coworker?
+Is it the wedding itself, as you experienced it?
+Or is it the \textit{story} about the wedding you had told your partner the week before?
+Or perhaps some combination of the two?
+Further, if the two recountings differ, does it solely reflect the ordinary imprecision of putting an experience into words?
+Or is it that the representation itself has changed?
 
-What happens to an experience between living it and describing it later?
-Since our brains do not maintain an exhaustive account of everything we encounter, the very act of perceiving an experience already necessarily entails compressing and distorting it.
+An experience is already transformed well before anyone sets out to describe it.
+Our brains do not maintain an exhaustive account of everything we encounter, so the very act of perceiving an experience in the first place entails compressing and distorting it.
 We attend closely to some aspects of a scene while ignoring others, and we tend to interpret ambiguous moments in light of what has happened previously and what we expect will happen next.
 But once an experience has ended, neither the experience itself nor our moment-to-moment perception of it remains available, to us or to anyone else.
-What remains is instead the product of a further distillation, through which our perception of the experience is reduced to something our memory systems can store and later reconstruct.
-Which aspects of an experience survive this second distillation may depend on what we attended to, what we anticipated would matter later, what we found interesting, and the thoughts, motivations, and biases we brought with us.
-Because remembering entails reconstructing an experience rather than replaying it, the resulting account often preserves the general ``shape'' of what happened while discarding many of its particulars~\citep{Bart32,SchaEtal11,Scha12}.
-The units over which these distillations operate appear to be events, in that people segment continuous experience into discrete episodes at moments of change, and those boundaries shape what is remembered afterwards~\citep{RadvZack17,BaldEtal17}.
+Rather, what remains is the product of a further distillation, through which our perception of the experience is reduced to something our memory systems can store and later reconstruct.
+Which aspects of an experience survive this second distillation may depend on what we attended to; what we anticipated would matter later; what we found interesting; and the thoughts, motivations, and biases we brought with us.
+Because remembering is reconstructive, the resulting account often preserves the general ``shape'' of what happened while discarding many of its particulars~\citep{Bart32,SchaEtal11,Scha12}.
+The units over which these distillations operate appear to be events.
+People segment continuous experience into discrete episodes at moments of change, and those boundaries shape what is remembered afterwards~\citep{RadvZack17,BaldEtal17}.
 In prior work we characterized this transformation geometrically by modeling an experience and a person's recounting of it as trajectories through a semantic space, and asking which properties of the experience's trajectory are preserved in the recounting~\citep{HeusEtal21}.
 
-Yet memories do not remain fixed once they have been encoded, pointing to further transformations that a single recounting cannot reveal.
+After encoding an experience into memory, the representation of that memory is not fixed.
 Information may be lost over time; experiences we have after an event may color how we later remember it; similar experiences may interfere with one another; and we may simply re-evaluate what happened in light of what we have learned since.
-The act of retrieving a memory itself appears to be one of the forces that changes it, in that a memory can become labile when it is reactivated and must be stabilized again afterwards~\citep{NadeEtal00,HupbEtal07,HupbEtal09,SedeEtal11}.
-Retrieval also changes what will be accessible later---often substantially---relative to memories that go unretrieved~\citep{RoedKarp06a,KarpRoed07}.
+Even the act of retrieving a memory itself appears to be one of the forces that changes it, in that a memory can become labile when it is reactivated and must be stabilized again afterwards~\citep{NadeEtal00,HupbEtal07,HupbEtal09,SedeEtal11}.
+Retrieval also changes what will be accessible later (often substantially) relative to memories that go unretrieved~\citep{RoedKarp06a,KarpRoed07}.
 Further, the particular way in which we recount an experience appears to matter as well, since people who are asked to describe an event for one purpose later remember it in ways that are biased toward that description~\citep{TverMars00}.
 Memories also become more semantic and less perceptually detailed, both with the passage of time and with repeated remembering~\citep{LifaEtal21}.
 Repeated retrieval of naturalistic events over the course of a week has been found to stabilize each person's recall (for example, which details they include) without causing different people's recalls to converge~\citep{MeleEtal25}.
-Taken together, these observations suggest that each time we remember an experience, the substance of the underlying memory we are retrieving may differ from what we retrieved before.
+Taken together, these observations suggest that each time we remember an experience, the substance of the underlying memory we are retrieving differs from what we retrieved before.
 
 How might we compare two recountings of the same experience when the experience and both recountings take the form of unconstrained natural language?
 Recent work has begun to use language models to quantify the content of what individuals say when they recount what they remember~\citep{HeusEtal21,MannEtal22,FitzEtal26,FeneEtal25}.
@@ -90,17 +92,20 @@ The approach developed in our prior work embeds the description of an experience
 We then segment the experience and each recounting into events and identify which event from the experience each recall event describes, yielding sequences of events that may be compared directly across people and across delays~\citep{ChenEtal17,BaldEtal17,HeusEtal21}.
 
 Here we apply our approach to data from an experiment in which participants viewed an episode of a television show, recounted its events immediately afterward, and then recounted them again following a week-long delay.
-Because we collected two recountings of the same experience from each participant, we are able to ask what participants' delayed recountings most closely resemble.
+We collected two recountings of the same experience from each participant, which allows us to ask what participants' delayed recountings most closely resemble.
 If retrieval recovered the original experience in an uncorrupted form, then both recountings should be about equally similar to the experience itself.
 We find instead that the structure of a participant's delayed recounting is more similar to that of their own immediate recounting than to that of the original episode.
 It is also more similar to their own immediate recounting than to other participants' immediate recountings, to the degree that an individual's immediate recall can be identified from their delayed recall on the basis of this structure alone.
-What governs retrieval after a delay therefore appears to be a person-specific distillation, rather than the episode as it was first experienced.
+Retrieval after a delay therefore appears to draw on a person-specific distillation of the episode more than on the episode as it was first experienced.
 
 Capturing the semantic geometry of individuals' recalls at different points in time also offers the opportunity to characterize the transformations undergone by our memories beyond an initial recounting.
 For example, if individuals' recountings tend to retain their idiosyncratic structures after a delay, how \textit{do} the structures of our memories tend to change with time?
 There is a particular qualitative change our memories undergo as we naturally forget aspects of experience, implied by common descriptors such as ``fading'', ``blurring'', becoming ``fuzzy'', or ``decaying''~\citep{Thor13}.
 But the nature of this change can be difficult to characterize more concretely.
-Here we show that this transformation is well described as geometrically simplifying the path through semantic space an individual follows as they recount an experience, in that applying an existing method for removing detail from a geometric curve to participants' immediate recalls preferentially removes events those individuals will forget following the delay.
+Here we show that this transformation is well described as geometrically simplifying the path through semantic space an individual follows as they recount an experience.
+We consider a method for simplifying geometric curves, originally developed for use constructing cartographic maps at different scales, expressing different levels of detail~\citep{Rame72,DougPeuc73}.
+When we apply this method to the trajectories through semantic space traced out by participants' immediate recountings, we can rank each event according to how much the path's shape would change if it were removed.
+We find that this ranking predicts which events participants will forget following a week-long delay.
 
 
 \section*{Results}
@@ -165,6 +170,17 @@ This resulted in a trajectory characterizing the dynamic semantic content of eac
     \caption{\textbf{Recall order is preserved between immediate and delayed sessions.} CAPTION}
 
     \label{fig:recall-order}
+\end{figure}
+
+
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/source/2d-trajectories}
+
+    \caption{\textbf{2D projections of the episode and recall trajectories.} CAPTION}
+
+    \label{fig:trajectories}
 \end{figure}
 
 
