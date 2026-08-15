@@ -111,6 +111,68 @@ We find that this ranking predicts which events participants will forget followi
 
 \section*{Results}
 
+%%%%%%%%%%%%%%%% RELEVANT STATS %%%%%%%%%%%%%%%%
+%- order-similarity analysis:
+%    - order structures of participants' delayed recalls were more similar to their 
+%      own immediate recalls than to other participants' immediate recalls: 
+%        - Wilcoxon's T = 1076.5, p < 0.001
+%- DTW analyses:
+%	- warp cost to align participants' delayed recalls to their own immediate 
+%	  recalls (example in fig panel A) was lower than the cost to align their 
+%	  delayed recalls to the episode (example in fig panel B):
+%		- Wilcoxon's T = 1430, p < 0.001
+%		- within-participant differences shown in fig panel D
+%	- warp cost to align participants' delayed recalls to the episode was higher 
+%	  than the cost to align their immediate recalls to the episode (can also 
+%	  phrase this in the reverse):
+%		- Wilcoxon's T = 1143, p < 0.001
+%		- not currently in fig
+%	- warp cost to align participants' delayed recalls to their own immediate 
+%	  recalls (example in fig panel A) was lower than the cost to align their 
+%	  delayed recalls to *other* participants' immediate recalls (example 
+%	  in fig panel C):
+%		- Wilcoxon's T = 1431, p < 0.001
+%		- fig panel E shows each each participant's delayed-own-immediate warp 
+%		  cost (magenta dog) \& 50th percentile (median) of delayed-other-immediates 
+%		  warp costs (grey dot). 50th percentile shown as the null because we 
+%		  compared percentile ranks of delayed-own-immediate warp costs (ranked 
+%		  against distribution of other delayed-other-immediate warp costs) against a 
+%		  null rank of 0.5
+%- RDP analyses:
+%	- epsilon at which RDP removes an event from immediate recall predicts whether 
+%	  it'll be omitted from delayed recall
+%	    - specifically: for each participant, compute probability that an event 
+%	      omitted from delayed recall was removed from immediate recall at lower 
+%	      epsilon than one that wasn't omitted (``probability of superiority'' or AUC).
+%	      Then compare per-participant PoSs against a null of 0.5
+%	    - mean PoS: 0.576, Wilcoxon's T = 946, p = 0.004
+%	    - fig panel C shows probabilities for each participant
+%	- delayed recall specifically reflects simplifying immediate recall, not 
+%	  simplifying the episode (fig panel D)
+%		- see methods section on logistic regression analysis for specifics
+%		- $\beta_{\text{imm}} = 0.242, p = 0.003, 95\% CI = \left[0.065, 0.424\right]$
+%		- $\beta_{\text{epi}} = 0.012, p = 0.451, 95\% CI = \eft[-0.159,  0.174\right]$
+%	- predictive value of simplification is specific to your own immediate recall 
+%	  geometry (i.e., not general trends in forgetting)
+%	    - see methods section for details on ``win rate'' calculation
+%	    - mean win rate: 0.641, Wilcoxon's T = 864.5, p = 0.002
+%	    - fig panel E shows distribution of win rates (1 per participant)
+%	    - notes on panel F: 
+%	      - since this test involves a head-to-head comparison between a given 
+%	        participant and each of their surrogates, where the own-immediate 
+%	        removal PoS must be recomputed for each surrogate based on the subset 
+%	        of events both self and surrogate recalled, there's no single global
+%	        ``own'' PoS value to percentile-rank against the surrogate PoS values. 
+%	        So the ranks that go into this panel are computed as 1 + number of wins 
+%	        against surrogates
+%	      - this is also why the ``chance'' line is slightly curved -- not all 
+%	        surrogates can be used for every participant because a surrogate must 
+%	        have immediately-recalled at least 1 event the target participant 
+%	        omitted post-delay in order to calculate the surrogate PoS. So 
+%	        ``chance'' is the number of expected wins over surrogates given 
+%	        the number of valid surrogates for each participant.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 We ran an experiment in which we asked participants to view and verbally recount episodes of television shows across two experiment sessions, separated by approximately one week (Fig.~\ref{fig:paradigm}).
 In the first session, participants viewed the pilot episode of the TV series \textit{Atlanta}.
 They were then given up to one hour (and a minimum of 10 minutes) to recount what had happened in the episode to the best of their abilities (i.e., \textit{immediate recall}).
