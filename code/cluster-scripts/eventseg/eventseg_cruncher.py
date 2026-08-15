@@ -64,10 +64,9 @@ min_k = int(sys.argv[1])
 max_k = int(sys.argv[2])
 
 episode_trajectory = np.load(EPISODE_DATA_DIR.joinpath('trajectory.npy'))
-episode_centered = episode_trajectory - episode_trajectory.mean(axis=0)
 
 wasserstein_dists, best_eventseg = search_segmentations(
-    episode_centered,
+    episode_trajectory,
     min_k,
     max_k,
     config.N_SPLIT_MERGE_PROPOSALS,

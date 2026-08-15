@@ -17,6 +17,8 @@
 
 % supplementary methods
 \newcommand{\suppMethods}{\textit{Supplementary methods}}
+% supplementary figures
+\newcommand{\kOptimization}{1}
 
 
 \newcommand{\comment}[1]{}
@@ -545,7 +547,7 @@ Conceptually, mean-centering a given set of embedding vectors (i.e., subtracting
 For example, consider the sequence of embedding vectors comprising the trajectory of the \textit{Atlanta} episode.
 Common across vectors within this sequence will be latent signals driven by how we chose to format the annotation text passed to the embedding model, the annotator's particular idiolect (i.e., idiosyncratic vocabulary and writing style), and any high-level overarching themes of the episode.
 \textit{Not} common across these vectors are the finer-grained semantic representations that distinguish different events, scenes, and actions throughout the episode from each other.
-We found that removing these non-discriminative signals (to the extent they behave as additive offsets) via mean-centering helped reduce the embeddings' anisotropy (i.e., increased the range of measured between-vector similarities) and improved our ability to segment the episode trajectory into meaningful events.
+We found that removing these non-discriminative signals (to the extent they behave as additive offsets) from the episode and recalls via mean-centering helped reduce the embeddings' anisotropy (i.e., increased the range of measured between-vector similarities) and improved our ability to distinguish different temporal periods of semantic content within a single trajectory.
 Similarly, mean-centering both the episode and recalls before relating their embedding representations helped mitigate broad-scale representational differences driven by their diverging registers, and enabled us to better relate them based on event-specific, content-driven patterns.
 
 Our approach to mean-centering the recalls was guided by the particular latent representation we wanted to remove versus retain.
@@ -554,7 +556,7 @@ We therefore centered each recall trajectory (in addition to the episode) on its
 However, the analyses shown in Figures~\ref{fig:dtw} and \ref{fig:rdp} entailed comparing sequences of recall events not only to the episode, but also to each other, both within- and across-participants, to examine whether within-participant similarities tended to exceed across-participant similarities. 
 Here our goal was to remove representational artifacts that could work to bias our results towards significance.
 Specifically, participants' idiolects (i.e., particular speaking styles and sets of words with which they describe the episode) will influence the embedding representations of their recalls in ways that tend to be similar between their immediate and delayed recalls, but differ across participants.
-To correct for this, we jointly centered each participant's set of immediate and delayed recall events on the two sequences' shared centroid (i.e., the average of the two event-sequences' centroids, weighting immediate and delayed recall equally). 
+To correct for this, we jointly centered each participant's set of immediate and delayed recall events on the two sequences' mean centroid (i.e., the average of the two event-sequences' centroids, weighting immediate and delayed recall equally). 
 This served to reduce the recall embeddings' anisotropy (by removing signals driven by high-level themes of the episode they recalled) and mitigate the effects of the spoken-recall register and participant-specific idiolect (both of which are shared between a participant's recalls from the two sessions) while preserving any genuine drift in the high-level content of each participant's recall over the delay (which per-session mean-centering would instead discard).
 
 
@@ -566,11 +568,11 @@ Because states persist, inferring the most probable state at each timepoint segm
 
 We segmented the episode trajectory into events using the HMM implemented in the BrainIAK toolbox~\citep{KumaEtal21}, which jointly learns a mean pattern for each of $K$ states and the set of transitions between them via the Baum-Welch algorithm~\citep{BaumEtal70}, with the added constraint that each state is visited exactly once in a strict left-to-right order~\citep{BaldEtal17}.
 To select an appropriate number of states (i.e., events) for the episode, we used an optimization procedure we developed in prior work~\citep{HeusEtal21} that aims to identify the single timescale of event representations emphasized most heavily in the episode's narrative structure.
-We began by segmenting the (mean-centered) episode trajectory into $K$ events for each $K$ between 2 and 50, inclusive.
-For each candidate segmentation, we then computed the cosine similarity between each pair of timepoints assigned to the same event, and between each pair of timepoints assigned to different events.
-When constructing these distributions of within- and across-event similarities, we restricted comparisons to pairs of timepoints separated by no more than the duration of the longest event in the candidate segmentation, so that the within- and across-event distributions were computed over comparable temporal distances and the across-event distribution was not dominated by distant timepoint pairs that we would expect to be dissimilar regardless of event structure.
-We then selected the candidate segmentation that maximized the Wasserstein distance between these within- and across-event similarity distributions.
-We found that the maximally distinctive and internally self-similar segmentation was yielded by $K = 20$ events. \textbf{(TODO: ADD SUPP FIG SHOWING WASSERSTEIN DIST AS FUNCTION OF K)}
+We began by segmenting the episode trajectory into $K$ events for each $K$ between 2 and 50, inclusive.
+For each candidate segmentation, we then computed the correlation between the embedding vectors for each pair of timepoints assigned to the same event, and between each pair of timepoints assigned to different events.
+When constructing these distributions of within- and across-event correlations, we restricted comparisons to pairs of timepoints separated by no more than the duration of the longest event in the candidate segmentation, so that the within- and across-event distributions were computed over comparable temporal distances and the across-event distribution was not dominated by distant timepoint pairs that we would expect to be dissimilar regardless of event structure.
+We then selected the candidate segmentation that maximized the Wasserstein distance between these within- and across-event distributions.
+We found that the maximally distinctive and internally self-similar segmentation was yielded by $K = 20$ events (see Supp.~Fig.~\kOptimization).
 Finally, we averaged the embedding vectors over timepoints between each pair of adjacent event boundaries to obtain a sequence of stable event-average representations for the episode.
 
 To segment participants' recall trajectories into sequences of events, we developed a novel HMM-driven procedure that grounded the recalls directly against the content of the episode participants viewed and recounted.
