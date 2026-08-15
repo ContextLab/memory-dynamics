@@ -32,8 +32,7 @@
 \author{Paxton C. Fitzpatrick, Alishba Tahir, Jennifer Xu, and Jeremy R. Manning\textsuperscript{*}\\
 \vspace{-0.5em}\small{Department of Psychological and Brain Sciences}\\
 \small{Dartmouth College, Hanover, NH 03755, USA}\\
-\vspace{-0.5em}\small{\textsuperscript{*}Corresponding author:
-Jeremy.R.Manning@Dartmouth.edu}}
+\vspace{-0.5em}\small{\textsuperscript{*}Corresponding author: Jeremy.R.Manning@Dartmouth.edu}}
 
 \date{}
 
@@ -440,7 +439,7 @@ Prior to data processing and analysis, we excluded a total of 17 participants fr
 The data we analyzed comprised the remaining 53 participants.
 
 At the start of the experiment, we asked each participant to complete a demographic survey that included questions about their age, sex, race, and ethnicity.
-Participants' ages ranged from 18 to 22 years (mean: 18.91 years; standard deviation: 1.01 years).
+Participants' ages ranged from 18 to 22 years (mean: 18.91 years; standard deviation: 1.00 years).
 A total of 41 participants reported their sex as female and 12 participants reported their sex as male.
 Participants reported their races as White (34 participants), Asian (16 participants), Black or African American (3 participants), American Indian or Alaska Native (1 participant), and other (1 participant).
 (Note that some participants selected multiple racial categories.)
@@ -451,9 +450,9 @@ All participants reported that their native spoken language was English, that th
 A total of 52 participants reported no attention- or memory-relevant medications or injuries. One participant reported sustaining a concussion more than 3 years prior to the experiment and was not excluded from our dataset.
 
 Additionally, before each of the two experiment sessions, we asked participants about their sleep, coffee consumption, and level of alertness. 
-Participants reported having slept between 5 and 11 hours the night prior to session 1 (mean: 7.37 hours; standard deviation: 1.45 hours) and between 5 and 11 hours the night prior to session 2 (mean: 7.39 hours; standard deviation: 1.23 hours). 
-They reported having consumed between 0 and 3 cups of coffee on the day of session 1 (mean: 0.43 cups; standard deviation: 0.72 cups) and between 0 and 3 cups of coffee on the day of session 2 (mean: 0.48 cups; standard deviation: 0.68 cups).
-Participants reported their current levels of alertness on a 5-point Likert scale. At the start of session 1, 1 participant reported feeling ``Very sluggish,'' 14 reported feeling ``A little sluggish,'' 18 reported feeling ``Neutral,'' 15 reported feeling ``A little alert,'' and 5 reported feeling ``Very alert.'' At the start of session 2, 3 participants reported feeling ``Very sluggish,'' 9 reported feeling ``A little sluggish,'' 23 reported feeling ``Neutral,'' 17 reported feeling ``A little alert,'' and 3 reported feeling ``Very alert.''
+Participants reported having slept between 5 and 11 hours the night prior to session 1 (mean: 7.37 hours; standard deviation: 1.43 hours) and between 5 and 11 hours the night prior to session 2 (mean: 7.39 hours; standard deviation: 1.22 hours). 
+They reported having consumed between 0 and 3 cups of coffee on the day of session 1 (mean: 0.43 cups; standard deviation: 0.71 cups) and between 0 and 3 cups of coffee on the day of session 2 (mean: 0.48 cups; standard deviation: 0.67 cups).
+Participants reported their current levels of alertness on a 5-point Likert scale. At the start of session 1, 1 participant reported feeling ``Very sluggish,'' 14 reported feeling ``A little sluggish,'' 18 reported feeling ``Neutral,'' 15 reported feeling ``A little alert,'' and 5 reported feeling ``Very alert.'' At the start of session 2, 1 participant reported feeling ``Very sluggish,'' 9 reported feeling ``A little sluggish,'' 23 reported feeling ``Neutral,'' 17 reported feeling ``A little alert,'' and 3 reported feeling ``Very alert.''
 
 
 \textbf{@jeremy}: \textit{do we want to report class years and majors? And/or do we want to report post-experiment survey responses (how engaging did you find the episode, how easy/difficult was it to follow, how well do you think you recalled it, how well do you think you learned characters' names)?}
@@ -461,7 +460,7 @@ Participants reported their current levels of alertness on a 5-point Likert scal
 
 \subsection*{Experiment}\label{subsec:experiment}
 
-The experiment took place over two sessions lasting approximately one hour each, separated by 6--8 days (mean: 6.76 days; standard deviation: 0.73 days).
+The experiment took place over two sessions lasting approximately one hour each, separated by 6--8 days (mean: 6.76 days; standard deviation: 0.72 days).
 Prior to the start of the experiment, participants were assigned to one of two groups (\textit{A} or \textit{B}), alternating based on enrollment order.
 During session 1, all participants first viewed the pilot episode of the FX series \textit{Atlanta} (``The Big Bang''; duration: 24 min 15 s).
 Immediately after viewing, participants were given up to one hour to recount what happened in the episode to the best of their abilities.
@@ -554,8 +553,8 @@ In segmenting each participant's recall trajectory from each session into events
 We therefore centered each recall trajectory (in addition to the episode) on its own centroid to remove non-discriminative representations (e.g., register, broad-scale thematic content) and maximize the contrast between vectors within that single sequence.
 However, the analyses shown in Figures~\ref{fig:dtw} and \ref{fig:rdp} entailed comparing sequences of recall events not only to the episode, but also to each other, both within- and across-participants, to examine whether within-participant similarities tended to exceed across-participant similarities. 
 Here our goal was to remove representational artifacts that could work to bias our results towards significance.
-Specifically, participants' idiolects (i.e., particular speaking styles and sets of words with which they desecribe the episode) will influence the embedding representations of their recalls in ways that tend to be similar between their immediate and delayed recalls, but differ across participants.
-To correct for this confound, we jointly centered each participant's set of immediate and delayed recall events on the two sequences' shared centroid (i.e., the average vector across all recall events from both sessions). 
+Specifically, participants' idiolects (i.e., particular speaking styles and sets of words with which they describe the episode) will influence the embedding representations of their recalls in ways that tend to be similar between their immediate and delayed recalls, but differ across participants.
+To correct for this, we jointly centered each participant's set of immediate and delayed recall events on the two sequences' shared centroid (i.e., the average of the two event-sequences' centroids, weighting immediate and delayed recall equally). 
 This served to reduce the recall embeddings' anisotropy (by removing signals driven by high-level themes of the episode they recalled) and mitigate the effects of the spoken-recall register and participant-specific idiolect (both of which are shared between a participant's recalls from the two sessions) while preserving any genuine drift in the high-level content of each participant's recall over the delay (which per-session mean-centering would instead discard).
 
 
@@ -575,7 +574,7 @@ We found that the maximally distinctive and internally self-similar segmentation
 Finally, we averaged the embedding vectors over timepoints between each pair of adjacent event boundaries to obtain a sequence of stable event-average representations for the episode.
 
 To segment participants' recall trajectories into sequences of events, we developed a novel HMM-driven procedure that grounded the recalls directly against the content of the episode participants viewed and recounted.
-Essentially, rather than re-learning separate sets of state representations from each participant's recalls (which tend to be shorter, noisier approximations of the episode content), we leveraged the state representations already learned from the episode to identify transitions between the episode events a given participant was (most probably) describing at each point during their recounting.
+Essentially, rather than re-learning separate sets of state representations from each participant's recalls (which tend to be shorter, noisier approximations of the episode content), we leveraged the state representations already learned from the episode to identify transitions between the episode events a given participant was (most probably) describing at a given point during their recounting.
 First, we mean-centered the sequence of event-average embedding vectors for the episode, and each participant's sequence of per-window embedding vectors from each session, separately.
 For each given recall trajectory, we then computed the cosine similarity between the embedding vector for each recall window and the event-average embedding vector for each of the 20 episode events.
 This yielded a number-of-windows by number-of-episode-events (20) similarity matrix.
@@ -605,7 +604,7 @@ We compared the geometric structures of the episode and recall event-sequences u
 The DTW algorithm finds the optimal order-preserving alignment between two sequences of vectors with potentially different lengths or sampling rates by locally ``stretching'' and ``compressing'' them in time to maximize their overall similarity.
 This alignment yields a ``warp path'' that maps each vector in each sequence onto one or more consecutive vectors in the other sequence, minimizing the total distance between matched vectors.
 The summed or average distance between matched vectors along the optimal warp path (the ``warp cost'') is commonly taken as a measure of the two sequences' structural dissimilarity.
-We computed the warp cost for a given pair of event-sequences as the average cosine distance between DTW-matched events to ensure that these costs were comparable across comparisons involving event-sequences of different lengths (whereas summed distance necessarily grows with sequence length).
+We computed the warp cost for a given pair of event-sequences as the average cosine distance between DTW-matched events so that these costs would be comparable across comparisons involving event-sequences of different lengths (whereas summed distance necessarily grows with sequence length).
 
 We hypothesized that the idiosyncratic geometric structures of participants' delayed recalls tended to reflect the structures of their immediate recalls.
 In the analyses shown in Figure~\ref{fig:dtw}, we tested this hypothesis two different ways.
