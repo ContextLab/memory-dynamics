@@ -192,7 +192,7 @@ We find that this ranking predicts which events participants will forget followi
 %    own-immediate vs. episode comparison, B/E for the drift across the delay,
 %    C/F for own vs. others, G/H for identification), for him to map onto the
 %    final layout.
-
+ 
 We ran an experiment in which we asked participants to view and verbally recount episodes of television shows across two experiment sessions, separated by approximately one week (Fig.~\ref{fig:paradigm}).
 In the first session, participants viewed the pilot episode of the TV series \textit{Atlanta}.
 They were then given up to one hour (and a minimum of 10 minutes) to recount what had happened in the episode to the best of their abilities (i.e., \textit{immediate recall}).
@@ -312,8 +312,7 @@ Order similarity is also defined only over the pairs of events that both recount
     The episode's event sequence (top left), together with the immediate (left) and delayed (right) event sequences of six example participants.
     Each point is one event, and color denotes the episode event being described, so the same color refers to the same episode content in every panel.
     Within each pair, the arrow runs from a participant's immediate recall to their delayed recall, and the episode's own path is drawn beneath both as a dashed grey underlay for reference.
-    Projections were obtained using UMAP and are shown for visualization only; every analysis we report was carried out in the full 768-dimensional space.
-    \textbf{[@paxton: nothing in the text points at this figure yet. Where should it be called out, and does it belong before or after the DTW figure?]}}
+    Projections were obtained using UMAP and are shown for visualization only; every analysis we report was carried out in the full 768-dimensional space.}
 
     \label{fig:trajectories}
 \end{figure}
@@ -340,7 +339,7 @@ Order similarity is also defined only over the pairs of events that both recount
 \end{figure}
 
 
-An important feature of our approach is that it places the episode and both of a participant's recountings in a common embedding space, which lets us ask whether the \textit{structure} of a participant's path through the episode's content is preserved, and not just the sequence in which they visited it.
+An important feature of our approach is that it places the episode and both of a participant's recountings in a common embedding space (Fig.~\ref{fig:trajectories}), which lets us ask whether the \textit{structure} of a participant's path through the episode's content is preserved, and not just the sequence in which they visited it.
 To do so, we aligned pairs of event sequences using dynamic time warping~\citep{Vint68,SakoChib78}.
 The algorithm pairs up the events of two sequences of differing length in the order-preserving way that minimizes the total distance between matched events.
 The average cosine distance across matched pairs was taken as the alignment's ``warp cost''.
@@ -368,6 +367,8 @@ In other words, the geometry of a single recounting carries enough of a person-s
 
 The comparisons above establish that a participant's two recountings resemble each other, and that they do so in a person-specific way, but none of them says how the two differ.
 We wondered whether that difference could be characterized directly, and reasoned that a delayed recounting might be a simplified version of the earlier one.
+This is often apparent by eye.
+For example, each participant in Figure~\ref{fig:trajectories} traces much the same overall shape in both sessions, while their delayed path tends to visit fewer points and to smooth over some of the excursions their immediate path made.
 The events an earlier recounting could most afford to lose (i.e., those whose removal would least disturb the shape of its trajectory) should then be the ones most likely to be dropped after the delay.
 We count an episode event as \textit{dropped} when a participant's delayed recounting devotes fewer events to it than their immediate recounting had, which covers events described less often as well as events left out altogether.
 
