@@ -149,7 +149,7 @@ We find that this ranking predicts which events participants will forget followi
 %	      omitted from delayed recall was removed from immediate recall at lower 
 %	      epsilon than one that wasn't omitted (``probability of superiority'' or AUC).
 %	      Then compare per-participant PoSs against a null of 0.5
-%	    - mean PoS: 0.576, Wilcoxon's T = 946, p = 0.004
+%	    - mean PoS: 0.576, Wilcoxon's T = 846, p = 0.004, 95\% CI  = \left[0.520, 0.632\right]
 %	    - fig panel C shows probabilities for each participant
 %	- delayed recall specifically reflects simplifying immediate recall, not 
 %	  simplifying the episode (fig panel D)
@@ -159,7 +159,7 @@ We find that this ranking predicts which events participants will forget followi
 %	- predictive value of simplification is specific to your own immediate recall 
 %	  geometry (i.e., not general trends in forgetting)
 %	    - see methods section for details on ``win rate'' calculation
-%	    - mean win rate: 0.641, Wilcoxon's T = 864.5, p = 0.002
+%	    - mean win rate: 0.614, Wilcoxon's T = 864.5, p = 0.002
 %	    - fig panel E shows distribution of win rates (1 per participant)
 %	    - notes on panel F: 
 %	      - since this test involves a head-to-head comparison between a given 
@@ -393,8 +393,6 @@ Both strengthen the result, and while dropping either one on its own leaves the 
 A further limit follows from the resolution at which we measured: segmenting a trajectory into events discards whatever varied within an event, so any pruning a participant performed below that scale is invisible to us.
 Overall, the relationships reported above describe a tendency across the sample at a fixed common resolution, and they do not imply that every delayed recounting is a visibly pruned copy of its predecessor.
 
-
-\section*{Discussion}
 
 \section*{Discussion}
 
@@ -684,7 +682,7 @@ We then performed a Wilcoxon signed-rank test comparing the resulting paired dis
 We then analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than they were to \textit{other} participants' immediate recall event-sequences.
 Here we used a surrogate-driven approach analogous to the approach we used to compare recall orderings.
 For each participant, we computed the warp cost to align their delayed recall event-sequence to their own immediate recall event-sequence, and to every other participant's immediate recall event-sequence.
-We then computed the percentile rank of within-participant warp cost against its distribution of across-participant warp costs, and performed a one-sample Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5 (with the alternative hypothesis that the own-alignment costs' ranks should be \textit{lower}).
+We then computed the percentile rank of each within-participant warp cost against its distribution of across-participant warp costs, and performed a one-sample Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5 (with the alternative hypothesis that the within-participant alignment costs' ranks should be \textit{lower}).
 
 
 \subsubsection*{Predicting forgetting through geometric simplification}
@@ -697,7 +695,7 @@ If the distance from the chord to that target point is less than $\varepsilon$, 
 Alternatively, if the target point is farther than $\varepsilon$ from the chord, it is retained in the simplified result and the algorithm is recursively applied to the sections of the curve on either side of the retained point.
 The end result is a simplified curve that preserves the high-level shape of the original, but with all spatial details smaller than $\varepsilon$ removed.
 Intuitively, the $\varepsilon$ parameter determines the ``amount'' of simplification applied to the original curve: smaller values of $\varepsilon$ result in discarding only fine-grained details, while larger values lead to discarding more coarse structure.
-In this way, points along a path that the RDP algorithm discards at lower values of $\varepsilon$ may be thought of as ``waypoints'' that contribute relatively little to defining to the paths's overall shape, while points discarded only at higher $\varepsilon$ values may be thought of as ``control points'' that play a more significant role.
+In this way, points along a path that the RDP algorithm discards at lower values of $\varepsilon$ may be thought of as ``waypoints'' that contribute relatively little to defining to the paths's overall shape, while points discarded only at higher $\varepsilon$ values may be thought of as ``control points'' that contribute more subtantially.
 
 We hypothesized that the differences between the semantic paths traversed by a participant's immediate and delayed recall event sequences might reflect a similar shape-preserving simplification.
 To test this idea, we first asked whether the $\varepsilon$ value at which the RDP algorithm discards a participant's recall of a given episode event predicted whether they would omit that event from their delayed recounting.
