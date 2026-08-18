@@ -699,16 +699,23 @@ The summed or average distance between matched vectors along the optimal warp pa
 We computed the warp cost for a given pair of event-sequences as the average cosine distance between DTW-matched events so that these costs would be comparable across comparisons involving event-sequences of different lengths (whereas summed distance necessarily grows with sequence length).
 
 We hypothesized that the idiosyncratic geometric structures of participants' delayed recalls tended to reflect the structures of their immediate recalls.
-In the analyses shown in Figure~\ref{fig:dtw}, we tested this hypothesis two different ways.
+In the analyses shown in Figure~\ref{fig:dtw}, we tested this hypothesis two different ways, and additionally asked whether participants' recountings aligned less closely with the episode following the delay.
 First, we analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than to the episode's event-sequence.
 We began by mean-centering the episode event sequence, and centering each participant's immediate and delayed recall event sequences by their shared centroid.
 For each participant, we then computed the warp cost to align their delayed recall event-sequence to their immediate recall event-sequence, and the warp cost to align their delayed recall event-sequence to the episode's event sequence.
 We then performed a Wilcoxon signed-rank test comparing the resulting paired distributions of immediate-alignment costs and episode-alignment costs to test whether participants' immediate-alignment costs were systematically lower.
 
-We then analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than they were to \textit{other} participants' immediate recall event-sequences.
+We also asked how closely each of participants' two recountings aligned with the episode itself.
+Using the same centered event-sequences, we computed, for each participant, the warp cost to align their \textit{immediate} recall event-sequence to the episode's event-sequence, and compared the resulting distribution against the distribution of delayed-recall alignment costs described above using a Wilcoxon signed-rank test (with the alternative hypothesis that participants' delayed-alignment costs should be \textit{higher}).
+
+Second, we analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than they were to \textit{other} participants' immediate recall event-sequences.
 Here we used a surrogate-driven approach analogous to the approach we used to compare recall orderings.
 For each participant, we computed the warp cost to align their delayed recall event-sequence to their own immediate recall event-sequence, and to every other participant's immediate recall event-sequence.
 We then computed the percentile rank of within-participant warp cost against its distribution of across-participant warp costs, and performed a one-sample Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5 (with the alternative hypothesis that the own-alignment costs' ranks should be \textit{lower}).
+
+Because either recounting may be treated as the target and the other as the pool to be searched, we ran this comparison in both directions.
+The analysis described above ranks each participant's delayed recall against the set of all 53 immediate recalls.
+We repeated it in the reverse direction, computing the warp cost to align each participant's immediate recall event-sequence to their own delayed recall event-sequence and to every other participant's delayed recall event-sequence, percentile-ranking the within-participant cost against the resulting distribution of across-participant costs, and testing those ranks against a null rank of 0.5 as above.
 
 
 \subsubsection*{Predicting forgetting through geometric simplification}
