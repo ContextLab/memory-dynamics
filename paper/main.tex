@@ -29,7 +29,7 @@
 \doublespacing
 \linenumbers
 
-\title{Geometric models reveal that delayed memories are simplified versions of our own earlier recountings}
+\title{Delayed recountings preserve but simplify the semantic geometry of earlier recountings}
 
 \author{Paxton C. Fitzpatrick, Alishba Tahir, Jennifer Xu, and Jeremy R. Manning\textsuperscript{*}\\
 \vspace{-0.5em}\small{Department of Psychological and Brain Sciences}\\
@@ -188,6 +188,11 @@ We find that this ranking predicts which events participants will forget followi
 %    should be added throughout once he provides them.
 %  - Wilcoxon tests are one-sided by design (see the Statistics subsection).
 %    Do not flip any of them to two-sided.
+%  - The own-minus-episode regression contrast (+0.230, p = 0.046) is deliberately
+%    NOT reported. Paxton (Slack, 2026-08-18): the two removal orders are
+%    uncorrelated, so their difference has high variance and that permuted
+%    p-value is misleadingly high; the individual coefficients tell the same
+%    story more convincingly. Jeremy agreed. Do not add it back.
 %  - Paxton (Slack, 2026-08-16): "Final panel letters will be set by the order
 %    the results are described in the text." DTW panel references below are
 %    therefore assigned in the order the results appear here (A/D for the
@@ -312,12 +317,12 @@ We note that this runs in the opposite direction to order similarity, where high
 
 If retrieving a memory after a delay recovered the original experience, then a participant's delayed recounting should align with the episode at least as closely as it aligns with their own earlier recounting of it.
 We found the opposite: delayed recountings aligned more closely with participants' own immediate recountings (mean warp cost 0.53) than with the episode itself (0.65; $T = 1430$, $p < 0.001$, $n = 53$; Fig.~\ref{fig:dtw}A,B,D).
-This suggests that what participants produce after a week is a recounting of their own earlier recounting, rather than a fresh recounting of the episode.
+This suggests that what participants produce after a week is a recounting of their own immediate recounting, rather than a fresh recounting of the episode.
 Two of the results below bear on that suggestion.
 
 Because we collected two recountings from every participant, we could also ask how each of them related to the episode.
 Participants' delayed recountings aligned to the episode reliably less closely than their immediate recountings did (mean warp costs 0.65 and 0.63, respectively; $T = 1143$, $p < 0.001$, $n = 53$).
-The difference is a small one, and we note that two recountings can say only so much about a process that plays out over many retellings.
+The difference is a small one, and we note that two recountings can say only so much about a process that plays out over many recountings.
 (Distinguishing a representation that moves across the delay from one that is simply sampled twice would require withholding the immediate recounting from some participants, which our design does not do.)
 
 A resemblance between two recountings could also reflect regularities that hold across people, rather than anything specific to the participant who produced them.
@@ -349,7 +354,7 @@ The comparisons above establish that a participant's two recountings resemble ea
 We wondered whether that difference could be characterized directly, and reasoned that a delayed recounting might be a simplified version of the earlier one.
 This is often apparent by eye.
 For example, each participant in Figure~\ref{fig:trajectories} traces much the same overall shape in both sessions, whereas their delayed path tends to visit fewer points and to smooth over some of the excursions their immediate path had made.
-If a delayed recounting simplifies an immediate one, then the events an earlier recounting could most afford to lose should be the ones a participant is most likely to omit after the delay.
+If a delayed recounting simplifies an immediate one, then the events the immediate recounting could most afford to lose should be the ones a participant is most likely to omit after the delay.
 
 To make this idea concrete, we simplified each participant's immediate recall trajectory using the Ramer-Douglas-Peucker algorithm~\citep{Rame72,DougPeuc73}, a standard method for reducing the number of points in a path made of connected straight segments.
 The algorithm discards points lying close to the line joining their retained neighbors, and keeps those whose removal would change the path's shape.
@@ -396,8 +401,7 @@ We therefore scored each episode event a participant had described in two ways: 
 We entered both scores into a single logistic regression predicting whether the event was omitted.
 Only the participant's own recounting carried a reliable effect ($\beta = 0.242$, $p = 0.003$ by participant-blocked permutation).
 The coefficient on the episode's removal tolerance was indistinguishable from zero ($\beta = 0.012$, $p = 0.451$; Fig.~\ref{fig:rdp}D).
-We note that the difference between the two coefficients is itself only marginally reliable ($\beta_{\text{difference}} = 0.230$, $p = 0.046$), so the two are better described as differing in degree than as one predicting omission and the other not.
-What predicts omission, in other words, is the shape of a participant's own earlier telling, and only weakly, if at all, the shape of the episode.
+What predicts omission, in other words, is the shape of a participant's own immediate recounting, and only weakly, if at all, the shape of the episode.
 
 As with the structural comparisons above, this prediction is also specific to the person who produced it.
 For each participant, we compared how well their own removal tolerances predicted their own omissions against how well each other participant's tolerances did.
@@ -638,7 +642,7 @@ Common across vectors within this sequence will be latent signals driven by how 
 We found that removing these non-discriminative signals (to the extent they behave as additive offsets) from the episode and recalls via mean-centering helped reduce the embeddings' anisotropy (i.e., increased the range of measured between-vector similarities) and improved our ability to distinguish different temporal periods of semantic content within a single trajectory.
 Similarly, mean-centering both the episode and recalls before relating their embedding representations helped mitigate broad-scale representational differences driven by their diverging registers, and enabled us to better relate them based on event-specific, content-driven patterns.
 
-Our approach to mean-centering the recalls was guided by the particular latent representation we wanted to remove versus retain.
+Our approach to mean-centering the recalls was guided by the particular latent representations we wanted to remove versus retain.
 In segmenting each participant's recall trajectory from each session into events (see \nameref{subsec:eventseg}), our goal was to discriminate between embedding vectors strictly within a single recall sequence in order to identify temporally transient content-related patterns.
 We therefore centered each recall trajectory (in addition to the episode) on its own centroid to remove non-discriminative representations (e.g., register, broad-scale thematic content) and maximize the contrast between vectors within that single sequence.
 However, the analyses shown in Figures~\ref{fig:dtw} and \ref{fig:rdp} entailed comparing sequences of recall events not only to the episode, but also to each other, both within- and across-participants, to examine whether within-participant similarities tended to exceed across-participant similarities. 
@@ -782,12 +786,10 @@ found at https://github.com/Con\-text\-Lab/memory-dynamics.
 
 \section*{Acknowledgements}
 
-We thank Luke Chang, Claudia Gonciulea, Andrew Heusser, and Xinming Xu for useful discussions. Our work was supported in part
-by NSF CAREER Award Number 2145172 to J.R.M. The content is solely the
-responsibility of the authors and does not necessarily represent the official
-views of our supporting organizations. The funders had no role in study design,
-data collection and analysis, decision to publish, or preparation of the
-manuscript.
+We thank Luke Chang, Claudia Gonciulea, Andrew Heusser, Lucy Owen, Xinming Xu, and Kirsten Ziman for useful discussions, and Soo Hwan Park for assistance with transcriptions.
+Our work was supported in part by NSF CAREER Award Number 2145172 to J.R.M.
+The content is solely the responsibility of the authors and does not necessarily represent the official views of our supporting organizations.
+The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.
 
 
 \section*{Author contributions}
