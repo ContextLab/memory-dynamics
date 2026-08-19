@@ -149,17 +149,24 @@ We find that this ranking predicts which events participants will forget followi
 %	      omitted from delayed recall was removed from immediate recall at lower 
 %	      epsilon than one that wasn't omitted (``probability of superiority'' or AUC).
 %	      Then compare per-participant PoSs against a null of 0.5
-%	    - mean PoS: 0.576, Wilcoxon's T = 846, p = 0.004, 95\% CI  = \left[0.520, 0.632\right]
+%	    - mean PoS: 0.576, Wilcoxon's T = 846, p = 0.004, 95\% CI  = \left[0.519, 0.632\right]
 %	    - fig panel C shows probabilities for each participant
 %	- delayed recall specifically reflects simplifying immediate recall, not 
 %	  simplifying the episode (fig panel D)
 %		- see methods section on logistic regression analysis for specifics
 %		- $\beta_{\text{imm}} = 0.242, p = 0.003, 95\% CI = \left[0.065, 0.424\right]$
 %		- $\beta_{\text{epi}} = 0.012, p = 0.451, 95\% CI = \eft[-0.159,  0.174\right]$
+%       - not sure if we care about reporting the intercept (captures baseline log-odds of 
+%         an event being omitted post-delay), but if so it's $\beta_{0} = -1.397$. The 
+%         catch with reporting it would be that the within-participant permutation doesn't 
+%         yield a meaningful p-value for the intercept cause it (by design) preserves each 
+%         participants # of omitted events, so the intercept is ~constant across 
+%         permutations (also reflecting the fact that these coefs reflect only 
+%         within-participant effects)
 %	- predictive value of simplification is specific to your own immediate recall 
 %	  geometry (i.e., not general trends in forgetting)
 %	    - see methods section for details on ``win rate'' calculation
-%	    - mean win rate: 0.614, Wilcoxon's T = 864.5, p = 0.002
+%	    - mean win rate: 0.614, Wilcoxon's T = 864.5, p = 0.002, , 95\% CI  = \left[0.541, 0.685\right]
 %	    - fig panel E shows distribution of win rates (1 per participant)
 %	    - notes on panel F: 
 %	      - since this test involves a head-to-head comparison between a given 
