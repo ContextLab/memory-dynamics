@@ -212,8 +212,8 @@ In the present study, we focus on characterizing how the content and structure o
 To characterize how participants preserve and distort the content of an experience, we adapt an approach, developed in our prior work, that casts experiences and memories as \textit{trajectories} unfolding in a common high-dimensional space~\citep{HeusEtal21}.
 The approach rests on a text embedding model, which takes in natural language text of arbitrary length and returns a fixed-length vector that captures its semantic meaning.
 Intuitively, that vector may be treated as a coordinate in a semantic space, where texts with similar meanings are assigned to nearby coordinates, so the distance between two texts' coordinates reflects how semantically related they are.
-Using EmbeddingGemma~\citep{VeraEtal25}, we embedded hand-written annotations describing the content of each camera shot in the episode, along with the transcript of each participant's recountings (Fig.~\ref{fig:pipeline}, \textit{Text}).
-Successive coordinates trace out a trajectory, so this yielded one path through the space for the episode and one for each recounting (Fig.~\ref{fig:pipeline}, \textit{Trajectories}; see \nameref{subsec:text-embedding}).
+Using EmbeddingGemma~\citep{VeraEtal25}, we embedded hand-written annotations describing the content of each camera shot in the episode, along with the transcript of each participant's recountings (Fig.~\ref{fig:pipeline}D--F).
+Successive coordinates trace out a trajectory, so this yielded one path through the space for the episode and one for each recounting (Fig.~\ref{fig:pipeline}G--I; see \nameref{subsec:text-embedding}).
 
 \begin{figure}[t]
     \centering
@@ -229,7 +229,7 @@ Successive coordinates trace out a trajectory, so this yielded one path through 
 
 Neither the episode's trajectory nor participants' recall trajectories move through the space at a constant rate.
 Both tend to linger within a region for a period before shifting relatively abruptly to another, and we treated these periods of relative stability as \textit{events}.
-We used a hidden Markov model~\citep{BaumPetr66,BaldEtal17,KumaEtal21} to segment the episode's trajectory, which yielded 20 events, each summarized by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}, \textit{Event-segmentation} and \textit{Events}; see \nameref{subsec:eventseg}).
+We used a hidden Markov model~\citep{BaumPetr66,BaldEtal17,KumaEtal21} to segment the episode's trajectory, which yielded 20 events, each summarized by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}J--O; see \nameref{subsec:eventseg}).
 Whereas the episode's events had to be discovered, segmenting participants' recountings called for a different approach: rather than finding a separate set of events within each recall, we sought to determine which of the episode's events a participant was describing at each moment.
 We therefore treated the episode's 20 events as a fixed set of states and decoded the highest-scoring sequence of them being described~\citep{Vite67}, allowing participants to describe events out of order and to return to an event they had already described.
 In this way, we obtained three descriptions of the same episode, all in a common set of units.
@@ -238,17 +238,25 @@ These are (a) the sequence of events comprising the episode itself, (b) each par
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{figures/source/pipeline-overview}
+    % Panel letters below assume COLUMN-MAJOR lettering of the 3x5 grid, i.e.
+    %   Experience A/B/C, Text D/E/F, Trajectories G/H/I,
+    %   Event-segmentation J/K/L, Events M/N/O,
+    % reading down each column (episode, immediate, delayed). The artwork still
+    % carries a placeholder "A" on all 15 panels and needs updating to match.
 
-    \caption{\small \textbf{Modeling the geometry of experiences and memories.} 
+    \caption{\small \textbf{Modeling the geometry of experiences and memories.}
     Each row shows one of the three sequences we compare: the \textit{Atlanta} episode (top), and one example participant's immediate (middle) and delayed (bottom) recountings of it.
-    \textbf{Experience.} The episode as viewed, and the two recall sessions in which the same participant recounted it.
-    \textbf{Text.} Hand-written annotations describing the content of each camera shot, and the transcript of each recall. 
-    \textbf{Trajectories.} Each text snippet is embedded as a coordinate in a 768-dimensional semantic space, and successive coordinates trace out a trajectory; color denotes elapsed time. 
-    The two-dimensional projections shown here are for visualization only, and every analysis we report was carried out in the full space. 
-    \textbf{Event-segmentation.} For the episode, the correlation between the embedding vectors at each pair of timepoints, with the boundaries of the 20 events recovered by the hidden Markov model outlined. 
-    For each recall, the similarity between every recall window and every episode event, with the decoded sequence of episode events outlined. 
-    \textbf{Events.} The resulting sequence of events, each summarized by averaging the embedding vectors spanned by that event. 
-    Color denotes the episode event being described, so the same color refers to the same episode content in all three rows.}
+    Each column shows one stage of the pipeline, applied to all three sequences in turn.
+    \textbf{A}--\textbf{C.} \textit{Experience.} The episode as viewed (\textbf{A}), and the two sessions in which the same participant recounted it (\textbf{B}, \textbf{C}).
+    \textbf{D}--\textbf{F.} \textit{Text.} Hand-written annotations describing the content of each camera shot, divided into labeled fields (\textbf{D}), and an excerpt from the transcript of each recounting (\textbf{E}, \textbf{F}).
+    \textbf{G}--\textbf{I.} \textit{Trajectories.} Each text snippet is embedded as a coordinate in a 768-dimensional semantic space, and successive coordinates trace out a trajectory.
+    For display, the paths are mean-centered, smoothed with a rolling average, and projected into two dimensions, whereas every analysis we report was carried out in the full space.
+    \textbf{J}--\textbf{L.} \textit{Event-segmentation.} For the episode, the correlation between the embedding vectors at each pair of timepoints, with the boundaries of the 20 events recovered by the hidden Markov model outlined (\textbf{J}).
+    For each recounting, the cosine similarity between every recall window and every episode event, with the decoded sequence of episode events outlined (\textbf{K}, \textbf{L}).
+    Darker colors denote greater values.
+    \textbf{M}--\textbf{O.} \textit{Events.} The resulting sequence of events, each summarized by averaging the embedding vectors it spans, and joined in the order they occur.
+    \textbf{G}--\textbf{I}: color denotes elapsed time within each sequence.
+    \textbf{J}--\textbf{O}: color denotes the episode event being described, so the same color refers to the same episode content in all three rows.}
 
     \label{fig:pipeline}
 \end{figure}
