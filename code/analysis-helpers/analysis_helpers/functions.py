@@ -12,31 +12,66 @@ from matplotlib.font_manager import findSystemFonts, fontManager
 from matplotlib.patches import Rectangle
 from scipy.spatial.distance import cdist
 
-from analysis_helpers.constants import CONTENT_WARNING, EVENTSEG_EDGECOLOR, FONTS_DIR
+from analysis_helpers.constants import (
+    CONTENT_WARNING,
+    EVENTSEG_EDGECOLOR,
+    FONTS_DIR
+)
 from analysis_helpers.internals import _imported_from_notebook
 
 if TYPE_CHECKING:
-    from typing import Any,Callable
+    from collections.abc import Sequence
+    from typing import Any, Callable
     from numpy.typing import ArrayLike
 
 
-def draw_event_bounds(
+def draw_eventseg_episode(
         ax: plt.Axes,
         event_bounds: list[tuple[int, int]],
-        **rect_kwargs: dict[str, Any]
+        edgecolor: Sequence = EVENTSEG_EDGECOLOR,
+        facecolor: str = 'none',
+        **rect_kwargs: Any
 ) -> list[Rectangle]:
-    facecolor = rect_kwargs.pop('facecolor', rect_kwargs.pop('fc', 'none'))
+    if isinstance(edgecolor, str):
+        edgecolor = [edgecolor] * len(event_bounds)
+
     patches = []
-    for onset, offset in event_bounds:
+    for ix, (onset, offset) in enumerate(event_bounds):
         size = offset - onset + 1
         rect = Rectangle((onset - 0.5, onset - 0.5),
                          width=size,
                          height=size,
-                         edgecolor=EVENTSEG_EDGECOLOR,
+                         edgecolor=edgecolor[ix],
                          facecolor=facecolor,
                          **rect_kwargs)
         ax.add_patch(rect)
         patches.append(rect)
+
+    return patches
+
+
+def draw_eventseg_recall(
+        ax: plt.Axes,
+        event_bounds: list[tuple[int, int]],
+        event_matches: list[int],
+        edgecolor: Sequence = EVENTSEG_EDGECOLOR,
+        facecolor: str = 'none',
+        **rect_kwargs: Any
+) -> list[Rectangle]:
+    if isinstance(edgecolor, str):
+        edgecolor = [edgecolor] * len(event_bounds)
+
+    patches = []
+    for ix, ((onset, offset), match_ix) in enumerate(zip(event_bounds, event_matches)):
+        rect = Rectangle((onset - 0.5, match_ix - 0.5),
+                         width=offset-onset+1,
+                         height=1,
+                         edgecolor=edgecolor[ix],
+                         facecolor=facecolor,
+                         **rect_kwargs)
+        ax.add_patch(rect)
+        patches.append(rect)
+
     return patches
 
 

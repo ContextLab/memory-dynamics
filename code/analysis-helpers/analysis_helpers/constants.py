@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import matplotlib.pyplot as plt
+
 
 CONTENT_WARNING = """\
 ⚠️ The episodes of [*Atlanta*](https://en.wikipedia.org/wiki/Atlanta_(TV_series)) \
@@ -41,5 +43,6 @@ FIG_DIR = Path('/mnt/paper/figures/source')
 ########################################################################
 #                            FIGURE STYLING                            #
 ########################################################################
-HEATMAP_CMAP = 'bone_r'
+HEATMAP_CMAP = plt.cm.bone_r
+TRAJECTORY_CMAP = plt.cm.Spectral
 EVENTSEG_EDGECOLOR = '#FFF9AE'
