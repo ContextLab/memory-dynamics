@@ -197,8 +197,10 @@ We find that this ranking predicts which events participants will forget followi
 %  - Event counts come from Slack (2026-08-17, 13:26 and 13:27), not from a
 %    committed notebook.
 %  - Confidence intervals are reported only where Paxton has supplied them: the
-%    probability of superiority and the two regression coefficients. The rest
-%    should be added throughout once he provides them.
+%    probability of superiority and the win rate (both added 2026-08-19 from
+%    7fffd939 / c5c61225). The regression CIs are in his block and in the
+%    fig:rdp caption but not in the running text. The rest should be added
+%    throughout once he provides them.
 %  - Wilcoxon tests are one-sided by design (see the Statistics subsection).
 %    Do not flip any of them to two-sided.
 %  - The own-minus-episode regression contrast (+0.230, p = 0.046) is deliberately
@@ -413,7 +415,7 @@ All of the simplification was also carried out on the full 768-dimensional traje
 
 Simplifying an immediate recounting separated the episode events a participant went on to omit from the events they retained.
 Given one event that a participant omitted and one that they kept, the omitted event tended to be the one their own path could more readily afford to lose.
-This held about 58\% of the time (mean probability of superiority 0.576, $95\%$ CI $ = [0.520, 0.632]$, $T = 846.0$, $p = 0.004$, $n = 48$ participants who omitted at least one event; Fig.~\ref{fig:rdp}C).
+This held about 58\% of the time (mean probability of superiority 0.576, $95\%$ CI $= [0.519, 0.632]$, $T = 846.0$, $p = 0.004$, $n = 48$ participants who omitted at least one event; Fig.~\ref{fig:rdp}C).
 The effect is a small one. We note also that it describes a tendency across the sample, and not a rule that holds within every participant.
 
 A participant's own recounting is not the only path from which an event's removal tolerance may be read, since the episode's own trajectory supplies an alternative.
@@ -427,7 +429,7 @@ What predicts omission, in other words, is the shape of a participant's own imme
 As with the structural comparisons above, this prediction is also specific to the person who produced it.
 For each participant, we compared how well their own removal tolerances predicted their own omissions against how well each other participant's tolerances did.
 We scored every comparison over the pool of episode events that both participants had described, so that no ranking gained an advantage from covering more of the episode.
-A participant's own tolerances won these comparisons more often than not (mean win rate 0.614, against a chance value of 0.5; $T = 864.5$, $p = 0.002$, $n = 48$; Fig.~\ref{fig:rdp}E).
+A participant's own tolerances won these comparisons more often than not (mean win rate 0.614, $95\%$ CI $= [0.541, 0.685]$, against a chance value of 0.5; $T = 864.5$, $p = 0.002$, $n = 48$; Fig.~\ref{fig:rdp}E).
 The probability of superiority for a participant's own recounting has to be recomputed against every surrogate, over a different pool of shared events each time.
 There is therefore no single value to rank against the surrogates' scores, and we summarized each participant instead by the number of surrogates they beat (Fig.~\ref{fig:rdp}F).
 A surrogate is usable only if they immediately recalled at least one event the target participant omitted.
