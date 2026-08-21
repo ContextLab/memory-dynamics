@@ -1,61 +1,18 @@
-import os
 import re
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import torch
 from sentence_transformers import SentenceTransformer
 
-
-# =======================================================================
-#                             CONSTANTS
-# =======================================================================
-BASE_DIR = Path(f'/home/{os.getenv("USER")}/memory-dynamics')
-TRANSCRIPTIONS_DIR = BASE_DIR / 'data' / 'raw' / 'transcriptions-formatted'
-SUBID_MAPPING_PATH = BASE_DIR / 'data' / 'processed' / 'subid-mapping.csv'
-OUTPUT_DIR = BASE_DIR / 'data' / 'processed' / 'participants'
-
-EMBEDDING_MODEL_NAME = 'google/embeddinggemma-300m'
-RECALL_WINDOW_SIZE = 5    # sentences
-MIN_GPU_MEM_GB = 1
-MAX_GPUS = 6
-VERBOSE = True
+import config
+from config import get_gpus, print_verbose
 
 
-# =======================================================================
-#                             FUNCTIONS
-# =======================================================================
-def print_verbose(*args, **kwargs) -> None:
-    """Print progress updates if global VERBOSE variable is True"""
-    if VERBOSE:
-        print(*args, flush=True, **kwargs)
+TRANSCRIPTIONS_DIR = config.RAW_DIR / 'transcriptions-formatted'
+SUBID_MAPPING_PATH = config.PROCESSED_DIR / 'subid-mapping.csv'
+OUTPUT_DIR = config.PROCESSED_DIR / 'participants'
 
-
-def get_gpus(min_mem_gb: float, max_gpus: int) -> list[str]:
-    """Find up to max_gpus GPUs with at least min_mem_gb free memory"""
-    min_free_bytes = min_mem_gb * 1024 ** 3
-    free_gpus = []
-    print_verbose('Checking GPU resources...')
-    for i in range(torch.cuda.device_count()):
-        free_mem, _ = torch.cuda.mem_get_info(i)
-        free_gb = free_mem / 1024 ** 3
-        if free_mem >= min_free_bytes:
-            free_gpus.append(f'cuda:{i}')
-            print_verbose(f'  GPU {i}: {free_gb:.1f} GB free — available')
-        else:
-            print_verbose(f'  GPU {i}: {free_gb:.1f} GB free — skipping (low memory)')
-
-    if not free_gpus:
-        raise RuntimeError('No GPUs with sufficient free memory found')
-
-    if len(free_gpus) > max_gpus:
-        skipped_gpus = free_gpus[max_gpus:]
-        free_gpus = free_gpus[:max_gpus]
-        print_verbose(f'  Capping at {max_gpus} GPUs; '
-                      f'not using {", ".join(skipped_gpus)}')
-
-    return free_gpus
+RECALL_WINDOW_SIZE = 5  # sentences
 
 
 def split_sentences(text: str) -> list[str]:
@@ -91,9 +48,6 @@ def parse_windows(textlist: list[str], wsize: int) -> list[str]:
     return windows
 
 
-# =======================================================================
-#                               MAIN
-# =======================================================================
 def main():
     OUTPUT_DIR.mkdir(exist_ok=True, parents=True)
 
@@ -101,15 +55,14 @@ def main():
     id_mapping = pd.read_csv(SUBID_MAPPING_PATH,
                              index_col='Subject ID',
                              dtype_backend='numpy_nullable')
-
     n_participants = len(id_mapping)
 
     # Detect GPUs with sufficient free memory (need ~1GB for this model)
-    free_gpus = get_gpus(MIN_GPU_MEM_GB, MAX_GPUS)
+    free_gpus = get_gpus(config.MIN_GPU_MEM_GB, config.MAX_GPUS)
 
     # Load model and start multi-GPU pool on available GPUs only
-    print_verbose(f'Loading model: {EMBEDDING_MODEL_NAME}...')
-    model = SentenceTransformer(EMBEDDING_MODEL_NAME, device='cpu')
+    print_verbose(f'Loading model: {config.EMBEDDING_MODEL_NAME}...')
+    model = SentenceTransformer(config.EMBEDDING_MODEL_NAME, device='cpu')
     print_verbose(f'Starting multi-process pool on {len(free_gpus)} GPUs...')
     pool = model.start_multi_process_pool(target_devices=free_gpus)
     print_verbose(f'Started multi-process pool across {len(pool["processes"])} GPUs')
@@ -137,7 +90,6 @@ def main():
                     continue
 
                 print_verbose(f'  P{sub_n}, {rectype}')
-
                 # Load and preprocess transcript
                 transcript_path = (TRANSCRIPTIONS_DIR /
                                    subid /
@@ -148,7 +100,6 @@ def main():
                 # Parse into sliding windows and embed
                 sentence_list = split_sentences(transcript)
                 p_windows = parse_windows(sentence_list, wsize=RECALL_WINDOW_SIZE)
-
                 window_embeddings = model.encode_multi_process(p_windows,
                                                                pool,
                                                                batch_size=256,

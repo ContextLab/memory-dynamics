@@ -1,59 +1,16 @@
-import os
-from pathlib import Path
-
 import numpy as np
 import pandas as pd
-import torch
 from scipy.interpolate import make_interp_spline
 from sentence_transformers import SentenceTransformer
 
-
-# ======================================================================
-#                             CONSTANTS
-# ======================================================================
-BASE_DIR = Path(f'/home/{os.getenv("USER")}/memory-dynamics')
-ANNOTATIONS_DIR = BASE_DIR / 'data' / 'raw' / 'annotations'
-OUTPUT_DIR = BASE_DIR / 'data' / 'processed' / 'episodes' / 'atlep1'
-
-EMBEDDING_MODEL_NAME = 'google/embeddinggemma-300m'
-MIN_GPU_MEM_GB = 1
-MAX_GPUS = 6
-ENDFRAME_TIME = 1454.16
-VERBOSE = True
-
-# ======================================================================
-#                             FUNCTIONS
-# ======================================================================
-def print_verbose(*args, **kwargs) -> None:
-    """Print progress updates if global VERBOSE variable is True"""
-    if VERBOSE:
-        print(*args, flush=True, **kwargs)
+import config
+from config import get_gpus, print_verbose
 
 
-def get_gpus(min_mem_gb: float, max_gpus: int) -> list[str]:
-    """Find up to max_gpus GPUs with at least min_mem_gb free memory"""
-    min_free_bytes = min_mem_gb * 1024 ** 3
-    free_gpus = []
-    print_verbose('Checking GPU resources...')
-    for i in range(torch.cuda.device_count()):
-        free_mem, _ = torch.cuda.mem_get_info(i)
-        free_gb = free_mem / 1024 ** 3
-        if free_mem >= min_free_bytes:
-            free_gpus.append(f'cuda:{i}')
-            print_verbose(f'  GPU {i}: {free_gb:.1f} GB free — available')
-        else:
-            print_verbose(f'  GPU {i}: {free_gb:.1f} GB free — skipping (low memory)')
+ANNOTATIONS_DIR = config.RAW_DIR / 'annotations'
+OUTPUT_DIR = config.PROCESSED_DIR / 'episodes' / 'atlep1'
 
-    if not free_gpus:
-        raise RuntimeError('No GPUs with sufficient free memory found')
-
-    if len(free_gpus) > max_gpus:
-        skipped_gpus = free_gpus[max_gpus:]
-        free_gpus = free_gpus[:max_gpus]
-        print_verbose(f'  Capping at {max_gpus} GPUs; '
-                      f'not using {", ".join(skipped_gpus)}')
-
-    return free_gpus
+ENDFRAME_TIME = 1454.16  # seconds
 
 
 def format_annotation(row: pd.Series) -> str:
@@ -107,18 +64,15 @@ def resample_trajectory(
     return resampled
 
 
-# ======================================================================
-#                               MAIN
-# ======================================================================
 def main():
     OUTPUT_DIR.mkdir(exist_ok=True, parents=True)
 
     # Detect GPUs with sufficient free memory (need ~1GB for this model)
-    free_gpus = get_gpus(MIN_GPU_MEM_GB, MAX_GPUS)
+    free_gpus = get_gpus(config.MIN_GPU_MEM_GB, config.MAX_GPUS)
 
     # Load model and start multi-GPU pool on available GPUs only
-    print_verbose(f'Loading model: {EMBEDDING_MODEL_NAME}...')
-    model = SentenceTransformer(EMBEDDING_MODEL_NAME, device='cpu')
+    print_verbose(f'Loading model: {config.EMBEDDING_MODEL_NAME}...')
+    model = SentenceTransformer(config.EMBEDDING_MODEL_NAME, device='cpu')
     print_verbose(f'Starting multi-process pool on {len(free_gpus)} GPUs...')
     pool = model.start_multi_process_pool(target_devices=free_gpus)
     print_verbose(f'Started multi-process pool across {len(pool["processes"])} GPUs')
