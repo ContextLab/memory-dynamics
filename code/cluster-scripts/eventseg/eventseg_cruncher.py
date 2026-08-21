@@ -8,7 +8,7 @@ from scipy.stats import wasserstein_distance
 import eventseg_config as config
 
 
-def proximal_diag_mask(event_mask):
+def proximal_diag_mask(event_mask: np.ndarray) -> np.ndarray:
     diag_mask = np.zeros_like(event_mask)
     rowcol_ixs = np.arange(diag_mask.shape[0])
 
@@ -58,12 +58,12 @@ def search_segmentations(
     return wasserstein_dists, best_eventseg
 
 
-EPISODE_DATA_DIR = config.DATA_DIR.joinpath('episodes', 'atlep1')
+EPISODE_DATA_DIR = config.DATA_DIR / 'episodes' / 'atlep1'
 
 min_k = int(sys.argv[1])
 max_k = int(sys.argv[2])
 
-episode_trajectory = np.load(EPISODE_DATA_DIR.joinpath('trajectory.npy'))
+episode_trajectory = np.load(EPISODE_DATA_DIR / 'trajectory.npy')
 
 wasserstein_dists, best_eventseg = search_segmentations(
     episode_trajectory,
@@ -73,7 +73,8 @@ wasserstein_dists, best_eventseg = search_segmentations(
     print_progress=True
 )
 
-np.save(EPISODE_DATA_DIR.joinpath(f'eventseg_kvals_{min_k}-{max_k}.npy'),
+np.save(EPISODE_DATA_DIR / f'eventseg_kvals_{min_k}-{max_k}.npy',
         np.array(wasserstein_dists))
-EPISODE_DATA_DIR.joinpath(f'eventseg_model_{min_k}-{max_k}.p').write_bytes(
-    pickle.dumps(best_eventseg))
+(EPISODE_DATA_DIR / f'eventseg_model_{min_k}-{max_k}.p').write_bytes(
+    pickle.dumps(best_eventseg)
+)

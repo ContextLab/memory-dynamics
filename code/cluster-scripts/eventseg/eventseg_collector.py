@@ -1,24 +1,28 @@
+from __future__ import annotations
+
 import time
+from typing import TYPE_CHECKING
 
 import numpy as np
 
 import eventseg_config as config
 
+if TYPE_CHECKING:
+    from pathlib import Path
 
-EPISODE_DATA_DIR = config.DATA_DIR.joinpath('episodes', 'atlep1')
-POLL_INTERVAL = 60    # seconds
 
-
-def temp_kvals_files():
+def temp_kvals_files() -> list[Path]:
     files = EPISODE_DATA_DIR.glob('eventseg_kvals_*-*.npy')
     return sorted(files, key=lambda f: int(f.stem.split('_', 2)[2].split('-')[0]))
 
 
-def temp_model_file(kvals_file):
+def temp_model_file(kvals_file: Path) -> Path:
     range_token = kvals_file.stem.split('_', 2)[2]
-    return EPISODE_DATA_DIR.joinpath(f'eventseg_model_{range_token}.p')
+    return EPISODE_DATA_DIR / f'eventseg_model_{range_token}.p'
 
 
+EPISODE_DATA_DIR = config.DATA_DIR / 'episodes' / 'atlep1'
+POLL_INTERVAL = 60  # seconds
 
 while True:
     kvals_files = temp_kvals_files()
@@ -45,4 +49,3 @@ best_model_file.replace(EPISODE_DATA_DIR.joinpath('eventseg_model.p'))
 for kvals_file in kvals_files:
     kvals_file.unlink(missing_ok=True)
     temp_model_file(kvals_file).unlink(missing_ok=True)    # best one was already moved
-
