@@ -29,7 +29,7 @@
 \doublespacing
 \linenumbers
 
-\title{Geometric models reveal that delayed memories are simplified versions of our own earlier recountings}
+\title{Delayed recountings preserve but simplify the semantic geometry of earlier recountings}
 
 \author{Paxton C. Fitzpatrick, Alishba Tahir, Jennifer Xu, and Jeremy R. Manning\textsuperscript{*}\\
 \vspace{-0.5em}\small{Department of Psychological and Brain Sciences}\\
@@ -112,6 +112,11 @@ We find that this ranking predicts which events participants will forget followi
 \section*{Results}
 
 %%%%%%%%%%%%%%%% RELEVANT STATS %%%%%%%%%%%%%%%%
+% [IMPORTED FROM PAXTON'S main.tex] This whole block is his, not ours.
+% Last synced by hand from upstream/master 785cff47 (2026-08-19), which
+% brought in 7fffd939 and c5c61225. Lines tagged [PCF 2026-08-19] below are
+% what that sync added or changed; everything else predates it. Copied
+% verbatim, typos included. Edit upstream, not here.
 %- order-similarity analysis:
 %    - order structures of participants' delayed recalls were more similar to their 
 %      own immediate recalls than to other participants' immediate recalls: 
@@ -149,14 +154,14 @@ We find that this ranking predicts which events participants will forget followi
 %	      omitted from delayed recall was removed from immediate recall at lower 
 %	      epsilon than one that wasn't omitted (``probability of superiority'' or AUC).
 %	      Then compare per-participant PoSs against a null of 0.5
-%	    - mean PoS: 0.576, Wilcoxon's T = 846, p = 0.004, 95\% CI  = \left[0.519, 0.632\right]
+%	    - mean PoS: 0.576, Wilcoxon's T = 846, p = 0.004, 95\% CI  = \left[0.519, 0.632\right]   % [PCF 2026-08-19] CI added; was 0.520 in the version we drafted against
 %	    - fig panel C shows probabilities for each participant
 %	- delayed recall specifically reflects simplifying immediate recall, not 
 %	  simplifying the episode (fig panel D)
 %		- see methods section on logistic regression analysis for specifics
 %		- $\beta_{\text{imm}} = 0.242, p = 0.003, 95\% CI = \left[0.065, 0.424\right]$
 %		- $\beta_{\text{epi}} = 0.012, p = 0.451, 95\% CI = \eft[-0.159,  0.174\right]$
-%       - not sure if we care about reporting the intercept (captures baseline log-odds of 
+%       - [PCF 2026-08-19] not sure if we care about reporting the intercept (captures baseline log-odds of 
 %         an event being omitted post-delay), but if so it's $\beta_{0} = -1.397$. The 
 %         catch with reporting it would be that the within-participant permutation doesn't 
 %         yield a meaningful p-value for the intercept cause it (by design) preserves each 
@@ -166,7 +171,7 @@ We find that this ranking predicts which events participants will forget followi
 %	- predictive value of simplification is specific to your own immediate recall 
 %	  geometry (i.e., not general trends in forgetting)
 %	    - see methods section for details on ``win rate'' calculation
-%	    - mean win rate: 0.614, Wilcoxon's T = 864.5, p = 0.002, , 95\% CI  = \left[0.541, 0.685\right]
+%	    - mean win rate: 0.614, Wilcoxon's T = 864.5, p = 0.002, , 95\% CI  = \left[0.541, 0.685\right]   % [PCF 2026-08-19] CI added
 %	    - fig panel E shows distribution of win rates (1 per participant)
 %	    - notes on panel F: 
 %	      - since this test involves a head-to-head comparison between a given 
@@ -183,15 +188,47 @@ We find that this ranking predicts which events participants will forget followi
 %	        ``chance'' is the number of expected wins over surrogates given 
 %	        the number of valid surrogates for each participant.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+% ---- OUR NOTES (not Paxton's; do not push upstream) ----------------------
+% Notes on how the section below reports these:
+%  - Statistics are reported exactly as Paxton shared them, from the block above,
+%    from the cell of his notebook that prints them, or from Slack. The two
+%    transposed digits flagged earlier (T = 946 and a 0.641 win rate) were his
+%    typos; he corrected both in 9ab2ac0b, and the block now matches In [207].
+%  - Event counts come from Slack (2026-08-17, 13:26 and 13:27), not from a
+%    committed notebook.
+%  - Confidence intervals are reported only where Paxton has supplied them: the
+%    probability of superiority and the win rate (both added 2026-08-19 from
+%    7fffd939 / c5c61225). The regression CIs are in his block and in the
+%    fig:rdp caption but not in the running text. The rest should be added
+%    throughout once he provides them.
+%  - Wilcoxon tests are one-sided by design (see the Statistics subsection).
+%    Do not flip any of them to two-sided.
+%  - The own-minus-episode regression contrast (+0.230, p = 0.046) is deliberately
+%    NOT reported. Paxton (Slack, 2026-08-18): the two removal orders are
+%    uncorrelated, so their difference has high variance and that permuted
+%    p-value is misleadingly high; the individual coefficients tell the same
+%    story more convincingly. Jeremy agreed. Do not add it back.
+%  - Paxton (Slack, 2026-08-16): "Final panel letters will be set by the order
+%    the results are described in the text." DTW panel references below are
+%    therefore assigned in the order the results appear here (A/D for the
+%    own-immediate vs. episode comparison, B/E for the drift across the delay,
+%    C/F for own vs. others, G/H for identification), for him to map onto the
+%    final layout.
+ 
 We ran an experiment in which we asked participants to view and verbally recount episodes of television shows across two experiment sessions, separated by approximately one week (Fig.~\ref{fig:paradigm}).
 In the first session, participants viewed the pilot episode of the TV series \textit{Atlanta}.
 They were then given up to one hour (and a minimum of 10 minutes) to recount what had happened in the episode to the best of their abilities (i.e., \textit{immediate recall}).
 After they finished recounting the episode, we asked participants to verbally predict what they thought would happen in the show's \textit{next} episode.
 Participants then returned for a second session between 6 and 8 days later, in which they began by again verbally recounting the \textit{Atlanta} episode they had viewed the week prior (i.e., \textit{delayed recall}).
 Following the delayed recall phase, participants viewed and recounted either the second episode of \textit{Atlanta} or the pilot episode of a different TV series, \textit{Arrested Development}.
-We designed our experiment to support exploring a range of behavioral memory phenomena, including differences between immediate and delayed recall, influences of contextually congruent versus incongruent prior experience, effects of self-cuing via context reinstatement, and relationships between successful prediction and subsequent memory.
+We designed the experiment to support exploring a range of memory phenomena beyond those we consider here (see \nameref{subsec:experiment}).
 In the present study, we focus on characterizing how the content and structure of participants' recountings of the first \textit{Atlanta} episode changed between their immediate and delayed recalls.
+
+To characterize how participants preserve and distort the content of an experience, we adapt an approach, developed in our prior work, that casts experiences and memories as \textit{trajectories} unfolding in a common high-dimensional space~\citep{HeusEtal21}.
+The approach rests on a text embedding model, which takes in natural language text of arbitrary length and returns a fixed-length vector that captures its semantic meaning.
+Intuitively, that vector may be treated as a coordinate in a semantic space, where texts with similar meanings are assigned to nearby coordinates, so the distance between two texts' coordinates reflects how semantically related they are.
+Using EmbeddingGemma~\citep{VeraEtal25}, we embedded hand-written annotations describing the content of each camera shot in the episode, along with the transcript of each participant's recountings (Fig.~\ref{fig:pipeline}D--F).
+Successive coordinates trace out a trajectory, so this yielded one path through the space for the episode and one for each recounting (Fig.~\ref{fig:pipeline}G--I; see \nameref{subsec:text-embedding}).
 
 \begin{figure}[t]
     \centering
@@ -205,61 +242,58 @@ In the present study, we focus on characterizing how the content and structure o
     \label{fig:paradigm}
 \end{figure}
 
-To characterize how participants preserve and/or distort the content of the \textit{Atlanta} episode in their immediate and delayed recountings, we adapt an approach, developed in our prior work, that casts experiences and memories as \textit{trajectories} unfolding in a common high-dimensional representation space~\citep{HeusEtal21}.
-We construct these trajectories using a text embedding model applied to annotations of the episode and participants' recall transcripts.
-Briefly, text embedding models take in natural language text (of arbitrary length) and output a single fixed-length numerical vector that captures the text's semantic meaning.
-Intuitively, an output vector of length $n$ can be viewed as a coordinate in an $n$-dimensional text embedding space, where texts with similar semantic meanings are assigned to nearby coordinates while those with different semantic meanings are farther apart.
-In this way, the distance between the embedding coordinates assigned to two texts provides a measure of how semantically related their underlying contents are.
-
-% JRM STOPPED HERE...
-We began by creating detailed text annotations describing the content present during each individual camera shot from the episode (Fig.~\ref{fig:pipeline}, \textit{Text}; see \nameref{subsec:annotations-transcripts}).
-We then projected each camera shot's text description onto a coordinate in a 768-dimensional text embedding space using EmbeddingGemma~\citep{VeraEtal25}.
-The sequence of embedding space coordinates across successive camera shots thus forms a trajectory that characterizes how the \textit{Atlanta} episode's latent semantic content unfolded over time (Fig.~\ref{fig:pipeline}, \textit{Trajectories}).
-Since the durations of camera shots varied over the course of the episode, we resampled the episode's trajectory to a constant temporal resolution of one vector per second.
-
-Next, we transcribed each participant's immediate and delayed verbal recounting of the episode content (Fig.~\ref{fig:pipeline}, \textit{Text}).
-In constructing trajectories from participants' recountings, we reasoned that casual, unrehearsed speech tends to be information-sparse relative to written text (e.g., it might take multiple spoken sentences to describe the same content or occurrence that could be more concisely described in a single written sentence).
-We therefore parsed each participant's recall transcript from each session into overlapping sliding windows spanning (up to) 5 consecutive sentences each, and transformed the text comprising each of these sliding windows into a text embedding vector.
-This resulted in a trajectory characterizing the dynamic semantic content of each participant's immediate and delayed recounting (Fig.~\ref{fig:pipeline}, \textit{Trajectories}).
-
-Neither the episode's trajectory nor participants' recall trajectories moved through the embedding space at a constant rate.
-Both tended to linger within a region for a period before shifting relatively abruptly to another, and we treated these periods of relative stability as \textit{events} (Fig.~\ref{fig:pipeline}, \textit{Event-segmentation}; see \nameref{subsec:eventseg}).
-Given this observation, we used a hidden Markov model (HMM)~\citep{BaumPetr66,BaldEtal17,KumaEtal21} to segment the episode's trajectory, selecting the number of events by finding the segmentation whose within-event timepoint correlations were most distinct from its across-event correlations, as quantified by the Wasserstein distance between the two distributions.
-We computed that distance over pairs of timepoints separated by no more than the longest event, so that the two distributions are drawn from comparable temporal lags.
-This yielded 20 events, each summarized (as a single 768-dimensional coordinate) by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}, \textit{Events}).
-
-Whereas the episode's events had to be discovered, segmenting participants' recountings called for a different approach: rather than finding a separate set of events within each recall (as we had for the episode), we sought to determine which of the episode's events a participant was describing at each moment.
-Specifically, we treated the episode's 20 events as a fixed set of states, scored each recall window by its similarity to each of them, and decoded the highest-scoring sequence of episode events being described~\citep{Vite67}.
-Because participants may recount events out of order, and may return to an event they have already described (e.g., to add a detail they had left out the first time), we permitted transitions between any pair of states, including re-entry into a state already visited.
-Transitions were penalized according to their type: no penalty for remaining within an event, a modest penalty for advancing to the next, and a larger penalty for any other jump (see \nameref{subsec:eventseg}).
-Collapsing runs of consecutive windows assigned to the same episode event yields, for each recounting, a sequence of recall events together with a label indicating which episode event each one describes (Fig.~\ref{fig:pipeline}, \textit{Events}).
-
-Together, these steps yielded three descriptions of the same episode: the sequence of events comprising the episode itself, each participant's sequences of immediate and delayed recall events, and a mapping from every recall event onto the episode event it describes.
-Because all three are expressed in a common set of units, they may be compared directly, both across participants and across the delay.
-
+Neither the episode's trajectory nor participants' recall trajectories move through the space at a constant rate.
+Both tend to linger within a region for a period before shifting relatively abruptly to another, and we treated these periods of relative stability as \textit{events}.
+We used a hidden Markov model~\citep{BaumPetr66,BaldEtal17,KumaEtal21} to segment the episode's trajectory, which yielded 20 events, each summarized by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}J--O; see \nameref{subsec:eventseg}).
+Whereas the episode's events had to be discovered, segmenting participants' recountings called for a different approach: rather than finding a separate set of events within each recall, we sought to determine which of the episode's events a participant was describing at each moment.
+We therefore treated the episode's 20 events as a fixed set of states and decoded the highest-scoring sequence of them being described~\citep{Vite67}, allowing participants to describe events out of order and to return to an event they had already described.
+In this way, we obtained three descriptions of the same episode, all in a common set of units.
+These are (a) the sequence of events comprising the episode itself, (b) each participant's sequences of immediate and delayed recall events, and (c) a mapping from every recall event onto the episode event it describes.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{figures/source/pipeline-overview}
+    % Panel letters below assume COLUMN-MAJOR lettering of the 3x5 grid, i.e.
+    %   Experience A/B/C, Text D/E/F, Trajectories G/H/I,
+    %   Event-segmentation J/K/L, Events M/N/O,
+    % reading down each column (episode, immediate, delayed). The artwork still
+    % carries a placeholder "A" on all 15 panels and needs updating to match.
 
-    \caption{\small \textbf{Modeling the geometry of experiences and memories.} 
-    Each row shows one of the three sequences we compare: the \textit{Atlanta} episode (top), and one example participant's immediate (middle) and delayed (bottom) recountings of it. 
-    \textbf{Text.} Hand-written annotations describing the content of each camera shot, and the transcript of each recall. 
-    \textbf{Trajectories.} Each text snippet is embedded as a coordinate in a 768-dimensional semantic space, and successive coordinates trace out a trajectory; color denotes elapsed time. 
-    The two-dimensional projections shown here are for visualization only, and every analysis we report was carried out in the full space. 
-    \textbf{Event-segmentation.} For the episode, the correlation between the embedding vectors at each pair of timepoints, with the boundaries of the 20 events recovered by the hidden Markov model outlined. 
-    For each recall, the similarity between every recall window and every episode event, with the decoded sequence of episode events outlined. 
-    \textbf{Events.} The resulting sequence of events, each summarized by averaging the embedding vectors spanned by that event. 
-    Color denotes the episode event being described, so the same color refers to the same episode content in all three rows.}
+    \caption{\small \textbf{Modeling the geometry of experiences and memories.}
+    Each row shows one of the three sequences we compare: the \textit{Atlanta} episode (top), and one example participant's immediate (middle) and delayed (bottom) recountings of it.
+    Each column shows one stage of the pipeline, applied to all three sequences in turn.
+    \textbf{A}--\textbf{C.} \textit{Experience.} The episode as viewed (\textbf{A}), and the two sessions in which the same participant recounted it (\textbf{B}, \textbf{C}).
+    \textbf{D}--\textbf{F.} \textit{Text.} Hand-written annotations describing the content of each camera shot, divided into labeled fields (\textbf{D}), and an excerpt from the transcript of each recounting (\textbf{E}, \textbf{F}).
+    \textbf{G}--\textbf{I.} \textit{Trajectories.} Each text snippet is embedded as a coordinate in a 768-dimensional semantic space, and successive coordinates trace out a trajectory.
+    For display, the paths are mean-centered, smoothed with a rolling average, and projected into two dimensions, whereas every analysis we report was carried out in the full space.
+    \textbf{J}--\textbf{L.} \textit{Event-segmentation.} For the episode, the correlation between the embedding vectors at each pair of timepoints, with the boundaries of the 20 events recovered by the hidden Markov model outlined (\textbf{J}).
+    For each recounting, the cosine similarity between every recall window and every episode event, with the decoded sequence of episode events outlined (\textbf{K}, \textbf{L}).
+    Darker colors denote greater values.
+    \textbf{M}--\textbf{O.} \textit{Events.} The resulting sequence of events, each summarized by averaging the embedding vectors it spans, and joined in the order they occur.
+    \textbf{G}--\textbf{I}: color denotes elapsed time within each sequence.
+    \textbf{J}--\textbf{O}: color denotes the episode event being described, so the same color refers to the same episode content in all three rows.}
 
     \label{fig:pipeline}
 \end{figure}
 
+The simplest sense in which a recounting has structure is the one that classic list-learning studies measure: which of the episode's events come back, and in what order.
+Participants described 16.98 of the episode's 20 events in the immediate session and 16.26 of them after the delay, a reliable decline (Wilcoxon $T = 199$, $p = 0.007$, $n = 53$).
+Their recountings also comprised fewer events overall, falling from 18.25 events immediately to 17.17 after a week ($T = 321.5$, $p = 0.004$).
+Measured this way, a week of delay costs a participant roughly seven tenths of one event out of 20.
 
+We next sought to characterize the order in which participants described those events.
+The episode unfolds in a fixed sequence, and participants tended to describe its events roughly as they had occurred.
+Any two recountings will therefore agree about the order of many event pairs, whether or not anything specific to a given participant survives the delay.
+We asked instead whether a participant's two recountings agreed more closely than that shared constraint already implies.
+For every pair of episode events described in both recountings, we computed the proportion of orderings in which the first preceded the second, and summarized the agreement between sessions as a single measure of ``order similarity'' (Fig.~\ref{fig:recall-order}A--C).
+We then ranked each participant's delayed-versus-own-immediate order similarity within the distribution of that same delayed recounting's similarities to all of the other 52 participants' immediate recountings, and tested those percentile ranks against chance.
+In this way, each participant serves as their own control, and whatever agreement the episode's own ordering imposes on everyone is absorbed into the null distribution.
+The same logic applies to each of the comparisons we report below.
+We found that participants' delayed recountings agreed with their own immediate recountings more closely than with anyone else's ($T = 1076.5$, $p < 0.001$, $n = 53$; Fig.~\ref{fig:recall-order}D).
 
 \begin{figure}[tp]
     \centering
-    \includegraphics[width=\textwidth]{figures/source/order-similarity}
+    \includegraphics[width=0.92\textwidth]{figures/source/order-similarity}
 
     \caption{\small \textbf{Recall order is preserved between immediate and delayed sessions.} 
     \textbf{A.} How order agreement is measured, illustrated with a schematic episode of six events. 
@@ -275,130 +309,140 @@ Because all three are expressed in a common set of units, they may be compared d
     \label{fig:recall-order}
 \end{figure}
 
+Both of these measures treat a recounting as a list of discrete items, and the trouble with doing so is not only that the resulting description is coarse.
+It is that the description is inaccurate about what participants actually do.
+Participants produced more recall events than the number of distinct episode events they described (18.25 against 16.98, on average), which means that they doubled back over ground they had already covered.
+Order similarity registers each of those returns as an out-of-order transition and stops there.
+For example, a participant who returns to an earlier scene halfway through describing a later one might be repeating what they had already said.
+They might also be adding a detail they had left out the first time, and those are entirely different things to do with a memory.
+Scoring an event as ``recalled'' is silent in the same way about \textit{what} was recalled about it.
+Two participants may describe the same event, at the same point in their recountings, and share almost nothing of its content: different characters, different settings, different details of what they had seen, and so on.
+Both measures take something continuous and rich, and treat it as discrete and simple.
+What they leave out is the content itself. They are also silent about the way the narrative arc of a recounting relates to the arc of the episode it describes.
 
-The most basic of these comparisons concerns how much of the episode each participant recounted (i.e., how many of its 20 events they described at least once).
-Immediate recountings described 16.98 of the episode's 20 events on average (s.d.~2.22), whereas delayed recountings described 16.26 (s.d.~2.51), a mean decline of 0.72 events (Wilcoxon signed-rank $T = 581.0,~p = 0.003,~r = 0.49,~95\%~\mathrm{CI} = [0.23, 1.19]$ events, $n = 53$; \textbf{[CHECK THIS: \texttt{event-recall-analyses.ipynb}, cell \texttt{In [7]}]}).
-% Cells are identified by the In[] label they carry in the committed notebook,
-% i.e. the execution count of the run whose output is stored there.
-Participants covered slightly less of the episode after a week than they had immediately after viewing it.
-A count of this kind establishes how much was left out, but says nothing about \textit{what} was left out.
-The same decline in the number of events recounted would follow whether every participant shed whichever events were easiest to shed, or whether each participant shed a different handful.
-
-We next asked whether the events participants left out were an arbitrary subset.
-For each of the episode's 20 events, we computed the proportion of participants who described that event at least once (counting a participant who returned to the same event more than once within a session only once).
-Had every event been equally likely to be recounted, these proportions would be expected to differ only by chance.
-Instead, we found that the proportion of participants describing a given event ranged from 0.64 to 0.96 in immediate recall (Cochran's $Q(19) = 75.07,~p = 1.3 \times 10^{-8}$, Kendall's $W = 0.075$) and from 0.58 to 0.98 after the delay ($Q(19) = 73.82,~p = 2.1 \times 10^{-8}$, $W = 0.073$; $n = 53$; \textbf{[CHECK THIS: \texttt{event-recall-analyses.ipynb}, cell \texttt{In [8]}]}).
-In other words, some of the episode's events were consistently more likely to be recounted than others, although the size of this effect was modest.
-
-This profile also changed little across the delay: the proportion of participants describing a given event immediately was strongly related to the proportion describing it a week later (Spearman's $\rho = 0.795,~p = 2.8 \times 10^{-5}$, $n = 20$ events; \textbf{[CHECK THIS: \texttt{event-recall-analyses.ipynb}, cell \texttt{In [10]}]}).
-The events most participants omitted after the delay were largely the ones they had omitted to begin with.
-This relationship is symmetric, so it shows only that the two profiles agree; it cannot show that the earlier one produced the later one.
-We note that these are statements about events, averaged over participants, and that they say nothing about whether any of this structure is specific to a given individual.
-For example, two participants could produce identical profiles while recounting the same events in quite different orders, and in quite different terms.
-
-Given that participants' omissions were systematic across the group, we wondered whether the recountings themselves carried any person-specific signature, beginning with the order in which participants described the episode's events.
-For every pair of episode events described in both of a participant's recountings, we asked whether the two were described in the same relative order (a graded quantity, since a participant may describe the same event more than once), and summarized the agreement between sessions as a single measure of order similarity.
-Establishing that a participant's two recountings agree is not by itself informative, since the episode imposes an order that every participant partly follows; the question is whether they agree more closely than that shared constraint already implies.
-We therefore compared each participant's delayed recounting to their own immediate recounting and to every other participant's immediate recounting, ranked the former within the distribution of the latter (i.e., computed a percentile rank), and tested those ranks against chance (a logic we apply to every comparison we report below).
-Participants' delayed recountings did resemble their own immediate recountings in order more than they resembled other participants' (Wilcoxon signed-rank $T = 1076.5,~p = 7.0 \times 10^{-4},~r = 0.51$, median percentile rank 0.76, $95\%~\mathrm{CI} = [0.60, 0.81]$, $n = 53$; \textbf{[CHECK THIS: \texttt{order-analysis-and-fig.ipynb}, cell \texttt{In [9]}]}; Fig.~\ref{fig:recall-order}A--D).
-This group-level agreement did not, however, extend to identifying individual participants: a participant's own immediate recounting was the closest of all 53 in order for 5.2\% of participants once ties were broken at random, which is not reliably above the 1.9\% expected by chance (one-sided binomial $p = 0.08$, $n = 53$; \textbf{[CHECK THIS: \texttt{identification-analyses.ipynb}, cell \texttt{In [8]}]}; Fig.~\ref{fig:recall-order}E).
-Ties were common enough at the top of these rankings that only 2 of the 53 participants had their own immediate recounting as an outright best match.
-
-
+Because our approach places the episode and both of a participant's recountings in a single embedding space (Fig.~\ref{fig:trajectories}), we can ask whether the \textit{structure} of a participant's path through the episode's content is preserved, and not only the sequence in which they visited it.
+We aligned pairs of event sequences using dynamic time warping~\citep{Vint68,SakoChib78}, which matches up the events of two sequences of differing length while preserving their order, and we took the average distance between matched events as the alignment's ``warp cost''.
+Intuitively, the warp cost reflects the amount of work required to bring one sequence into alignment with the other, so two sequences that trace similar shapes have a low warp cost.
+We note that this runs in the opposite direction to order similarity, where higher values indicated closer agreement, and the axes in Figure~\ref{fig:dtw} are inverted accordingly.
 
 \begin{figure}[tp]
     \centering
     \includegraphics[width=\textwidth]{figures/source/2d-trajectories}
 
-    \caption{\textbf{2D projections of the episode and recall trajectories.} CAPTION}
+    \caption{\small \textbf{Two-dimensional projections of the episode and recall trajectories.}
+    The episode's event sequence (top left), together with the immediate (left) and delayed (right) event sequences of six example participants.
+    Each point is one event, and color denotes the episode event being described, so the same color refers to the same episode content in every panel.
+    Within each pair, the arrow runs from a participant's immediate recall to their delayed recall, and the episode's own path is drawn beneath both as a dashed grey underlay for reference.
+    Projections were obtained using UMAP and are shown for visualization only; every analysis we report was carried out in the full 768-dimensional space.}
 
     \label{fig:trajectories}
 \end{figure}
 
+If retrieving a memory after a delay recovered the original experience, then a participant's delayed recounting should align with the episode at least as closely as it aligns with their own earlier recounting of it.
+We found the opposite: delayed recountings aligned more closely with participants' own immediate recountings (mean warp cost 0.53) than with the episode itself (0.65; $T = 1430$, $p < 0.001$, $n = 53$; Fig.~\ref{fig:dtw}A,B,D).
+This suggests that what participants produce after a week is a recounting of their own immediate recounting, rather than a fresh recounting of the episode.
+Two of the results below bear on that suggestion.
 
+Because we collected two recountings from every participant, we could also ask how each of them related to the episode.
+Participants' delayed recountings aligned to the episode reliably less closely than their immediate recountings did (mean warp costs 0.65 and 0.63, respectively; $T = 1143$, $p < 0.001$, $n = 53$).
+The difference is a small one, and we note that two recountings can say only so much about a process that plays out over many recountings.
+(Distinguishing a representation that moves across the delay from one that is simply sampled twice would require withholding the immediate recounting from some participants, which our design does not do.)
 
+A resemblance between two recountings could also reflect regularities that hold across people, rather than anything specific to the participant who produced them.
+We therefore ranked each delayed recounting's warp cost to its own immediate counterpart within the distribution of its costs to the other 52 participants' immediate recountings, as we had done for order similarity.
+A participant's delayed recounting was (reliably) closer in structure to their own immediate recounting than to anyone else's ($T = 1431$, $p < 0.001$, $n = 53$; Fig.~\ref{fig:dtw}A,C,E).
+The same held when we ran the comparison in the opposite direction, matching each immediate recounting against the full set of delayed recountings ($T = 1419.5$, $p < 0.001$).
+In other words, the geometry of a single recounting carries enough of a person-specific signature to locate its counterpart from the other session (Fig.~\ref{fig:dtw}F,G).
+Because both sides of this comparison are recountings, whatever makes a delayed recounting resemble its own immediate counterpart is not a general property of recounting the episode.
 
 \begin{figure}[tp]
     \centering
     \includegraphics[width=\textwidth]{figures/source/dtw-figure}
 
-    \caption{\small \textbf{Participants' delayed recalls resemble their own immediate recalls.} 
-    \textbf{A}--\textbf{C.} One participant's delayed recall event sequence (navy), aligned by dynamic time warping to their own immediate recall (\textbf{A}), to a different participant's immediate recall (\textbf{B}), and to the episode (\textbf{C}). 
-    Grey lines connect matched events, the mean warp cost of each alignment is inset, and the sequences are drawn with a small spatial offset so that overlapping events remain visible. 
-    \textbf{D.} For each participant, the warp cost between their delayed recall and their own immediate recall (pink), and the median cost between that same delayed recall and the other 52 participants' immediate recalls (grey). 
-    Each joined pair of dots is one participant. 
-    \textbf{E.} For each participant, the warp cost between their delayed recall and their own immediate recall, against the cost between that same delayed recall and the episode; black bars denote means, and the inset shows the distribution of paired differences. 
-    \textbf{F.} The proportion of participants whose own immediate recall falls among the $k$ closest of all 53, as a function of $k$ (pink), against the proportion expected by chance (grey, dashed). 
-    \textbf{G.} Warp cost between every delayed recall (rows) and every immediate recall (columns). 
-    A marker denotes the closest match to each delayed recall: pink where that match is the participant's own immediate recall, which places it on the diagonal, and white where it is another participant's.}
+    \caption{\small \textbf{Participants' delayed recalls resemble their own immediate recalls.}
+    \textbf{A}--\textbf{C.} One participant's delayed recall event sequence (navy), aligned by dynamic time warping to their own immediate recall (\textbf{A}, green), to the episode (\textbf{B}, orange), and to a different participant's immediate recall (\textbf{C}, pink).
+    Grey lines connect matched events, the mean warp cost of each alignment is inset, and each pair of sequences is drawn with a small spatial offset so that overlapping events remain visible.
+    \textbf{D.} For each participant, the warp cost between their delayed recall and their own immediate recall (green), against the cost between that same delayed recall and the episode (orange).
+    Each joined pair of dots is one participant, black bars denote means, and the inset shows the distribution of paired differences.
+    \textbf{E.} For each participant, the warp cost between their delayed recall and their own immediate recall (pink), and the median cost between that same delayed recall and the other 52 participants' immediate recalls (grey).
+    \textbf{F.} The proportion of participants whose own immediate recall falls among the $k$ closest of all 53, as a function of $k$ (pink), against the proportion expected by chance (grey, dashed).
+    \textbf{G.} Warp cost between every delayed recall (rows) and every immediate recall (columns).
+    A marker denotes the closest match to each delayed recall: pink where that match is the participant's own immediate recall, which places it on the diagonal, and white where it is another participant's.
+    \textbf{D}, \textbf{E}: the warp cost axes are inverted, so that higher (\textbf{D}) and further right (\textbf{E}) denote greater similarity.}
 
     \label{fig:dtw}
 \end{figure}
 
+The comparisons above establish that a participant's two recountings resemble each other, and that they do so in a person-specific way, but none of them says how the two differ.
+We wondered whether that difference could be characterized directly, and reasoned that a delayed recounting might be a simplified version of the earlier one.
+This is often apparent by eye.
+For example, each participant in Figure~\ref{fig:trajectories} traces much the same overall shape in both sessions, whereas their delayed path tends to visit fewer points and to smooth over some of the excursions their immediate path had made.
+If a delayed recounting simplifies an immediate one, then the events the immediate recounting could most afford to lose should be the ones a participant is most likely to omit after the delay.
 
-Order, however, provides only a coarse description of a recounting, since it treats events as interchangeable labels and discards everything about how their contents relate to one another (e.g., whether two events were described in similar terms or in quite different ones).
-An important feature of our approach is that it places the episode and both recountings in a common embedding space, which allows us to ask a stronger question: whether the \textit{structure} of a participant's path through the episode's content is preserved, and not merely the sequence in which they visited it.
-To assess this, we compared event sequences using dynamic time warping (DTW), which aligns two sequences of differing length by finding the order-preserving correspondence between their events that minimizes the total distance between matched pairs~\citep{Vint68,SakoChib78}.
-The average distance (here, cosine distance) across matched pairs provides a measure of how similar the two sequences' structures are.
-
-If retrieval after a delay recovered the episode as it was originally experienced, a participant's delayed recounting should resemble the episode at least as closely as it resembles their own earlier recounting of it.
-Instead, we found that delayed recountings aligned more closely with the participant's own immediate recounting than with the episode itself (mean alignment costs 0.53, s.d.~0.10, and 0.65, s.d.~0.06, respectively; two-sided Wilcoxon signed-rank $T_w = 1.0,~p = 2.5 \times 10^{-10},~r = 1.00$, mean difference 0.12, $95\%~\mathrm{CI} = [0.10, 0.14]$, $n = 53$; \textbf{[CHECK THIS: \texttt{dtw-analyses-and-fig.ipynb}, cell \texttt{In [11]}]}; Fig.~\ref{fig:recall-structure}A,C,E).
-We next asked whether this resemblance was specific to the participant who produced it, and found that each participant's delayed recounting was structurally closer to their own immediate recounting than to those of other participants ($T = 1431.0,~p = 2.2 \times 10^{-11},~r = 1.00$, median percentile rank 1.00, $n = 53$; \textbf{[CHECK THIS: \texttt{dtw-analyses-and-fig.ipynb}, cell \texttt{In [12]}]}; Fig.~\ref{fig:recall-structure}A,B,D).
-Unlike recall order, this effect was strong enough to identify individual participants: for 36 of the 53 participants, the delayed recounting aligned more closely with their own immediate recounting than with any of the other 52 (68\%, $95\%~\mathrm{CI} = [55, 79]\%$, against 1.9\% expected by chance; one-sided binomial $p = 2.0 \times 10^{-49}$), and for 91\% it ranked among the five closest (\textbf{[CHECK THIS: \texttt{identification-analyses.ipynb}, cell \texttt{In [10]}]}; Fig.~\ref{fig:recall-structure}F,G).
-In other words, what a participant retrieved after a week reflected something specific to how they had described the episode before.
-
-Establishing that this structure is preserved is not the same as establishing that it is unchanged.
-Every measure to this point reports only whether two things are more or less alike, and none describes what the change between them consists of.
-To characterize the transformation itself, we hypothesized that if a delayed recounting is a simplified version of an earlier one, the events the earlier one could most afford to lose should be the events that go missing.
-We used the Ramer-Douglas-Peucker algorithm~\citep{Rame72,DougPeuc73} (a standard method for simplifying polylines) to simplify each participant's immediate recall trajectory, discarding events that lay close to the line between their neighbors while retaining those whose removal would change the path's shape.
-How much detail the algorithm removes depends on a tolerance ($\epsilon$, expressed as a cosine distance), and a tolerance chosen by reference to the delayed recounting would fit the prediction to the outcome it is meant to predict.
-We therefore swept $\epsilon$ across its full range in steps of 0.1 without selecting a value, and scored each event by its \textit{prominence}: the tolerance at which simplification first removes it (see \nameref{subsec:stats}).
-An event removed at a low tolerance is one the path can afford to lose, and an event surviving to a high tolerance is one it cannot.
-Prominence is read off a participant's immediate recounting alone, so the delayed recounting contributes only the labels.
-We note that this simplification was performed on the full 768-dimensional trajectories, and that the two-dimensional projections in Figure~\ref{fig:pipeline} serve only to visualize the result.
-
-
-
+To make this idea concrete, we simplified each participant's immediate recall trajectory using the Ramer-Douglas-Peucker algorithm~\citep{Rame72,DougPeuc73}, a standard method for reducing the number of points in a path made of connected straight segments.
+The algorithm discards points lying close to the line joining their retained neighbors, and keeps those whose removal would change the path's shape.
+The amount of detail it removes is governed by a tolerance ($\epsilon$, expressed here as a cosine distance; Fig.~\ref{fig:rdp}A).
+Choosing a single tolerance by reference to participants' delayed recountings would fit the prediction to the outcome it is meant to predict.
+We therefore swept $\epsilon$ across its range, and scored each event by the tolerance at which simplification first removes it (i.e., its ``removal tolerance''; see \nameref{subsec:rdp}).
+An event with a low removal tolerance is one that a participant's path can lose without much changing shape (equivalently, one whose position along the path is well predicted by the events on either side of it).
+For example, an event a participant described in terms very similar to the events on either side of it will sit close to the line joining them, and simplification will remove it early.
+An event's removal tolerance is also defined relative to the neighbors that survive alongside it, so the same episode event may be scored differently in two participants' recountings.
+We treat an episode event as \textit{omitted} when a participant's delayed recounting devotes fewer events to it than their immediate recounting had.
+This covers events described less often as well as events left out altogether (see \nameref{subsec:rdp} for the edge cases the definition has to handle).
+We note that the removal tolerance is computed from a participant's immediate recounting alone, so their delayed recounting contributes only the labels denoting which events were omitted.
+All of the simplification was also carried out on the full 768-dimensional trajectories, and not on the two-dimensional projections we use to visualize them.
 
 \begin{figure}[tp]
     \centering
-    \includegraphics[width=\textwidth]{figures/source/rdp-figure}
+    \includegraphics[width=0.82\textwidth]{figures/source/rdp-figure}
 
-    \caption{\small \textbf{Delayed recalls drop the events an immediate recall could most afford to lose.} 
-    \textbf{A.} Simplifying a trajectory. 
-    At each successively larger tolerance (blue band), an event falling within the band around the line joining its retained neighbors is removed (red) and an event falling outside it is retained (green), leaving the simplified path in blue. 
-    \textbf{B.} One participant's immediate and delayed recall event sequences, with the events they described immediately and not after the delay faded. 
-    \textbf{C.} For each participant, the probability that an event they dropped was removed at a lower tolerance than an event they kept. 
-    Chance is 0.5 (dashed) and the black bar denotes the mean. 
-    \textbf{D.} Coefficients of a logistic regression predicting whether an event was dropped from its removal tolerance in the episode's trajectory and in the participant's own immediate recall. 
-    Dots are the fitted coefficients, vertical bars are cluster-bootstrap $95\%$ confidence intervals obtained by resampling participants, and the histograms are null distributions from 10,000 permutations of the dropped and retained labels within participant. 
-    \textbf{E.} The proportion of the other participants' rankings that each participant's own ranking beats at predicting their own forgetting, against the $0.5$ expected by chance (dashed). 
-    \textbf{F.} The proportion of participants whose own ranking falls among the $k$ best at predicting their forgetting, as a function of $k$, against the proportion expected by chance (grey, dashed).
-    \textbf{[@paxton: panels A, B, E, and F are described from the rendered figure, since your message covered panel D only. Please check them, particularly what the faded events in B denote and what F is ranking.]}}
+    \caption{\small \textbf{Delayed recalls omit the events an immediate recall could most afford to lose.}
+    \textbf{A.} The simplification procedure, applied to a schematic trajectory at a single tolerance ($\epsilon$).
+    At each step, a band of width $\epsilon$ is drawn around the line joining the endpoints of the segment under consideration (light blue).
+    The event lying farthest outside that band is retained (green) and becomes a new vertex, whereas events lying within it are removed (red).
+    Retained events and the path they define are drawn in blue and removed events in grey, leaving the fully simplified path at the bottom.
+    \textbf{B.} One participant's immediate (left) and delayed (right) recall event sequences, with color denoting the episode event each recall event describes.
+    Events the participant described immediately but omitted after the delay are faded on the right.
+    \textbf{C.} For each participant, the probability that an event they omitted was removed at a lower tolerance than an event they kept.
+    Pink dots are individual participants and the violin shows their distribution; the black point and bar denote the mean and its bootstrap-estimated $95\%$ confidence interval, against the 0.5 expected by chance (dashed).
+    \textbf{D.} Coefficients of a logistic regression predicting whether an event was omitted, from its removal tolerance in the episode's trajectory ($\epsilon_{\mathrm{episode}}$, grey) and in the participant's own immediate recall ($\epsilon_{\mathrm{immediate\ recall}}$, pink).
+    Points are the fitted coefficients, vertical bars are cluster-bootstrap $95\%$ confidence intervals obtained by resampling participants, and the mirrored histograms are null distributions from 10,000 permutations of the omitted and retained labels within participant.
+    \textbf{E.} The distribution across participants of the proportion of the other participants' rankings that each participant's own ranking beats at predicting their own omissions, against the 0.5 expected by chance (dashed).
+    \textbf{F.} The proportion of participants whose own ranking falls among the $k$ best at predicting their omissions, as a function of $k$ (pink), against the proportion expected by chance (grey, dashed).}
 
     \label{fig:rdp}
 \end{figure}
 
-Prominence separated the episode events a participant went on to drop from the events they kept (mean probability of superiority 0.576, $95\%~\mathrm{CI} = [0.52, 0.63]$, one-sided Wilcoxon signed-rank $T = 846.0,~p = 0.004,~r = 0.44$, $n = 48$ participants with at least one event of each kind; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [28]}]}).
-The events a participant shed were the events their own path could most afford to lose.
-This separation was specific to the person who produced it: a participant's own ranking predicted their forgetting better than other participants' rankings did (mean win rate 0.614, $95\%~\mathrm{CI} = [0.54, 0.69]$, $T = 864.5,~p = 0.002,~r = 0.47$, $n = 48$; \textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [29]}]}).
-We scored each of those comparisons over the episode events both participants described, so no ranking gained an advantage from covering more of the episode.
+Simplifying an immediate recounting separated the episode events a participant went on to omit from the events they retained.
+Given one event that a participant omitted and one that they kept, the omitted event tended to be the one their own path could more readily afford to lose.
+This held about 58\% of the time (mean probability of superiority 0.576, $95\%$ CI $= [0.519, 0.632]$, $T = 846.0$, $p = 0.004$, $n = 48$ participants who omitted at least one event; Fig.~\ref{fig:rdp}C).
+The effect is a small one. We note also that it describes a tendency across the sample, and not a rule that holds within every participant.
 
-A participant's own recounting is not the only path an event's removal order could be read from, since the episode itself supplies an alternative.
-We therefore scored each episode event a participant had described twice over: once by the tolerance at which simplification removes it from the episode's trajectory, and once by the tolerance at which it is removed from that participant's immediate recall.
-Entering both scores into a single logistic regression predicting whether the event was later dropped separates what each one contributes (711 events, 47 participants, 18 episode events; \textbf{[CHECK THIS: \texttt{rdp-analyses-and-fig.ipynb}, cell \texttt{In [210]}]}).
-Only the participant's own recounting carried the effect ($\beta = 0.242$ in log-odds per within-participant standard deviation, $p = 0.004$ by participant-blocked permutation), whereas the coefficient on the episode's removal order was indistinguishable from zero ($\beta = 0.012$, two-sided $p = 0.90$).
-The difference between the two coefficients was itself reliable ($\beta_{\text{difference}} = 0.230,~p = 0.048$).
-What predicts forgetting is the shape of a participant's own earlier telling rather than the shape of the episode that telling described.
+A participant's own recounting is not the only path from which an event's removal tolerance may be read, since the episode's own trajectory supplies an alternative.
+For example, an event sitting at a sharp turn in the episode's trajectory might be omitted by everyone who described it, whatever their own immediate recounting had looked like.
+We therefore scored each episode event a participant had described in two ways: once by the tolerance at which simplification removes it from the episode's trajectory, and once by the tolerance at which it is removed from that participant's own immediate recall trajectory.
+We entered both scores into a single logistic regression predicting whether the event was omitted.
+Only the participant's own recounting carried a reliable effect ($\beta = 0.242$, $p = 0.003$ by participant-blocked permutation).
+The coefficient on the episode's removal tolerance was indistinguishable from zero ($\beta = 0.012$, $p = 0.451$; Fig.~\ref{fig:rdp}D).
+What predicts omission, in other words, is the shape of a participant's own immediate recounting, and only weakly, if at all, the shape of the episode.
 
-Three features of the simplification analysis qualify what it can show.
-First, the effect is a modest one.
-Prominence orders a pair of events correctly about 58\% of the time, against the 50\% expected by chance.
-Second, the analysis covers the 48 participants who dropped at least one event, since the remaining five dropped none and so leave no contrast for prominence to separate (\textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [28]}]}).
-Third, two conventions in constructing the measure are consequential: scoring a repeatedly described event by its first removal rather than its average, and offsetting the delayed counts for endpoint occurrences.
-Both strengthen the result, and while dropping either one on its own leaves the separation reliable, dropping both leaves the separation no longer reliable (\textbf{[CHECK THIS: \texttt{rdp-analyses.ipynb}, cell \texttt{In [31]}]}).
-A further limit follows from the resolution at which we measured: segmenting a trajectory into events discards whatever varied within an event, so any pruning a participant performed below that scale is invisible to us.
-Overall, the relationships reported above describe a tendency across the sample at a fixed common resolution, and they do not imply that every delayed recounting is a visibly pruned copy of its predecessor.
+As with the structural comparisons above, this prediction is also specific to the person who produced it.
+For each participant, we compared how well their own removal tolerances predicted their own omissions against how well each other participant's tolerances did.
+We scored every comparison over the pool of episode events that both participants had described, so that no ranking gained an advantage from covering more of the episode.
+A participant's own tolerances won these comparisons more often than not (mean win rate 0.614, $95\%$ CI $= [0.541, 0.685]$, against a chance value of 0.5; $T = 864.5$, $p = 0.002$, $n = 48$; Fig.~\ref{fig:rdp}E).
+The probability of superiority for a participant's own recounting has to be recomputed against every surrogate, over a different pool of shared events each time.
+There is therefore no single value to rank against the surrogates' scores, and we summarized each participant instead by the number of surrogates they beat (Fig.~\ref{fig:rdp}F).
+A surrogate is usable only if they immediately recalled at least one event the target participant omitted.
+The number of available surrogates therefore varies across participants, and the chance line in this panel gives the number of wins expected given each participant's own pool.
+
+Taken together, these analyses suggest a different picture of what it means to leave something out of a recounting.
+An event with a low removal tolerance is, by construction, one that sits close to the line joining the events on either side of it, which is to say that its content is already well approximated by the content surrounding it.
+The events participants omitted after a week are drawn preferentially from that set.
+An omitted event is therefore not an item deleted from a list, but a stop along a path that the path can afford to skip.
+Whatever that event contributed is largely carried by its neighbors.
+The delayed recounting traces much the same overall shape, with fewer stops along the way.
+Forgetting, described in this way, is a smoothing of a trajectory rather than a loss of discrete items, and it has no natural analog in paradigms where an item is either recalled or not.
+
 
 
 \section*{Discussion}
@@ -574,7 +618,7 @@ Finally, we manually reviewed all LLM-formatted transcripts to identify and corr
 
 \subsection*{Analysis}
 
-\subsubsection*{Statistics}
+\subsubsection*{Statistics}\label{subsec:stats}
 
 Wilcoxon tests were one-sided because our alternative hypothesis was directional (delayed matches own immediate \textit{better than} the episode, others' immediates, etc.).
 
@@ -680,19 +724,26 @@ The summed or average distance between matched vectors along the optimal warp pa
 We computed the warp cost for a given pair of event-sequences as the average cosine distance between DTW-matched events so that these costs would be comparable across comparisons involving event-sequences of different lengths (whereas summed distance necessarily grows with sequence length).
 
 We hypothesized that the idiosyncratic geometric structures of participants' delayed recalls tended to reflect the structures of their immediate recalls.
-In the analyses shown in Figure~\ref{fig:dtw}, we tested this hypothesis two different ways.
+In the analyses shown in Figure~\ref{fig:dtw}, we tested this hypothesis two different ways, and additionally asked whether participants' recountings aligned less closely with the episode following the delay.
 First, we analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than to the episode's event-sequence.
 We began by mean-centering the episode event sequence, and centering each participant's immediate and delayed recall event sequences by their shared centroid.
 For each participant, we then computed the warp cost to align their delayed recall event-sequence to their immediate recall event-sequence, and the warp cost to align their delayed recall event-sequence to the episode's event sequence.
 We then performed a Wilcoxon signed-rank test comparing the resulting paired distributions of immediate-alignment costs and episode-alignment costs to test whether participants' immediate-alignment costs were systematically lower.
 
-We then analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than they were to \textit{other} participants' immediate recall event-sequences.
+We also asked how closely each of participants' two recountings aligned with the episode itself.
+Using the same centered event-sequences, we computed, for each participant, the warp cost to align their \textit{immediate} recall event-sequence to the episode's event-sequence, and compared the resulting distribution against the distribution of delayed-recall alignment costs described above using a Wilcoxon signed-rank test (with the alternative hypothesis that participants' delayed-alignment costs should be \textit{higher}).
+
+Second, we analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than they were to \textit{other} participants' immediate recall event-sequences.
 Here we used a surrogate-driven approach analogous to the approach we used to compare recall orderings.
 For each participant, we computed the warp cost to align their delayed recall event-sequence to their own immediate recall event-sequence, and to every other participant's immediate recall event-sequence.
 We then computed the percentile rank of each within-participant warp cost against its distribution of across-participant warp costs, and performed a one-sample Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5 (with the alternative hypothesis that the within-participant alignment costs' ranks should be \textit{lower}).
 
+Because either recounting may be treated as the target and the other as the pool to be searched, we ran this comparison in both directions.
+The analysis described above ranks each participant's delayed recall against the set of all 53 immediate recalls.
+We repeated it in the reverse direction, computing the warp cost to align each participant's immediate recall event-sequence to their own delayed recall event-sequence and to every other participant's delayed recall event-sequence, percentile-ranking the within-participant cost against the resulting distribution of across-participant costs, and testing those ranks against a null rank of 0.5 as above.
 
-\subsubsection*{Predicting forgetting through geometric simplification}
+
+\subsubsection*{Predicting forgetting through geometric simplification}\label{subsec:rdp}
 
 In the analyses shown in Figure~\ref{fig:rdp}, we asked whether the particular episode content a participant tended to forget following the week-long delay could be explained by geometrically simplifying the path through semantic space traversed by their immediate recounting.
 We formalized this geometric simplification using the Ramer-Douglas-Peucker (RDP) algorithm~\citep{Rame72,DougPeuc73}.
