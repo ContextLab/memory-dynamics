@@ -740,19 +740,19 @@ In the analyses shown in Figure~\ref{fig:dtw}, we tested this hypothesis two dif
 First, we analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than to the episode's event-sequence.
 We began by mean-centering the episode event sequence, and centering each participant's immediate and delayed recall event sequences by their shared centroid.
 For each participant, we then computed the warp cost to align their delayed recall event-sequence to their immediate recall event-sequence, and the warp cost to align their delayed recall event-sequence to the episode's event sequence.
-We then performed a Wilcoxon signed-rank test comparing the resulting paired distributions of immediate-alignment costs and episode-alignment costs to test whether participants' immediate-alignment costs were systematically lower.
+We then performed a Wilcoxon signed-rank test comparing the resulting paired distributions of immediate-alignment costs and episode-alignment costs to assess whether the two systematically differed.
 
 We also asked how closely each of participants' two recountings aligned with the episode itself.
-Using the same centered event-sequences, we computed, for each participant, the warp cost to align their \textit{immediate} recall event-sequence to the episode's event-sequence, and compared the resulting distribution against the distribution of delayed-recall alignment costs described above using a Wilcoxon signed-rank test (with the alternative hypothesis that participants' delayed-alignment costs should be \textit{higher}).
+Using the same centered event-sequences, we computed, for each participant, the warp cost to align their \textit{immediate} recall event-sequence to the episode's event-sequence, and compared the resulting distribution against the distribution of delayed-recall alignment costs described above using a Wilcoxon signed-rank test.
 
 Second, we analyzed whether participants' delayed recall event-sequences tended to be more geometrically similar to their own immediate recall event-sequences than they were to \textit{other} participants' immediate recall event-sequences.
 Here we used a surrogate-driven approach analogous to the approach we used to compare recall orderings.
 For each participant, we computed the warp cost to align their delayed recall event-sequence to their own immediate recall event-sequence, and to every other participant's immediate recall event-sequence.
-We then computed the percentile rank of each within-participant warp cost against its distribution of across-participant warp costs, and performed a one-sample Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5 (with the alternative hypothesis that the within-participant alignment costs' ranks should be \textit{lower}).
+We then computed the percentile rank of each within-participant warp cost against its distribution of across-participant warp costs, and performed a one-sample Wilcoxon test comparing these per-participant percentile ranks against a null rank of 0.5.
 
 Because either recounting may be treated as the target and the other as the pool to be searched, we ran this comparison in both directions.
-The analysis described above ranks each participant's delayed recall against the set of all 53 immediate recalls.
-We repeated it in the reverse direction, computing the warp cost to align each participant's immediate recall event-sequence to their own delayed recall event-sequence and to every other participant's delayed recall event-sequence, percentile-ranking the within-participant cost against the resulting distribution of across-participant costs, and testing those ranks against a null rank of 0.5 as above.
+The analysis described above compares each participant's delayed recall against the set of all 53 participants' immediate recalls.
+We repeated this analysis in the reverse direction, computing the warp cost to align each participant's immediate recall event-sequence to their own delayed recall event-sequence and to every other participant's delayed recall event-sequence, percentile-ranking the within-participant cost against the resulting distribution of across-participant costs, and testing those ranks against a null rank of 0.5 as above.
 
 
 \subsubsection*{Predicting forgetting through geometric simplification}\label{subsec:rdp}
@@ -800,7 +800,7 @@ We note that because the within-participant $z$-scoring removes each participant
 
 To estimate $p$-values for these coefficients, we used a participant-blocked permutation procedure.
 For each of 10,000 permutations, we randomly shuffled the ``omitted'' labels within each participant's set of immediately recalled episode events, independently, and preserving the numbers of episode events they omitted versus retained in following the delay.
-We then re-fit the above model using each set of permuted labels to construct a null distribution of coefficients, and computed a $p$-value as $\frac{r+1}{n+1}$, where $r$ is the number of permutations that yielded a coefficient greater than or equal to the observed coefficient, and $n$ is the number of permutations we performed (10,000).
+We then re-fit the above model using each set of permuted labels to construct a null distribution of coefficients, and computed a $p$-value as $\frac{r+1}{n+1}$, where $r$ is the number of permutations that yielded a coefficient whose absolute value was greater than or equal to that of the observed coefficient, and $n$ is the number of permutations we performed (10,000).
 
 To construct the 95\% confidence intervals displayed in Figure~\ref{fig:rdp}D, we used a cluster bootstrap procedure.
 For each of 10,000 bootstraps, we subsampled participants (with replacement) from the full pool and re-fit the above model using each subsample's data. 
