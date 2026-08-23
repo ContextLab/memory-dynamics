@@ -620,7 +620,19 @@ Finally, we manually reviewed all LLM-formatted transcripts to identify and corr
 
 \subsubsection*{Statistics}\label{subsec:stats}
 
-Wilcoxon tests were one-sided because our alternative hypothesis was directional (delayed matches own immediate \textit{better than} the episode, others' immediates, etc.).
+All statistical tests we performed were two-sided. All tests we performed were nonparametric, with the exception of the logistic regression analysis, for which the model itself is necessarily parametric but we estimated confidence intervals and $p$-values in a nonparametric manner (see~\nameref{subsec:rdp}).
+%Because our analyses are performed on scales whose values are bounded and may not be normally distributed (e.g., order-similarity, warp cost, $\varepsilon$-at-removal), 
+For all other statistical comparisons, we used Wilcoxon's signed-rank test~\citep{Wilc45}.
+Given two distributions of paired observations, the Wilcoxon signed-rank statistic $T_W$ is computed by first taking the set of paired differences, discarding any that are exactly zero, and ranking the remaining $m$ differences by their absolute values (the smallest absolute difference is assigned rank 1; the largest is assigned rank $m$). 
+For the one-sample Wilcoxon signed-rank test, the observations are analogously ranked by their absolute differences from the null-hypothesized center.
+In both cases, the resulting ranks are then divided into two groups by their corresponding differences' signs, and the ranks in each group summed (where $W^+$ denotes the sum of the positive differences' ranks and $W^-$ denotes the sum of the negative differences' ranks).
+The two-sided test statistic $T_W$ is then given by the \textit{smaller} of $W^+$ and $W^-$.
+For a given directional effect, the test statistic thus denotes the weight of the rank-sum evidence in the \textit{opposite} direction.
+We note that this means the test statistic's magnitude varies inversely to that of analogous parametric tests (e.g., $t$-tests): for example, in a case where every observation exhibited a shift in the same direction, the value of $T_W$ would be 0.
+Under the null hypothesis that each difference is equally likely to be positive or negative, the $p$-value for the test statistic is then computed (via the ``exact'' method, which we use here) by enumerating all $2^m$ possible sign-assignments for the $m$ differences' ranks, re-deriving the test statistic (as the smaller of $W^+$ and $W^-$) for each assignment, and computing the proportion of sign-permuted statistics at least as extreme as (i.e., less than or equal to) the observed statistic.
+Because $T_W$ is not itself an interpretable measure of effect size (and its magnitude is perhaps somewhat counterintuitive), alongside each test we also report the rank-biserial correlation \citep[computed as $\frac{W^+ - W^-}{W^+ + W^-}$;][]{Kerb14}, which ranges from $-1$ to $+1$, grows with the strength and consistency of the effect, and shares an exact $p$-value with its corresponding signed-rank test.
+The 95\% confidence intervals we report alongside each test were obtained by subsampling participants (with replacement) 10,000 times, recomputing the measure of interest for each subsample, and identifying the 2.5\textsuperscript{th} and 97.5\textsuperscript{th} percentiles of the resulting bootstrap distribution.
+
 
 \subsubsection*{Constructing episode and recall trajectories}\label{subsec:text-embedding}
 
