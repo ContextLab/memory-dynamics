@@ -26,7 +26,7 @@
 
 \title{\textit{Supplementary information for}: Geometric models reveal that delayed memories are simplified versions of our own earlier recountings}
 
-\author{Paxton C. Fitzpatrick, Alishba Tahir, Jennifer Xu, Soo Hwan Park, and Jeremy R. Manning\textsuperscript{*}\\
+\author{Paxton C. Fitzpatrick, Alishba Tahir, Jennifer Xu, Soo Hwan Park,\\and Jeremy R. Manning\textsuperscript{*}\\
 \small{Department of Psychological and Brain Sciences}\\
 \small{Dartmouth College, Hanover, NH 03755, USA}\\
 \small{\textsuperscript{*}Corresponding author: Jeremy.R.Manning@Dartmouth.edu}}
@@ -235,8 +235,12 @@
 }
 
 
-\clearpage
-\bibliographystyle{apa}
-\renewcommand{\refname}{Supplementary references}
-\bibliography{CDL-bibliography/cdl}
+% This supplement contains no \cite commands, so declaring a bibliography made
+% bibtex exit 2 ("I found no \citation commands") and fail the latexmk build.
+% The declaration is kept here, commented out, so it can be restored verbatim
+% the moment anything in this file is cited.
+%\clearpage
+%\bibliographystyle{apa}
+%\renewcommand{\refname}{Supplementary references}
+%\bibliography{CDL-bibliography/cdl}
 \end{document}
