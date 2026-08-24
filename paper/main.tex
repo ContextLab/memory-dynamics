@@ -31,7 +31,7 @@
 
 \title{Delayed recountings preserve but simplify the semantic geometry of earlier recountings}
 
-\author{Paxton C. Fitzpatrick, Alishba Tahir, Jennifer Xu, and Jeremy R. Manning\textsuperscript{*}\\
+\author{Paxton C. Fitzpatrick, Alishba Tahir, Jennifer Xu, Soo Hwan Park, and Jeremy R. Manning\textsuperscript{*}\\
 \vspace{-0.5em}\small{Department of Psychological and Brain Sciences}\\
 \small{Dartmouth College, Hanover, NH 03755, USA}\\
 \vspace{-0.5em}\small{\textsuperscript{*}Corresponding author: Jeremy.R.Manning@Dartmouth.edu}}
@@ -112,31 +112,49 @@ We find that this ranking predicts which events participants will forget followi
 \section*{Results}
 
 %%%%%%%%%%%%%%%% RELEVANT STATS %%%%%%%%%%%%%%%%
-% [IMPORTED FROM PAXTON'S main.tex] This whole block is his, not ours.
-% Last synced by hand from upstream/master 785cff47 (2026-08-19), which
-% brought in 7fffd939 and c5c61225. Lines tagged [PCF 2026-08-19] below are
-% what that sync added or changed; everything else predates it. Copied
-% verbatim, typos included. Edit upstream, not here.
+% [IMPORTED FROM PAXTON'S main.tex] The structure and wording of this block
+% are his. Synced to upstream/master 0137e894 (2026-08-24).
+%
+% ALL STATISTICS BELOW ARE TWO-SIDED, per c63b5153 and 0216f5f2, which
+% reanalyzed every test. Two-sided T_W is the SMALLER of W+ and W-, so the
+% statistics bear no resemblance to the one-sided values this block used to
+% carry (order similarity was T = 1076.5, now T_W = 354.4, and so on). Every
+% conclusion survived the change. Values here were taken from the Results
+% prose, which is where he entered them; his own notebook cells and this
+% block's older text still show the one-sided numbers in places.
+%- event counts (added upstream in 54740ae5):
+%    - episode events described: 16.981 immediate, 16.264 delayed,
+%      mean difference 0.717, 95% CI = [0.226, 1.189],
+%      T_W = 199, p = 0.007, r_rb = 0.490
+%    - recall events produced: 18.245 immediate, 17.170 delayed,
+%      mean difference 1.075, 95% CI = [0.358, 1.774],
+%      T_W = 321.5, p = 0.003, r_rb = 0.475
 %- order-similarity analysis:
 %    - order structures of participants' delayed recalls were more similar to their 
 %      own immediate recalls than to other participants' immediate recalls: 
-%        - Wilcoxon's T = 1076.5, p < 0.001
+%        - mean percentile rank 0.640, 95% CI = [0.563, 0.710],
+%          T_W = 354.4, p < 0.001, r_rb = 0.505
 %- DTW analyses:
 %	- warp cost to align participants' delayed recalls to their own immediate 
 %	  recalls (example in fig panel A) was lower than the cost to align their 
 %	  delayed recalls to the episode (example in fig panel B):
-%		- Wilcoxon's T = 1430, p < 0.001
+%		- mean warp costs 0.532 (own immediate) versus 0.654 (episode),
+%		  mean difference 0.122, 95% CI = [0.104, 0.139],
+%		  T_W = 1, p < 0.001, r_rb = 0.999
 %		- within-participant differences shown in fig panel D
 %	- warp cost to align participants' delayed recalls to the episode was higher 
 %	  than the cost to align their immediate recalls to the episode (can also 
 %	  phrase this in the reverse):
-%		- Wilcoxon's T = 1143, p < 0.001
+%		- mean warp costs 0.654 (delayed) versus 0.626 (immediate),
+%		  mean difference 0.028, 95% CI = [0.013, 0.042],
+%		  T_W = 228, p < 0.001, r_rb = 0.598
 %		- not currently in fig
 %	- warp cost to align participants' delayed recalls to their own immediate 
 %	  recalls (example in fig panel A) was lower than the cost to align their 
 %	  delayed recalls to *other* participants' immediate recalls (example 
 %	  in fig panel C):
-%		- Wilcoxon's T = 1431, p < 0.001
+%		- mean percentile rank 0.971, 95% CI = [0.950, 0.987],
+%		  T_W = 0, p < 0.001, r_rb = 1.000
 %		- fig panel E shows each each participant's delayed-own-immediate warp 
 %		  cost (magenta dog) \& 50th percentile (median) of delayed-other-immediates 
 %		  warp costs (grey dot). 50th percentile shown as the null because we 
@@ -146,7 +164,8 @@ We find that this ranking predicts which events participants will forget followi
 %   - warp cost to align participants' immediate recalls to their own delayed recalls
 %     was lower than the cost to align their immediate recalls to *other* participants'
 %     delayed recalls:
-%       - Wilcoxon's T = 1419.5, p < 0.001
+%       - mean percentile rank 0.923, 95% CI = [0.874, 0.965],
+%         T_W = 11.5, p < 0.001, r_rb = 0.984
 %- RDP analyses:
 %	- epsilon at which RDP removes an event from immediate recall predicts whether 
 %	  it'll be omitted from delayed recall
@@ -154,13 +173,14 @@ We find that this ranking predicts which events participants will forget followi
 %	      omitted from delayed recall was removed from immediate recall at lower 
 %	      epsilon than one that wasn't omitted (``probability of superiority'' or AUC).
 %	      Then compare per-participant PoSs against a null of 0.5
-%	    - mean PoS: 0.576, Wilcoxon's T = 846, p = 0.004, 95\% CI  = \left[0.519, 0.632\right]   % [PCF 2026-08-19] CI added; was 0.520 in the version we drafted against
+%	    - mean PoS 0.576, 95% CI = [0.519, 0.632],
+%	      T_W = 330, p = 0.007, r_rb = 0.439
 %	    - fig panel C shows probabilities for each participant
 %	- delayed recall specifically reflects simplifying immediate recall, not 
 %	  simplifying the episode (fig panel D)
 %		- see methods section on logistic regression analysis for specifics
-%		- $\beta_{\text{imm}} = 0.242, p = 0.003, 95\% CI = \left[0.065, 0.424\right]$
-%		- $\beta_{\text{epi}} = 0.012, p = 0.451, 95\% CI = \eft[-0.159,  0.174\right]$
+%		- beta_imm = 0.242, 95% CI = [0.065, 0.424], p = 0.007
+%		- beta_epi = 0.012, 95% CI = [-0.159, 0.174], p = 0.900
 %       - [PCF 2026-08-19] not sure if we care about reporting the intercept (captures baseline log-odds of 
 %         an event being omitted post-delay), but if so it's $\beta_{0} = -1.397$. The 
 %         catch with reporting it would be that the within-participant permutation doesn't 
@@ -171,7 +191,8 @@ We find that this ranking predicts which events participants will forget followi
 %	- predictive value of simplification is specific to your own immediate recall 
 %	  geometry (i.e., not general trends in forgetting)
 %	    - see methods section for details on ``win rate'' calculation
-%	    - mean win rate: 0.614, Wilcoxon's T = 864.5, p = 0.002, , 95\% CI  = \left[0.541, 0.685\right]   % [PCF 2026-08-19] CI added
+%	    - mean win rate 0.614, 95% CI = [0.541, 0.685],
+%	      T_W = 311.5, p = 0.004, r_rb = 0.470
 %	    - fig panel E shows distribution of win rates (1 per participant)
 %	    - notes on panel F: 
 %	      - since this test involves a head-to-head comparison between a given 
@@ -196,24 +217,22 @@ We find that this ranking predicts which events participants will forget followi
 %    typos; he corrected both in 9ab2ac0b, and the block now matches In [207].
 %  - Event counts come from Slack (2026-08-17, 13:26 and 13:27), not from a
 %    committed notebook.
-%  - Confidence intervals are reported only where Paxton has supplied them: the
-%    probability of superiority and the win rate (both added 2026-08-19 from
-%    7fffd939 / c5c61225). The regression CIs are in his block and in the
-%    fig:rdp caption but not in the running text. The rest should be added
-%    throughout once he provides them.
-%  - Wilcoxon tests are one-sided by design (see the Statistics subsection).
-%    Do not flip any of them to two-sided.
+%  - Confidence intervals now accompany every test, along with a rank-biserial
+%    correlation. Paxton added them in c63b5153; they are bootstrap intervals
+%    over 10,000 participant resamples (see the Statistics subsection).
+%  - Wilcoxon tests are TWO-sided. Paxton reanalyzed everything two-sided in
+%    c63b5153 and documented it in the Statistics subsection. The old rule here
+%    said the opposite; it applied before 2026-08-19 and no longer holds.
 %  - The own-minus-episode regression contrast (+0.230, p = 0.046) is deliberately
 %    NOT reported. Paxton (Slack, 2026-08-18): the two removal orders are
 %    uncorrelated, so their difference has high variance and that permuted
 %    p-value is misleadingly high; the individual coefficients tell the same
 %    story more convincingly. Jeremy agreed. Do not add it back.
-%  - Paxton (Slack, 2026-08-16): "Final panel letters will be set by the order
-%    the results are described in the text." DTW panel references below are
-%    therefore assigned in the order the results appear here (A/D for the
-%    own-immediate vs. episode comparison, B/E for the drift across the delay,
-%    C/F for own vs. others, G/H for identification), for him to map onto the
-%    final layout.
+%  - Fig. 2's panel letters are settled: Paxton lettered the artwork A-O
+%    column-major in 66f6765c, matching the caption below.
+%  - Fig. 5 is still WIP (0137e894). The prose cites panels F and G, but the
+%    caption only describes A-E, and the drift result no longer cites a panel
+%    at all. Needs his layout before those references can be finalized.
  
 We ran an experiment in which we asked participants to view and verbally recount episodes of television shows across two experiment sessions, separated by approximately one week (Fig.~\ref{fig:paradigm}).
 In the first session, participants viewed the pilot episode of the TV series \textit{Atlanta}.
@@ -253,11 +272,6 @@ These are (a) the sequence of events comprising the episode itself, (b) each par
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{figures/source/pipeline-overview}
-    % Panel letters below assume COLUMN-MAJOR lettering of the 3x5 grid, i.e.
-    %   Experience A/B/C, Text D/E/F, Trajectories G/H/I,
-    %   Event-segmentation J/K/L, Events M/N/O,
-    % reading down each column (episode, immediate, delayed). The artwork still
-    % carries a placeholder "A" on all 15 panels and needs updating to match.
 
     \caption{\small \textbf{Modeling the geometry of experiences and memories.}
     Each row shows one of the three sequences we compare: the \textit{Atlanta} episode (top), and one example participant's immediate (middle) and delayed (bottom) recountings of it.
@@ -277,8 +291,8 @@ These are (a) the sequence of events comprising the episode itself, (b) each par
 \end{figure}
 
 The simplest sense in which a recounting has structure is the one that classic list-learning studies measure: which of the episode's events come back, and in what order.
-Participants described 16.981 of the episode's 20 events in the immediate session and 16.264 of them after the delay, a reliable decline (mean difference = 0.717 events, $\text{95\% confidence interval (CI)} = \left[0.226,~1.189\right]$, Wilcoxon's $T = 199$, $p = 0.007$, rank-biserial $r = 0.490$).
-Their recountings also comprised fewer events overall, falling from 18.245 events immediately to 17.170 after a week (mean difference: 1.075 events; $\text{95\% CI} = \left[0.358,~1.774\right]$, $T_W = 321.5$, $p = 0.003$, $r_{rb} = 0.4751$).
+Participants described 16.981 of the episode's 20 events in the immediate session and 16.264 of them after the delay, a reliable decline (mean difference = 0.717 events, $\text{95\% confidence interval (CI)} = \left[0.226,~1.189\right]$, Wilcoxon's $T_W = 199$, $p = 0.007$, rank-biserial $r_{rb} = 0.490$).
+Their recountings also comprised fewer events overall, falling from 18.245 events immediately to 17.170 after a week (mean difference = 1.075 events, $\text{95\% CI} = \left[0.358,~1.774\right]$, $T_W = 321.5$, $p = 0.003$, $r_{rb} = 0.475$).
 Measured this way, a week of delay costs a participant roughly seven tenths of one event out of 20.
 
 We next sought to characterize the order in which participants described those events.
@@ -350,7 +364,7 @@ The difference is a small one, and we note that two recountings can say only so 
 
 A resemblance between two recountings could also reflect regularities that hold across people, rather than anything specific to the participant who produced them.
 We therefore ranked each delayed recounting's warp cost to its own immediate counterpart within the distribution of its costs to the other 52 participants' immediate recountings, as we had done for order similarity.
-A participant's delayed recounting was (reliably) closer in structure to their own immediate recounting than to anyone else's (mean percentile rank = 0.971, $\text{95\% CI} = \left[0.950,~0.987\right]$, $T_W = 0$, $p < 0.001$, $r_{rb} = 1.00$; Fig.~\ref{fig:dtw}A,C,E).
+A participant's delayed recounting was (reliably) closer in structure to their own immediate recounting than to anyone else's (mean percentile rank = 0.971, $\text{95\% CI} = \left[0.950,~0.987\right]$, $T_W = 0$, $p < 0.001$, $r_{rb} = 1.000$; Fig.~\ref{fig:dtw}A,C,E).
 The same held when we ran the comparison in the opposite direction, matching each immediate recounting against the full set of delayed recountings (mean percentile rank = 0.923, $\text{95\% CI} = \left[0.874,~0.965\right]$, $T_W = 11.5$, $p < 0.001$, $r_{rb} = 0.984$).
 In other words, the geometry of a single recounting carries enough of a person-specific signature to locate its counterpart from the other session (Fig.~\ref{fig:dtw}F,G).
 Because both sides of this comparison are recountings, whatever makes a delayed recounting resemble its own immediate counterpart is not a general property of recounting the episode.
@@ -822,7 +836,7 @@ found at https://github.com/Con\-text\-Lab/memory-dynamics.
 
 \section*{Acknowledgements}
 
-We thank Luke Chang, Claudia Gonciulea, Andrew Heusser, Lucy Owen, Xinming Xu, and Kirsten Ziman for useful discussions, and Soo Hwan Park for assistance with transcriptions.
+We thank Luke Chang, Claudia Gonciulea, Andrew Heusser, Lucy Owen, Xinming Xu, and Kirsten Ziman for useful discussions.
 Our work was supported in part by NSF CAREER Award Number 2145172 to J.R.M.
 The content is solely the responsibility of the authors and does not necessarily represent the official views of our supporting organizations.
 The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.
@@ -832,7 +846,7 @@ The funders had no role in study design, data collection and analysis, decision 
 
 Conceptualization: P.C.F. and J.R.M. Methodology: P.C.F. and J.R.M. Software:
 P.C.F. Validation: P.C.F., A.T., J.X., and J.R.M. Formal analysis: P.C.F., A.T.,
-J.X., and J.R.M. Investigation: P.C.F. Resources: J.R.M. Data curation: P.C.F.
+J.X., and J.R.M. Investigation: P.C.F. Resources: J.R.M. Data curation: P.C.F. and S.H.P.
 Writing (original draft): P.C.F. and J.R.M. Writing (review and editing):
 P.C.F., A.T., J.X., and J.R.M. Visualization: P.C.F. Supervision: J.R.M. Project
 administration: P.C.F. and J.R.M. Funding acquisition: J.R.M.
