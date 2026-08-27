@@ -292,42 +292,27 @@ To answer this question, we compared each participant's delayed recounting to th
 As in our order similarity analysis, we ranked the warp costs of each participant's delayed recounting to their own immediate recounting within the distribution of its costs to the other 52 participants' immediate recountings.
 We found that participants' delayed recountings aligned reliably more closely with their own immediate recountings than with anyone else's (mean percentile rank = 0.971, $\text{95\% CI} = \left[0.950,~0.987\right]$, $T_W = 0$, $p < 0.001$, $r_{rb} = 1.000$; Fig.~\ref{fig:dtw}A,C,E).
 The same held when we ran the comparison in the opposite direction, matching each immediate recounting against the full set of delayed recountings (mean percentile rank = 0.923, $\text{95\% CI} = \left[0.874,~0.965\right]$, $T_W = 11.5$, $p < 0.001$, $r_{rb} = 0.984$).
-Taken together, these results suggest that %% JRM STOPPED HERE...
+Taken together, these results suggest that the specific ways in which participants' recountings change with repeated retellings are person-specific.
 
+Next, we wondered \textit{how} recountings changed over the course of the week-long delay.
+The trajectories for the original episode and for the example participants' immediate and delayed recountings displayed in Figure~\ref{fig:trajectories} all appear relatively visually similar.
+We know from our analyses above that the delayed recountings contain a little more than one fewer event than the immediate recountings on average, and that they align more closely with the same participant's immediate recounting than with the episode itself or with other participants' immediate recountings.
+One possibility is that the ``dropped'' event in participants' delayed recountings is chosen (roughly) uniformly at random from the events they recounted immediately.
+We note as a clarification here that ``dropped'' is solely a reflection of the ways participants recounting trajectories are segmented into discrete events, as opposed to an implication that participants are literally discretizing their memories.
+Nonetheless, the segmentation procedure \textit{does} provide a way to approximate how distinct each moment of recounting is from the moments that precede and follow it.
+We suggest that the number of events identified in a recounting should be interpreted as a rough approximation of the number of different ``chunks'' of content a participant is describing.
 
-
-Because we collected two recountings from every participant, we could also ask how each of them related to the episode.
-Participants' delayed recountings aligned to the episode reliably less closely than their immediate recountings did (mean warp costs 0.654 and 0.626, respectively; mean difference = 0.028, $\text{95\% CI} = \left[0.013,~0.042\right]$, $T_W = 228$, $p < 0.001$, $r_{rb} = 0.598$).
-The difference is a small one, and we note that two recountings can say only so much about a process that plays out over many recountings.
-(Distinguishing a representation that moves across the delay from one that is simply sampled twice would require withholding the immediate recounting from some participants, which our design does not do.)
-
-A resemblance between two recountings could also reflect regularities that hold across people, rather than anything specific to the participant who produced them.
-We therefore ranked each delayed recounting's warp cost to its own immediate counterpart within the distribution of its costs to the other 52 participants' immediate recountings, as we had done for order similarity.
-A participant's delayed recounting was (reliably) closer in structure to their own immediate recounting than to anyone else's (mean percentile rank = 0.971, $\text{95\% CI} = \left[0.950,~0.987\right]$, $T_W = 0$, $p < 0.001$, $r_{rb} = 1.000$; Fig.~\ref{fig:dtw}A,C,E).
-In other words, the geometry of a single recounting carries enough of a person-specific signature to locate its counterpart from the other session (Fig.~\ref{fig:dtw}F,G).
-Because both sides of this comparison are recountings, whatever makes a delayed recounting resemble its own immediate counterpart is not a general property of recounting the episode.
-
-
-
-
-The comparisons above establish that a participant's two recountings resemble each other, and that they do so in a person-specific way, but none of them says how the two differ.
-We wondered whether that difference could be characterized directly, and reasoned that a delayed recounting might be a simplified version of the earlier one.
-This is often apparent by eye.
-For example, each participant in Figure~\ref{fig:trajectories} traces much the same overall shape in both sessions, whereas their delayed path tends to visit fewer points and to smooth over some of the excursions their immediate path had made.
-If a delayed recounting simplifies an immediate one, then the events the immediate recounting could most afford to lose should be the ones a participant is most likely to omit after the delay.
-
-To make this idea concrete, we simplified each participant's immediate recall trajectory using the Ramer-Douglas-Peucker algorithm~\citep{Rame72,DougPeuc73}, a standard method for reducing the number of points in a path made of connected straight segments.
-The algorithm discards points lying close to the line joining their retained neighbors, and keeps those whose removal would change the path's shape.
-The amount of detail it removes is governed by a tolerance ($\epsilon$, expressed here as a cosine distance; Fig.~\ref{fig:rdp}A).
-Choosing a single tolerance by reference to participants' delayed recountings would fit the prediction to the outcome it is meant to predict.
-We therefore swept $\epsilon$ across its range, and scored each event by the tolerance at which simplification first removes it (i.e., its ``removal tolerance''; see \nameref{subsec:rdp}).
-An event with a low removal tolerance is one that a participant's path can lose without much changing shape (equivalently, one whose position along the path is well predicted by the events on either side of it).
-For example, an event a participant described in terms very similar to the events on either side of it will sit close to the line joining them, and simplification will remove it early.
-An event's removal tolerance is also defined relative to the neighbors that survive alongside it, so the same episode event may be scored differently in two participants' recountings.
-We treat an episode event as \textit{omitted} when a participant's delayed recounting devotes fewer events to it than their immediate recounting had.
-This covers events described less often as well as events left out altogether (see \nameref{subsec:rdp} for the edge cases the definition has to handle).
-We note that the removal tolerance is computed from a participant's immediate recounting alone, so their delayed recounting contributes only the labels denoting which events were omitted.
-All of the simplification was also carried out on the full 768-dimensional trajectories, and not on the two-dimensional projections we use to visualize them.
+An alternative to the uniform randomness accounting of participants' delayed recountings is that there are systematic rules or principles governing which specific events are dropped (again, with the above caveats about what ``dropping'' means in this context).
+For example, that the trajectories in Figure~\ref{fig:trajectories} all appear visually similar may actually reflect something about how they compare.
+In particular, suppose we take trajectory shapes (of the episode and recountings) as approximations of the true underlying sequence of ``meanings'' participants experience (as they are watching the original episode) or recount (when they communicate their memories of the episode).
+If the ``goal'' of encoding an experience into memory, and of communicating the memory to others, is to preserve the path through semantic space, then different events (as different coordinates in semantic embedding space) may play distinct roles---and, critically, differ in importance---with respect to how their presence or absence affects the overall shape of their containing trajectory.
+Consider, for example, a vector graphic representing the coastline of a country.
+The ``true'' shape of the coastline is nearly infinitely detailed (one could imagine even going down to the sub-atomic level).
+But in practice, typically far fewer control points are needed to capture the coastline's shape \textit{at the scale the resulting map is to be drawn}.
+Zooming in to a single inlet, one might need many points to sufficiently capture a relatively small area of land, whereas zooming out to a country's entire coastline might use a similar number of points to capture a much larger area.
+This idea was formalized in the service of drawing cartographic maps at different scales by the Ramer-Douglas-Peucker (RDP) algorithm~\citep{Rame72,DougPeuc73}.
+Intuitively, the RDP algorithm iteratively considers, for each point in turn, how far it is from the line joining its immediate neighbors.
+If a point is sufficiently close to that line (i.e., within a specified tolerance threshold, $\epsilon$), then we can remove it without substantially changing the shape of the full path (Fig.~\ref{fig:rdp}A).
 
 \begin{figure}[tp]
     \centering
@@ -350,37 +335,27 @@ All of the simplification was also carried out on the full 768-dimensional traje
     \label{fig:rdp}
 \end{figure}
 
-Simplifying an immediate recounting separated the episode events a participant went on to omit from the events they retained.
-Given one event that a participant omitted and one that they kept, the omitted event tended to be the one their own path could more readily afford to lose.
-This held about 58\% of the time (mean probability of superiority = 0.576, $\text{95\% CI} = \left[0.519,~0.632\right]$, $T_W = 330$, $p = 0.007$, $r_{rb} = 0.439$; Fig.~\ref{fig:rdp}C).
-The effect is a small one. We note also that it describes a tendency across the sample, and not a rule that holds within every participant.
+\textbf{JRM NOTE: Paxton, I need your help correcting the next 2 paragraphs; not sure this accurately describes the regression analyses...and I may be missing important tests...}
+We reasoned that analogous cartographic principles might apply to participants' recountings of the episode (Fig.~\ref{fig:rdp}).
+To that end, we applied the RDP algorithm to the original episode's trajectory, and the to the trajectories of participants' immediate recountings.
+We then asked, for each event, how much its path's shape would change if that event were removed.
+In other words, we identified the minimum tolerance threshold (i.e., cosine distance~$\geq \epsilon$) at which each event in turn would be removed by the RDP algorithm (see~\nameref{subsec:rdp}).
+Here a higher value of $\epsilon$ indicates that an event is more important to the shape of the path, in that removing it would more substantially change the path's shape.
+Note that, although Figure~\ref{fig:rdp}B displays the RDP simplification applied to a two-dimensional projection of the trajectories, all analyses were carried out in the full 768-dimensional embedding space.
+We built a logistic regression model to predict whether an event was omitted in a participant's delayed recounting from its removal tolerance in the episode's trajectory and in the participant's own immediate recounting (\textbf{JRM NOTE: Describe in Methods and cite here...}).
+We found that ``dropped'' events in participants' delayed recountings tended to have reliably smaller $\epsilon$ values in their own immediate recountings than events that were retained (mean probability that the higher-$\epsilon$ event in a random pair was retained = 0.576, $\text{95\% CI} = \left[0.519,~0.632\right]$, $T_W = 330$, $p = 0.007$, $r_{rb} = 0.439$; Fig.~\ref{fig:rdp}C).
 
-A participant's own recounting is not the only path from which an event's removal tolerance may be read, since the episode's own trajectory supplies an alternative.
-For example, an event sitting at a sharp turn in the episode's trajectory might be omitted by everyone who described it, whatever their own immediate recounting had looked like.
-We therefore scored each episode event a participant had described in two ways: once by the tolerance at which simplification removes it from the episode's trajectory, and once by the tolerance at which it is removed from that participant's own immediate recall trajectory.
-We entered both scores into a single logistic regression predicting whether the event was omitted.
-Only the participant's own recounting carried a reliable effect ($\beta_{\text{imm}} = 0.242$, $\text{95\% CI} = \left[0.065,~0.424\right]$, $p = 0.007$ by participant-blocked permutation).
-The coefficient on the episode's removal tolerance was indistinguishable from zero ($\beta_{\text{epi}} = 0.012$, $\text{95\% CI} = \left[-0.159,~0.174\right]$, $p = 0.900$; Fig.~\ref{fig:rdp}D).
-What predicts omission, in other words, is the shape of a participant's own immediate recounting, and only weakly, if at all, the shape of the episode.
+Following this logic, we wondered whether the shape of the \textit{original episode's} trajectory might also predict which events participants would go on to retain or omit in their recountings.
+We applied an anlogous analysis to the episode's trajectory, to predict which events would be retained or omitted in participants' \textit{immediate} recountings.
+However, we found no reliable evidence that the original episode's events' $\epsilon$ values predicted which events would be recounted ($\beta_{\text{epi}} = 0.012$, $\text{95\% CI} = \left[-0.159,~0.174\right]$, $p = 0.900$; Fig.~\ref{fig:rdp}D).
+This suggests that recounting an experience is different from leading someone else along the same semantic path taken by the experience, in that distortions introduced by the recounting process do \textit{not} maximally preserve the original episode's trajectory shape.
 
-As with the structural comparisons above, this prediction is also specific to the person who produced it.
-For each participant, we compared how well their own removal tolerances predicted their own omissions against how well each other participant's tolerances did.
-We scored every comparison over the pool of episode events that both participants had described, so that no ranking gained an advantage from covering more of the episode.
-A participant's own tolerances won these comparisons more often than not (mean win rate = 0.614, $\text{95\% CI} = \left[0.541,~0.685\right]$, $T_W = 311.5$, $p = 0.004$, $r_{rb} = 0.470$; Fig.~\ref{fig:rdp}E).
-The probability of superiority for a participant's own recounting has to be recomputed against every surrogate, over a different pool of shared events each time.
-There is therefore no single value to rank against the surrogates' scores, and we summarized each participant instead by the number of surrogates they beat (Fig.~\ref{fig:rdp}F).
-A surrogate is usable only if they immediately recalled at least one event the target participant omitted.
-The number of available surrogates therefore varies across participants, and the chance line in this panel gives the number of wins expected given each participant's own pool.
-
-Taken together, these analyses suggest a different picture of what it means to leave something out of a recounting.
-An event with a low removal tolerance is, by construction, one that sits close to the line joining the events on either side of it, which is to say that its content is already well approximated by the content surrounding it.
-The events participants omitted after a week are drawn preferentially from that set.
-An omitted event is therefore not an item deleted from a list, but a stop along a path that the path can afford to skip.
-Whatever that event contributed is largely carried by its neighbors.
-The delayed recounting traces much the same overall shape, with fewer stops along the way.
-Forgetting, described in this way, is a smoothing of a trajectory rather than a loss of discrete items, and it has no natural analog in paradigms where an item is either recalled or not.
-
-
+We also wondered whether commonalities across participants' immediate recountings might enable us to predict which events would be omitted in delayed recountings across participants.
+We again used an analogous analysis to ask whether $\epsilon$ values from \textit{other} participants' immediate recountings could predict which events another participant would omit in their delayed recounting.
+We found that only the \textit{same} participant's immediate recounting could reliably predict which events they went on to omit ($\beta_{\text{imm}} = 0.242$, $\text{95\% CI} = \left[0.065,~0.424\right]$, $p = 0.007$ by participant-blocked permutation).
+All told, our regression analyses indicate that the shape of a participant's immediate recounting may be used to accurately predict omissions and simplifications in their own delayed recounting.
+But neither the shape of the episode itself, nor the shapes of other participants' immediate recountings, carry reliable information about delayed recountings.
+This provides further evidence that memories are shaped by our own (unique) prior recountings, even when the original experience was shared by different people.
 
 \section*{Discussion}
 
