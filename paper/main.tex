@@ -236,18 +236,41 @@ We next leverage these tools to answer fundamental questions about how memories 
 
 We began our study with the question of what a delayed recounting is a recounting \textit{of}.
 With the above tools in hand, we can now distinguish between two reasonable hypotheses.
-One hypothesis is that each time we recount an experience, what we produce is essentially a noisy version of the original.
+One hypothesis (Fig.~\ref{fig:hypotheses}A) is that each time we recount an experience, what we produce is essentially a noisy version of the original.
 Noise may increase over time (e.g., a delayed recounting may be \textit{further} from the original experience than an immediate recounting), but the underlying representation being retrieved remains consistent.
-According to this hypothesis, on average participants' delayed recountings should align with the episode at least as closely as they align with their own immediate recountings of the same episode.
-A second hypothesis is that each time we recount an experience, what we produce is a noisy version of a previous \textit{recounting} of the original experience.
-According to this alternative hypothesis, in our experiment, on average participants' delayed recountings should align more closely with their own immediate recountings than with the episode itself.
+According to this hypothesis, on average participants' delayed recountings should align with the episode about as closely as they align with their own immediate recountings of the same episode (Fig.~\ref{fig:hypotheses}B).
+A second hypothesis (Fig.~\ref{fig:hypotheses}C) is that each time we recount an experience, what we produce is a noisy version of a previous \textit{recounting} of the original experience.
+According to this alternative hypothesis, in our experiment, on average participants' delayed recountings should align more closely with their own immediate recountings than with the episode itself (Fig.~\ref{fig:hypotheses}D).
 
-%%JRM STOPPED HERE
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/source/hypotheses}
 
-If retrieving a memory after a delay recovered the original experience, then a participant's delayed recounting should align with the episode at least as closely as it aligns with their own earlier recounting of it.
-We found the opposite: delayed recountings aligned more closely with participants' own immediate recountings (mean warp cost 0.532) than with the episode itself (0.654; mean difference = 0.122, $\text{95\% CI} = \left[0.104,~0.139\right]$, $T_W = 1$, $p < 0.001$, $r_{rb} = 0.999$; Fig.~\ref{fig:dtw}A,B,D).
-This suggests that what participants produce after a week is a recounting of their own immediate recounting, rather than a fresh recounting of the episode.
-Two of the results below bear on that suggestion.
+    \caption{\small \textbf{Two hypothetical accounts of memory retrieval.}
+    \textbf{A--B. Hypothesis 1.} A participant's immediate (red) and delayed (blue) recountings are both noisy versions of the original experience (black).
+    \textbf{A.} Each dot represents the position of a semantic embedding trajectory, mapped into a two-dimensional space. The Gaussian halos around the large dots
+    denote drift and measurement noise. The small red and blue dots show \textit{potential} simulated recountings (drawn from their respecitive sampling distributions), and the larger
+    black-outlined dots show the simulated \textit{observed} recountings. \textbf{B.} The density plots display the distributions of distances (anlogous to warp costs used in our main analyses)
+    between the recountings and episode. Of note, the delayed and immediate recountings tend to be much further from each other than either the delayed or immediate recountings are to the original.
+    \textbf{C--D. Hypothesis 2.} A participant's delayed recounting is a noisy version of their own immediate recounting, rather than the original episode. 
+    \textbf{C.} Same format as Panel~A, but here the delayed recountings are drawn from a distribution centered on the observed immediate recounting for this participant.
+    \textbf{D.} Same format as Panel~B. Note that the delayed recountings are now much closer to the immediate recountings than they are to the original episode.
+    \textbf{All panels.} Note that all data in this figure are simulated for the purposes of illustration; they do not reflect any actual data from our experiment.
+    }
+
+    \label{fig:hypotheses}
+\end{figure}
+
+Distinguishing between the two accounts reflected in Figure~\ref{fig:hypotheses} within our framework becomes a matter of comparing the warp costs of the delayed recountings to their own immediate recountings versus to the episode itself.
+If retrieving a memory after a delay recovers the original experience (Hypothesis 1), then a participant's delayed recounting should align with the episode at least as closely as it aligns with their own earlier recounting of it.
+If, however, retrieving a memory after a delay recovers a previous recounting of the experience (Hypothesis 2), then a participant's delayed recounting should align more closely with their own immediate recounting than with the episode itself.
+We found clear support for this second hypothesis.
+In particular, the delayed recountings aligned more closely with participants' own immediate recountings (mean warp cost 0.532) than with the episode itself (0.654; mean difference = 0.122, $\text{95\% CI} = \left[0.104,~0.139\right]$, $T_W = 1$, $p < 0.001$, $r_{rb} = 0.999$; Fig.~\ref{fig:dtw}A,B,D).
+This suggests that ``what participants are recounting'' after a week is better characterized as a recounting of their own (previous) immediate recounting than as a recounting of the actual original episode that they experienced.
+
+%% JRM STOPPED HERE...
+
+
 
 Because we collected two recountings from every participant, we could also ask how each of them related to the episode.
 Participants' delayed recountings aligned to the episode reliably less closely than their immediate recountings did (mean warp costs 0.654 and 0.626, respectively; mean difference = 0.028, $\text{95\% CI} = \left[0.013,~0.042\right]$, $T_W = 228$, $p < 0.001$, $r_{rb} = 0.598$).
