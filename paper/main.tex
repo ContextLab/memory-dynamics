@@ -50,7 +50,7 @@ We model experiences and recountings as trajectories through a semantic embeddin
 We apply our approach to data collected from participants who watched a television episode, verbally recounted it immediately afterward, then recounted it again one week later.
 We find that the trajectories of participants' delayed recountings resemble their own immediate recountings more closely than they resemble the episode itself.
 We also find that this resemblance is person-specific enough to identify one of an individual's recounting of the experience from the geometry of their other recounting.
-The delayed recountings' trajectories were also well described as geometrically simplified versions of immediate recountings' trajectories, in that the immediately recounted events that least contributed to their trajectory's shape were the events most likely to be omitted from the delayed recounting.
+The delayed recountings' trajectories were also well described as geometrically simplified versions of immediate recountings' trajectories, in that the immediately recounted events that least contributed to a trajectory's shape were the events most likely to be omitted from the delayed recounting.
 These findings suggest that the act of retrieving a memory after a delay draws on a person-specific distillation of the experience, rather than the original experience as it was first encountered.
 Further, the distillation itself appears to proceed in a way that best preserves the shape of the original recounting's trajectory.
 \end{abstract}
@@ -63,7 +63,7 @@ That evening, you describe it to your partner, recounting how the ceremony ran l
 A week later your coworker asks how the wedding was, and you tell the story again.
 What specifically are you recounting to your coworker?
 Is it the wedding itself, as you experienced it?
-Or is it the \textit{story} about the wedding you had told your partner the week before?
+Or is it the \textit{story} about the wedding you told your partner the week before?
 Or is it perhaps some combination of the two?
 Further, if the two recountings differ, do their differences solely reflect the ordinary imprecision of putting an experience into words?
 Or is it that the representation itself has changed?
@@ -101,7 +101,7 @@ We find instead that the structure of a participant's delayed recounting is more
 It is also more similar to their own immediate recounting than to other participants' immediate recountings, to the degree that one of an individual's two recountings can be identified from the other on the basis of this structure alone.
 Retrieval after a delay therefore appears to draw on a person-specific distillation of the episode more than on the episode as it was first experienced.
 
-Capturing the semantic geometry of individuals' recountings at different points in time also offers the opportunity to characterize the specific transformations undergone by our memories beyond an initial recounting.
+Capturing the semantic geometry of individuals' recountings at different points in time also offers the opportunity to characterize the transformations undergone by our memories beyond an initial recounting.
 For example, if individuals' recountings tend to retain their idiosyncratic structures after a delay, how \textit{do} the structures of our memories tend to change with time?
 There is a particular qualitative change our memories undergo as we naturally forget aspects of experience, implied by common descriptors such as ``fading'', ``blurring'', becoming ``fuzzy'', or ``decaying''~\citep{Thor13}.
 But the nature of this change can be difficult to characterize more concretely.
@@ -127,9 +127,9 @@ To characterize how participants preserved and distorted the content of the epis
 We construct these trajectories using a text embedding model, which transforms natural language text into a vector representation that captures the text's semantic meaning.
 Intuitively, this vector may be treated as a coordinate in a semantic space, in which texts with similar meanings are assigned to nearby coordinates while those with diverging meanings are assigned to more distant coordinates. 
 In this way, the distance between two texts' embedding coordinates reflects how semantically similar their contents are.
-We created detailed annotations describing the content of each individual camera shot from the episode (Fig.~\ref{fig:pipeline}D; see \nameref{subsec:annotations-transcripts}) and used EmbeddingGemma~\citep{VeraEtal25} to transform this sequence of annotations into a sequence of text embedding coordinates.
-We then transformed the transcript of each participant's recounting from each of the two sessions into an analogous sequence of coordinates (Fig.~\ref{fig:pipeline}E,F).
-The successive coordinates in each of these sequences trace out a trajectory, yielding one path through the embedding space for the episode, and one for each recounting (Fig.~\ref{fig:pipeline}G--I; see \nameref{subsec:text-embedding}).
+We created detailed annotations describing the content of each individual camera shot from the episode (Fig.~\ref{fig:pipeline}A; see \nameref{subsec:annotations-transcripts}) and used EmbeddingGemma~\citep{VeraEtal25} to transform this sequence of annotations into a sequence of text embedding coordinates.
+We then transformed the transcript of each participant's recounting from each of the two experiment sessions into an analogous sequence of coordinates (Fig.~\ref{fig:pipeline}B,C).
+The progression of coordinates in each of these sequences traces out a trajectory, yielding one path through the embedding space for the episode, and one for each recounting (Fig.~\ref{fig:pipeline}D--F; see \nameref{subsec:text-embedding}).
 
 \begin{figure}[t]
     \centering
@@ -137,7 +137,7 @@ The successive coordinates in each of these sequences trace out a trajectory, yi
 
     \caption{\textbf{Experimental paradigm.} Visual timeline of the two study sessions, spanning approximately one week.
     In session 1, participants view the pilot episode of \textit{Atlanta}, immediately verbally recount its content, and then verbally predict what will happen in the next episode.
-    In session 2, participants again recount the \textit{Atlanta} episode (viewed the week prior), and then view and verbally recount either the second episode of \textit{Atlanta} or the pilot episode of \textit{Arrested Development}.
+    In session 2, participants again recount the \textit{Atlanta} episode (viewed the week prior), then view and verbally recount either the second episode of \textit{Atlanta} or the pilot episode of \textit{Arrested Development}.
     Here we analyze participants' immediate and delayed recalls of the first \textit{Atlanta} episode.
     Faded elements denote phases of the experiment that are not analyzed in the present study: the prediction phase at the end of session 1, and the second episode (and its recall) in session 2.}
     \label{fig:paradigm}
@@ -145,37 +145,37 @@ The successive coordinates in each of these sequences trace out a trajectory, yi
 
 Neither the episode's trajectory nor participants' recall trajectories move through the space at a constant rate.
 Both tend to linger within a given region for a period of time before shifting relatively abruptly to another. 
-We treated these periods of relative stability as \textit{events}~\citep{RadvZack17,EzzyDava11} and used a hidden Markov model~\citep[HMM;][]{BaumPetr66,BaldEtal17,KumaEtal21} to identify boundary points in the episode's trajectory where the episode's content abruptly shifted (Fig.~\ref{fig:pipeline}J).
-This yielded a sequence of 20 events, each of whose content we summarized by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}M; see \nameref{subsec:eventseg}).
-We then sought to identify whether, when, and how participants' described these different events in their verbal recountings.
-We therefore treated the episode's 20 events as a fixed set of states in a separate HMM and decoded the boundary points in each recall trajectory where the participant shifted from (most probably) describing one event in the episode to another.
-Similarly to the episode, we then summarized each participant's description of each event by averaging the embedding vectors between successive boundaries.
+We treated these periods of relative stability as \textit{events}~\citep{RadvZack17,EzzyDava11} and used a hidden Markov model~\citep[HMM;][]{BaumPetr66,BaldEtal17,KumaEtal21} to identify boundary points in the episode's trajectory where the episode content abruptly shifted (Fig.~\ref{fig:pipeline}G).
+This yielded a sequence of 20 events, each of whose content we summarized by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}J; see \nameref{subsec:eventseg}).
+We then sought to identify whether, when, and how each participant described these different events in their verbal recountings.
+We therefore treated the episode's 20 events as a fixed set of states in a separate HMM and decoded the boundary points in each recall trajectory where the participant shifted from (most probably) describing one event in the episode to another (Fig.~\ref{fig:pipeline}H,I).
+As with the episode, we then summarized each participant's description of each event by averaging the embedding vectors between successive boundaries (Fig.~\ref{fig:pipeline}K,L).
 %This enables us to characterize when participants describe events out of order, and/or when they return to an event they had already described.
-In summary, we used the trajectories to operationalize (a) the sequence of events comprising the episode itself, (b) each participant's sequences of immediate and delayed recall events, and (c) a mapping from every recall event onto the episode event it describes.
+In summary, this procedure yielded (a) a sequence of embedding vectors characterizing the events from the episode, (b) sequences of embedding vectors characterizing each participant's immediate and delayed recall, and (c) a mapping from every recall event onto the episode event it describes.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{figures/source/pipeline-overview}
 
     \caption{\small \textbf{Modeling the geometry of experiences and memories.}
-    Each row shows one of the three sequences we compare: the \textit{Atlanta} episode (top), and one example participant's immediate (middle) and delayed (bottom) recountings of it.
-    Each column shows one stage of the pipeline, applied to all three sequences in turn.
-    \textbf{A}--\textbf{C.} \textit{Experience.} The episode as viewed (\textbf{A}), and the two sessions in which the same participant recounted it (\textbf{B}, \textbf{C}).
-    \textbf{D}--\textbf{F.} \textit{Text.} Hand-written annotations describing the content of each camera shot, divided into labeled fields (\textbf{D}), and an excerpt from the transcript of each recounting (\textbf{E}, \textbf{F}).
-    \textbf{G}--\textbf{I.} \textit{Trajectories.} Each text snippet is embedded as a coordinate in a 768-dimensional semantic space, and successive coordinates trace out a trajectory.
-    For display, the paths are mean-centered, smoothed with a rolling average, and projected into two dimensions, whereas every analysis we report was carried out in the full space.
-    \textbf{J}--\textbf{L.} \textit{Event-segmentation.} For the episode, the correlation between the embedding vectors at each pair of timepoints, with the boundaries of the 20 events recovered by the hidden Markov model outlined (\textbf{J}).
-    For each recounting, the cosine similarity between every recall window and every episode event, with the decoded sequence of episode events outlined (\textbf{K}, \textbf{L}).
-    Darker colors denote greater values.
-    \textbf{M}--\textbf{O.} \textit{Events.} The resulting sequence of events, each summarized by averaging the embedding vectors it spans, and joined in the order they occur.
-    \textbf{G}--\textbf{I}: color denotes elapsed time within each sequence.
-    \textbf{J}--\textbf{O}: color denotes the episode event being described, so the same color refers to the same episode content in all three rows.}
-
+    Each row illustrates the construction of one of the three sequences we compare: the \textit{Atlanta} episode (top), and an example participant's immediate (middle) and delayed (bottom) recountings of it.
+    Each column shows one stage of our modeling pipeline, applied to all three sources in turn.
+    \textbf{A}--\textbf{C.} \textit{Text.} Hand-written annotations describing the content of an example camera shot shown to the left (\textbf{A}), and an excerpt from an example participant's immediate and delayed recall transcripts describing that same content (\textbf{E},\textbf{F}).
+    \textbf{D}--\textbf{F.} \textit{Trajectories.} Each text snippet is embedded as a coordinate in a 768-dimensional semantic space, and successive coordinates trace out a trajectory.
+    Color denotes elapsed time within each sequence (red: early; blue: late).
+    For display, we projected the 768-dimensional trajectories onto two dimensions using UMAP~\citep{McInEtal18a}; all analyses we report were carried out in the original space.
+    \textbf{G}--\textbf{I.} \textit{Event-segmentation.} For the episode, the correlation between the embedding vectors at each pair of timepoints, with the boundaries of the 20 events recovered by the hidden Markov model outlined (\textbf{G}).
+    For each recounting, the cosine similarity between every recall window and every episode event, with the decoded sequence of episode events described outlined (\textbf{H},\textbf{I}).
+    Darker heatmap colors denote higher similarities.
+    \textbf{J}--\textbf{L.} \textit{Events.} The resulting sequences of events, each summarized by averaging the embedding vectors it spans, and joined in the order they occur.
+    \textbf{G}--\textbf{L}: episode events are colored by their temporal order (red: early; blue: late) and each recall event is colored according to the episode event it describes.}
+    
     \label{fig:pipeline}
 \end{figure}
 
-The simplest sense in which a recounting has structure is the one that classic list-learning studies measure: which of the episode's events come back, and in what order.
-Participants described an average of 16.981 of the episode's 20 events in the immediate session and 16.264 of them after the delay (a reliable decline; mean difference = 0.717 events, $\text{95\% confidence interval (CI)} = \left[0.226,~1.189\right]$, Wilcoxon's $T_W = 199$, $p = 0.007$, rank-biserial $r_{rb} = 0.490$).
+Our high-level goal is to characterize the structures of participants' recountings of the episode, and the degree to which they remained stable versus changed over the week-long delay.
+The simplest sense in which a recounting has structure is the one that traditional list-learning studies measure: which of the episode's events a participant recalled, and in what order.
+Participants described an average of 16.981 of the episode's 20 events in the immediate session and an average of 16.264 of them after the delay (a reliable decline; mean difference = 0.717 events, $\text{95\% confidence interval (CI)} = \left[0.226,~1.189\right]$, Wilcoxon's $T_W = 199$, $p = 0.007$, rank-biserial $r_{rb} = 0.490$).
 Their recountings also comprised fewer events overall, falling from 18.245 events immediately to 17.170 after a week (mean difference = 1.075 events, $\text{95\% CI} = \left[0.358,~1.774\right]$, $T_W = 321.5$, $p = 0.003$, $r_{rb} = 0.475$).
 Measured this way, a week of delay costs a participant roughly seven tenths of one event out of 20.
 
