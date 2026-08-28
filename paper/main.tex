@@ -107,7 +107,7 @@ There is a particular qualitative change our memories undergo as we naturally fo
 But the nature of this change can be difficult to characterize more concretely.
 Here we show that this transformation is well described as geometrically simplifying the path through semantic space an individual follows as they recount an experience.
 We consider a method for simplifying geometric curves, originally developed for use constructing cartographic maps at different scales, expressing different levels of detail~\citep{Rame72,DougPeuc73}.
-When we apply this method to the trajectories through semantic space traced out by participants' immediate recountings, we can quantify how strongly each of their recall events contributes to defining their trajectory's overall structure.
+When we apply this method to the trajectory through semantic space traced out by a participant's immediate recounting, we can quantify how strongly each of their recall events contributes to defining the trajectory's overall structure.
 We find that this structural importance predicts which events a participant will retain versus omit from their recounting following a week-long delay.
 
 
@@ -116,19 +116,20 @@ We find that this structural importance predicts which events a participant will
 
 We asked participants to view and verbally recount episodes of television shows across two experiment sessions, separated by approximately one week (Fig.~\ref{fig:paradigm}).
 In the first session, participants viewed the pilot episode of \textit{Atlanta}.
-We gave them up to an hour (and asked them to speak for a minimum of 10 minutes) to recount what had happened in the episode to the best of their abilities (i.e., \textit{immediate recall}).
+They were then given up to an hour to recount what had happened in the episode to the best of their abilities (i.e., \textit{immediate recall}).
 After they finished recounting the episode, we asked participants to verbally predict what they thought would happen in the show's \textit{next} episode.
 Participants then returned for a second session between 6 and 8 days later, where they began by again verbally recounting the \textit{Atlanta} episode they had viewed the week prior (i.e., \textit{delayed recall}).
 Following the delayed recall phase, participants viewed and recounted either the second episode of \textit{Atlanta} or the pilot episode of a different TV series, \textit{Arrested Development}.
 We designed the experiment to support exploring a range of memory phenomena beyond those we consider here (see \nameref{subsec:experiment}).
-In the present study, we focus specifically on characterizing how the content and structure of participants' recountings of the first \textit{Atlanta} episode changed between their immediate and delayed recalls.
-Therefore, in this manuscript we do not analyze data from the prediction task or immediate recalls from the second session.
+In the present study, we focus specifically on characterizing how the contents and structures of participants' recountings of the first \textit{Atlanta} episode changed over the week-long delay.
 
-To characterize how participants preserve and distort the content of an experience, we adapt an approach, developed in our prior work, that casts experiences and memories as \textit{trajectories} unfolding in a common high-dimensional space~\citep{HeusEtal21}.
-The approach rests on a text embedding model, which takes in natural language text of arbitrary length and returns a fixed-length vector that captures its semantic meaning.
-Intuitively, that vector may be treated as a coordinate in a semantic space, where texts with similar meanings are assigned to nearby coordinates, so the distance between two texts' coordinates reflects how semantically related they are.
-Using EmbeddingGemma~\citep{VeraEtal25}, we embedded hand-written annotations describing the content of each camera shot in the episode, along with the transcript of each participant's recountings (Fig.~\ref{fig:pipeline}D--F).
-Successive coordinates trace out a trajectory, yielding one path through the space for the episode and one for each recounting (Fig.~\ref{fig:pipeline}G--I; see \nameref{subsec:text-embedding}).
+To characterize how participants preserved and distorted the content of the episode in their recountings, we adapted an approach developed in our prior work that casts experiences and memories as \textit{trajectories} unfolding in a common high-dimensional space~\citep{HeusEtal21}.
+We construct these trajectories using a text embedding model, which transforms natural language text into a vector representation that captures the text's semantic meaning.
+Intuitively, this vector may be treated as a coordinate in a semantic space, in which texts with similar meanings are assigned to nearby coordinates while those with diverging meanings are assigned to more distant coordinates. 
+In this way, the distance between two texts' embedding coordinates reflects how semantically similar their contents are.
+We created detailed annotations describing the content of each individual camera shot from the episode (Fig.~\ref{fig:pipeline}D; see \nameref{subsec:annotations-transcripts}) and used EmbeddingGemma~\citep{VeraEtal25} to transform this sequence of annotations into a sequence of text embedding coordinates.
+We then transformed the transcript of each participant's recounting from each of the two sessions into an analogous sequence of coordinates (Fig.~\ref{fig:pipeline}E,F).
+The successive coordinates in each of these sequences trace out a trajectory, yielding one path through the embedding space for the episode, and one for each recounting (Fig.~\ref{fig:pipeline}G--I; see \nameref{subsec:text-embedding}).
 
 \begin{figure}[t]
     \centering
@@ -143,12 +144,14 @@ Successive coordinates trace out a trajectory, yielding one path through the spa
 \end{figure}
 
 Neither the episode's trajectory nor participants' recall trajectories move through the space at a constant rate.
-Both tend to linger within a region for a period before shifting relatively abruptly to another, and we treated these periods of relative stability as \textit{events}.
-We used a hidden Markov model~\citep{BaumPetr66,BaldEtal17,KumaEtal21} to segment the episode's trajectory, which yielded 20 events, each summarized by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}J--O; see \nameref{subsec:eventseg}).
-Whereas the episode's events had to be discovered, segmenting participants' recountings called for a different approach: rather than finding a separate set of events within each recall, we sought to determine which of the episode's events a participant was describing at each moment.
-We therefore treated the episode's 20 events as a fixed set of states and decoded the highest-scoring sequence of them being described~\citep{Vite67}.
-This enables us to characterize when participants describe events out of order, and/or when they return to an event they had already described.
-Specifically, we used the trajectories to operationalize (a) the sequence of events comprising the episode itself, (b) each participant's sequences of immediate and delayed recall events, and (c) a mapping from every recall event onto the episode event it describes.
+Both tend to linger within a given region for a period of time before shifting relatively abruptly to another. 
+We treated these periods of relative stability as \textit{events}~\citep{RadvZack17,EzzyDava11} and used a hidden Markov model~\citep[HMM;][]{BaumPetr66,BaldEtal17,KumaEtal21} to identify boundary points in the episode's trajectory where the episode's content abruptly shifted (Fig.~\ref{fig:pipeline}J).
+This yielded a sequence of 20 events, each of whose content we summarized by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}M; see \nameref{subsec:eventseg}).
+We then sought to identify whether, when, and how participants' described these different events in their verbal recountings.
+We therefore treated the episode's 20 events as a fixed set of states in a separate HMM and decoded the boundary points in each recall trajectory where the participant shifted from (most probably) describing one event in the episode to another.
+Similarly to the episode, we then summarized each participant's description of each event by averaging the embedding vectors between successive boundaries.
+%This enables us to characterize when participants describe events out of order, and/or when they return to an event they had already described.
+In summary, we used the trajectories to operationalize (a) the sequence of events comprising the episode itself, (b) each participant's sequences of immediate and delayed recall events, and (c) a mapping from every recall event onto the episode event it describes.
 
 \begin{figure}[t]
     \centering
