@@ -232,9 +232,6 @@ We note that since warp cost is a \textit{cost} measure, it runs in the opposite
 Taken together, framing experiences and recountings geometrically and applying geometric measures to relate them enables us to formally quantify how similarly their qualitative semantic contents unfold over time.
 We next leverage these tools to answer fundamental questions about how memories change over time.
 
-% The quality of the best possible alignment is summarized by its ``warp cost'': the total distance between matched points along the optimal warping path. Crucially, this captures how closely the two trajectories can be made to coincide once differences in rate have been factored out---not the amount of stretching required to align them. Two sequences that trace similar shapes can therefore be brought into close correspondence and receive a low warp cost, even when they unfold at very different rates.
-
-
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures/source/2d-trajectories}
@@ -326,8 +323,6 @@ Taken together, these results suggest that the specific ways in which participan
 Next, we wondered \textit{how} recountings changed over the course of the week-long delay.
 The 2D projections of the example participants' immediate and delayed recall trajectories displayed throughout the figures above suggest---and our analyses thus far indicate---that a given participant's immediate and delayed recountings tend to be structurally similar.
 But our analyses thus far also indicate that the delayed recountings tend to comprise slightly fewer events than their corresponding immediate recountings.
-%The trajectories for the original episode and for the example participants' immediate and delayed recountings displayed in Figure~\ref{fig:trajectories} all appear relatively visually similar.
-%We know from our analyses above that the delayed recountings contain a little more than one fewer event than the immediate recountings on average, and that they align more closely with the same participant's immediate recounting than with the episode itself or with other participants' immediate recountings.
 One possibility is that the events ``omitted'' from participants' delayed recountings are chosen (roughly) uniformly at random from the events they recounted immediately.
 We note as a clarification here that ``omitted'' is solely a reflection of the ways participants' trajectories are segmented into discrete events, as opposed to an implication that participants are literally discretizing their memories.
 Nonetheless, the segmentation procedure \textit{does} provide a way to approximate how distinct each moment of recounting is from the moments that precede and follow it.
@@ -336,29 +331,35 @@ We suggest that the number of events identified in a recounting should be interp
 An alternative to the events ``omitted'' from participants' delayed recountings arising randomly is that there are systematic rules or principles governing which specific events tend to be omitted versus retained.
 For example, that the trajectories in Figure~\ref{fig:trajectories} all appear visually similar may actually reflect something about how they compare.
 In particular, suppose we take trajectory shapes (of the episode and recountings) as approximations of the true underlying sequence of ``meanings'' participants experience (as they are watching the original episode) or recount (when they communicate their memories of the episode).
-If the ``goal'' of encoding an experience into memory, and of communicating that memory to others, is to preserve the progression of meanings as captured by the experience's path through semantic space, then different events (as different coordinates in semantic embedding space) may play distinct roles---and, critically, differ in importance---with respect to how their presence or absence affects the overall shape of their containing trajectory.
-To ground this idea in a physical space, consider, for example, a vector graphic representing the coastline of a country.
-The ``true'' shape of the coastline is nearly infinitely detailed (e.g., down to the subatomic level).
-But in practice, typically far fewer control points are needed to capture the coastline's shape \textit{at the scale the resulting map is to be drawn}.
-Zooming in to a single inlet, one might need many points to sufficiently capture a relatively small area of land, whereas zooming out to a country's entire coastline might use a similar number of points to capture a much larger area.
-This idea was formalized in the service of drawing cartographic maps at different scales by the Ramer-Douglas-Peucker (RDP) algorithm~\citep{Rame72,DougPeuc73}.
-Intuitively, the RDP algorithm iteratively considers, for each point in turn, how far it is from the line joining its immediate neighbors.
-If a point is sufficiently close to that line (i.e., within a specified tolerance threshold, $\epsilon$), then we can remove it without substantially changing the shape of the full path (Fig.~\ref{fig:rdp}A).
+If the ``goal'' of encoding an experience into memory, and of communicating that memory to others, is to preserve the progression of meanings captured by the experience's path through semantic space, then different events (as different coordinates in semantic space) may play distinct roles---and, critically, differ in importance---with respect to how their presence or absence affects the overall shape of their containing trajectory.
+
+To ground this idea in physical space, consider, for example, a map of a coastline.
+The ``true'' shape of that coastline is nearly infinitely detailed (e.g., down to individual grains of sand, or even the subatomic level).
+But in practice, the number of ``control points'' used to represent its shape is determined by the scale at which the resulting map is intended to be relevant and useful to others.
+If this map were intended to capture the topography of a single bay or estuary, it might use a relatively large number of control points to define that region's shape.
+But if instead the map was ``zoomed out'' to encompass the coastline of the entire containing country, it might instead represent that single region using a much smaller number of control points---and, critically, specifically the subset of points most important to faithfully preserving that region's high-level shape.
+This idea is formalized in cartographic generalization (the practice of translating between cartographic maps at different scales) by the Ramer-Douglas-Peucker (RDP) algorithm~\citep{Rame72,DougPeuc73}.
+Given a threshold distance $\varepsilon$, the RDP algorithm simplifies a curve composed of line segments by removing points that contribute spatial details on a scale smaller than $\varepsilon$ (Fig.~\ref{fig:rdp}A).
+
+
+%This idea was formalized in the service of drawing cartographic maps at different scales by the Ramer-Douglas-Peucker (RDP) algorithm~\citep{Rame72,DougPeuc73}.
+%Intuitively, the RDP algorithm iteratively considers, for each point in turn, how far it is from the line joining its immediate neighbors.
+%If a point is sufficiently close to that line (i.e., within a specified tolerance threshold, $\varepsilon$), then we can remove it without substantially changing the shape of the full path (Fig.~\ref{fig:rdp}A).
 
 \begin{figure}[tp]
     \centering
     \includegraphics[width=0.93\textwidth]{figures/source/rdp-figure}
 
     \caption{\small \textbf{Delayed recalls omit the events an immediate recall could most afford to lose.}
-    \textbf{A.} The simplification procedure, applied to a schematic trajectory at a single tolerance ($\epsilon$).
-    At each step, a band of width $\epsilon$ is drawn around the line joining the endpoints of the segment under consideration (light blue).
+    \textbf{A.} The simplification procedure, applied to a schematic trajectory at a single tolerance ($\varepsilon$).
+    At each step, a band of width $\varepsilon$ is drawn around the line joining the endpoints of the segment under consideration (light blue).
     The event lying farthest outside that band is retained (green) and becomes a new vertex, whereas events lying within it are removed (red).
     Retained events and the path they define are drawn in blue and removed events in grey, leaving the fully simplified path at the bottom.
     \textbf{B.} One participant's immediate (left) and delayed (right) recall event sequences, with color denoting the episode event each recall event describes.
     Events the participant described immediately but omitted after the delay are faded on the right.
     \textbf{C.} For each participant, the probability that an event they omitted was removed at a lower tolerance than an event they kept.
     Pink dots are individual participants and the violin shows their distribution; the black point and bar denote the mean and its bootstrap-estimated $95\%$ confidence interval, against the 0.5 expected by chance (dashed).
-    \textbf{D.} Coefficients of a logistic regression predicting whether an event was omitted, from its removal tolerance in the episode's trajectory ($\epsilon_{\mathrm{episode}}$, grey) and in the participant's own immediate recall ($\epsilon_{\mathrm{immediate\ recall}}$, pink).
+    \textbf{D.} Coefficients of a logistic regression predicting whether an event was omitted, from its removal tolerance in the episode's trajectory ($\varepsilon_{\mathrm{episode}}$, grey) and in the participant's own immediate recall ($\varepsilon_{\mathrm{immediate\ recall}}$, pink).
     Points are the fitted coefficients, vertical bars are cluster-bootstrap $95\%$ confidence intervals obtained by resampling participants, and the mirrored histograms are null distributions from 10,000 permutations of the omitted and retained labels within participant.
     \textbf{E.} The distribution across participants of the proportion of the other participants' rankings that each participant's own ranking beats at predicting their own omissions, against the 0.5 expected by chance (dashed).
     \textbf{F.} The proportion of participants whose own ranking falls among the $k$ best at predicting their omissions, as a function of $k$ (pink), against the proportion expected by chance (grey, dashed).}
@@ -370,19 +371,19 @@ If a point is sufficiently close to that line (i.e., within a specified toleranc
 We reasoned that analogous cartographic principles might apply to participants' recountings of the episode (Fig.~\ref{fig:rdp}).
 To that end, we applied the RDP algorithm to the original episode's trajectory, and the to the trajectories of participants' immediate recountings.
 We then asked, for each event, how much its path's shape would change if that event were removed.
-In other words, we identified the minimum tolerance threshold (i.e., cosine distance~$\geq \epsilon$) at which each event in turn would be removed by the RDP algorithm (see~\nameref{subsec:rdp}).
-Here a higher value of $\epsilon$ indicates that an event is more important to the shape of the path, in that removing it would more substantially change the path's shape.
+In other words, we identified the minimum tolerance threshold (i.e., cosine distance~$\geq \varepsilon$) at which each event in turn would be removed by the RDP algorithm (see~\nameref{subsec:rdp}).
+Here a higher value of $\varepsilon$ indicates that an event is more important to the shape of the path, in that removing it would more substantially change the path's shape.
 Note that, although Figure~\ref{fig:rdp}B displays the RDP simplification applied to a two-dimensional projection of the trajectories, all analyses were carried out in the full 768-dimensional embedding space.
 We built a logistic regression model to predict whether an event was omitted in a participant's delayed recounting from its removal tolerance in the episode's trajectory and in the participant's own immediate recounting (\textbf{JRM NOTE: Describe in Methods and cite here...}).
-We found that ``dropped'' events in participants' delayed recountings tended to have reliably smaller $\epsilon$ values in their own immediate recountings than events that were retained (mean probability that the higher-$\epsilon$ event in a random pair was retained = 0.576, $\text{95\% CI} = \left[0.519,~0.632\right]$, $T_W = 330$, $p = 0.007$, $r_{rb} = 0.439$; Fig.~\ref{fig:rdp}C).
+We found that ``dropped'' events in participants' delayed recountings tended to have reliably smaller $\varepsilon$ values in their own immediate recountings than events that were retained (mean probability that the higher-$\varepsilon$ event in a random pair was retained = 0.576, $\text{95\% CI} = \left[0.519,~0.632\right]$, $T_W = 330$, $p = 0.007$, $r_{rb} = 0.439$; Fig.~\ref{fig:rdp}C).
 
 Following this logic, we wondered whether the shape of the \textit{original episode's} trajectory might also predict which events participants would go on to retain or omit in their recountings.
 We applied an anlogous analysis to the episode's trajectory, to predict which events would be retained or omitted in participants' \textit{immediate} recountings.
-However, we found no reliable evidence that the original episode's events' $\epsilon$ values predicted which events would be recounted ($\beta_{\text{epi}} = 0.012$, $\text{95\% CI} = \left[-0.159,~0.174\right]$, $p = 0.900$; Fig.~\ref{fig:rdp}D).
+However, we found no reliable evidence that the original episode's events' $\varepsilon$ values predicted which events would be recounted ($\beta_{\text{epi}} = 0.012$, $\text{95\% CI} = \left[-0.159,~0.174\right]$, $p = 0.900$; Fig.~\ref{fig:rdp}D).
 This suggests that recounting an experience is different from leading someone else along the same semantic path taken by the experience, in that distortions introduced by the recounting process do \textit{not} maximally preserve the original episode's trajectory shape.
 
 We also wondered whether commonalities across participants' immediate recountings might enable us to predict which events would be omitted in delayed recountings across participants.
-We again used an analogous analysis to ask whether $\epsilon$ values from \textit{other} participants' immediate recountings could predict which events another participant would omit in their delayed recounting.
+We again used an analogous analysis to ask whether $\varepsilon$ values from \textit{other} participants' immediate recountings could predict which events another participant would omit in their delayed recounting.
 We found that only the \textit{same} participant's immediate recounting could reliably predict which events they went on to omit ($\beta_{\text{imm}} = 0.242$, $\text{95\% CI} = \left[0.065,~0.424\right]$, $p = 0.007$ by participant-blocked permutation).
 All told, our regression analyses indicate that the shape of a participant's immediate recounting may be used to accurately predict omissions and simplifications in their own delayed recounting.
 But neither the shape of the episode itself, nor the shapes of other participants' immediate recountings, carry reliable information about delayed recountings.
