@@ -10,6 +10,7 @@
 \usepackage{hyperref}
 \usepackage{lineno}
 \usepackage{xcolor}
+%\usepackage{placeins}
 %\usepackage[nolists, nomarkers, fighead]{endfloat}
 %\renewcommand{\includegraphics}[2][]{}
 
@@ -19,6 +20,8 @@
 \newcommand{\suppMethods}{\textit{Supplementary methods}}
 % supplementary figures
 \newcommand{\kOptimization}{1}
+\newcommand{\recallEventseg}{2}
+\newcommand{\recallTrajectories}{3}
 
 
 \newcommand{\comment}[1]{}
@@ -122,14 +125,6 @@ Following the delayed recall phase, participants viewed and recounted either the
 We designed the experiment to support exploring a range of memory phenomena beyond those we consider here (see \nameref{subsec:experiment}).
 In the present study, we focus specifically on characterizing how the contents and structures of participants' recountings of the first \textit{Atlanta} episode changed over the week-long delay.
 
-To characterize how participants preserved and distorted the content of the episode in their recountings, we adapted an approach developed in our prior work that casts experiences and memories as \textit{trajectories} unfolding in a common high-dimensional space~\citep{HeusEtal21,FitzEtal26}.
-We construct these trajectories using a text embedding model, which transforms natural language text into a vector representation that captures the text's semantic meaning.
-Intuitively, this vector may be treated as a coordinate in a semantic space, in which texts with similar meanings are assigned to nearby coordinates while those with diverging meanings are assigned to more distant coordinates. 
-In this way, the distance between two texts' embedding coordinates reflects how semantically similar their contents are.
-We created detailed annotations describing the content of each individual camera shot throughout the \textit{Atlanta} episode (Fig.~\ref{fig:pipeline}A; see \nameref{subsec:annotations-transcripts}) and used EmbeddingGemma~\citep{VeraEtal25} to transform this sequence of annotations into a sequence of text embedding coordinates.
-We then transformed the transcript of each participant's recounting from each of the two experiment sessions into an analogous sequence of coordinates (Fig.~\ref{fig:pipeline}B,C).
-The progression of coordinates in each of these sequences traces out a trajectory, yielding one path through the embedding space for the episode, and one for each recounting (Fig.~\ref{fig:pipeline}D--F; see \nameref{subsec:text-embedding}).
-
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{figures/source/paradigm}
@@ -142,16 +137,15 @@ The progression of coordinates in each of these sequences traces out a trajector
     \label{fig:paradigm}
 \end{figure}
 
-Neither the episode's trajectory nor participants' recall trajectories move through the space at a constant rate.
-Both tend to linger within a given region for a period of time before shifting relatively abruptly to another. 
-We treated these periods of relative stability as \textit{events}~\citep{RadvZack17,EzzyDava11} and used a hidden Markov model~\citep[HMM;][]{BaumPetr66,BaldEtal17,KumaEtal21} to identify boundary points in the episode's trajectory where the episode content abruptly shifted (Fig.~\ref{fig:pipeline}G).
-This yielded a sequence of 20 events, each of whose content we summarized by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}J; see \nameref{subsec:eventseg}).
-We then sought to identify whether, when, and how each participant described these different events in their verbal recountings.
-We therefore treated the episode's 20 events as a fixed set of states in a separate HMM and decoded the boundary points in each recall trajectory where the participant shifted from (most probably) describing one event in the episode to another (Fig.~\ref{fig:pipeline}H,I).
-As with the episode, we then summarized each participant's description of each event by averaging the embedding vectors between successive boundaries (Fig.~\ref{fig:pipeline}K,L).
-In summary, this procedure yielded (a) a sequence of embedding vectors characterizing the events from the episode, (b) sequences of embedding vectors characterizing each participant's immediate and delayed recall, and (c) a mapping from every recall event onto the episode event it describes.
+To characterize how participants preserved and distorted the content of the episode in their recountings, we adapted an approach developed in our prior work that casts experiences and memories as \textit{trajectories} unfolding in a common high-dimensional space~\citep{HeusEtal21,FitzEtal26}.
+We construct these trajectories using a text embedding model, which transforms natural language text into a vector representation that captures the text's semantic meaning.
+Intuitively, this vector may be treated as a coordinate in a semantic space, in which texts with similar meanings are assigned to nearby coordinates while those with diverging meanings are assigned to more distant coordinates. 
+In this way, the distance between two texts' embedding coordinates reflects how semantically similar their contents are.
+We created detailed annotations describing the content of each individual camera shot throughout the \textit{Atlanta} episode (Fig.~\ref{fig:pipeline}A; see \nameref{subsec:annotations-transcripts}) and used EmbeddingGemma~\citep{VeraEtal25} to transform this sequence of annotations into a sequence of text embedding coordinates.
+We then transformed the transcript of each participant's recounting from each of the two experiment sessions into an analogous sequence of coordinates (Fig.~\ref{fig:pipeline}B,C).
+The progression of coordinates in each of these sequences traces out a trajectory, yielding one path through the embedding space for the episode, and one for each recounting (Fig.~\ref{fig:pipeline}D--F; see \nameref{subsec:text-embedding}).
 
-\begin{figure}[t]
+\begin{figure}[t!]
     \centering
     \includegraphics[width=\textwidth]{figures/source/pipeline-overview}
 
@@ -165,11 +159,21 @@ In summary, this procedure yielded (a) a sequence of embedding vectors character
     \textbf{G}--\textbf{I.} \textit{Event-segmentation.} For the episode, the correlation between the embedding vectors at each pair of timepoints, with the boundaries of the 20 events recovered by the hidden Markov model outlined (\textbf{G}).
     For each recounting, the cosine similarity between every recall window and every episode event, with the decoded sequence of episode events described outlined (\textbf{H},\textbf{I}).
     Darker heatmap colors denote higher similarities.
+    Analogous plots for all participants are shown in Supplementary Figure \recallEventseg.
     \textbf{J}--\textbf{L.} \textit{Events.} The resulting sequences of events, each summarized by averaging the embedding vectors it spans, and joined in the order they occur.
     \textbf{G}--\textbf{L.} Episode events are colored by their temporal order (red: early; blue: late) and each recall event is colored according to the episode event it describes.}
     
     \label{fig:pipeline}
 \end{figure}
+
+Neither the episode's trajectory nor participants' recall trajectories move through the space at a constant rate.
+Both tend to linger within a given region for a period of time before shifting relatively abruptly to another. 
+We treated these periods of relative stability as \textit{events}~\citep{RadvZack17,EzzyDava11} and used a hidden Markov model~\citep[HMM;][]{BaumPetr66,BaldEtal17,KumaEtal21} to identify boundary points in the episode's trajectory where the episode content abruptly shifted (Fig.~\ref{fig:pipeline}G).
+This yielded a sequence of 20 events, each of whose content we summarized by averaging the embedding vectors across the timepoints it spanned (Fig.~\ref{fig:pipeline}J; see \nameref{subsec:eventseg}).
+We then sought to identify whether, when, and how each participant described these different events in their verbal recountings.
+We therefore treated the episode's 20 events as a fixed set of states in a separate HMM and decoded the boundary points in each recall trajectory where the participant shifted from (most probably) describing one event in the episode to another (Fig.~\ref{fig:pipeline}H,I).
+As with the episode, we then summarized each participant's description of each event by averaging the embedding vectors between successive boundaries (Fig.~\ref{fig:pipeline}K,L).
+In summary, this procedure yielded (a) a sequence of embedding vectors characterizing the events from the episode, (b) sequences of embedding vectors characterizing each participant's immediate and delayed recall, and (c) a mapping from every recall event onto the episode event it describes.
 
 Our high-level goal is to characterize the structures of participants' recountings of the episode, and the degree to which they remained stable versus changed over the week-long delay.
 The simplest sense in which a recounting has structure is the one that traditional list-learning studies measure: which of the episode's events a participant recalled, and in what order.
@@ -222,15 +226,6 @@ By embedding the episode and each recounting into a common semantic space, we ca
 Viewed under this geometric lens, individual instances of one participant's event recountings may be quantitatively distinguished or compared (within or across participants, to the original episode's events, etc.).
 Further, the shape of a recounting's path through the semantic embedding space (i.e., it's \textit{trajectory}; Fig.~\ref{fig:trajectories}) characterizes how the recounting unfolds over time, and how each recounted event relates to each other.
 
-In order to compare and contrast these trajectories' shapes, we used dynamic time warping~\citep{Vint68,SakoChib78}.
-Intuitively, dynamic time warping finds the optimal alignment between two trajectories by locally ``stretching'' and ``compressing'' them to map each point along one trajectory onto one or more consecutive points along the other, while preserving both trajectories' temporal orderings (see~\nameref{subsec:dtw}).
-The quality of this optimal alignment is summarized by its ``warp cost,'' or the residual distance between matched points along the trajectories after bringing them into optimal alignment.
-In other words, the warp cost for a pair of trajectories reflects how closely they can be aligned by temporally stretching and compressing them, such that two trajectories that trace out the same shape will have a low warp cost even if they sample that shape at different resolutions.
-Two trajectories that trace out different shapes, meanwhile, cannot be coerced into as close an alignment and will exhibit a higher warp cost.
-We note that since warp cost is a \textit{cost} measure, it runs in the opposite direction to the above order similarity measure: a lower warp cost denotes greater similarity between two trajectories' structures, and vice versa.
-Taken together, framing experiences and recountings geometrically and applying geometric measures to relate them enables us to formally quantify how similarly their qualitative semantic contents unfold.
-We next leverage these tools to answer fundamental questions about how memories change over time.
-
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures/source/2d-trajectories}
@@ -240,10 +235,19 @@ We next leverage these tools to answer fundamental questions about how memories 
     Each colored dot denotes an event; solid black lines denote transitions between adjacent events.
     The episode's events are colored by their temporal order (red: early; blue: late) and each recall event is colored to match to the episode event it describes.
     The episode's shape is drawn beneath each recall as a dashed grey line for reference.
-    We projected the episode and recall events onto two dimensions using UMAP for visualization; all analyses we report were carried out in the full 768-dimensional space.}
-
+    We projected the episode and recall events onto two dimensions using UMAP for visualization; all analyses we report were carried out in the full 768-dimensional space.
+    Analogous recall trajectory plots for all participants are shown in Supplementary Figure \recallTrajectories.}
     \label{fig:trajectories}
 \end{figure}
+
+In order to compare and contrast these trajectories' shapes, we used dynamic time warping~\citep{Vint68,SakoChib78}.
+Intuitively, dynamic time warping finds the optimal alignment between two trajectories by locally ``stretching'' and ``compressing'' them to map each point along one trajectory onto one or more consecutive points along the other, while preserving both trajectories' temporal orderings (see~\nameref{subsec:dtw}).
+The quality of this optimal alignment is summarized by its ``warp cost,'' or the residual distance between matched points along the trajectories after bringing them into optimal alignment.
+In other words, the warp cost for a pair of trajectories reflects how closely they can be aligned by temporally stretching and compressing them, such that two trajectories that trace out the same shape will have a low warp cost even if they sample that shape at different resolutions.
+Two trajectories that trace out different shapes, meanwhile, cannot be coerced into as close an alignment and will exhibit a higher warp cost.
+We note that since warp cost is a \textit{cost} measure, it runs in the opposite direction to the above order similarity measure: a lower warp cost denotes greater similarity between two trajectories' structures, and vice versa.
+Taken together, framing experiences and recountings geometrically and applying geometric measures to relate them enables us to formally quantify how similarly their qualitative semantic contents unfold.
+We next leverage these tools to answer fundamental questions about how memories change over time.
 
 We began our study with the question of what a delayed recounting is a recounting \textit{of}.
 With the above tools in hand, we can now distinguish between two reasonable hypotheses.
@@ -303,10 +307,10 @@ This suggests that \textit{what} participants recounted after a week is better c
     \textbf{E.} The warp cost of aligning each participant's delayed (gold) and immediate (slate) recall to the episode, in the same format as Panel D.
     \textbf{F.} The example participant's delayed recall trajectory aligned to a different participant's immediate recall trajectory (pink), in the same format as panel A.
     \textbf{G.} For each participant, the warp cost of aligning their delayed recall trajectory to their own immediate recall trajectory (pink) versus the median cost of aligning their delayed recall trajectory to the other 52 participants' immediate recall trajectories (grey), in the same format as Fig.~\ref{fig:recall-order}D.
-    \textbf{H.} The proportion of participants' whose own immediate recall trajectory falls among the $k$ most similar (i.e., lowest warp costs) to their delayed recall trajectory, as a function of $k$ (pink), against the proportion expected by chance (grey, dashed).
+    \textbf{H.} The proportion of participants whose own immediate recall trajectory falls among the $k$ most similar (i.e., lowest warp costs) to their delayed recall trajectory, as a function of $k$ (pink), against the proportion expected by chance (grey, dashed).
     \textbf{I.} The example participant's immediate recall trajectory aligned to a different participant's delayed recall trajectory (purple), in the same format as panel A.
     \textbf{J.} For each participant, the warp cost of aligning their immediate recall trajectory to their own delayed recall trajectory (purple) versus the median cost of aligning their immediate recall trajectory to the other 52 participants' delayed recall trajectories (grey), in the same format as Fig.~\ref{fig:recall-order}D.
-    \textbf{H.} The proportion of participants' whose own delayed recall trajectory falls among the $k$ most similar (i.e., lowest warp costs) to their immediate recall trajectory, as a function of $k$ (pink), in the same format as Panel H.}
+    \textbf{H.} The proportion of participants whose own delayed recall trajectory falls among the $k$ most similar (i.e., lowest warp costs) to their immediate recall trajectory, as a function of $k$ (pink), in the same format as Panel H.}
     
 \end{figure}
 
