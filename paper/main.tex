@@ -112,7 +112,6 @@ We find that this structural importance predicts which events a participant will
 
 
 \section*{Results}
-%% JRM NOTE: Paxton, please check ALL stats + review for accuracy!!
 
 We asked participants to view and verbally recount episodes of television shows across two experiment sessions, separated by approximately one week (Fig.~\ref{fig:paradigm}).
 In the first session, participants viewed the pilot episode of \textit{Atlanta}.
@@ -150,7 +149,6 @@ This yielded a sequence of 20 events, each of whose content we summarized by ave
 We then sought to identify whether, when, and how each participant described these different events in their verbal recountings.
 We therefore treated the episode's 20 events as a fixed set of states in a separate HMM and decoded the boundary points in each recall trajectory where the participant shifted from (most probably) describing one event in the episode to another (Fig.~\ref{fig:pipeline}H,I).
 As with the episode, we then summarized each participant's description of each event by averaging the embedding vectors between successive boundaries (Fig.~\ref{fig:pipeline}K,L).
-%This enables us to characterize when participants describe events out of order, and/or when they return to an event they had already described.
 In summary, this procedure yielded (a) a sequence of embedding vectors characterizing the events from the episode, (b) sequences of embedding vectors characterizing each participant's immediate and delayed recall, and (c) a mapping from every recall event onto the episode event it describes.
 
 \begin{figure}[t]
@@ -229,7 +227,7 @@ The quality of this optimal alignment is summarized by its ``warp cost'', or the
 In other words, the warp cost for a pair of trajectories reflects how closely they can be aligned by temporally stretching and compressing them, such that two trajectories that trace out the same shape will have a low warp cost even if they sample that shape at different resolutions.
 Two trajectories that trace out different shapes, meanwhile, cannot be coerced into as close an alignment and will exhibit a higher warp cost.
 We note that since warp cost is a \textit{cost} measure, it runs in the opposite direction to the above order similarity measure---a lower warp cost denotes greater similarity between two trajectories' structures, and vice versa.
-Taken together, framing experiences and recountings geometrically and applying geometric measures to relate them enables us to formally quantify how similarly their qualitative semantic contents unfold over time.
+Taken together, framing experiences and recountings geometrically and applying geometric measures to relate them enables us to formally quantify how similarly their qualitative semantic contents unfold.
 We next leverage these tools to answer fundamental questions about how memories change over time.
 
 \begin{figure}
@@ -273,12 +271,12 @@ According to this alternative hypothesis, on average, participants' delayed reco
     \label{fig:hypotheses}
 \end{figure}
 
-Within our framework, distinguishing between the two accounts illustrated in Figure~\ref{fig:hypotheses} becomes a matter of comparing the warp costs between participants' delayed recountings and their own immediate recountings to those between their delayed recountings and the episode itself.
+Within our framework, distinguishing between the two accounts illustrated in Figure~\ref{fig:hypotheses} becomes a matter of comparing two sets of warp costs: between participants' delayed recountings and their own immediate recountings, and between their delayed recountings and the episode itself.
 If retrieving a memory after a delay recovers the original experience (Hypothesis 1), then a participant's delayed recounting should align with the episode at least as closely as it aligns with their own earlier recounting of it.
 If, however, retrieving a memory after a delay recovers a previous recounting of the experience (Hypothesis 2), then a participant's delayed recounting should align more closely with their own immediate recounting than with the episode itself.
 We found clear support for this second hypothesis.
 In particular, participants' delayed recountings aligned more closely with their own immediate recountings (mean warp cost 0.532; Fig.~\ref{fig:dtw}A) than with the episode itself (0.654; mean difference = 0.122, $\text{95\% CI} = \left[0.104,~0.139\right]$, $T_W = 1$, $p < 0.001$, $r_{rb} = 0.999$; Fig.~\ref{fig:dtw}B,D).
-We found that this pattern was highly consistent, holding for all but one of the 53 participants in our dataset, for whom the absolute difference between their delayed-to-immediate and delayed-to-episode warp costs was the smallest of any participant.
+We found that this pattern was highly consistent, holding for all 53 participants in our dataset but one (for whom the absolute difference between their delayed-to-immediate and delayed-to-episode warp costs was the smallest of any participant).
 This suggests that \textit{what} participants recounted after a week is better characterized as a recounting of their own (previous) immediate recounting than as a recounting of the actual original episode that they experienced.
 
 \begin{figure}[p]
@@ -286,16 +284,17 @@ This suggests that \textit{what} participants recounted after a week is better c
     \refstepcounter{figure}
     \phantomsection
     \includegraphics[width=\textwidth]{figures/source/dtw-figure}
-    \caption*{\small \textit{(caption next page.)}}
+    \caption*{\small \textit{(Caption next page.)}}
     \label{fig:dtw}
 \end{figure}
 
 \begin{figure}[t]
     \ContinuedFloat
     \caption{\small \textbf{Participants' delayed recalls resemble their own immediate recalls.}
-    \textbf{A.} An example participant's delayed recall trajectory (blue) aligned to their immediate recall trajectory (green) via dynamic time warping. 
+    \textbf{A.} An example participant's delayed recall trajectory (blue) aligned to their immediate recall trajectory (green) via dynamic time warping (DTW). 
     Grey lines connect DTW-matched events; the warp cost of the alignment (i.e., mean distance between matched events) is displayed in the top left.
     The $\searrow$ indicates the direction and magnitude of the offset applied to the trajectory in back for visual clarity.
+    Each trajectory was projected to 2D for visualization using UMAP; DTW alignments, warp costs, and all statistical tests were computed in the original space.
     \textbf{B.} The example participant's delayed recall trajectory aligned to the episode's trajectory (orange), in the same format as Panel A.
     \textbf{C.} The example participant's immediate recall trajectory aligned to the episode's trajectory, in the same format as Panel A.
     \textbf{D.} The warp costs of aligning each participant's delayed recall to their immediate recall (teal) and to the episode (gold).
@@ -305,7 +304,7 @@ This suggests that \textit{what} participants recounted after a week is better c
     \textbf{G.} For each participant, the warp cost of aligning their delayed recall trajectory to their own immediate recall trajectory (pink) versus the median cost of aligning their delayed recall trajectory to the other 52 participants' immediate recall trajectories (grey), in the same format as Fig.~\ref{fig:recall-order}D.
     \textbf{H.} The proportion of participants' whose own immediate recall trajectory falls among the $k$ most similar (i.e., lowest warp costs) to their delayed recall trajectory, as a function of $k$ (pink), against the proportion expected by chance (grey, dashed).
     \textbf{I.} The example participant's immediate recall trajectory aligned to a different participant's delayed recall trajectory (purple), in the same format as panel A.
-    \textbf{J.}For each participant, the warp cost of aligning their immediate recall trajectory to their own delayed recall trajectory (purple) versus the median cost of aligning their immediate recall trajectory to the other 52 participants' delayed recall trajectories (grey), in the same format as Fig.~\ref{fig:recall-order}D.
+    \textbf{J.} For each participant, the warp cost of aligning their immediate recall trajectory to their own delayed recall trajectory (purple) versus the median cost of aligning their immediate recall trajectory to the other 52 participants' delayed recall trajectories (grey), in the same format as Fig.~\ref{fig:recall-order}D.
     \textbf{H.} The proportion of participants' whose own delayed recall trajectory falls among the $k$ most similar (i.e., lowest warp costs) to their immediate recall trajectory, as a function of $k$ (pink), in the same format as Panel H.}
     
 \end{figure}
@@ -314,14 +313,14 @@ This suggests that \textit{what} participants recounted after a week is better c
 That delayed recountings more closely resemble immediate recountings than the original episode suggests that the memories reflected by those accountings might drift over time.
 Accordingly, we found that participants' recountings came to align less closely with the original episode following the week-long delay (mean immediate-episode warp cost = 0.626; mean delayed-episode warp cost = 0.654; mean difference = 0.028, $\text{95\% CI} = \left[0.013,~0.042\right]$, $T_W = 288$, $p < 0.001$, $r_{rb} = 0.598$; Fig.~\ref{fig:dtw}B,C,E).
 We next asked whether the nature of this drift was idiosyncratic to each participant or potentially reflected more general patterns shared across people.
-To answer this question, we aligned each participant's delayed recounting to their own immediate recounting (Fig.~\ref{fig:dtw}A), and to all 52 other participants' immediate recountings (Fig.~\ref{fig:dtw}F), and compared the resulting warp costs.
+To answer this question, we aligned each participant's delayed recounting to their own immediate recounting (Fig.~\ref{fig:dtw}A) and to all 52 other participants' immediate recountings (Fig.~\ref{fig:dtw}F), and compared the resulting warp costs.
 As in our order similarity analysis, we ranked the warp cost for each within-participant alignment within its corresponding distribution of warp costs for across-participant alignments, and tested these percentile ranks against chance.
-We found that participants' delayed recountings aligned reliably more closely with their own immediate recountings than with anyone else's (mean percentile rank = 0.971, $\text{95\% CI} = \left[0.950,~0.987\right]$, $T_W = 0$, $p < 0.001$, $r_{rb} = 1.000$; Fig.~\ref{fig:dtw}G,H).
-The same held when we ran the comparison in the opposite direction, aligning each immediate recounting to the full set of delayed recountings (mean percentile rank = 0.923, $\text{95\% CI} = \left[0.874,~0.965\right]$, $T_W = 11.5$, $p < 0.001$, $r_{rb} = 0.984$; Fig.~\ref{fig:dtw}A,I,J,K).
+We found that every participant's delayed recounting aligned more closely with their own immediate recounting than would be expected by chance (mean percentile rank = 0.971, $\text{95\% CI} = \left[0.950,~0.987\right]$, $T_W = 0$, $p < 0.001$, $r_{rb} = 1.000$; Fig.~\ref{fig:dtw}G), with most participants' own immediate recountings yielding the single closest alignment of any immediate recounting, and nearly all participants' own immediate recountings falling within the top few closest (Fig.~\ref{fig:dtw}H).
+The same held (for all but two participants) when we ran the comparison in the opposite direction, aligning each immediate recounting to the full set of delayed recountings (mean percentile rank = 0.923, $\text{95\% CI} = \left[0.874,~0.965\right]$, $T_W = 11.5$, $p < 0.001$, $r_{rb} = 0.984$; Fig.~\ref{fig:dtw}A,I,J,K).
 Taken together, these results suggest that the specific ways in which participants' recountings change with repeated retellings are person-specific.
 
 Next, we wondered \textit{how} recountings changed over the course of the week-long delay.
-The 2D projections of the example participants' immediate and delayed recall trajectories displayed throughout the figures above suggest---and our analyses thus far indicate---that a given participant's immediate and delayed recountings tend to be structurally similar.
+The 2D projections of participants' immediate and delayed recall trajectories displayed throughout the figures above suggest---and our analyses thus far indicate---that a given participant's immediate and delayed recountings tend to be structurally similar.
 But our analyses thus far also indicate that the delayed recountings tend to comprise slightly fewer events than their corresponding immediate recountings.
 One possibility is that the events ``omitted'' from participants' delayed recountings are chosen (roughly) uniformly at random from the events they recounted immediately.
 We note as a clarification here that ``omitted'' is solely a reflection of the ways participants' trajectories are segmented into discrete events, as opposed to an implication that participants are literally discretizing their memories.
@@ -330,64 +329,111 @@ We suggest that the number of events identified in a recounting should be interp
 
 An alternative to the events ``omitted'' from participants' delayed recountings arising randomly is that there are systematic rules or principles governing which specific events tend to be omitted versus retained.
 For example, that the trajectories in Figure~\ref{fig:trajectories} all appear visually similar may actually reflect something about how they compare.
-In particular, suppose we take trajectory shapes (of the episode and recountings) as approximations of the true underlying sequence of ``meanings'' participants experience (as they are watching the original episode) or recount (when they communicate their memories of the episode).
-If the ``goal'' of encoding an experience into memory, and of communicating that memory to others, is to preserve the progression of meanings captured by the experience's path through semantic space, then different events (as different coordinates in semantic space) may play distinct roles---and, critically, differ in importance---with respect to how their presence or absence affects the overall shape of their containing trajectory.
+In particular, suppose we take trajectory shapes (of the episode and recountings) as approximations of the true underlying sequence of ``meanings'' a participant experiences (as they are watching the original episode) or recounts (when they communicate their memories of the episode).
+If the ``goal'' of encoding an experience into memory, and of communicating that memory to others, is to preserve the progression of meanings captured by the experience's trajectory through semantic space, then different events (as different coordinates in semantic space) may play distinct roles---and, critically, differ in importance---with respect to how their presence or absence affects the overall shape of their containing trajectory.
 
-To ground this idea in physical space, consider, for example, a map of a coastline.
+To ground this idea in physical space, consider, for example, different possible maps of a coastline.
 The ``true'' shape of that coastline is nearly infinitely detailed (e.g., down to individual grains of sand, or even the subatomic level).
 But in practice, the number of ``control points'' used to represent its shape is determined by the scale at which the resulting map is intended to be relevant and useful to others.
-If this map were intended to capture the topography of a single bay or estuary, it might use a relatively large number of control points to define that region's shape.
-But if instead the map was ``zoomed out'' to encompass the coastline of the entire containing country, it might instead represent that single region using a much smaller number of control points---and, critically, specifically the subset of points most important to faithfully preserving that region's high-level shape.
-This idea is formalized in cartographic generalization (the practice of translating between cartographic maps at different scales) by the Ramer-Douglas-Peucker (RDP) algorithm~\citep{Rame72,DougPeuc73}.
-Given a threshold distance $\varepsilon$, the RDP algorithm simplifies a curve composed of line segments by removing points that contribute spatial details on a scale smaller than $\varepsilon$ (Fig.~\ref{fig:rdp}A).
+On a map intended to capture the complex topography of a single bay or estuary, that few-mile region might be defined in relatively high detail using a large number of control points.
+Whereas on a more ``zoomed-out'' map encompassing the coastline of the entire containing country, that same region would instead be defined using a much smaller number of control points---and, critically, specifically the subset of points most important to faithfully preserving that region's coarse-scale shape.
+%If this map were intended to capture the topography of a single bay or estuary, it might use a relatively large number of control points to define that region's shape.
+%But if instead the map was ``zoomed out'' to encompass the coastline of the entire containing country, it might instead represent that single region using a much smaller number of control points---and, critically, specifically the subset of points most important to faithfully preserving that region's high-level shape.
+This idea was first formalized in cartographic generalization (the practice of translating between maps at different scales) by the Ramer-Douglas-Peucker (RDP) algorithm~\citep{Rame72,DougPeuc73}.
+Given a threshold distance $\varepsilon$, the RDP algorithm simplifies a curve composed of line segments (e.g., a map of coastline) by iteratively removing vertices within $\varepsilon$ of an approximating chord (Fig.~\ref{fig:rdp}A; for additional details see~\nameref{subsec:rdp}).
+The end result is a simplified version of the original curve that preserves its high-level shape, but does so using fewer total points by discarding spatial details smaller than $\varepsilon$.
+Intuitively, $\varepsilon$ thus determines the ``amount'' of simplification applied to the original curve, with progressively larger $\varepsilon$ values leading to discarding progressively coarser structure.
+In this way, the smallest $\varepsilon$ value at which a given point is first removed from its containing curve indicates its importance in defining the curve's overall shape.
 
 
-%This idea was formalized in the service of drawing cartographic maps at different scales by the Ramer-Douglas-Peucker (RDP) algorithm~\citep{Rame72,DougPeuc73}.
-%Intuitively, the RDP algorithm iteratively considers, for each point in turn, how far it is from the line joining its immediate neighbors.
-%If a point is sufficiently close to that line (i.e., within a specified tolerance threshold, $\varepsilon$), then we can remove it without substantially changing the shape of the full path (Fig.~\ref{fig:rdp}A).
-
-\begin{figure}[tp]
+\begin{figure}[p]
     \centering
-    \includegraphics[width=0.93\textwidth]{figures/source/rdp-figure}
-
-    \caption{\small \textbf{Delayed recalls omit the events an immediate recall could most afford to lose.}
-    \textbf{A.} The simplification procedure, applied to a schematic trajectory at a single tolerance ($\varepsilon$).
-    At each step, a band of width $\varepsilon$ is drawn around the line joining the endpoints of the segment under consideration (light blue).
-    The event lying farthest outside that band is retained (green) and becomes a new vertex, whereas events lying within it are removed (red).
-    Retained events and the path they define are drawn in blue and removed events in grey, leaving the fully simplified path at the bottom.
-    \textbf{B.} One participant's immediate (left) and delayed (right) recall event sequences, with color denoting the episode event each recall event describes.
-    Events the participant described immediately but omitted after the delay are faded on the right.
-    \textbf{C.} For each participant, the probability that an event they omitted was removed at a lower tolerance than an event they kept.
-    Pink dots are individual participants and the violin shows their distribution; the black point and bar denote the mean and its bootstrap-estimated $95\%$ confidence interval, against the 0.5 expected by chance (dashed).
-    \textbf{D.} Coefficients of a logistic regression predicting whether an event was omitted, from its removal tolerance in the episode's trajectory ($\varepsilon_{\mathrm{episode}}$, grey) and in the participant's own immediate recall ($\varepsilon_{\mathrm{immediate\ recall}}$, pink).
-    Points are the fitted coefficients, vertical bars are cluster-bootstrap $95\%$ confidence intervals obtained by resampling participants, and the mirrored histograms are null distributions from 10,000 permutations of the omitted and retained labels within participant.
-    \textbf{E.} The distribution across participants of the proportion of the other participants' rankings that each participant's own ranking beats at predicting their own omissions, against the 0.5 expected by chance (dashed).
-    \textbf{F.} The proportion of participants whose own ranking falls among the $k$ best at predicting their omissions, as a function of $k$ (pink), against the proportion expected by chance (grey, dashed).}
-
+    \includegraphics[width=\textwidth]{figures/source/rdp-figure}
+    \caption{\small \textbf{Geometrically simplifying immediate recounting predicts omissions from delayed recounting.}
+    \textbf{A.} The Ramer-Douglas-Peucker algorithm applied to an example polyline.
+    At each step, the algorithm draws a chord spanning the section of the polyline under consideration and identifies the interior point farthest from the chord.
+    If that point is farther from the chord than the threshold distance $\varepsilon$ (blue band), it is retained (green) and the algorithm is recursively applied on either side of it.
+    Otherwise, it is removed (red) with that section approximated by the chord in the simplified result.
+    The simplified result (blue) preserves the high-level shape of the original but with points contributing spatial details smaller than $\varepsilon$ removed (grey).
+    See \nameref{subsec:rdp} for a full description.
+    \textbf{B.} An example participant's immediate (left) and delayed (right) recall trajectories, in the same format as Fig.~\ref{fig:trajectories}.
+    Faded dots denote events described in immediate recall but omitted from delayed recall.
+    Each trajectory was projected to 2D for visualization using UMAP; all analyses were performed in the original space.
+    \textbf{C.} For each participant (pink dot), the probability that an event omitted from their delayed recounting was removed from their immediate recall trajectory at a lower $\varepsilon$ than an event retained.
+    The violin shows a kernel density estimate of the distribution; the black dot and bar denote the across-participants mean and its bootstrap-estimated 95\% confidence interval.
+    \textit{(Continued next page.)}
+    }
     \label{fig:rdp}
 \end{figure}
 
-\textbf{JRM NOTE: Paxton, I need your help correcting the next 2 paragraphs; not sure this accurately describes the regression analyses...and I may be missing important tests...}
-We reasoned that analogous cartographic principles might apply to participants' recountings of the episode (Fig.~\ref{fig:rdp}).
-To that end, we applied the RDP algorithm to the original episode's trajectory, and the to the trajectories of participants' immediate recountings.
-We then asked, for each event, how much its path's shape would change if that event were removed.
-In other words, we identified the minimum tolerance threshold (i.e., cosine distance~$\geq \varepsilon$) at which each event in turn would be removed by the RDP algorithm (see~\nameref{subsec:rdp}).
-Here a higher value of $\varepsilon$ indicates that an event is more important to the shape of the path, in that removing it would more substantially change the path's shape.
-Note that, although Figure~\ref{fig:rdp}B displays the RDP simplification applied to a two-dimensional projection of the trajectories, all analyses were carried out in the full 768-dimensional embedding space.
-We built a logistic regression model to predict whether an event was omitted in a participant's delayed recounting from its removal tolerance in the episode's trajectory and in the participant's own immediate recounting (\textbf{JRM NOTE: Describe in Methods and cite here...}).
-We found that ``dropped'' events in participants' delayed recountings tended to have reliably smaller $\varepsilon$ values in their own immediate recountings than events that were retained (mean probability that the higher-$\varepsilon$ event in a random pair was retained = 0.576, $\text{95\% CI} = \left[0.519,~0.632\right]$, $T_W = 330$, $p = 0.007$, $r_{rb} = 0.439$; Fig.~\ref{fig:rdp}C).
+\begin{figure}[t]
+    \ContinuedFloat
+    \caption*{\small 
+    \textbf{D.} Coefficients from a logistic regression predicting whether an event would be omitted post-delay from its $\varepsilon$ at removal from the episode's trajectory (grey) and the participant's own immediate recall trajectory (pink).
+    Dots denote the estimated coefficients; vertical bars denote their cluster-bootstrap-estimated $95\%$ confidence intervals.
+    Histograms show the null distributions of each coefficient estimated via participant-blocked permutation.
+    $\varepsilon$ values were negated and $z$-scored within participants, so the coefficients express the increase in the log-odds of omission per within-participant standard-deviation increase in removability.
+    \textbf{E.} The distribution of per-participant win rates.
+    Each participant's win rate is the proportion of surrogate participants' immediate recountings that their own immediate recounting predicted their post-delay omissions better than.
+    \textbf{F.} The proportion of participants whose own immediate recountings fall among the $k$ best predictors of their post-delay omissions, as a function of $k$.
+    \textbf{C}--\textbf{F.} The dashed grey line in each panel denotes chance.}
+\end{figure}
 
-Following this logic, we wondered whether the shape of the \textit{original episode's} trajectory might also predict which events participants would go on to retain or omit in their recountings.
-We applied an anlogous analysis to the episode's trajectory, to predict which events would be retained or omitted in participants' \textit{immediate} recountings.
-However, we found no reliable evidence that the original episode's events' $\varepsilon$ values predicted which events would be recounted ($\beta_{\text{epi}} = 0.012$, $\text{95\% CI} = \left[-0.159,~0.174\right]$, $p = 0.900$; Fig.~\ref{fig:rdp}D).
-This suggests that recounting an experience is different from leading someone else along the same semantic path taken by the experience, in that distortions introduced by the recounting process do \textit{not} maximally preserve the original episode's trajectory shape.
+%\begin{figure}[tp]
+%    \centering
+%    \refstepcounter{figure}
+%    \phantomsection
+%    \includegraphics[width=\textwidth]{figures/source/rdp-figure}
+%    \caption*{\small \textit{(Caption next page.)}}
+%    \label{fig:rdp}
+%    \end{figure}
+%
+%\begin{figure}[t]
+%    \ContinuedFloat
+%    \caption{\small \textbf{Geometrically simplifying immediate recounting predicts omissions in delayed recounting.}
+%    \textbf{A.} The Ramer-Douglas-Peucker algorithm applied to an example polyline.
+%    At each step, the algorithm draws a chord spanning the section of the polyline under consideration and identifies the interior point farthest from the chord.
+%    If that point is farther from the chord than the threshold distance $\varepsilon$ (blue band), it is retained (green) and the algorithm is recursively applied on either side of it.
+%    Otherwise, it is removed (red) with that section approximated by the chord in the simplified result.
+%    The simplified polyline (blue) preserves the high-level shape of the original, but with points contributing spatial details smaller than $\varepsilon$ removed (grey).
+%    See \nameref{subsec:rdp} for a full description.
+%    \textbf{B.} An example participant's immediate (left) and delayed (right) recall trajectories, in the same format as Fig.~\ref{fig:trajectories}.
+%    Faded dots denote events described in immediate recall but omitted from delayed recall.
+%    Each trajectory was projected to 2D for visualization using UMAP; all analyses were performed in the original space.
+%    \textbf{C.} For each participant (pink dot), the probability that an event omitted from their delayed recounting was removed from their immediate recall trajectory at a lower $\varepsilon$ than an event retained.
+%    The violin shows a kernel density estimate of the distribution; the black dot and bar denote the across-participants mean and its bootstrap-estimated 95\% confidence interval.
+%    \textbf{D.} Coefficients from a logistic regression predicting whether an event would be omitted post-delay from its $\varepsilon$ at removal from the episode's trajectory (grey) and the participant's own immediate recall trajectory (pink).
+%    Dots denote the estimated coefficients; vertical bars denote their cluster-bootstrap-estimated $95\%$ confidence intervals.
+%    Histograms show the null distributions of each coefficient estimated via participant-blocked permutation.
+%    \textbf{E.} The distribution of per-participant win rates.
+%    Each participant's win rate is the proportion of surrogate participants' immediate recountings that their own immediate recounting predicted their post-delay omissions better than.
+%    \textbf{F.} The proportion of participants whose own immediate recountings fall among the $k$ best predictors of their post-delay omissions, as a function of $k$.
+%    \textbf{C}--\textbf{F.} The dashed grey line in each panel denotes chance.}
+%\end{figure}
 
-We also wondered whether commonalities across participants' immediate recountings might enable us to predict which events would be omitted in delayed recountings across participants.
-We again used an analogous analysis to ask whether $\varepsilon$ values from \textit{other} participants' immediate recountings could predict which events another participant would omit in their delayed recounting.
-We found that only the \textit{same} participant's immediate recounting could reliably predict which events they went on to omit ($\beta_{\text{imm}} = 0.242$, $\text{95\% CI} = \left[0.065,~0.424\right]$, $p = 0.007$ by participant-blocked permutation).
-All told, our regression analyses indicate that the shape of a participant's immediate recounting may be used to accurately predict omissions and simplifications in their own delayed recounting.
-But neither the shape of the episode itself, nor the shapes of other participants' immediate recountings, carry reliable information about delayed recountings.
-This provides further evidence that memories are shaped by our own (unique) prior recountings, even when the original experience was shared by different people.
+We reasoned that, if the goal of retaining a memory across time is to preserve its high-level arc of semantic meanings despite becoming less detailed, then the differences between the paths traced out by a participant's immediate and delayed recountings might reflect a similar shape-preserving simplification.
+To test this idea, we repeatedly applied the RDP algorithm to the trajectory of each participant's immediate recounting with progressively larger $\varepsilon$ values, and recorded the smallest $\varepsilon$ at which each event was discarded (i.e., its relative importance to defining the trajectory's geometric structure).
+For each participant, we then computed the probability that an event they would go on to omit from their delayed recounting was removed from their immediate recounting at a lower $\varepsilon$ than one they would retain (i.e., the probability of superiority), and compared these probabilities for each participant against chance.
+We found that the degree to which an event could be removed from a participant's immediate recall trajectory without altering its high-level shape predicted whether that event would be omitted from their delayed recounting (mean probability of superiority = 0.576, $\text{95\% CI} = \left[0.519,~0.632\right]$, $T_W = 330$, $p = 0.007$, $r_{rb} = 0.439$; Fig.~\ref{fig:rdp}C).
+
+We then asked whether this effect was specific to the idiosyncratic geometry of each participant's own immediate recounting.
+For example, an alternative explanation for the above result could be that certain events from the episode are simply less interesting, salient, or important to the overall narrative than others, and thus both tend to contribute weakly to the geometries of participants' immediate recountings \textit{and} tend to be forgotten following the delay.
+%We therefore performed a surrogate-based analysis testing whether an event's omission from an individual's delayed recounting was better predicted by its removability from their own immediate recall trajectory than by its removability from \textit{other} individuals' immediate recall trajectories.
+We therefore performed a surrogate-based analysis testing whether an event's removability from each individual's own immediate recall trajectory predicted whether they would omit it following the delay better than its removability from \textit{other} individuals' immediate recall trajectories did.
+For each participant, we computed the probability of superiority for events they omitted post-delay using those events' $\varepsilon$-at-removal values from their own immediate recounting, and from each \textit{other} participant's immediate recounting.
+We then computed a ``win rate'' for each participant as the proportion of surrogate participants their own geometry predicted their omissions better than, and compared these win rates against chance.
+We found that the predictive signal of events' removabilities was specific to the geometry of an individual's own immediate recounting, rather than patterns common across participants (mean win rate = 0.614, $\text{95\% CI} = \left[0.541,~0.685\right]$, $T_W = 311.5$, $p = 0.004$, $r_{rb} = 0.470$; Fig.~\ref{fig:rdp}E,F).
+
+Given that participants' recall trajectories tend to reflect the episode's trajectory relatively faithfully (e.g., Fig.~\ref{fig:trajectories}), another alternative explanation for these results could be that an event's removability from a participant's immediate recall geometry is simply a proxy for its removability from the episode's geometry, and thus that omissions post-delay are really driven by properties of the stimulus, rather than a person-specific reconstruction of it.
+Our earlier analyses suggest that what participants retrieve when recounting the episode after the delay is a reconstruction of their own previous recounting, rather than of the original episode itself.
+If this is the case, then we should expect participants' omissions post-delay to specifically reflect a simplification of their own immediate recountings, rather than a simplification of the episode, even when accounting for both possibilities and the overlap that the episode and recall trajectories' similarities implies.
+To test this claim, we fit a logistic regression to predict omissions from participants' delayed recountings based on the geometries of both their immediate recountings and the episode itself (Eqn.~\ref{eqn:regression}).
+For each participant, we computed two $\varepsilon$-at-removal values for each event described in their immediate recounting: the $\varepsilon$ at which it was removed from their own immediate recall trajectory, and the $\varepsilon$ at which it was removed from the episode's trajectory.
+We multiplied these $\varepsilon$ values by $-1$ (so that they denoted each event's ``removability'') and $z$-scored the events' values from each trajectory, separately and within-participants, to ensure that the two predictors' scales were comparable and that their effects were estimated purely within participants (see~\nameref{subsec:rdp}).
+We then used these two sets of removability values across all participants to fit a logistic regression estimating the effect of an event's removability from a participant's immediate recall trajectory on its probability of being omitted from their delayed recounting, while controlling for the analogous effect of its removability from the episode's trajectory, and vice versa.
+We found that an event's removability from one's own immediate recall trajectory predicted its omission following the delay ($\beta_{\text{imm}} = 0.242$, $\text{95\% CI} = \left[0.065,~0.424\right]$, $p = 0.007$), whereas its removability from the episode's trajectory carried essentially no predictive value ($\beta_{\text{epi}} = 0.012$, $\text{95\% CI} = \left[-0.159,~0.174\right]$, $p = 0.900$; Fig.~\ref{fig:rdp}D).
+Taken together, our results suggest among the various factors that determine whether an individual will omit a part of an experience when recounting it after a delay, one such factor is the degree to which omitting it preserves versus distorts the shape of how that same individual recounted the experience previously.
+
 
 \section*{Discussion}
 
@@ -733,7 +779,7 @@ As above, since the RDP algorithm cannot remove the endpoints of a curve, we exc
 We then multiplied these ``$\varepsilon$ at removal'' scores for each episode event by $-1$ so that they represented ``removability'' (i.e., higher scores $\Rightarrow$ more RDP-removable), and $z$-scored the events' removability scores from each source, separately, so their scales were comparable both with each other and across participants.
 We then used these two $z$-scored removability scores across all episode events recalled by all participants in the immediate session to fit a logistic regression:
 
-\begin{equation}
+\begin{equation}\label{eqn:regression}
   \operatorname{logit}\!\big(\Pr(\text{omitted}_{pe}=1)\big)
     = \beta_0 + \beta_{\text{imm}}\, z^{\text{imm}}_{pe} + \beta_{\text{epi}}\, z^{\text{epi}}_{pe}
 \end{equation}
