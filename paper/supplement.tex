@@ -20,6 +20,7 @@
 
 \newcommand{\trajectoriesFig}{4}
 \newcommand{\pipelineFig}{2}
+\newcommand{\eventsegMethods}{\textit{Event-segmentation}}
 
 %\doublespacing
 %\linenumbers
@@ -188,7 +189,10 @@
     \centering
     \includegraphics[width=\textwidth]{figures/source/k-optimization-episode}
     
-    \caption{\small \textbf{Wasserstein distance as a function of $K$.} CAPTION}
+    \caption{\small \textbf{Wasserstein distance as a function of $K$.} 
+    We used a hidden Markov model to segment the trajectory of the \textit{Atlanta} episode into a sequence of discrete events. 
+    To select an appropriate number of events for the episode, we segmented its trajectory into $K$ events for each $K$ between 2 and 50 (inclusive), and for each segmentation computed the correlation between the embedding vectors for all pairs of timepoints assigned to the same event, and for all pairs of timepoints assigned to different events.
+    We then identified the segmentation that maximized the Wasserstein distance between these distributions of within- and across-event correlations (see \eventsegMethods).}
 \end{figure}
 
 
@@ -208,7 +212,7 @@
         \includegraphics[width=\textwidth]{figures/source/recall-eventseg-all-C}
         
         \caption{\textbf{Recall event-segmentation fits.} 
-        Each pair of matrices (left: immediate recall; right: delayed recall) is in the same format as those displayed in Figure~\pipelineFig \textbf{TODO: ADD LETTER}.}
+        Each pair of matrices (left: immediate recall; right: delayed recall) is shown in the same format as those displayed in Figure~\pipelineFig H,I.}
     \end{figure}
     \clearpage
 }
@@ -229,16 +233,11 @@
         \includegraphics[width=\textwidth]{figures/source/2d-trajectories-all-C}
         
         \caption{\textbf{2D projections all participants' recall trajectories.} 
-        Each pair of trajectories (left: immediate recall; right: delayed recall) is in the same format as those displayed in Figure~\trajectoriesFig.}
+        Each pair of trajectories (left: immediate recall; right: delayed recall) is shown in the same format as those displayed in Figure~\trajectoriesFig.}
     \end{figure}
     \clearpage
 }
 
-
-% This supplement contains no \cite commands, so declaring a bibliography made
-% bibtex exit 2 ("I found no \citation commands") and fail the latexmk build.
-% The declaration is kept here, commented out, so it can be restored verbatim
-% the moment anything in this file is cited.
 %\clearpage
 %\bibliographystyle{apa}
 %\renewcommand{\refname}{Supplementary references}
