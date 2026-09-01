@@ -460,170 +460,63 @@ If the situation calls for efficiency, such as in resource-constrained settings,
 Similarly, if the goal of recounting an experience is to guide a listener along the same semantic path taken by one's memory of the original experience, then it is in both the speaker's and the listener's best interests to omit details that are obvious from the surrounding context.
 Consistent with this idea, we found that recountings after a week-long delay tend to preserve the ``control points'' of the original recounting, while omitting the ``waypoints'' that do little to change the overall shape of the semantic path.
 
-%%JRM STOPPED HERE
-
 A second line of related work concerns how memories change over time, especially with repeated recollections.
+Early work from nearly a century ago~\citep{Bart32} reached (at a coarse level) a similar conclusion to ours-- that repeated recountings of an experience tend to preserve the ``form'' of the original recounting (e.g., as opposed to the original experience itself).
+This work was later replicated by~\cite{BergRoed99}.
+Our geometric framework provides a more fine-grained and formal way of quantifying the content of an experience and its recountings, enabling us to characterize how memories change over time in a way that was not possible with prior approaches (e.g., our ``control points'' versus ``waypoints'' finding described above).
+Other related work in this vein suggests that retrieving a memory pushes it into a labile state, making it more susceptible to distortion~\citep{NadeEtal00,HupbEtal07,NadeHard09,BridPall12,StJaScha13,ChanEtal09b}.
+This suggests that the act of recounting an experience may itself be a mechanism by which memories change over time, as opposed to reflecting passive decay or forgetting alone.
 
-%% ===================== OUTLINE-- written by claude w/ guidance by JRM: review + replace with prose =====================
-%% Ordering principle: each beat earns the next. Beats 1--2 establish that the
-%% phenomenon is real AND that retrieval is its cause; 3--4 establish that the
-%% change is systematic and selective (which is what licenses looking for a
-%% rule); 5 is the single consolidated scope block (previously scattered, which
-%% is what made the passage read as a list); 6 is the gap we fill.
-%% The one thing the previous draft never established was beat 2 --- without it,
-%% everything cited is equally consistent with ordinary forgetting.
-%%
-%% Every claim below was red-teamed against the sources. Three errors in the
-%% earlier prose draft were found and are corrected here; each is marked
-%% [RED-TEAM] so the wrong version does not creep back in during rewriting.
+The notion that not all events are equally memorable has also been well-established in prior work, including our own.
+For example, gist and central details are more likely to be encoded and retained than perceptual and peripheral details~\citep{HeusEtal21,SekeEtal16,SekeEtal18,GilbMosc21}, and autobiographical narratives shed some classes of content faster than others~\citep{DiamLevi20,SuEtal26}.
+Other work as shown that memories become less perceptually detailed as they age and as they are retold~\citep{LifaEtal21}, and that events that are more central to a narrative survive better than isolated ones~\citep{LeeChen22,AntoEtal24}.
+In each of these prior studies, memory distortions were characterized in terms of the content of the original experience, and the focus was on what was remembered or forgotten.
+Here we are concerned with how the recountings themselves change over time, and how different recountings of the same experience relate to one another (in addition to the original experience).
 
-\textbf{[OUTLINE --- to be rewritten as prose.]}
+Our finding that events that serve as control points are more likely to be retained than waypoint-like events contributes several additional insights into those previous findings.
+One insight is that a trajectory's control points define something akin to its gist (i.e., by preserving low spatial frequency structure).
+The present study helps to formalize this notion by providing a concrete, quantitative definition of what constitutes a control point versus a waypoint.
+Another insight is that the control-point versus waypoint distinction, as it pertains to persistence across recountings, is not a property of the original experience itself, but rather of the \textit{recountings} of that experience.
+In our study, we did \textit{not} find evidence that control points in the original episode were more likely to be retained than its waypoints.
+Only by identifying control points and waypoints in participants' immediate recountings of the episode could we identify which events were likely to be retained versus omitted in their delayed recountings.
+This suggests that the control-point versus waypoint distinction may not be a property of the original experience, but rather of the \textit{recountings} of that experience.
+Further, because recountings are person-specific, our work suggests that the control-point versus waypoint distinction is also person-specific.
+This also fits with prior work showing that people also differ in where they place event boundaries in a continuous experience~\citep{SavaEtal23}, how much of their recall structure they share with others~\citep{ChenEtal17,NguyEtal19}, the character of their autobiographical remembering, and so on~\citep{PaloEtal18}.
+Within the context of the navigation analogy described above, an implication is that \textit{what is recounted} when we communicate about an experience is not purely a function of what happened.
+Instead, the unique goals and perspectives we wish to convey end up shaping the way we recount it initially~\citep{TverMars00,Mars07}, and subsequently this shapes \textit{later} recountings as well.
+This account is also consistent with prior work showing that recounting an experience can entrench the idiosyncratic information each person includes~\citep[i.e., without moving towards a common account;][]{MeleEtal25}.
 
-\begin{enumerate}
-    \item \textbf{The phenomenon: across retellings, what persists is the form of the earlier telling.}
-    In Bartlett's \textit{repeated} reproduction studies, one person retells the same story at
-    intervals, and what persists is ``the general form of his first reproduction''~\citep{Bart32}.
-    Distortion accumulates fastest in the early retellings. These effects replicate~\citep{BergRoed99}.
-    \textit{Why it is first:} this is the phenomenon we measure, and repeated reproduction is our design.
-    %% [RED-TEAM] The prose draft said "serial reproduction". WRONG: serial reproduction passes a
-    %% story between people (telephone-style). Repeated reproduction is one person over time, which
-    %% is Bartlett's other method and ours. BergRoed99's own title says "repeated reproduction".
-    %% [RED-TEAM] Cite BergRoed99 ONLY for replication. They measured forgetting and distortion
-    %% against retention interval; they did NOT test "resembles the previous telling rather than the
-    %% original". Bart32 carries that claim; BergRoed99 does not.
+Speculatively, the notion of attractor dynamics~\citep{Hopf82} may help to explain why repeated recountings will tend to resemble prior recountings more than the original experience.
+Intuitively, attractor models of memory posit that laying down (i.e., encoding) a memory carves out a basin in a high-dimensional energy landscape.
+Retrieving a memory corresponds to landing somewhere within that basin.
+However, retrieval has its own effect on the memory system, since ``remembering an experience'' is \textit{itself} a (related) experience.
+The experience of remembering is typically different from the original experience, in part because remembering can incorporate new information gained or retrieved \textit{after} the original experience~\citep{Mann21a,Mann24}.
+In this way, the representation of the experience of remembering will differ from the representation of the original experience.
+When the memory of the remembering is laid down, it carves out a \textit{new} basin in the energy landscape.
+When we attempt to retrieve the original experience again, we may either land in the basin corresponding to the original experience, or in the basin corresponding to our memory of a prior remembering.
+This in turn leads to laying down new memories for \textit{those} memories, caving out new corresponding basins in the energy landscape, and so on.
+This framing suggests that the more times we remember an experience, the more likely it is that we will land in a basin corresponding to a prior remembering rather than the original experience itself.
+This offers a natural explanation for why participants delayed recountings tend to resemble prior recountings more than the original experience.
 
-    \item \textbf{The mechanism: retrieval is itself what changes the trace.}
-    Retrieving a memory renders it labile and open to revision~\citep{NadeEtal00,HupbEtal07,NadeHard09},
-    reactivation measurably distorts what is later reported~\citep{BridPall12,StJaScha13}, and an
-    earlier retrieval makes a later one more suggestible~\citep{ChanEtal09b}.
-    \textit{Why it is second, and why it is load-bearing:} without it, everything below is equally
-    consistent with ordinary forgetting. This is what licenses treating a delayed recounting as a
-    recounting \textit{of} the immediate one.
+Whatever the underlying mechanism, our findings also suggest what might become of a memory that is recounted many times, where each retelling preserves control points and sheds waypoints, and each retelling then becomes the trajectory that the next one simplifies.
+As this process repeats, memories may converge towards a skeleton of control points in the recounting's trajectory, with the intervening details (i.e., waypoints) increasingly left implied and unstated.
+If future work were to test this idea using additional retellings, it would be interesting to see whether this process has a floor (beyond which further retellings do not lead to further simplification), and whether the surviving skeleton continues to resemble the original experience in any recognizable way.
+These questions are worth taking seriously outside of the laboratory, since the settings in which people are asked to recount an experience repeatedly are often the settings in which accuracy matters most~\citep[e.g., eyewitness testimony; ][]{ChanEtal09b}.
 
-    \item \textbf{The change is systematic rather than random.}
-    Two independent lines converge. Reports are reconstructive and can be reshaped by what a person
-    encounters afterwards, down to the wording of a question~\citep{LoftPalm74,Loft05}. Separately,
-    with no outside information at all, people recall and then confidently recognize items that were
-    never presented but that are strong associates of the items that were~\citep{Dees59,RoedMcDe95}.
-    \textit{Why it is third:} systematicity is what makes it sensible to look for a rule governing
-    \textit{which} events survive. The second line needs no external input, so it is the closer
-    analogue to our design.
-    %% [RED-TEAM] Do NOT call the Dees59/RoedMcDe95 effect "gist-based". Deese's account is
-    %% associative, and the word "gist" appears nowhere in Roediger & McDermott (1995); their
-    %% mechanism is the implicit associative response (spreading activation). The gist framing is a
-    %% later theoretical overlay (fuzzy-trace theory). "Gist" IS the right word for the
-    %% consolidation literature cited later in this Discussion --- just not for these two papers.
+We note several limitations of our work, roughly in descending order of how much they constrain our interpretations.
+First, we have no means of distinguishing between what is recounted and the underlying mental representation.
+It may be that the underlying memories of the episode are more stable and faithful to the original experience than participants' recountings suggest.
+Or it could be that control points and waypoints are properties of \textit{storytelling} rather than of the underlying memories themselves.
+To this end, we have intentionally avoided using the term ``memory'' in describing our observations of the data, and instead refer to what participants \textit{recount} from their experience.
+Second, our approach to identifying control points versus waypoints is based on a particular geometric simplification algorithm (the RDP algorithm), and other algorithms may yield different results.
+In designing our analyses, we did explore alternatives~\citep[e.g., the Visvalingam-Whyatt algorithm; ][]{VisvWhya93}, but we found (via spot checks) that the RDP algorithm seemed to better captured what we ``meant'' by control points in this context.
+Third, our study used just one episode of one television show, and just one delay interval, so it remains to be seen how our findings might generalize to other experiences and delays.
 
-    \item \textbf{Retelling specifically is selective, and shaped by the goal and the audience.}
-    Retelling an event from an assigned perspective biases what is later remembered~\citep{TverMars00},
-    and conversational retelling is not verbatim recall but goal-directed selection~\citep{Mars07}.
-    \textit{Why it is fourth:} it is the closest match to what our participants did, and it supplies
-    a motivated reason \textit{why} some events are dropped, which beat 6 reinterprets geometrically.
-    %% [RED-TEAM] SCOPE TverMars00 carefully: written stories, an experimenter-assigned biased
-    %% letter (not free retelling), and a 20-minute delay. It cannot carry an unqualified claim
-    %% about free retelling at one week. Phrase as "at least over short delays".
-    %% [RED-TEAM] Mars07 full text was NOT obtained; the claim above rests on its abstract. Either
-    %% read it before writing this sentence, or keep the claim at abstract strength.
-
-    \item \textbf{Where that literature stops.} (One consolidated block; these were scattered across
-    the prose draft, which is what broke its flow.)
-    \begin{enumerate}
-        \item Misinformation paradigms supply new information from outside; our participants
-        received nothing between recountings, so the change we observe is entirely self-generated.
-        \item Word lists lack narrative structure, causal dependence between events, and personal
-        relevance, which limits generalization to naturalistic memory~\citep{Gall10}.
-        \item The closest analogue asks what a trace reflects about the manner of its own retrieval,
-        and finds that neural representations track the semantic level at which an item was last
-        accessed~\citep{QiCout26}. But the pairings were arbitrary, each item was probed at one level
-        within a single session, and behavioral accuracy was matched by design, so the result
-        concerns how a memory is expressed rather than what a person can remember.
-        \item In naturalistic repeated recall, person-specific stabilization without cross-person
-        convergence is \textit{already established}~\citep{MeleEtal25}. Concede this plainly: it is
-        not our novelty.
-    \end{enumerate}
-
-    \item \textbf{The gap, and what we add.}
-    Every literature above characterizes the change in terms of \textit{content}: which details are
-    added, lost, or distorted. None characterizes its \textit{form}. Building on the trajectory
-    framing of the preceding paragraph~\citep{HeusEtal21}, we find that a delayed recounting is well
-    described as a shape-preserving simplification of the earlier one, and that the events a person
-    omits are predictable from the geometry of their own previous recounting, from that recounting
-    alone.
-    \textit{Why it is last:} it is the only claim here that nothing above already makes.
-\end{enumerate}
-%% =================== END OUTLINE ===================
-
-That not all events are equally memorable is well established.
-Gist and central details, for example, survive delays that perceptual and peripheral details do not~\citep{HeusEtal21,SekeEtal16,SekeEtal18,GilbMosc21}, and autobiographical narratives shed some classes of content faster than others~\citep{DiamLevi20,SuEtal26}.
-Memories also become less perceptually detailed as they age and as they are retold~\citep{LifaEtal21}, and events bound tightly to those around them survive better than isolated ones~\citep{LeeChen22,AntoEtal24}.
-What our results add is a change in where that asymmetry comes from.
-Centrality is ordinarily assigned from the outside (e.g., by asking raters which details matter to the plot, by sorting content into categories fixed in advance, and so on).
-Here it follows from the geometry of an individual's own trajectory, and it may be computed from that trajectory alone.
-For example, an event that no rater would call pivotal may still be a control point, if it happens to be the moment at which one participant's recounting turns.
-
-Why should waypoints be the events that go?
-One possibility is that they are redundant, in that a listener may recover them from the events on either side, since travelling between the surrounding control points already implies passing near them.
-Another is that they are simply weaker in themselves, for example less distinctive, less emotionally charged, or less causally connected to the rest of the narrative~\citep{AntoEtal24}.
-The two accounts make similar predictions about which events will be forgotten.
-They differ in what those predictions should depend on.
-If events are dropped because they are intrinsically weak, then a simplification derived from any participant's trajectory should predict forgetting about as well as one derived from the participant's own.
-If they are dropped because they are recoverable from their neighbors, then a participant's own trajectory should do better, because control-point status is defined relative to the rest of that person's path.
-Our results favor the second account: a participant's own path orders their forgetting (reliably) better than any other participant's path does (\textbf{[VERIFY THIS]}: this contrast appears in Fig.~\ref{fig:rdp}E,F, but no statistic for it is reported in the Results text).
-The episode's own shape is uninformative in the same sense, and how disposable an event is within the episode's trajectory carries no reliable information about which events participants left out (\textbf{[VERIFY THIS]}: the Results text and Fig.~\ref{fig:rdp}D currently describe different comparisons).
-What a recounting keeps therefore appears to be a property of that recounting, and not of the material it describes.
-
-What counts as a control point should then be idiosyncratic.
-An event's status depends on the path it sits within, and different people who watched the same episode construct different paths through it.
-We take the specificity of participants' delayed recountings to mean just this.
-That a delayed recounting may be matched to the immediate recounting that preceded it, on the basis of structure alone, is a fingerprint.
-We use the term in the sense it carries for the neural signatures by which individuals may be identified from functional connectivity or from their responses to naturalistic stimuli~\citep{FinnEtal15,FinnEtal20,AndeEtal20}.
-The parallel lies in the identification logic alone (ours is a behavioral signature recovered from what a participant said, whereas theirs are recovered from how the brain responded).
-People also differ in where they place event boundaries in a continuous experience~\citep{SavaEtal23}, in how much of their recall structure they share with others~\citep{ChenEtal17,NguyEtal19}, in the character of their autobiographical remembering, and so on~\citep{PaloEtal18}.
-Retelling has also been found to entrench what each person includes without drawing different people toward a common account~\citep{MeleEtal25}, which is what one would expect if each person is stabilizing their own set of control points.
-
-Everything we measured came from a verbal recounting, and so a reasonable objection is that control points and waypoints are properties of storytelling rather than of memory.
-That dichotomy may be less clean than it first appears.
-Recounting is the only observable available in a study of this kind, so the two are confounded by construction, and no analysis of transcripts alone can fully separate them.
-The way a person tells a story is also not merely a window onto what they remember.
-It is an input to what they will remember next.
-Retelling an event for a particular audience or purpose, for example, biases how it is recalled later~\citep{TverMars00,Mars07}, and reproducing a narrative repeatedly reshapes it in ways that persist~\citep{BergRoed99,StJaScha13}.
-Conceptually, if the function of recounting is to let a listener (or one's own future self) re-traverse the trajectory of the original experience, then communicative efficiency and mnemonic efficiency are not competing explanations so much as the same pressure seen from two sides.
-
-We note six limitations, in roughly descending order of how much they constrain what we may conclude.
-The most substantial is that every participant recounted the episode immediately, so we cannot separate two accounts of what we observed.
-A delayed recounting may resemble an immediate one because the immediate recounting was itself re-encoded and then retrieved a week later, or because a single stable memory was sampled twice, with each sampling shaped by the same person-specific distillation.
-Our measures are symmetric and cannot establish direction.
-Settling this would require an arm in which the immediate recounting is withheld (designs of that kind show retrieved information later sitting nearer to what was retrieved than to what was originally presented~\citep{BridPall12,NadeEtal00,NadeHard09}).
-A second limitation is that segmenting a trajectory into events is itself a form of simplification, performed by our analysis rather than by the participant, and it sets the resolution at which everything else is measured.
-A participant whose recounting appears unchanged may simply have changed it in ways too fine for us to resolve.
-Segmenting at a range of granularities would establish how much of what we report survives that choice.
-Third, control-point status is defined with respect to one particular simplification algorithm, and a different algorithm might well order the same events differently; running several would show whether the grading belongs to the trajectories or to the procedure.
-Fourth, we used one episode, one delay, and one intervening recounting, so how the picture changes across stimuli, across longer intervals, or across many successive retellings remains to be seen~\citep{ChanEtal09b,LifaEtal21}.
-Fifth, our procedure matches every recall event to an event in the episode, so content a participant introduced that does not appear in the episode falls outside what we are able to measure.
-Finally, our measure of what connects one event to another is built from semantic similarity, and so it cannot on its own distinguish events that are close in meaning from events that are causally linked~\citep{LeeChen22,AntoEtal24,XuEtal24b}; separating the two would require causal and importance judgments collected for this same episode.
-
-Speculatively, one way to think about how this might work is in terms of attractor dynamics~\citep{Hopf82}.
-Rather than supposing that we hold literal duplicate copies of a memory, we might imagine that laying down a memory carves out a basin in an energy landscape, and that remembering the experience deepens a basin near wherever we happen to land.
-Combined with the observation that remembering distorts, this implies that what gets re-encoded on each occasion may not be the original memory, but a distorted version of it.
-Successive retrievals might then arrive at a basin corresponding to the original experience, or at one corresponding to any of our previous rememberings of it.
-A related point has been made from the perspective of context reinstatement, in that each time we remember a prior experience, our memory of it becomes colored by the contextual thoughts we were having at the time of each remembering~\citep{Mann24}.
-We did not test this picture, and our data cannot distinguish it from other mechanisms that would leave the same trace in a transcript.
-It does, however, offer a natural reading of why a delayed recounting should resemble an earlier recounting more closely than the experience that both describe.
-
-Whatever the underlying mechanism, our account also suggests what might become of a memory that is recounted many times.
-If each retelling preserves control points and sheds waypoints, and if each retelling then becomes the trajectory that the next one simplifies, a memory might converge over many retellings toward a skeleton of control points, with the intervening detail increasingly implied and left unstated.
-Whether that convergence has a floor, and whether the surviving skeleton continues to resemble the original experience, are questions our data cannot answer.
-The possibility seems worth taking seriously outside the laboratory, since the settings in which people are asked to recount an experience repeatedly are often the settings in which accuracy matters most.
-For example, an eyewitness who has already described what they saw is describing a description the next time they are asked~\citep{ChanEtal09b}.
-
-Ultimately, our work points toward a set of questions about how the geometry of a recounting relates to the experience that it describes.
-Do the events that behave like control points in a recounting correspond to the boundaries at which neural activity shifts during the experience itself~\citep{ChenEtal17,BaldEtal17}?
-Can they be predicted in advance from the stimulus, or are they recoverable only after the fact, from a particular person's path?
-Does a listener who hears a recounting actually re-traverse the speaker's trajectory, filling in the waypoints that the speaker left out?
-Questions of this kind become tractable once what a person retains from an experience is treated as a shape that may be measured, rather than as a quantity that may only be counted.
-We may recover that shape from what someone says, and control points are identifiable from a single recounting.
-It may eventually be possible to ask what a student will still carry from a lecture, or what a patient will still carry from a conversation with their physician, before the delay that would reveal it has passed.
-Forgetting, on this view, is not only loss: what falls away between one telling and the next is largely what the remaining structure already implies.
+The above limitations notwithstanding, one could also extend this approach to other domains.
+For example, whereas we focus here on participants' recountings of a single television episode, an analogous approach could be applied to a wide range of experiences including natural conversations, academic lectures, narrations of natural phenomena, and others.
+It remains to be seen whether the same principles might hold across these different scenarios.
+Ultimately, by framing recountings as trajectories through semantic space, we demonstrate that repeated recountings preserve high level (coarse scale) structure while shedding lower level (fine scale) structure.
+Our findings suggest that our memories do not simply decay over time, but rather they are actively maintained and reshaped by how we shepherd them through time by recounting them to ourselves and to others.
 
 \section*{Methods}
 
