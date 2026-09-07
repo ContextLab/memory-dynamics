@@ -22,6 +22,8 @@ analyses via [Docker](https://www.docker.com/).
 - [Repository Organization](#repository-organization)
 - [Installing Docker](#installing-docker)
   - [Configuring Docker with WSL2 on Windows](#configuring-docker-with-wsl2-on-windows)
+- [Running the Analyses](#running-the-analyses)
+  - [Option 1: `launch_notebooks.sh`](#option-1-launch_notebookssh)
   - [Option 2: Manual setup](#option-2-manual-setup)
 - [Running the Experiment](#running-the-experiment)
 - [Other useful documentation](#other-useful-documentation)
@@ -100,7 +102,7 @@ and configuring Docker to use the
 
    ```sh
    cd ~ && git clone https://github.com/ContextLab/memory-dynamics.git
-    ```
+   ```
 
 4. In the Docker Desktop app, go to **Settings → General** and make sure
    "**Use the WSL 2 based engine**" is selected. Then go to
