@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>🚨&lt;project/repo name placeholder&gt;🚨</h1>
+  <h1>Delayed recountings preserve but simplify the semantic geometry of earlier recountings</h1>
   🚨&lt;preprint/paper badge placeholder&gt;🚨
   <!---
   <a href="🚨<PREPRINT URL>🚨">
@@ -11,46 +11,43 @@
 `🚨 indicates content to be updated later`
 
 This repository contains all data and code used to produce the paper
-"🚨[_PAPER NAME PLACEHOLDER_](PAPER_URL_PLACEHOLDER)🚨" by 🚨**AUTHORS PLACEHOLDER**🚨.
+"🚨[Delayed recountings preserve but simplify the semantic geometry of earlier recountings](PAPER_URL_PLACEHOLDER)🚨" by Paxton C. Fitzpatrick, Alishba Tahir, Jennifer Xu, Soo Hwan Park, and Jeremy R. Manning.
 
 We also include reproducible environments for running our experiment and
 analyses via [Docker](https://www.docker.com/).
 
-
 ## Table of Contents
 
+- [Table of Contents](#table-of-contents)
 - [Repository Organization](#repository-organization)
 - [Installing Docker](#installing-docker)
   - [Configuring Docker with WSL2 on Windows](#configuring-docker-with-wsl2-on-windows)
-- [Running the Analyses](#running-the-analyses)
-    - [Option 1: `launch_notebooks.sh`](#option-1-launch_notebookssh)
-    - [Option 2: Manual setup](#option-2-manual-setup)
-- [Running the Experiment](#running-the-experiment)
+  - [Option 2: Manual setup](#option-2-manual-setup)
+- [🚨Running the Experiment🚨](#running-the-experiment)
 - [Other useful documentation](#other-useful-documentation)
 
 
-## 🚨Repository Organization🚨
-
-🚨update at the end with `tree -dL 2 --gitignore`🚨
+## Repository Organization
 
 The repository is organized as follows:
 
 ```yaml
 .
-├── code : all analysis code used in the paper
-│   ├─ notebooks : Jupyter notebooks for running analyses
+├── code : all code for analyses & figures from the paper
+│   ├─ notebooks : Jupyter notebooks for running analyses & generating figures
+│   ├── cluster-scripts : Python scripts for analyses run on a computing cluster
 │   └─ analysis_helpers : Python package with helper code for analyses
-├── data : all data analyzed in the paper
-│   ├── PLACEHOLDER : PLACEHOLDER TEXT
-│   └── PLACEHOLDER : PLACEHOLDER TEXT
-├── docker : files for building experiment & analysis environments
+├── data : all data collected during the experiment & analyzed in the paper
+│   ├── raw : raw episode annotations, recall transcripts, and demographics survey responses
+│   └── processed : episode & recall embeddings, events, 2D projections, and other processed data
+├── docker : files for building the experiment & analysis environments
 ├── exp : all code for running the experiment
 │   ├── static : scripts, stylesheets, example stimuli, and other static files
 │   └── templates : HTML templates for experiment pages
 └── paper : LaTeX source files for generating the paper
-    ├── CDL-bibliography : submodule for ContextLab BibTeX file
+    ├── CDL-bibliography : submodule for ContextLab shared BibTeX file
     ├── admin : files related to submission & review process
-    └── figs : PDFs of all figures from the paper
+    └── figures : PDFs of all figures from the paper
 ```
 
 
@@ -59,12 +56,13 @@ The repository is organized as follows:
 You can install the [Docker Desktop](https://docs.docker.com/desktop/) app for
 your operating system using one of the guides below:
 
-- [MacOS](https://docs.docker.com/docker-for-mac/install/)
-- [Windows](https://docs.docker.com/docker-for-windows/install/)
-- [Debian](https://docs.docker.com/desktop/install/debian/)
-- [Fedora](https://docs.docker.com/desktop/install/fedora/)
-- [Ubuntu](https://docs.docker.com/desktop/install/ubuntu/)
-- [Arch](https://docs.docker.com/desktop/install/archlinux/)
+- [MacOS](https://docs.docker.com/desktop/setup/install/mac-install/)
+- [Windows](https://docs.docker.com/desktop/setup/install/windows-install/)
+- [Ubuntu](https://docs.docker.com/desktop/setup/install/linux/ubuntu/)
+- [Debian](https://docs.docker.com/desktop/setup/install/linux/debian/)
+- [Fedora](https://docs.docker.com/desktop/setup/install/linux/fedora/)
+- [Arch](https://docs.docker.com/desktop/setup/install/linux/archlinux/)
+- [RHEL](https://docs.docker.com/desktop/setup/install/linux/rhel/)
 
 Alternatively, you can install [Docker Engine](https://docs.docker.com/engine/)
 (CLI only) for various Linux OSes using one of the guides listed
@@ -74,34 +72,41 @@ Alternatively, you can install [Docker Engine](https://docs.docker.com/engine/)
 this repo.**
 
 ### Configuring Docker with WSL2 on Windows
-If you're using Windows, we recommend installing 
-[Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/about) 
-and configuring Docker to use the 
+
+If you're using Windows, we recommend installing
+[Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/about)
+and configuring Docker to use the
 [WSL2 backend](https://docs.docker.com/desktop/windows/wsl/):
+
 1. Open PowerShell as Administrator and run:
+
    ```powershell
    wsl --install -d Ubuntu
    ```
-   You may be prompted to restart your computer. After restarting, an 
-   [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu) terminal window should 
-   appear automatically. Follow the on-screen prompts to choose a username and 
+
+   You may be prompted to restart your computer. After restarting, an
+   [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu) terminal window should
+   appear automatically. Follow the on-screen prompts to choose a username and
    password for your Ubuntu account.
-2. From the same terminal window, run the following command to install Git 
+2. From the same terminal window, run the following command to install Git
    inside Ubuntu (if it isn't installed already):
+
    ```sh
    command -v git > /dev/null 2>&1 || { sudo apt update && sudo apt install -y git; }
    ```
+
    If prompted for your password, enter the one you just created.
 3. Clone the repository to the home directory of your WSL filesystem:
+
    ```sh
-   cd ~ && git clone 🚨https://github.com/ContextLab/memory-dynamics.git🚨
+   cd ~ && git clone https://github.com/ContextLab/memory-dynamics.git
     ```
-4. In the Docker Desktop app, go to **Settings → General** and make sure 
-   "**Use the WSL 2 based engine**" is selected. Then, go to 
+
+4. In the Docker Desktop app, go to **Settings → General** and make sure
+   "**Use the WSL 2 based engine**" is selected. Then go to
     **Settings → Resources → WSL Integration** and make sure Ubuntu is enabled.
 
 Run the commands in the instructions below from your Ubuntu terminal window.
-
 
 ## Running the Analyses
 
@@ -157,28 +162,32 @@ The script should work on most systems. If for some reason it doesn't work for
 you, or you prefer to manage the environment manually, you can build and run the
 analysis environment following the steps below
 (and if you encounter any errors, feel free to
-🚨[open an issue](https://github.com/ContextLab/memory-dynamics/issues/new)🚨!).
+[open an issue](https://github.com/ContextLab/memory-dynamics/issues/new)!).
 
 ### Option 2: Manual setup
 
-1. Launch the Docker Desktop app or start the Docker daemon from the command 
+1. Launch the Docker Desktop app or start the Docker daemon from the command
    line.
-2. _From the repository's root directory_, build the "🚨`memory-dynamics`🚨" 
+2. _From the repository's root directory_, build the "`memory-dynamics`"
    image from the [Dockerfile-analyses](docker/Dockerfile-analyses) file in the
    [docker](docker) directory:
+
    ```sh
-   docker build -f docker/Dockerfile-analyses -t 🚨memory-dynamics🚨 .
+   docker build -f docker/Dockerfile-analyses -t memory-dynamics .
    ```
-   (see [Dockerfile-analyses](docker/Dockerfile-analyses) for the various 
+
+   (see [Dockerfile-analyses](docker/Dockerfile-analyses) for the various
    [build arguments](https://docs.docker.com/engine/reference/builder/#arg)
    that can be passed to customize the image)
-3. Run a container (named "🚨`MD`🚨") from the newly built image:
+3. Run a container (named "`MD`") from the newly built image:
+
    ```sh
-   docker run -it -p 8888:8888 --name 🚨MD🚨 -v $PWD:/mnt 🚨memory-dynamics🚨
+   docker run -it -p 8888:8888 --name MD -v $PWD:/mnt memory-dynamics
    ```
-   The command above binds port 8888 in the container to port 8888 on the host 
-   so the Jupyter notebook server can be accessed from a web browser, and 
-   bind-mounts the repository to the container's `/mnt` directory so files in 
+
+   The command above binds port 8888 in the container to port 8888 on the host
+   so the Jupyter notebook server can be accessed from a web browser, and
+   bind-mounts the repository to the container's `/mnt` directory so files in
    the repo can be accessed and modified from inside it.
 4. The notebook server will launch automatically when the container is run. Copy
    and paste the 3rd link that appears (the one starting with
@@ -187,14 +196,14 @@ analysis environment following the steps below
    run the code inside it. When finished, return to the terminal and press
    **Control+C** to stop the notebook server and exit the container.
 6. To launch the container and notebooks any time after this initial setup, run:
-   ```sh
-   docker start 🚨MD🚨 && docker attach 🚨MD🚨
-   ```
 
+   ```sh
+   docker start MD && docker attach MD
+   ```
 
 ## 🚨Running the Experiment🚨
 
-🚨 **_THIS WHOLE SECTION NEEDS TO BE UPDATED ONCE THE EXPERIMENT CODE IS FINALIZED_** 🚨
+🚨 **_PLACEHOLDER TEXT COPIED OVER FROM EFFICIENT-LEARNING-KHAN REPO. THIS WHOLE SECTION NEEDS TO BE UPDATED ONCE THE EXPERIMENT CODE IS FINALIZED_** 🚨
 
 1. After [installing Docker](#installing-docker), launch the desktop app or
    start the daemon from the command line.
@@ -267,7 +276,6 @@ analysis environment following the steps below
    ```sh
    docker start Khan-exp && docker attach Khan-exp
    ```
-
 
 ## Other useful documentation
 - [Docker](https://docs.docker.com/)
