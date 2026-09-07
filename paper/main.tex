@@ -16,8 +16,9 @@
 
 \setcitestyle{notesep={; }}
 
-% supplementary methods
-\newcommand{\suppMethods}{\textit{Supplementary methods}}
+% supplementary tables
+\newcommand{\primaryPrompt}{1}
+\newcommand{\likeRemovalPrompt}{2}
 % supplementary figures
 \newcommand{\kOptimization}{1}
 \newcommand{\recallEventseg}{2}
@@ -127,7 +128,7 @@ In the present study, we focus specifically on characterizing how the contents a
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=\textwidth]{figures/source/paradigm}
+    \includegraphics[width=\textwidth]{figures/paradigm}
 
     \caption{\textbf{Experimental paradigm.} Visual timeline of the two study sessions, spanning approximately one week.
     In session 1, participants view the pilot episode of \textit{Atlanta}, immediately verbally recount its content, and then verbally predict what will happen in the next episode.
@@ -147,7 +148,7 @@ The progression of coordinates in each of these sequences traces out a trajector
 
 \begin{figure}[t!]
     \centering
-    \includegraphics[width=\textwidth]{figures/source/pipeline-overview}
+    \includegraphics[width=\textwidth]{figures/pipeline-overview}
 
     \caption{\small \textbf{Modeling the geometry of experiences and memories.}
     Each row illustrates the construction of one of the three sequences we compare: the \textit{Atlanta} episode (top), and an example participant's immediate (middle) and delayed (bottom) recountings of it.
@@ -198,7 +199,7 @@ These comparisons revealed that participants' delayed recountings tended to refl
 
 \begin{figure}[tp]
     \centering
-    \includegraphics[width=0.98\textwidth]{figures/source/order-similarity}
+    \includegraphics[width=0.98\textwidth]{figures/order-similarity}
 
     \caption{\small \textbf{Recall order is preserved between immediate and delayed sessions.} 
     \textbf{A.} How order agreement is measured, illustrated with a schematic episode of six events. 
@@ -228,7 +229,7 @@ Further, the shape of a recounting's path through the semantic embedding space (
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figures/source/2d-trajectories}
+    \includegraphics[width=\textwidth]{figures/2d-trajectories}
 
     \caption{\small \textbf{2D projections of the episode and recall trajectories.}
     The episode's event sequence (top left), together with the immediate (left) and delayed (right) recall event sequences for six example participants.
@@ -259,7 +260,7 @@ According to this alternative hypothesis, on average, participants' delayed reco
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figures/source/hypotheses}
+    \includegraphics[width=\textwidth]{figures/hypotheses}
 
     \caption{\small \textbf{Simulations under two hypothetical accounts of memory retrieval.}
     \textbf{A},\textbf{B.\ Hypothesis 1.} A participant's immediate (red) and delayed (blue) recountings are both noisy versions of the original experience (black).
@@ -288,7 +289,7 @@ This suggests that \textit{what} participants recounted after a week is better c
     \centering
     \refstepcounter{figure}
     \phantomsection
-    \includegraphics[width=\textwidth]{figures/source/dtw-figure}
+    \includegraphics[width=\textwidth]{figures/dtw-figure}
     \caption*{\small \textit{(Caption next page.)}}
     \label{fig:dtw}
 \end{figure}
@@ -351,7 +352,7 @@ In this way, the smallest $\varepsilon$ value at which a given point is first re
 
 \begin{figure}[p]
     \centering
-    \includegraphics[width=\textwidth]{figures/source/rdp-figure}
+    \includegraphics[width=\textwidth]{figures/rdp-figure}
     \caption{\small \textbf{Geometrically simplifying immediate recounting predicts omissions from delayed recounting.}
     \textbf{A.} The Ramer-Douglas-Peucker algorithm applied to an example polyline.
     At each step, the algorithm draws a chord spanning the section of the polyline under consideration and identifies the interior point farthest from the chord.
@@ -382,37 +383,6 @@ In this way, the smallest $\varepsilon$ value at which a given point is first re
     \textbf{C}--\textbf{F.} The dashed grey line in each panel denotes chance.}
 \end{figure}
 
-%\begin{figure}[tp]
-%    \centering
-%    \refstepcounter{figure}
-%    \phantomsection
-%    \includegraphics[width=\textwidth]{figures/source/rdp-figure}
-%    \caption*{\small \textit{(Caption next page.)}}
-%    \label{fig:rdp}
-%    \end{figure}
-%
-%\begin{figure}[t]
-%    \ContinuedFloat
-%    \caption{\small \textbf{Geometrically simplifying immediate recounting predicts omissions in delayed recounting.}
-%    \textbf{A.} The Ramer-Douglas-Peucker algorithm applied to an example polyline.
-%    At each step, the algorithm draws a chord spanning the section of the polyline under consideration and identifies the interior point farthest from the chord.
-%    If that point is farther from the chord than the threshold distance $\varepsilon$ (blue band), it is retained (green) and the algorithm is recursively applied on either side of it.
-%    Otherwise, it is removed (red) with that section approximated by the chord in the simplified result.
-%    The simplified polyline (blue) preserves the high-level shape of the original, but with points contributing spatial details smaller than $\varepsilon$ removed (grey).
-%    See \nameref{subsec:rdp} for a full description.
-%    \textbf{B.} An example participant's immediate (left) and delayed (right) recall trajectories, in the same format as Fig.~\ref{fig:trajectories}.
-%    Faded dots denote events described in immediate recall but omitted from delayed recall.
-%    Each trajectory was projected to 2D for visualization using UMAP; all analyses were performed in the original space.
-%    \textbf{C.} For each participant (pink dot), the probability that an event omitted from their delayed recounting was removed from their immediate recall trajectory at a lower $\varepsilon$ than an event retained.
-%    The violin shows a kernel density estimate of the distribution; the black dot and bar denote the across-participants mean and its bootstrap-estimated 95\% confidence interval.
-%    \textbf{D.} Coefficients from a logistic regression predicting whether an event would be omitted post-delay from its $\varepsilon$ at removal from the episode's trajectory (grey) and the participant's own immediate recall trajectory (pink).
-%    Dots denote the estimated coefficients; vertical bars denote their cluster-bootstrap-estimated $95\%$ confidence intervals.
-%    Histograms show the null distributions of each coefficient estimated via participant-blocked permutation.
-%    \textbf{E.} The distribution of per-participant win rates.
-%    Each participant's win rate is the proportion of surrogate participants' immediate recountings that their own immediate recounting predicted their post-delay omissions better than.
-%    \textbf{F.} The proportion of participants whose own immediate recountings fall among the $k$ best predictors of their post-delay omissions, as a function of $k$.
-%    \textbf{C}--\textbf{F.} The dashed grey line in each panel denotes chance.}
-%\end{figure}
 
 We reasoned that, if the goal of retaining a memory over time is to preserve its high-level arc of semantic meanings despite becoming less detailed, then the differences between the paths traced out by a participant's immediate and delayed recountings might reflect a similar shape-preserving simplification.
 To test this idea, we repeatedly applied the RDP algorithm to the trajectory of each participant's immediate recounting using progressively larger $\varepsilon$ values, and recorded the smallest $\varepsilon$ at which each event was discarded (i.e., its relative importance to defining the trajectory's geometric structure).
@@ -584,7 +554,7 @@ We used the \texttt{langchain\_dartmouth} Python package~\citep{StonEtal25} to i
 In the first pass, we prompted the model to split the transcript into sentences at natural breaking points, add punctuation including quotes around reported speech, remove clear non-word disfluencies (``um,'' ``uh,'' ``hmm,'' etc.), collapse stuttered verbatim repetitions, and mark self-corrections and restarts with em-dashes.
 In the second pass, we prompted the model to remove all instances of ``like'' used as a filler word.
 We removed filler ``like'' instances in a separate pass because of their high frequency of occurrence in the transcripts and the additional effort to required to distinguish them from meaningful uses of ``like.''
-The full texts of our prompts for both passes can be found in \suppMethods.
+The full texts of our prompts for both passes can be found in Supplementary Tables~\primaryPrompt~and~\likeRemovalPrompt.
 Finally, we manually reviewed all LLM-formatted transcripts to identify and correct any errors, ensure sentence breaks were appropriate and consistent across participants and sessions, confirm that no content was improperly added to or removed from the transcripts, and resolve any ambiguities based on the prosody of participants' original recall audio.
 
 

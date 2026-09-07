@@ -37,7 +37,7 @@ PARTICIPANT_DATA_DIR = PROCESSED_DIR.joinpath('participants')
 
 FONTS_DIR = DATA_DIR.joinpath('fonts')
 
-FIG_DIR = Path('/mnt/paper/figures/source')
+FIG_DIR = Path('/mnt/paper/figures')
 
 
 ########################################################################
