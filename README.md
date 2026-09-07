@@ -23,7 +23,7 @@ analyses via [Docker](https://www.docker.com/).
 - [Installing Docker](#installing-docker)
   - [Configuring Docker with WSL2 on Windows](#configuring-docker-with-wsl2-on-windows)
   - [Option 2: Manual setup](#option-2-manual-setup)
-- [🚨Running the Experiment🚨](#running-the-experiment)
+- [Running the Experiment](#running-the-experiment)
 - [Other useful documentation](#other-useful-documentation)
 
 
@@ -201,32 +201,29 @@ analysis environment following the steps below
    docker start MD && docker attach MD
    ```
 
-## 🚨Running the Experiment🚨
-
-🚨 **_PLACEHOLDER TEXT COPIED OVER FROM EFFICIENT-LEARNING-KHAN REPO. THIS WHOLE SECTION NEEDS TO BE UPDATED ONCE THE EXPERIMENT CODE IS FINALIZED_** 🚨
+## Running the Experiment
 
 1. After [installing Docker](#installing-docker), launch the desktop app or
    start the daemon from the command line.
-2. _From the repository's root directory_, build the "`khan-exp`" image from the
-   [Dockerfile-experiment](docker/Dockerfile-experiment) file in the
-   [docker](docker) directory:
+2. _From the repository's root directory_, build the "`memory-dynamics-exp`"
+   image from the [Dockerfile-experiment](docker/Dockerfile-experiment) file in
+   the [docker](docker) directory:
 
    ```sh
-   docker build -f docker/Dockerfile-experiment -t khan-exp .
+   docker build -f docker/Dockerfile-experiment -t memory-dynamics-exp .
    ```
 
-3. Run a container (named "`Khan-exp`") from the newly built image:
+3. Run a container (named "`MD-exp`") from the newly built image:
 
    ```sh
-   docker run -it -p 22363:22363 -v "$PWD/exp:/exp" --name Khan-exp khan-exp
+   docker run -it -p 22363:22363 --name MD-exp -v $PWD:/mnt memory-dynamics-exp
    ```
 
-   The command above bind-mounts the container to the repository's [`exp/`](exp)
-   directory so the psiTurk server can read and run the experiment code, and
-   binds port 22363 between the container and host so the server can be accessed
-   from a web browser.
+   The command above bind-mounts the repository to the container's `/mnt`
+   directory so the psiTurk server can read the experiment code and save out
+   data, and binds port 22363 between the container and host so the server can be accessed from a web browser.
 
-   **Note**: the port published by the container must match the port listed in
+   **Note**: the port published by the container must match the `port` field in
    [`exp/config.txt`](exp/config.txt).
 
 4. Your shell prompt (`$PS1`) should now start with `root@`, indicating that
@@ -240,8 +237,7 @@ analysis environment following the steps below
    When you see "_`Now serving on http://0.0.0.0:22363`_," the experiment server
    is ready. Starting the server for the first time will also create
    `exp/server.log`, a logfile for the experiment server, and
-   `exp/efficient-learning-khan.db`, a SQLite database to hold raw experiment
-   data.
+   `exp/memory-dynamics.db`, a SQLite database to hold raw experiment data.
 
 5. Generate a link to the experiment in "debug mode":
 
@@ -251,17 +247,17 @@ analysis environment following the steps below
 
    This will output a URL in the format
    `http://0.0.0.0:22363/ad?assignmentId=debug<XXXXXX>&hitId=debug<YYYYYY>&workerId=debug<ZZZZZZ>&mode=debug`,
-   where `<XXXXXX>` and `<ZZZZZZ>` will form a unique identifier for the run
-   (i.e., a participant's unique ID). In debug mode, the experiment will behave
-   normally and data will still be saved properly, but psiTurk will not try to
-   connect to [Amazon Mechanical Turk](https://www.mturk.com/)'s servers. This
-   is useful because it enables the experiment to be run locally without the
-   user having to create AWS & MTurk accounts, supply access keys, etc.
+   where `<ZZZZZZ>` and `<XXXXXX>` together form a unique identifier for the run
+   (i.e., a participant's unique ID). In debug mode, the experiment behaves
+   normally and data are still saved properly, but psiTurk won't try to connect
+   to [Amazon Mechanical Turk](https://www.mturk.com/) so you can run the
+   experiment locally instead of online
 
 6. Copy and paste the URL into a web browser, and follow the on-screen
    instructions to progress through the experiment. **Note**: the experiment
    will not work in Google Chrome. Recommended browsers include Safari and
-   Firefox.
+   Firefox. **Also note**: since the TV episodes used in the experiment are copyrighted, the experiment will play a short example video clip in place of
+   all three.
 
 7. When finished, return to the terminal and shut down the experiment server:
 
@@ -274,7 +270,7 @@ analysis environment following the steps below
 8. To start and enter the container any time after this initial setup, run:
 
    ```sh
-   docker start Khan-exp && docker attach Khan-exp
+   docker start MD-exp && docker attach MD-exp
    ```
 
 ## Other useful documentation
@@ -282,7 +278,6 @@ analysis environment following the steps below
     - [`Dockerfile` reference](https://docs.docker.com/engine/reference/builder/)
     - [`docker build` command reference](https://docs.docker.com/engine/reference/commandline/build/)
     - [`docker run` command reference](https://docs.docker.com/engine/reference/run/)
-- [Jupyter notebook (v6.4.7)](https://jupyter-notebook.readthedocs.io/en/v6.4.7/)
 - [psiTurk](https://psiturk.readthedocs.io/en/stable/)
     - [psiTurk shell commands](https://psiturk.readthedocs.io/en/stable/command_line.html)
     - [Guide to `config.txt` fields](https://psiturk.readthedocs.io/en/stable/settings.html)
