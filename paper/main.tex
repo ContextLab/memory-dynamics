@@ -553,7 +553,7 @@ We therefore used a large language model~\citep[Qwen3.5 122b;][]{Qwen26} to conv
 We used the \texttt{langchain\_dartmouth} Python package~\citep{StonEtal25} to implement this conversion as two sequential passes over each transcript.
 In the first pass, we prompted the model to split the transcript into sentences at natural breaking points, add punctuation including quotes around reported speech, remove clear non-word disfluencies (``um,'' ``uh,'' ``hmm,'' etc.), collapse stuttered verbatim repetitions, and mark self-corrections and restarts with em-dashes.
 In the second pass, we prompted the model to remove all instances of ``like'' used as a filler word.
-We removed filler ``like'' instances in a separate pass because of their high frequency of occurrence in the transcripts and the additional effort to required to distinguish them from meaningful uses of ``like.''
+We removed filler ``like'' instances in a separate pass because of their high frequency of occurrence in the transcripts and the additional effort required to distinguish them from meaningful uses of ``like.''
 The full texts of our prompts for both passes can be found in Supplementary Tables~\primaryPrompt~and~\likeRemovalPrompt.
 Finally, we manually reviewed all LLM-formatted transcripts to identify and correct any errors, ensure sentence breaks were appropriate and consistent across participants and sessions, confirm that no content was improperly added to or removed from the transcripts, and resolve any ambiguities based on the prosody of participants' original recall audio.
 
