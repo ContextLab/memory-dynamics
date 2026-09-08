@@ -1,0 +1,97 @@
+\title{cover letter}
+%
+% See http://texblog.org/2013/11/11/latexs-alternative-letter-class-newlfm/
+% and http://www.ctan.org/tex-archive/macros/latex/contrib/newlfm
+% for more information.
+%
+\documentclass[11pt,stdletter,orderfromtodate,sigleft]{newlfm}
+\let\geometry\relax
+\usepackage{blindtext, xfrac, animate, hyperref, pxfonts, geometry}
+
+  \setlength{\voffset}{0in}
+
+\newlfmP{dateskipbefore=0pt}
+\newlfmP{sigsize=20pt}
+\newlfmP{sigskipbefore=10pt}
+
+\newlfmP{Headlinewd=0pt,Footlinewd=0pt}
+
+\newcommand{\journal}{Nature Communications}
+\newcommand{\articletype}{Article}
+\newcommand{\myTitle}{Delayed recountings preserve but simplify the semantic geometry of earlier recountings}
+\newcommand{\corresponding}{Jeremy R. Manning}
+
+
+\namefrom{\vspace{-0.3in}\corresponding}
+\addrfrom{
+  Dartmouth College\\
+  Department of Psychological and Brain Sciences\\
+  HB 6207 Moore Hall\\
+  Hanover, NH, 03755\\
+  Jeremy.R.Manning@Dartmouth.edu}
+\addrto{}
+\dateset{\today}
+
+
+\greetto{To the editors of \textit{\journal}:}
+
+
+
+\closeline{Sincerely,}
+
+\begin{document}
+\begin{newlfm}
+
+  We have enclosed our manuscript entitled \textit{\myTitle} to be considered
+  for publication as an \textit{\articletype}. In our manuscript, we develop and test a mathematical framework,
+  based on natural language processing models (text embeddings), for characterizing how
+  people's recountings of an experienc change over time.
+
+  We asked participants in our study to watch an episode of a television show,
+  then recount it immediately, and then recount it again a week later. As in
+  several of our prior studies (several of which are published in other Nature-family journals), we embedded sliding windows of detailed
+  (human-generated) annotations of the episode, and of each recounting, into 
+  a shared semantic space. This yields a ``trajectory'' through the embedding space
+  for the episode and each recounting.
+
+  We report two main findings. First, participants' delayed recountings resemble their own
+  immediate recountings more closely than they resemble the episode they actually watched,
+  and also more closely than they resemble other participants' immediate recountings. This
+  suggests that what they are actually recounting after a week is best described as
+  their own \textit{earlier recounting} of the episode, as opposed to either the
+  actual original experience of watching the episode, or to a more general shared distillation
+  of the episode that is common across participants.
+
+  Our second finding concerns the specific changes (within person)
+  between the initial (immediate) recounting and the recounting a week later. As one might expect,
+  and as any reasonable memory model would predict,
+  the delayed recountings capture less detail than the immediate recountings (i.e., there is some forgetting or loss of information over time).
+  The interesting question is which \textit{particular} details are lost, and which are preserved.
+  We applied an algorithm, originally developed for drawing cartographic maps at different scales (and with different levels of detail)
+  to the trajectories of the immediate recountings. We used the algorithm to assign a score to each
+  point along the trajectory that reflects how much removing that point would change the overall shape
+  of the trajectory. We found that points that contributed little to the overall trajectory shapes
+  were the very same points most likely to be ``dropped'' from the delayed recountings.
+  In other words, delayed recountings appear to preserve the overall shape of the immediate recountings'
+  paths through semantic space in a way that loses minimal information about its overall structure.
+
+  Our work suggests that when we recount our experiences to other people, what
+  we may be doing is ``leading'' them on a journey through a semantic
+  representation space (approximated here using text embeddings). But just like
+  navigating through the woods using hiking trail markers, not all markers are
+  equally useful. It's necessary to put in a marker at ambiguous locations
+  (forks in the path, overgrown parts of the trail). But markers at obvious
+  locations (or, for highway navigation, unhelpful GPS ``continue straight!''
+  instructions, given while already on a highway straightaway) are less useful.
+  If there are "extra waypoints" in someone's recounting --- i.e., events
+  inferable from their neighbors --- then we can simplify our recountings by
+  dropping them, without losing much of the overall structure of the narrative.
+  
+We expect that our work will be of broad interest to the readership of \textit{\journal}, including
+cognitive psycholoogists and cognitive neuroscientists, social psychologists, and natural language
+processing researchers, among others. Thank you for considering this manuscript, and we
+hope you will find it suitable for publication in \textit{\journal}.
+
+
+\end{newlfm}
+\end{document}
