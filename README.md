@@ -1,17 +1,12 @@
 <div align="center">
   <h1>Delayed recountings preserve but simplify the semantic geometry of earlier recountings</h1>
-  🚨&lt;preprint/paper badge placeholder&gt;🚨
-  <!---
-  <a href="🚨<PREPRINT URL>🚨">
+  <a href="https://doi.org/10.31234/osf.io/mhxtd_v1">
     <img src="https://img.shields.io/badge/PsyArXiv-Preprint-cf1d35.svg" alt="PsiArXiv preprint">
   </a>
-  --->
 </div>
 
-`🚨 indicates content to be updated later`
-
 This repository contains all data and code used to produce the paper
-"🚨[Delayed recountings preserve but simplify the semantic geometry of earlier recountings](PAPER_URL_PLACEHOLDER)🚨" by Paxton C. Fitzpatrick, Alishba Tahir, Jennifer Xu, Soo Hwan Park, and Jeremy R. Manning.
+"[Delayed recountings preserve but simplify the semantic geometry of earlier recountings](https://doi.org/10.31234/osf.io/mhxtd_v1)" by Paxton C. Fitzpatrick, Alishba Tahir, Jennifer Xu, Soo Hwan Park, and Jeremy R. Manning.
 
 We also include reproducible environments for running our experiment and
 analyses via [Docker](https://www.docker.com/).
