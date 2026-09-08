@@ -35,6 +35,9 @@ exp/.psiturk_history
 # psiTurk experiment server logfile
 exp/server.log
 
+# psiTurk participant database
+exp/*.db
+
 # raw participant audio files
 data/raw/recall-audio/
 

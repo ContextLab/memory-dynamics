@@ -1,6 +1,15 @@
-var atlep1 = '/static/files/atlanta-ep1.mp4'
-var atlep2 = '/static/files/atlanta-ep2.mp4'
-var arrestdevep1 = '/static/files/arrested-development-ep1.mp4'
+// Note: The TV episodes used in the experiment are copyrighted, so they aren't
+// distributed with this repo and the experiment will load an example video file
+// instead.
+// To adapt the experiment to use "real" stimuli, add your video files to
+// exp/static/files/, update the paths below, and set use_sample_video to false.
+
+var use_sample_video = true
+var sample_video = '/static/files/sample_video.mp4'
+
+var atlep1 = use_sample_video ? sample_video : '/static/files/atlanta-ep1.mp4'
+var atlep2 = use_sample_video ? sample_video : '/static/files/atlanta-ep2.mp4'
+var arrestdevep1 = use_sample_video ? sample_video : '/static/files/arrested-development-ep1.mp4'
 
 var runStim_select = function(options) {
 

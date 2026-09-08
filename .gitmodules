@@ -1,3 +1,6 @@
 [submodule "exp/static/lib/jsPsych"]
 	path = exp/static/lib/jsPsych
 	url = https://github.com/paxtonfitzpatrick/jsPsych.git
+[submodule "paper/CDL-bibliography"]
+	path = paper/CDL-bibliography
+	url = https://github.com/paxtonfitzpatrick/CDL-bibliography.git

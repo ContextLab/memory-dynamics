@@ -1,37 +1,35 @@
 [HIT Configuration]
 title = Memory Dynamics
-description = View episodes of TV shows and verbally recall them
-amt_keywords = Psychology, Memory
+description = Watch episodes of TV shows and verbally recall them
+keywords = Psychology, Memory
 lifetime = 24
 us_only = true
 approve_requirement = 95
-contact_email_on_error = youremail@gmail.com
-ad_group = Default psiTurk Stroop Example
-psiturk_keywords = memory
-organization_name = Dartmouth College
-browser_exclude_rule = MSIE, mobile, tablet
 
 [Database Parameters]
-database_url = sqlite:///memory-dynamics-1.1.db
-table_name = turkdemo
+database_url = sqlite:///memory-dynamics.db
+assignments_table_name = turkdemo
 
 [Server Parameters]
 host = 0.0.0.0
+# must match the port published by the container
 port = 22363
-cutoff_time = 120
-timeout = 120
-logfile = server.log
+errorlog = server.log
 loglevel = 1
-debug = true
-login_username = examplename
-login_pw = examplepassword
 threads = 1
-secret_key = 'this is my secret key which is hard to guess, i should change this'
+# seconds a gunicorn worker waits for a synchronous request to finish. Needs
+# to be generous because the /save_audio route (see custom.py) writes out
+# recordings that can be up to an hour long.
+server_timeout = 120
 
 [Task Parameters]
 experiment_code_version = 1.1
 num_conds = 1
 num_counters = 1
+contact_email_on_error = contextualdynamics@gmail.com
+browser_exclude_rule = MSIE, mobile, tablet
+cutoff_time = 120
+allow_repeats = false
 
 [Shell Parameters]
-launch_in_sandbox_mode = true
+launch_in_mode = sandbox

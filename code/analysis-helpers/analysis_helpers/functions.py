@@ -9,14 +9,71 @@ import numpy as np
 from IPython.core.oinspect import pylight
 from IPython.display import display, HTML, Markdown
 from matplotlib.font_manager import findSystemFonts, fontManager
+from matplotlib.patches import Rectangle
 from scipy.spatial.distance import cdist
+from scipy.stats import rankdata
 
-from analysis_helpers.constants import CONTENT_WARNING, FONTS_DIR
+from analysis_helpers.constants import (
+    CONTENT_WARNING,
+    EVENTSEG_EDGECOLOR,
+    FONTS_DIR
+)
 from analysis_helpers.internals import _imported_from_notebook
 
 if TYPE_CHECKING:
-    from typing import Callable
+    from collections.abc import Sequence
+    from typing import Any, Callable, Literal
     from numpy.typing import ArrayLike
+
+
+def draw_eventseg_episode(
+        ax: plt.Axes,
+        event_bounds: list[tuple[int, int]],
+        edgecolor: Sequence = EVENTSEG_EDGECOLOR,
+        facecolor: str = 'none',
+        **rect_kwargs: Any
+) -> list[Rectangle]:
+    if isinstance(edgecolor, str):
+        edgecolor = [edgecolor] * len(event_bounds)
+
+    patches = []
+    for ix, (onset, offset) in enumerate(event_bounds):
+        size = offset - onset + 1
+        rect = Rectangle((onset - 0.5, onset - 0.5),
+                         width=size,
+                         height=size,
+                         edgecolor=edgecolor[ix],
+                         facecolor=facecolor,
+                         **rect_kwargs)
+        ax.add_patch(rect)
+        patches.append(rect)
+
+    return patches
+
+
+def draw_eventseg_recall(
+        ax: plt.Axes,
+        event_bounds: list[tuple[int, int]],
+        event_matches: list[int],
+        edgecolor: Sequence = EVENTSEG_EDGECOLOR,
+        facecolor: str = 'none',
+        **rect_kwargs: Any
+) -> list[Rectangle]:
+    if isinstance(edgecolor, str):
+        edgecolor = [edgecolor] * len(event_bounds)
+
+    patches = []
+    for ix, ((onset, offset), match_ix) in enumerate(zip(event_bounds, event_matches)):
+        rect = Rectangle((onset - 0.5, match_ix - 0.5),
+                         width=offset-onset+1,
+                         height=1,
+                         edgecolor=edgecolor[ix],
+                         facecolor=facecolor,
+                         **rect_kwargs)
+        ax.add_patch(rect)
+        patches.append(rect)
+
+    return patches
 
 
 def dtw(
@@ -176,6 +233,47 @@ def mean_center(*to_center, equal_weight=True):
         centered = np.vsplit(stacked, split_inds)
 
     return tuple(c[0] if was_1d else c for c, was_1d in zip(centered, input_was_1d))
+
+
+def rankbiserialr(
+    x: ArrayLike,
+    y: ArrayLike | None = None,
+    zero_method: Literal['wilcox', 'pratt', 'zsplit'] = 'wilcox'
+):
+    """
+    Matched-pairs rank-biserial correlation.
+
+    Arguments have the same meanings, options, and defaults as
+    `scipy.stats.wilcoxon`.
+
+    Returns `r` in [-1, 1] = (W+ - W-) / (W+ + W-), consistent with the
+    Wilcoxon signed-rank statistic under the chosen `zero_method` (so it
+    shares that test's p-value). Positive when the differences run in
+    the +(x - y) direction.
+    """
+    if zero_method not in ('wilcox', 'pratt', 'zsplit'):
+        raise ValueError("zero_method must be 'wilcox', 'pratt', or 'zsplit'")
+
+    d = np.asarray(x, dtype=float)
+    if y is not None:
+        d = d - np.asarray(y, dtype=float)      # broadcasts for scalar or array y
+
+    d = d.ravel()
+    if zero_method == 'wilcox':
+        d = d[d != 0]
+    if d.size == 0:
+        return np.nan
+
+    r = rankdata(np.abs(d))
+    r_plus  = np.sum(r[d > 0])
+    r_minus = np.sum(r[d < 0])
+    if zero_method == 'zsplit':
+        r_zero = np.sum(r[d == 0])
+        r_plus  += r_zero / 2.0
+        r_minus += r_zero / 2.0
+
+    denom = r_plus + r_minus
+    return np.nan if denom == 0 else (r_plus - r_minus) / denom
 
 
 def set_figure_style():
